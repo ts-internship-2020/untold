@@ -65,6 +65,8 @@ namespace ConferencePlanner.Api
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
+
+            //buseala sper
         }
     }
 }
