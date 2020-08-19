@@ -37,6 +37,7 @@ namespace ConferencePlanner.Api
 
                     options.UseSqlServer(connectionString, a => a.EnableRetryOnFailure())
                     .UseInternalServiceProvider(serviceProvider);
+                    int a = 5;
                 });
 
             services.AddScoped<IGetDemoRepository, GetDemoRepository>();
