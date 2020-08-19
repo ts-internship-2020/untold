@@ -21,6 +21,7 @@ namespace ConferencePlanner.Api
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            // test push
         }
 
         public IConfiguration Configuration { get; }
@@ -37,6 +38,7 @@ namespace ConferencePlanner.Api
 
                     options.UseSqlServer(connectionString, a => a.EnableRetryOnFailure())
                     .UseInternalServiceProvider(serviceProvider);
+                    int a = 5;
                 });
 
             services.AddScoped<IGetDemoRepository, GetDemoRepository>();
@@ -65,6 +67,15 @@ namespace ConferencePlanner.Api
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
+
+            //buseala sper
+            //alo
+            //alo
+            //te-am
+            //sunat
+            //sa-ti
+            //spun
+            //buseala 2 
         }
     }
 }
