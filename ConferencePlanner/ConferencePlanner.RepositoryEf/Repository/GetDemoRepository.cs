@@ -26,5 +26,6 @@ namespace ConferencePlanner.Repository.Ef.Repository
             return demoModels;
         }
     }
+    //alt test 
     //petrecere!!!
 }
