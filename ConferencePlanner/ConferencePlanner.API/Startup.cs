@@ -21,6 +21,7 @@ namespace ConferencePlanner.Api
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            // test push
         }
 
         public IConfiguration Configuration { get; }
@@ -68,6 +69,12 @@ namespace ConferencePlanner.Api
             });
 
             //buseala sper
+            //alo
+            //alo
+            //te-am
+            //sunat
+            //sa-ti
+            //spun
             //buseala 2 
         }
     }

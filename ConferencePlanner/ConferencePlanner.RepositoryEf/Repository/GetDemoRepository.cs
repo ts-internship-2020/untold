@@ -27,4 +27,5 @@ namespace ConferencePlanner.Repository.Ef.Repository
         }
     }
     //alt test 
+    //petrecere!!!
 }
