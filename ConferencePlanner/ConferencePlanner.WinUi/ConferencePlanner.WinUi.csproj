@@ -16,5 +16,4 @@
     <ProjectReference Include="..\ConferencePlanner.RepositoryAdo\ConferencePlanner.Repository.Ado.csproj" />
     <ProjectReference Include="..\ConferencePlanner.RepositoryApi\ConferencePlanner.Repository.Api.csproj" />
   </ItemGroup>
-	//comment
 </Project>
