@@ -21,6 +21,7 @@ namespace ConferencePlanner.Api
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            // test push
         }
 
         public IConfiguration Configuration { get; }
