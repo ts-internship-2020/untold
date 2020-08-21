@@ -1,4 +1,5 @@
 ﻿using ConferencePlanner.Abstraction.Repository;
+using ConferencePlanner.Repository.Ado.Repository;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -12,12 +13,14 @@ namespace ConferencePlanner.WinUi
 {
     public partial class MainForm : Form
     {
+        
+        private readonly IAttendeeRepository _attendeeRepository;
+
         private readonly IGetDemoRepository _getDemoRepository;
-
-        public MainForm(IGetDemoRepository getDemoRepository)
+        public MainForm(IAttendeeRepository attendeeRepository)
         {
-            _getDemoRepository = getDemoRepository;
-
+            
+            _attendeeRepository = attendeeRepository;
             InitializeComponent();
             
         }
@@ -38,7 +41,19 @@ namespace ConferencePlanner.WinUi
 
         private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            //var x = _getDemoRepository.GetDemo()
+            // var x = _getDemoRepository.GetDemo()
+
+
+            
+
+        }
+
+       
+
+        private void tabPage1_Layout(object sender, LayoutEventArgs e)
+        {
+            var x = _attendeeRepository.AttendeeConferences("attendee@test.com");
+            AttendeeGridView.DataSource = x.ToList();
         }
     }
 }

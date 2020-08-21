@@ -12,7 +12,7 @@ namespace ConferencePlanner.WinUi
 {
     static class Program
     {
-        /// <summary>
+        
         ///  The main entry point for the application.
         /// </summary>
         [STAThread]
@@ -36,6 +36,7 @@ namespace ConferencePlanner.WinUi
             var services = new ServiceCollection();
             services.AddScoped<MainForm>();
             services.AddScoped<IGetDemoRepository, GetDemoRepository>();
+            services.AddScoped<IAttendeeRepository, AttendeeRepository>();
             services.AddSingleton<SqlConnection>(a =>
             {
                 SqlConnection sqlConnection = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["DbConnection"].ConnectionString);
