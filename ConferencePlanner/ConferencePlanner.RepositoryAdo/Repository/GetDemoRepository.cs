@@ -29,7 +29,11 @@ namespace ConferencePlanner.Repository.Ado.Repository
             {
                 while (sqlDataReader.Read())
                 {
-                    demos.Add(new DemoModel() { Id = sqlDataReader.GetInt32("ConferenceId"), Name = sqlDataReader.GetString("ConferenceName") });
+                    demos.Add(new DemoModel()
+                    {
+                        Id = sqlDataReader.GetInt32("ConferenceId"),
+                        Name = sqlDataReader.GetString("ConferenceName")
+                    });
                 }
             }
 
@@ -39,3 +43,4 @@ namespace ConferencePlanner.Repository.Ado.Repository
         }
     }
 }
+
