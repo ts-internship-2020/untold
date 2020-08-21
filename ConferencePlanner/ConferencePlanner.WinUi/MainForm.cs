@@ -30,5 +30,15 @@ namespace ConferencePlanner.WinUi
             listBox1.DataSource = x;
             listBox1.DisplayMember = "Name";
         }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }
