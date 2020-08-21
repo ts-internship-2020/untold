@@ -12,7 +12,8 @@ namespace ConferencePlanner.WinUi
 {
     static class Program
     {
-        
+        public static string EnteredEmailAddress;
+        /// <summary>
         ///  The main entry point for the application.
         /// </summary>
         [STAThread]
@@ -24,8 +25,8 @@ namespace ConferencePlanner.WinUi
             ConfigureServices();
 
 
-            Application.Run(ServiceProvider.GetService<MainForm>()); 
-            //e posibil sa deschidem de aici
+            Application.Run(new EmailIdentityForm());
+            //e posibil sa deschidem de aici ServiceProvider.GetService<MainForm>
         }
 
 
@@ -35,8 +36,7 @@ namespace ConferencePlanner.WinUi
         {
             var services = new ServiceCollection();
             services.AddScoped<MainForm>();
-            services.AddScoped<IGetDemoRepository, GetDemoRepository>();
-            services.AddScoped<IAttendeeRepository, AttendeeRepository>();
+            services.AddScoped<IConferenceRepository, ConferenceRepository>();
             services.AddSingleton<SqlConnection>(a =>
             {
                 SqlConnection sqlConnection = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["DbConnection"].ConnectionString);
