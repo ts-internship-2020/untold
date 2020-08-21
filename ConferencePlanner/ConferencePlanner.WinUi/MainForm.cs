@@ -13,13 +13,18 @@ namespace ConferencePlanner.WinUi
     public partial class MainForm : Form
     {
         private readonly IGetDemoRepository _getDemoRepository;
-
+        
         public MainForm(IGetDemoRepository getDemoRepository)
         {
             _getDemoRepository = getDemoRepository;
 
             InitializeComponent();
             
+        }
+
+        public MainForm()
+        {
+
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -37,6 +42,16 @@ namespace ConferencePlanner.WinUi
         }
 
         private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void MainForm_Load(object sender, EventArgs e)
         {
 
         }
