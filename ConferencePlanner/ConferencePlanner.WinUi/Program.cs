@@ -23,7 +23,9 @@ namespace ConferencePlanner.WinUi
             Application.SetCompatibleTextRenderingDefault(false);
             ConfigureServices();
 
-            Application.Run(ServiceProvider.GetService<MainForm>());
+
+            Application.Run(ServiceProvider.GetService<MainForm>()); 
+            //e posibil sa deschidem de aici
         }
 
 

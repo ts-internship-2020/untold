@@ -20,7 +20,7 @@ namespace ConferencePlanner.Repository.Ado.Repository
         public List<DemoModel> GetDemo(string name)
         {
             SqlCommand sqlCommand = _sqlConnection.CreateCommand();
-            sqlCommand.CommandText = "select * from Demo";
+            sqlCommand.CommandText = "select * from Conference";
             SqlDataReader sqlDataReader = sqlCommand.ExecuteReader();
 
             List<DemoModel> demos = new List<DemoModel>();
@@ -29,7 +29,7 @@ namespace ConferencePlanner.Repository.Ado.Repository
             {
                 while (sqlDataReader.Read())
                 {
-                    demos.Add(new DemoModel() { Id = sqlDataReader.GetInt32("Id"), Name = sqlDataReader.GetString("Name") });
+                    demos.Add(new DemoModel() { Id = sqlDataReader.GetInt32("ConferenceId"), Name = sqlDataReader.GetString("ConferenceName") });
                 }
             }
 
