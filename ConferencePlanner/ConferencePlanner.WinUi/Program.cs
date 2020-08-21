@@ -23,10 +23,11 @@ namespace ConferencePlanner.WinUi
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             ConfigureServices();
+            
 
-
-            Application.Run(ServiceProvider.GetService<MainForm>()); 
-            //e posibil sa deschidem de aici
+            //Application.Run(new EmailIdentityForm());
+            Application.Run(ServiceProvider.GetService<MainForm>());
+            //e posibil sa deschidem de aici ServiceProvider.GetService<MainForm>
         }
 
 
@@ -36,7 +37,7 @@ namespace ConferencePlanner.WinUi
         {
             var services = new ServiceCollection();
             services.AddScoped<MainForm>();
-            services.AddScoped<IGetDemoRepository, GetDemoRepository>();
+            services.AddScoped<IConferenceRepository, ConferenceRepository>();
             services.AddSingleton<SqlConnection>(a =>
             {
                 SqlConnection sqlConnection = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["DbConnection"].ConnectionString);

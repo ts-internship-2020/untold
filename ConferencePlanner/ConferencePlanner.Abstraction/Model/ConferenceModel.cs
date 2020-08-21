@@ -15,8 +15,8 @@ namespace ConferencePlanner.Abstraction.Model
         public string CityName { get; set; }
         public string SpeakerFirstName { get; set; }
         public string SpeakerLastName { get; set; }
-        public string StartDate { get; set; }
-        public string EndDate { get; set; }
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }
 
     }
 

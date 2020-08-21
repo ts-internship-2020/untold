@@ -1,6 +1,8 @@
-﻿namespace ConferencePlanner.WinUi
+﻿using System.Windows.Forms;
+
+namespace ConferencePlanner.WinUi
 {
-    partial class MainForm
+    public partial class MainForm : Form
     {
         /// <summary>
         /// Required designer variable.
@@ -31,15 +33,20 @@
             this.button1 = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.listBox1 = new System.Windows.Forms.ListBox();
-            this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
             this.button5 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.TabAttendee = new System.Windows.Forms.TabPage();
+            this.TabOrganizer = new System.Windows.Forms.TabPage();
+            this.organizerDataGrid = new System.Windows.Forms.DataGridView();
+            this.TabControl = new System.Windows.Forms.TabControl();
+            this.AttendeeGridView = new System.Windows.Forms.DataGridView();
             this.button2 = new System.Windows.Forms.Button();
-            this.tabControl1.SuspendLayout();
-            this.tabPage1.SuspendLayout();
+            this.TabOrganizer.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.organizerDataGrid)).BeginInit();
+            this.TabControl.SuspendLayout();
+            this.TabAttendee.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.AttendeeGridView)).BeginInit();
             this.SuspendLayout();
             // 
             // button1
@@ -70,29 +77,37 @@
             this.listBox1.Size = new System.Drawing.Size(219, 49);
             this.listBox1.TabIndex = 2;
             // 
-            // tabControl1
+            // TabControl
             // 
-            this.tabControl1.Controls.Add(this.tabPage1);
-            this.tabControl1.Controls.Add(this.tabPage2);
-            this.tabControl1.Location = new System.Drawing.Point(42, 67);
-            this.tabControl1.Name = "tabControl1";
-            this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(732, 311);
-            this.tabControl1.TabIndex = 3;
-            this.tabControl1.SelectedIndexChanged += new System.EventHandler(this.tabControl1_SelectedIndexChanged);
+            this.TabControl.Controls.Add(this.TabAttendee);
+            this.TabControl.Controls.Add(this.TabOrganizer);
+            this.TabControl.Location = new System.Drawing.Point(42, 67);
+            this.TabControl.Name = "TabControl";
+            this.TabControl.SelectedIndex = 0;
+            this.TabControl.Size = new System.Drawing.Size(732, 311);
+            this.TabControl.TabIndex = 3;
+            this.TabControl.SelectedIndexChanged += new System.EventHandler(this.tabOrganizer_SelectedIndexChanged);
             // 
-            // tabPage1
+            // TabAttendee
             // 
-            this.tabPage1.Controls.Add(this.button5);
-            this.tabPage1.Controls.Add(this.button4);
-            this.tabPage1.Controls.Add(this.button3);
-            this.tabPage1.Location = new System.Drawing.Point(4, 24);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(724, 283);
-            this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "Spectator";
-            this.tabPage1.UseVisualStyleBackColor = true;
+            this.TabAttendee.Location = new System.Drawing.Point(4, 24);
+            this.TabAttendee.Name = "TabAttendee";
+            this.TabAttendee.Padding = new System.Windows.Forms.Padding(3);
+            this.TabAttendee.Size = new System.Drawing.Size(724, 283);
+            this.TabAttendee.TabIndex = 0;
+            this.TabAttendee.Text = "Attendee";
+            this.TabAttendee.UseVisualStyleBackColor = true;
+            // 
+            // TabOrganizer
+            // 
+            this.TabOrganizer.Controls.Add(this.organizerDataGrid);
+            this.TabOrganizer.Location = new System.Drawing.Point(4, 24);
+            this.TabOrganizer.Name = "TabOrganizer";
+            this.TabOrganizer.Padding = new System.Windows.Forms.Padding(3);
+            this.TabOrganizer.Size = new System.Drawing.Size(724, 283);
+            this.TabOrganizer.TabIndex = 1;
+            this.TabOrganizer.Text = "Organizer";
+            this.TabOrganizer.UseVisualStyleBackColor = true;
             // 
             // button5
             // 
@@ -128,13 +143,14 @@
             // 
             // tabPage2
             // 
-            this.tabPage2.Location = new System.Drawing.Point(4, 24);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(724, 283);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "Organizator";
-            this.tabPage2.UseVisualStyleBackColor = true;
+            this.organizerDataGrid.AllowUserToOrderColumns = true;
+            this.organizerDataGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.organizerDataGrid.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.organizerDataGrid.Location = new System.Drawing.Point(3, 3);
+            this.organizerDataGrid.Name = "organizerDataGrid";
+            this.organizerDataGrid.Size = new System.Drawing.Size(718, 277);
+            this.organizerDataGrid.TabIndex = 0;
+            this.organizerDataGrid.Text = "organizerDataGrid";
             // 
             // button2
             // 
@@ -152,16 +168,47 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.button2);
-            this.Controls.Add(this.tabControl1);
+            this.Controls.Add(this.TabControl);
             this.Controls.Add(this.listBox1);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.button1);
             this.Name = "MainForm";
             this.Text = "MainForm";
-            this.tabControl1.ResumeLayout(false);
-            this.tabPage1.ResumeLayout(false);
+            this.Load += new System.EventHandler(this.MainForm_Load);
+            this.TabOrganizer.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.organizerDataGrid)).EndInit();
+            this.TabControl.ResumeLayout(false);
+            this.TabAttendee.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.AttendeeGridView)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            // 
+            // AttendeeGridView
+            // 
+            this.AttendeeGridView.AllowUserToOrderColumns = true;
+            this.AttendeeGridView.BackgroundColor = System.Drawing.Color.Azure;
+            this.AttendeeGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.AttendeeGridView.GridColor = System.Drawing.SystemColors.MenuText;
+            this.AttendeeGridView.Location = new System.Drawing.Point(3, 3);
+            this.AttendeeGridView.Name = "AttendeeGridView";
+            this.AttendeeGridView.Size = new System.Drawing.Size(645, 277);
+            this.AttendeeGridView.TabIndex = 0;
+            this.AttendeeGridView.Text = "AttendeeGridView";
 
         }
 
@@ -170,10 +217,12 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ListBox listBox1;
-        private System.Windows.Forms.TabControl tabControl1;
-        private System.Windows.Forms.TabPage tabPage1;
-        private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.TabControl TabControl;
+        private System.Windows.Forms.TabPage TabAttendee;
+        private System.Windows.Forms.TabPage TabOrganizer;
         private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.DataGridView organizerDataGrid;
+        private System.Windows.Forms.DataGridView AttendeeGridView;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.Button button4;
