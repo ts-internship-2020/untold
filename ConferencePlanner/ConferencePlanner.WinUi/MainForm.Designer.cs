@@ -31,12 +31,12 @@
             this.button1 = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.listBox1 = new System.Windows.Forms.ListBox();
-            this.TabControlAttendee = new System.Windows.Forms.TabControl();
+            this.TabControl = new System.Windows.Forms.TabControl();
             this.TabAttendee = new System.Windows.Forms.TabPage();
             this.AttendeeGridView = new System.Windows.Forms.DataGridView();
             this.TabOrganizer = new System.Windows.Forms.TabPage();
             this.button2 = new System.Windows.Forms.Button();
-            this.TabControlAttendee.SuspendLayout();
+            this.TabControl.SuspendLayout();
             this.TabAttendee.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.AttendeeGridView)).BeginInit();
             this.SuspendLayout();
@@ -69,16 +69,16 @@
             this.listBox1.Size = new System.Drawing.Size(219, 49);
             this.listBox1.TabIndex = 2;
             // 
-            // TabControlAttendee
+            // TabControl
             // 
-            this.TabControlAttendee.Controls.Add(this.TabAttendee);
-            this.TabControlAttendee.Controls.Add(this.TabOrganizer);
-            this.TabControlAttendee.Location = new System.Drawing.Point(42, 67);
-            this.TabControlAttendee.Name = "TabControlAttendee";
-            this.TabControlAttendee.SelectedIndex = 0;
-            this.TabControlAttendee.Size = new System.Drawing.Size(732, 311);
-            this.TabControlAttendee.TabIndex = 3;
-            this.TabControlAttendee.SelectedIndexChanged += new System.EventHandler(this.tabControl1_SelectedIndexChanged);
+            this.TabControl.Controls.Add(this.TabAttendee);
+            this.TabControl.Controls.Add(this.TabOrganizer);
+            this.TabControl.Location = new System.Drawing.Point(42, 67);
+            this.TabControl.Name = "TabControl";
+            this.TabControl.SelectedIndex = 0;
+            this.TabControl.Size = new System.Drawing.Size(732, 311);
+            this.TabControl.TabIndex = 3;
+            this.TabControl.SelectedIndexChanged += new System.EventHandler(this.tabControl1_SelectedIndexChanged);
             // 
             // TabAttendee
             // 
@@ -91,18 +91,6 @@
             this.TabAttendee.Text = "Attendee";
             this.TabAttendee.UseVisualStyleBackColor = true;
             this.TabAttendee.Layout += new System.Windows.Forms.LayoutEventHandler(this.tabPage1_Layout);
-            // 
-            // AttendeeGridView
-            // 
-            this.AttendeeGridView.AllowUserToOrderColumns = true;
-            this.AttendeeGridView.BackgroundColor = System.Drawing.Color.Azure;
-            this.AttendeeGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.AttendeeGridView.GridColor = System.Drawing.SystemColors.MenuText;
-            this.AttendeeGridView.Location = new System.Drawing.Point(3, 77);
-            this.AttendeeGridView.Name = "AttendeeGridView";
-            this.AttendeeGridView.Size = new System.Drawing.Size(645, 153);
-            this.AttendeeGridView.TabIndex = 0;
-            this.AttendeeGridView.Text = "AttendeeGridView";
             // 
             // TabOrganizer
             // 
@@ -130,17 +118,44 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.button2);
-            this.Controls.Add(this.TabControlAttendee);
+            this.Controls.Add(this.TabControl);
             this.Controls.Add(this.listBox1);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.button1);
             this.Name = "MainForm";
             this.Text = "MainForm";
-            this.TabControlAttendee.ResumeLayout(false);
+            this.TabControl.ResumeLayout(false);
             this.TabAttendee.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.AttendeeGridView)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            // 
+            // AttendeeGridView
+            // 
+            this.AttendeeGridView.AllowUserToOrderColumns = true;
+            this.AttendeeGridView.BackgroundColor = System.Drawing.Color.Azure;
+            this.AttendeeGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.AttendeeGridView.GridColor = System.Drawing.SystemColors.MenuText;
+            this.AttendeeGridView.Location = new System.Drawing.Point(3, 3);
+            this.AttendeeGridView.Name = "AttendeeGridView";
+            this.AttendeeGridView.Size = new System.Drawing.Size(645, 277);
+            this.AttendeeGridView.TabIndex = 0;
+            this.AttendeeGridView.Text = "AttendeeGridView";
 
         }
 
@@ -149,7 +164,7 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ListBox listBox1;
-        private System.Windows.Forms.TabControl TabControlAttendee;
+        private System.Windows.Forms.TabControl TabControl;
         private System.Windows.Forms.TabPage TabAttendee;
         private System.Windows.Forms.TabPage TabOrganizer;
         private System.Windows.Forms.Button button2;
