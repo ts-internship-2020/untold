@@ -37,5 +37,29 @@ namespace ConferencePlanner.Repository.Ado.Repository
 
             return demos;
         }
+
+        //public List<ConferenceModel> GetOrganizers(string name)
+        //{
+        //    SqlCommand sqlCommand = _sqlConnection.CreateCommand();
+        //    sqlCommand.CommandText = "select * from vwConferenceDetails ";
+        //    SqlDataReader sqlDataReader = sqlCommand.ExecuteReader();
+
+        //    List<DemoModel> demos = new List<ConferenceModel>();
+
+        //    if (sqlDataReader.HasRows)
+        //    {
+        //        while (sqlDataReader.Read())
+        //        {
+        //            demos.Add(new ConferenceModel() { 
+        //                Id = sqlDataReader.GetInt32("ConferenceId"), 
+        //                Name = sqlDataReader.GetString("ConferenceName") });
+        //                //Category = sqlDataReader.GetString("ConferenceCategoryName") });
+        //    }
+        //    }
+
+        //    sqlDataReader.Close();
+
+        //    return demos;
+        //}
     }
 }
