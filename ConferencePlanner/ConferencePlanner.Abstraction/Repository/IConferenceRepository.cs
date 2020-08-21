@@ -8,6 +8,7 @@ namespace ConferencePlanner.Abstraction.Repository
 {
     public interface IConferenceRepository
     {
-        List<ConferenceModel> GetConferencesByOrganizer(string name);
+        List<ConferenceModel> GetConferencesByOrganizer(string email);
+        
     }
 }
