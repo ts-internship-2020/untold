@@ -12,6 +12,7 @@ namespace ConferencePlanner.WinUi
 {
     static class Program
     {
+        public static string EnteredEmailAddress;
         /// <summary>
         ///  The main entry point for the application.
         /// </summary>
