@@ -38,11 +38,16 @@ namespace ConferencePlanner.WinUi
 
         }
 
-        private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            var x = _conferenceRepository.GetConferencesByOrganizer(Program.EnteredEmailAddress);
+        private void tabOrganizer_SelectedIndexChanged(object sender, EventArgs e)
+        { //Program.EnteredEmailAddress
+            var x = _conferenceRepository.GetConferencesByOrganizer("organizer@test.com");
 
-            dataGridView1.DataSource = x.ToList();
+            if (x.Count() == 0)
+            {
+                organizerDataGrid.Visible = false;
+            }
+
+            organizerDataGrid.DataSource = x.ToList();
           
         }
 
@@ -50,5 +55,11 @@ namespace ConferencePlanner.WinUi
         {
 
         }
+
+        private void dataGridView1_CellContentClick(object sender, EventArgs e)
+        {
+
+        }
+
     }
 }

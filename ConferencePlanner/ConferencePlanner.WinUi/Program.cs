@@ -23,9 +23,10 @@ namespace ConferencePlanner.WinUi
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             ConfigureServices();
+            
 
-
-            Application.Run(new EmailIdentityForm());
+            //Application.Run(new EmailIdentityForm());
+            Application.Run(ServiceProvider.GetService<MainForm>());
             //e posibil sa deschidem de aici ServiceProvider.GetService<MainForm>
         }
 
