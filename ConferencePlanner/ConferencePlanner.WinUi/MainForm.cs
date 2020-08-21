@@ -31,14 +31,16 @@ namespace ConferencePlanner.WinUi
             listBox1.DisplayMember = "Name";
         }
 
-        private void button2_Click(object sender, EventArgs e)
-        {
-
-        }
 
         private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void AddConfBtn_Click(object sender, EventArgs e)
+        {
+            var formPopup = new AddConf();
+            formPopup.ShowDialog(this);
         }
     }
 }
