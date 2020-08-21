@@ -1,8 +1,10 @@
 ﻿using ConferencePlanner.Abstraction.Repository;
+using ConferencePlanner.Repository.Ado.Repository;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -26,6 +28,8 @@ namespace ConferencePlanner.WinUi
             
         }
 
+        public MainForm() { }
+
         private void button1_Click(object sender, EventArgs e)
         {
             //var x = _getDemoRepository.GetDemo("hello");
@@ -37,31 +41,59 @@ namespace ConferencePlanner.WinUi
 
         private void button2_Click(object sender, EventArgs e)
         {
-            var varAddConf = new AddConf(_conferenceRepository,_countryRepository);
+            var varAddConf = new AddConf(_conferenceRepository, _countryRepository);
 
-            varAddConf.ShowDialog(); 
+            varAddConf.ShowDialog();
         }
 
-        private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
+        private void tabOrganizer_SelectedIndexChanged(object sender, EventArgs e)
+        { //Program.EnteredEmailAddress
+            var x = _conferenceRepository.GetConferencesByOrganizer("organizer@test.com");
+
+            if (x.Count() == 0)
+            {
+                organizerDataGrid.Visible = false;
+            }
+
+            organizerDataGrid.DataSource = x.ToList();
+          
+        }
+
+        private void MainForm_Load(object sender, EventArgs e)
         {
-            var x = _conferenceRepository.GetConferencesByOrganizer("test");
-
-            var index = this.dataGridView1.Rows.Add();
-            dataGridView1.Rows[index].Cells[0].Value = x.FirstOrDefault().ConferenceName;
-            dataGridView1.Rows[index].Cells[2].Value = x.FirstOrDefault().ConferenceTypeName;
-            dataGridView1.Rows[index].Cells[3].Value = x.FirstOrDefault().ConferenceCategoryName;
-            //dataGridView1.Rows[index].Cells[5].Value = x.FirstOrDefault();
-
-            //listBox2.Items.Insert()
-            //Add(x.FirstOrDefault().ConferenceName, );
-            //listBox2.Items.Add(x.FirstOrDefault().ConferenceId);
-
-            //label1.Text = x.FirstOrDefault().ConferenceId.ToString();
-            //listBox1.DataSource = x;
-
-            //listBox1.DisplayMember = "Name";
-
 
         }
+
+        private void dataGridView1_CellContentClick(object sender, EventArgs e)
+        {
+            // var x = _getDemoRepository.GetDemo()
+            
+        }
+
+       
+
+        private void tabPage1_Layout(object sender, LayoutEventArgs e)
+        {
+            //var x = _getDemoRepository.GetDemo()
+            var x = _conferenceRepository.AttendeeConferences("attendee@test.com");
+            AttendeeGridView.DataSource = x.ToList();
+
+        }
+
+        private void Attend_Click(object sender, EventArgs e)
+        {
+            _getDemoRepository.AddEmail(Program.EnteredEmailAddress);
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            //WebView1.Navigate(new Uri(@"http://www.google.com"));
+        }
+
     }
 }
