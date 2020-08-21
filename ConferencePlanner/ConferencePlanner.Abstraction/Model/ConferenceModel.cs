@@ -20,4 +20,7 @@ namespace ConferencePlanner.Abstraction.Model
 
     }
 
+    
+
+
 }

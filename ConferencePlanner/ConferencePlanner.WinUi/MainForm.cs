@@ -14,11 +14,15 @@ namespace ConferencePlanner.WinUi
     {
         private readonly IConferenceRepository _conferenceRepository;
 
-        public MainForm(IConferenceRepository conferenceRepository)
+        private readonly ICountryRepository _countryRepository;
+
+        public MainForm(IConferenceRepository conferenceRepository, ICountryRepository countryRepository)
         {
             _conferenceRepository = conferenceRepository;
 
-            InitializeComponent();
+            _countryRepository = countryRepository;
+
+        InitializeComponent();
             
         }
 
@@ -33,7 +37,9 @@ namespace ConferencePlanner.WinUi
 
         private void button2_Click(object sender, EventArgs e)
         {
+            var varAddConf = new AddConf(_conferenceRepository,_countryRepository);
 
+            varAddConf.ShowDialog(); 
         }
 
         private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
@@ -54,6 +60,8 @@ namespace ConferencePlanner.WinUi
             //listBox1.DataSource = x;
 
             //listBox1.DisplayMember = "Name";
+
+
         }
     }
 }

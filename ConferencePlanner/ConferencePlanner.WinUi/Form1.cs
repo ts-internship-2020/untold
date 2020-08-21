@@ -6,13 +6,24 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using System.Data.SqlClient;
+using ConferencePlanner.Abstraction.Repository;
 
 namespace ConferencePlanner.WinUi
 {
     public partial class AddConf : Form
     {
 
-        SqlConnection con = new SqlConnection("Data Source=ts-internship-2019.database.windows.net; Initial Catalog=untold; Integrated Security=True");
+        private readonly IConferenceRepository _conferenceRepository;
+
+        private readonly ICountryRepository _countryRepository;
+
+        public AddConf(IConferenceRepository conferenceRepository, ICountryRepository  countryRepository)
+        {
+            _conferenceRepository = conferenceRepository;
+            _countryRepository = countryRepository;
+            InitializeComponent();
+
+        }
 
         public AddConf()
         {
@@ -31,27 +42,12 @@ namespace ConferencePlanner.WinUi
 
         private void AddConf_Load(object sender, EventArgs e)
         {
-            try {
-                con.Open();
-                SqlCommand sc = new SqlCommand("select CountryName from DictionaryCountry", con);
-                SqlDataReader reader;
-                reader = sc.ExecuteReader();
-                DataTable CountryTable = new DataTable();
-                CountryTable.Columns.Add("Country", typeof(string));
-                CountryTable.Load(reader);
-                comboBox1.ValueMember = "Country";
-                comboBox1.DataSource = CountryTable;
-                con.Close();
-            }
-            catch (Exception)
-            {
-
-            }
+            var list = _countryRepository.GetListCountry();
         }
 
         private void tabPage1_Click(object sender, EventArgs e)
         {
-
+            
         }
 
         private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
@@ -77,6 +73,7 @@ namespace ConferencePlanner.WinUi
         private void comboBox3_SelectedIndexChanged(object sender, EventArgs e)
         {
 
+            
         }
     }
 }

@@ -2,15 +2,11 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace ConferencePlanner.Abstraction.Repository
 {
-    public interface IConferenceRepository
+    public interface ICountryRepository
     {
-        List<ConferenceModel> GetConferencesByOrganizer(string name);
-       
+        List<CountryModel> GetListCountry();
     }
-
-
 }

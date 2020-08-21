@@ -17,10 +17,14 @@ namespace ConferencePlanner.Repository.Ado.Repository
             _sqlConnection = sqlConnection;
         }
 
+       
+
+
+
         public List<ConferenceModel> GetConferencesByOrganizer(string name)
         {
             SqlCommand sqlCommand = _sqlConnection.CreateCommand();
-            sqlCommand.CommandText = "select * from vwConferenceDetails ";
+            sqlCommand.CommandText = "select * from vwConferenceDetails";
             SqlDataReader sqlDataReader = sqlCommand.ExecuteReader();
 
             List<ConferenceModel> demos = new List<ConferenceModel>();
