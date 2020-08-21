@@ -1,6 +1,8 @@
-﻿namespace ConferencePlanner.WinUi
+﻿using System.Windows.Forms;
+
+namespace ConferencePlanner.WinUi
 {
-    partial class MainForm
+    public partial class MainForm : Form
     {
         /// <summary>
         /// Required designer variable.
@@ -31,11 +33,14 @@
             this.button1 = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.listBox1 = new System.Windows.Forms.ListBox();
-            this.TabControl = new System.Windows.Forms.TabControl();
             this.TabAttendee = new System.Windows.Forms.TabPage();
-            this.AttendeeGridView = new System.Windows.Forms.DataGridView();
             this.TabOrganizer = new System.Windows.Forms.TabPage();
+            this.organizerDataGrid = new System.Windows.Forms.DataGridView();
+            this.TabControl = new System.Windows.Forms.TabControl();
+            this.AttendeeGridView = new System.Windows.Forms.DataGridView();
             this.button2 = new System.Windows.Forms.Button();
+            this.TabOrganizer.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.organizerDataGrid)).BeginInit();
             this.TabControl.SuspendLayout();
             this.TabAttendee.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.AttendeeGridView)).BeginInit();
@@ -78,11 +83,10 @@
             this.TabControl.SelectedIndex = 0;
             this.TabControl.Size = new System.Drawing.Size(732, 311);
             this.TabControl.TabIndex = 3;
-            this.TabControl.SelectedIndexChanged += new System.EventHandler(this.tabControl1_SelectedIndexChanged);
+            this.TabControl.SelectedIndexChanged += new System.EventHandler(this.tabOrganizer_SelectedIndexChanged);
             // 
             // TabAttendee
             // 
-            this.TabAttendee.Controls.Add(this.AttendeeGridView);
             this.TabAttendee.Location = new System.Drawing.Point(4, 24);
             this.TabAttendee.Name = "TabAttendee";
             this.TabAttendee.Padding = new System.Windows.Forms.Padding(3);
@@ -90,10 +94,10 @@
             this.TabAttendee.TabIndex = 0;
             this.TabAttendee.Text = "Attendee";
             this.TabAttendee.UseVisualStyleBackColor = true;
-            this.TabAttendee.Layout += new System.Windows.Forms.LayoutEventHandler(this.tabPage1_Layout);
             // 
             // TabOrganizer
             // 
+            this.TabOrganizer.Controls.Add(this.organizerDataGrid);
             this.TabOrganizer.Location = new System.Drawing.Point(4, 24);
             this.TabOrganizer.Name = "TabOrganizer";
             this.TabOrganizer.Padding = new System.Windows.Forms.Padding(3);
@@ -101,6 +105,17 @@
             this.TabOrganizer.TabIndex = 1;
             this.TabOrganizer.Text = "Organizer";
             this.TabOrganizer.UseVisualStyleBackColor = true;
+            // 
+            // organizerDataGrid
+            // 
+            this.organizerDataGrid.AllowUserToOrderColumns = true;
+            this.organizerDataGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.organizerDataGrid.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.organizerDataGrid.Location = new System.Drawing.Point(3, 3);
+            this.organizerDataGrid.Name = "organizerDataGrid";
+            this.organizerDataGrid.Size = new System.Drawing.Size(718, 277);
+            this.organizerDataGrid.TabIndex = 0;
+            this.organizerDataGrid.Text = "organizerDataGrid";
             // 
             // button2
             // 
@@ -124,6 +139,9 @@
             this.Controls.Add(this.button1);
             this.Name = "MainForm";
             this.Text = "MainForm";
+            this.Load += new System.EventHandler(this.MainForm_Load);
+            this.TabOrganizer.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.organizerDataGrid)).EndInit();
             this.TabControl.ResumeLayout(false);
             this.TabAttendee.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.AttendeeGridView)).EndInit();
@@ -168,6 +186,7 @@
         private System.Windows.Forms.TabPage TabAttendee;
         private System.Windows.Forms.TabPage TabOrganizer;
         private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.DataGridView organizerDataGrid;
         private System.Windows.Forms.DataGridView AttendeeGridView;
     }
 }
