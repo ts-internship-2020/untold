@@ -12,7 +12,7 @@ namespace ConferencePlanner.WinUi
 {
     static class Program
     {
-        public static string EnteredEmailAddress = "organizer@test.com";
+        public static string EnteredEmailAddress;
         /// <summary>
         ///  The main entry point for the application.
         /// </summary>
@@ -25,8 +25,8 @@ namespace ConferencePlanner.WinUi
             ConfigureServices();
 
 
-            Application.Run(ServiceProvider.GetService<MainForm>()); 
-            //e posibil sa deschidem de aici
+            Application.Run(new EmailIdentityForm());
+            //e posibil sa deschidem de aici ServiceProvider.GetService<MainForm>
         }
 
 

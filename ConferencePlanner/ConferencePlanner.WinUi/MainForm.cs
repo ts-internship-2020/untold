@@ -22,6 +22,8 @@ namespace ConferencePlanner.WinUi
             
         }
 
+        public MainForm() { }
+
         private void button1_Click(object sender, EventArgs e)
         {
             //var x = _getDemoRepository.GetDemo("hello");
@@ -42,6 +44,11 @@ namespace ConferencePlanner.WinUi
 
             dataGridView1.DataSource = x.ToList();
           
+        }
+
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }
