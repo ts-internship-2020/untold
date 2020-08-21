@@ -70,7 +70,7 @@ namespace ConferencePlanner.WinUi
 
         private void tabPage1_Layout(object sender, LayoutEventArgs e)
         {
-            var x = _attendeeRepository.AttendeeConferences("attendee@test.com");
+            var x = _conferenceRepository.AttendeeConferences("attendee@test.com");
             AttendeeGridView.DataSource = x.ToList();
         }
 
