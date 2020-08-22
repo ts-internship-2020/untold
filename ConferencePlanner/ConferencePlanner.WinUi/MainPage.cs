@@ -20,13 +20,18 @@ namespace ConferencePlanner.WinUi
 
         private readonly IGetDemoRepository _getDemoRepository;
 
-        public MainPage(IConferenceRepository conferenceRepository, ICountryRepository countryRepository, IGetDemoRepository getDemoRepository)
+        private readonly IAttendeeButtonsRepository _attendeeButtons;
+
+        public MainPage(IConferenceRepository conferenceRepository, ICountryRepository countryRepository, IGetDemoRepository getDemoRepository, IAttendeeButtonsRepository attendeeButtonsRepository)
         {
             _conferenceRepository = conferenceRepository;
 
             _countryRepository = countryRepository;
 
             _getDemoRepository = getDemoRepository;
+
+            _attendeeButtons = attendeeButtonsRepository;
+
         InitializeComponent();
             
         }
@@ -77,11 +82,6 @@ namespace ConferencePlanner.WinUi
 
         }
 
-        private void Attend_Click(object sender, EventArgs e)
-        {
-            _getDemoRepository.AddEmail(Program.EnteredEmailAddress);
-        }
-
         private void button4_Click(object sender, EventArgs e)
         {
             
@@ -105,6 +105,11 @@ namespace ConferencePlanner.WinUi
         private void StartDateTimePicker_ValueChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void JoinButton_Click(object sender, EventArgs e)
+        {
+            _attendeeButtons.AddEmail(Program.EnteredEmailAddress);
         }
     }
 }
