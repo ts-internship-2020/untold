@@ -26,7 +26,7 @@ namespace ConferencePlanner.WinUi
             
 
             //Application.Run(new EmailIdentityForm());
-            Application.Run(ServiceProvider.GetService<MainForm>());
+            Application.Run(new EmailForm());
             //e posibil sa deschidem de aici ServiceProvider.GetService<MainForm>
         }
 
@@ -36,7 +36,7 @@ namespace ConferencePlanner.WinUi
         static void ConfigureServices()
         {
             var services = new ServiceCollection();
-            services.AddScoped<MainForm>();
+            services.AddScoped<MainPage>();
             services.AddScoped<IConferenceRepository, ConferenceRepository>();
             services.AddScoped<ICountryRepository, CountryRepository>();
             services.AddSingleton<SqlConnection>(a =>

@@ -10,16 +10,16 @@ using System.Windows.Forms;
 
 namespace ConferencePlanner.WinUi
 {
-    public partial class EmailIdentityForm : Form
+    public partial class EmailForm : Form
     {
 
         
-        public EmailIdentityForm()
+        public EmailForm()
         {
             InitializeComponent();
         }
 
-        private void emailTextBox_TextChanged(object sender, EventArgs e)
+        private void EmailTextBox_TextChanged(object sender, EventArgs e)
         {
             ErrorLabel.Visible = false;
         }
@@ -55,8 +55,8 @@ namespace ConferencePlanner.WinUi
         public void SubmitBtnClick()
         {
             Program.EnteredEmailAddress = EmailTextBox.Text;
-            var NextPage = new MainForm();
-            NextPage.Show();
+            var NextPage = new MainPage();
+            NextPage.ShowDialog();
 
         }
     }

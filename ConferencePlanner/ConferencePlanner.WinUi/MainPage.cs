@@ -12,41 +12,38 @@ using System.Windows.Forms;
 
 namespace ConferencePlanner.WinUi
 {
-    public partial class MainForm : Form
+    public partial class MainPage : Form
     {
         private readonly IConferenceRepository _conferenceRepository;
 
         private readonly ICountryRepository _countryRepository;
 
-        public MainForm(IConferenceRepository conferenceRepository, ICountryRepository countryRepository)
+        private readonly IGetDemoRepository _getDemoRepository;
+
+        public MainPage(IConferenceRepository conferenceRepository, ICountryRepository countryRepository, IGetDemoRepository getDemoRepository)
         {
             _conferenceRepository = conferenceRepository;
 
             _countryRepository = countryRepository;
 
+            _getDemoRepository = getDemoRepository;
         InitializeComponent();
             
         }
 
-        public MainForm() { }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            //var x = _getDemoRepository.GetDemo("hello");
-
-            //label1.Text = x.FirstOrDefault().Name;
-            //listBox1.DataSource = x;
-            //listBox1.DisplayMember = "Name";
+        public MainPage() {
+            InitializeComponent();
         }
 
-        private void button2_Click(object sender, EventArgs e)
+
+        private void AddConferenceButton_Click(object sender, EventArgs e)
         {
             var varAddConf = new AddConf(_conferenceRepository, _countryRepository);
 
             varAddConf.ShowDialog();
         }
 
-        private void tabOrganizer_SelectedIndexChanged(object sender, EventArgs e)
+        private void TabOrganizer_SelectedIndexChanged(object sender, EventArgs e)
         { //Program.EnteredEmailAddress
             var x = _conferenceRepository.GetConferencesByOrganizer("organizer@test.com");
 
@@ -95,5 +92,19 @@ namespace ConferencePlanner.WinUi
             //WebView1.Navigate(new Uri(@"http://www.google.com"));
         }
 
+        private void TabAttendee_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void StartDateTimePicker_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

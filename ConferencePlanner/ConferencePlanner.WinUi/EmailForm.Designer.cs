@@ -1,6 +1,6 @@
 ﻿namespace ConferencePlanner.WinUi
 {
-    partial class EmailIdentityForm
+    partial class EmailForm
     {
         /// <summary>
         /// Required designer variable.
@@ -41,7 +41,7 @@
             this.EmailTextBox.Size = new System.Drawing.Size(260, 23);
             this.EmailTextBox.TabIndex = 0;
             this.EmailTextBox.Text = "Type an email";
-            this.EmailTextBox.TextChanged += new System.EventHandler(this.emailTextBox_TextChanged);
+            this.EmailTextBox.TextChanged += new System.EventHandler(this.EmailTextBox_TextChanged);
             this.EmailTextBox.Leave += new System.EventHandler(this.EmailTextBox_Leave);
             // 
             // SubmitBtn
@@ -67,7 +67,7 @@
             this.ErrorLabel.Text = "Insert a valid email address like \"name@example.com\"";
             this.ErrorLabel.Visible = false;
             // 
-            // EmailIdentityForm
+            // EmailForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -76,8 +76,8 @@
             this.Controls.Add(this.SubmitBtn);
             this.Controls.Add(this.EmailTextBox);
             this.MinimumSize = new System.Drawing.Size(300, 200);
-            this.Name = "EmailIdentityForm";
-            this.Text = "Connection";
+            this.Name = "EmailForm";
+            this.Text = "Conference Planner";
             this.ResumeLayout(false);
             this.PerformLayout();
 
