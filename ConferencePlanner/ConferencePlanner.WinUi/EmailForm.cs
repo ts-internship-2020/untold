@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using ConferencePlanner.Abstraction.Repository;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -13,12 +14,26 @@ namespace ConferencePlanner.WinUi
     public partial class EmailForm : Form
     {
 
-        
-        public EmailForm()
+        public readonly IServiceProvider _ServiceProvider;
+
+        private static IConferenceRepository _conferenceRepository;
+
+        private static ICountryRepository _countryRepository;
+
+        private static IGetDemoRepository _getDemoRepository;
+
+        public EmailForm(IServiceProvider ServiceProvider)
         {
+            _ServiceProvider = ServiceProvider;
             InitializeComponent();
         }
 
+        public void init()
+        {
+            _conferenceRepository = _ServiceProvider.GetRequiredService<IConferenceRepository>();
+            _countryRepository = _ServiceProvider.GetRequiredService<ICountryRepository>();
+            _getDemoRepository = _ServiceProvider.GetRequiredService<IGetDemoRepository>();
+        }
         private void EmailTextBox_TextChanged(object sender, EventArgs e)
         {
             ErrorLabel.Visible = false;
@@ -54,10 +69,18 @@ namespace ConferencePlanner.WinUi
 
         public void SubmitBtnClick()
         {
+            init();
+            Program.EnteredEmailAddress = EmailTextBox.Text;
+            var NextPage = new MainPage(_conferenceRepository, _countryRepository, _getDemoRepository);
+            NextPage.ShowDialog();
+            
+        }
+
+        private void SubmitBtn_KeyUp(object sender, KeyEventArgs e)
+        {
             Program.EnteredEmailAddress = EmailTextBox.Text;
             var NextPage = new MainPage();
             NextPage.ShowDialog();
-
         }
     }
 }

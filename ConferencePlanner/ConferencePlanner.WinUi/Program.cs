@@ -12,6 +12,7 @@ namespace ConferencePlanner.WinUi
 {
     static class Program
     {
+
         public static string EnteredEmailAddress;
         /// <summary>
         ///  The main entry point for the application.
@@ -23,11 +24,11 @@ namespace ConferencePlanner.WinUi
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             ConfigureServices();
-            
 
-            //Application.Run(new EmailIdentityForm());
-            Application.Run(new EmailForm());
-            //e posibil sa deschidem de aici ServiceProvider.GetService<MainForm>
+
+            //Application.Run(ServiceProvider.GetService<MainPage>());
+            Application.Run(new EmailForm(ServiceProvider));
+            //e posibil sa deschidem de aici ServiceProvider.GetService<MainPage>()
         }
 
 
@@ -39,6 +40,7 @@ namespace ConferencePlanner.WinUi
             services.AddScoped<MainPage>();
             services.AddScoped<IConferenceRepository, ConferenceRepository>();
             services.AddScoped<ICountryRepository, CountryRepository>();
+            services.AddScoped<IGetDemoRepository, GetDemoRepository>();
             services.AddSingleton<SqlConnection>(a =>
             {
                 SqlConnection sqlConnection = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["DbConnection"].ConnectionString);
