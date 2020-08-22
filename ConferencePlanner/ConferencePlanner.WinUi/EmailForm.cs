@@ -22,6 +22,8 @@ namespace ConferencePlanner.WinUi
 
         private static IGetDemoRepository _getDemoRepository;
 
+        private static IAttendeeButtonsRepository _attendeeButtonsRepository;
+
         public EmailForm(IServiceProvider ServiceProvider)
         {
             _ServiceProvider = ServiceProvider;
@@ -32,7 +34,8 @@ namespace ConferencePlanner.WinUi
         {
             _conferenceRepository = _ServiceProvider.GetRequiredService<IConferenceRepository>();
             _countryRepository = _ServiceProvider.GetRequiredService<ICountryRepository>();
-            _getDemoRepository = _ServiceProvider.GetRequiredService<IGetDemoRepository>();
+            _attendeeButtonsRepository = _ServiceProvider.GetRequiredService<IAttendeeButtonsRepository>();
+
         }
         private void EmailTextBox_TextChanged(object sender, EventArgs e)
         {
@@ -71,7 +74,7 @@ namespace ConferencePlanner.WinUi
         {
             init();
             Program.EnteredEmailAddress = EmailTextBox.Text;
-            var NextPage = new MainPage(_conferenceRepository, _countryRepository, _getDemoRepository);
+            var NextPage = new MainPage(_conferenceRepository, _countryRepository, _getDemoRepository, _attendeeButtonsRepository);
             NextPage.ShowDialog();
             
         }

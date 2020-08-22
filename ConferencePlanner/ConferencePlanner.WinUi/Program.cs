@@ -39,6 +39,7 @@ namespace ConferencePlanner.WinUi
             var services = new ServiceCollection();
             services.AddScoped<MainPage>();
             services.AddScoped<IConferenceRepository, ConferenceRepository>();
+            services.AddScoped<IAttendeeButtonsRepository, AttendeeButtonsRepository>();
             services.AddScoped<ICountryRepository, CountryRepository>();
             services.AddScoped<IGetDemoRepository, GetDemoRepository>();
             services.AddSingleton<SqlConnection>(a =>
