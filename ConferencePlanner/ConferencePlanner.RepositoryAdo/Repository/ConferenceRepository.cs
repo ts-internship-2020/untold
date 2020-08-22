@@ -19,10 +19,9 @@ namespace ConferencePlanner.Repository.Ado.Repository
 
         public List<ConferenceModel> GetConferencesByOrganizer(string email)
         {
-            string command = "select * from vwConferenceDetails where EmailOrganizer = '" + email + "'";
         
             SqlCommand sqlCommand = _sqlConnection.CreateCommand();
-            sqlCommand.CommandText = command;
+            sqlCommand.CommandText = "select * from vwConferenceDetails where EmailOrganizer = '"+email + "'";
             SqlDataReader sqlDataReader = sqlCommand.ExecuteReader();
 
             List<ConferenceModel> demos = new List<ConferenceModel>();
