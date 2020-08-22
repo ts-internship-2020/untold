@@ -26,7 +26,7 @@ namespace ConferencePlanner.WinUi
             ConfigureServices();
 
 
-           // Application.Run(ServiceProvider.GetService<MainPage>());
+            //Application.Run(ServiceProvider.GetService<MainPage>());
             Application.Run(new EmailForm(ServiceProvider));
             //e posibil sa deschidem de aici ServiceProvider.GetService<MainPage>()
         }
