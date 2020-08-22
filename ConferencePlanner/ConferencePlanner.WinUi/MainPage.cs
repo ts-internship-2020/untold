@@ -32,6 +32,7 @@ namespace ConferencePlanner.WinUi
         }
 
         public MainPage() {
+
             InitializeComponent();
         }
 
@@ -45,15 +46,15 @@ namespace ConferencePlanner.WinUi
 
         private void TabOrganizer_SelectedIndexChanged(object sender, EventArgs e)
         { //Program.EnteredEmailAddress
-            var x = _conferenceRepository.GetConferencesByOrganizer("organizer@test.com");
-
-            if (x.Count() == 0)
-            {
-                organizerDataGrid.Visible = false;
-            }
+            var x = _conferenceRepository.GetConferencesByOrganizer(Program.EnteredEmailAddress);
 
             organizerDataGrid.DataSource = x.ToList();
-          
+
+            //if (x.Count() == 0)
+            //{
+            //    organizerDataGrid.Visible = false;
+            //}
+
         }
 
         private void MainForm_Load(object sender, EventArgs e)
