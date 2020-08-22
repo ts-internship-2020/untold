@@ -13,9 +13,11 @@ namespace ConferencePlanner.WinUi
     public partial class EmailForm : Form
     {
 
-        
-        public EmailForm()
+        public readonly IServiceProvider _ServiceProvider;
+
+        public EmailForm(IServiceProvider ServiceProvider)
         {
+            _ServiceProvider = ServiceProvider;
             InitializeComponent();
         }
 
@@ -57,7 +59,14 @@ namespace ConferencePlanner.WinUi
             Program.EnteredEmailAddress = EmailTextBox.Text;
             var NextPage = new MainPage();
             NextPage.ShowDialog();
+            
+        }
 
+        private void SubmitBtn_KeyUp(object sender, KeyEventArgs e)
+        {
+            Program.EnteredEmailAddress = EmailTextBox.Text;
+            var NextPage = new MainPage();
+            NextPage.ShowDialog();
         }
     }
 }

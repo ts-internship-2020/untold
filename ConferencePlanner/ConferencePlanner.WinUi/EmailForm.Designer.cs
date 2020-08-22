@@ -53,6 +53,7 @@
             this.SubmitBtn.TabIndex = 1;
             this.SubmitBtn.Text = "OK";
             this.SubmitBtn.UseVisualStyleBackColor = false;
+            this.SubmitBtn.KeyUp += new System.Windows.Forms.KeyEventHandler(this.SubmitBtn_KeyUp);
             // 
             // ErrorLabel
             // 
