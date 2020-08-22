@@ -48,13 +48,14 @@ namespace ConferencePlanner.WinUi
         { //Program.EnteredEmailAddress
             var x = _conferenceRepository.GetConferencesByOrganizer(Program.EnteredEmailAddress);
 
-            organizerDataGrid.DataSource = x.ToList();
+            if (x.Count() == 0)
+            {
+                OrganizerDataGrid.Visible = false;
+                NoConferenceLabel.Visible = true;
+            }
 
-            //if (x.Count() == 0)
-            //{
-            //    organizerDataGrid.Visible = false;
-            //}
-
+            OrganizerDataGrid.DataSource = x.ToList();
+          
         }
 
         private void MainForm_Load(object sender, EventArgs e)
@@ -94,16 +95,6 @@ namespace ConferencePlanner.WinUi
         }
 
         private void TabAttendee_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void StartDateTimePicker_ValueChanged(object sender, EventArgs e)
         {
 
         }
