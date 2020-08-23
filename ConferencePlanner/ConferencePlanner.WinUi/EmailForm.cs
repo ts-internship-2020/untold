@@ -39,6 +39,7 @@ namespace ConferencePlanner.WinUi
         }
         private void EmailTextBox_TextChanged(object sender, EventArgs e)
         {
+            EmailTextBox.ForeColor = Color.Black;
             ErrorLabel.Visible = false;
         }
 
@@ -67,23 +68,34 @@ namespace ConferencePlanner.WinUi
                 ErrorLabel.Text = "Insert an email adress";
             }
         }
+        public void NextPage()
+        {
+            init();
+            Hide();
+            Program.EnteredEmailAddress = EmailTextBox.Text;
+            var NextPage = new MainPage(_conferenceRepository, _countryRepository, _getDemoRepository, _attendeeButtonsRepository);
+            NextPage.ShowDialog();
 
+        }
 
 
         public void SubmitBtnClick()
         {
-            init();
-            Program.EnteredEmailAddress = EmailTextBox.Text;
-            var NextPage = new MainPage(_conferenceRepository, _countryRepository, _getDemoRepository, _attendeeButtonsRepository);
-            NextPage.ShowDialog();
-            
+            NextPage();
         }
 
-        private void SubmitBtn_KeyUp(object sender, KeyEventArgs e)
+        private void EmailTextBox_KeyUp(object sender, KeyEventArgs e)
         {
-            Program.EnteredEmailAddress = EmailTextBox.Text;
-            var NextPage = new MainPage();
-            NextPage.ShowDialog();
+            if (e.KeyCode == Keys.Enter)
+            {
+                NextPage();
+            }
+        }
+
+        private void EmailTextBox_Click(object sender, EventArgs e)
+        {
+            EmailTextBox.Text = "";
+            EmailTextBox.ForeColor = Color.Black;
         }
     }
 }

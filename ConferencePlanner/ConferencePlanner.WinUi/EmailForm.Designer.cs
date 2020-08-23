@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EmailForm));
             this.EmailTextBox = new System.Windows.Forms.TextBox();
             this.SubmitBtn = new System.Windows.Forms.Button();
             this.ErrorLabel = new System.Windows.Forms.Label();
@@ -35,35 +36,48 @@
             // 
             // EmailTextBox
             // 
-            this.EmailTextBox.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.EmailTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
+            this.EmailTextBox.Font = new System.Drawing.Font("Comic Sans MS", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.EmailTextBox.ForeColor = System.Drawing.Color.Silver;
             this.EmailTextBox.Location = new System.Drawing.Point(110, 44);
             this.EmailTextBox.Name = "EmailTextBox";
-            this.EmailTextBox.Size = new System.Drawing.Size(260, 23);
+            this.EmailTextBox.Size = new System.Drawing.Size(260, 28);
             this.EmailTextBox.TabIndex = 0;
-            this.EmailTextBox.Text = "Type an email";
+            this.EmailTextBox.Text = "Type an email...";
+            this.EmailTextBox.Click += new System.EventHandler(this.EmailTextBox_Click);
             this.EmailTextBox.TextChanged += new System.EventHandler(this.EmailTextBox_TextChanged);
+            this.EmailTextBox.KeyUp += new System.Windows.Forms.KeyEventHandler(this.EmailTextBox_KeyUp);
             this.EmailTextBox.Leave += new System.EventHandler(this.EmailTextBox_Leave);
             // 
             // SubmitBtn
             // 
-            this.SubmitBtn.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.SubmitBtn.Location = new System.Drawing.Point(199, 98);
+            this.SubmitBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
+            this.SubmitBtn.FlatAppearance.BorderColor = System.Drawing.SystemColors.Info;
+            this.SubmitBtn.FlatAppearance.BorderSize = 0;
+            this.SubmitBtn.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Cornsilk;
+            this.SubmitBtn.FlatAppearance.MouseOverBackColor = System.Drawing.Color.LightSteelBlue;
+            this.SubmitBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.SubmitBtn.Font = new System.Drawing.Font("HoloLens MDL2 Assets", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.SubmitBtn.Location = new System.Drawing.Point(186, 104);
+            this.SubmitBtn.MaximumSize = new System.Drawing.Size(90, 30);
             this.SubmitBtn.Name = "SubmitBtn";
-            this.SubmitBtn.Size = new System.Drawing.Size(91, 28);
+            this.SubmitBtn.Size = new System.Drawing.Size(90, 30);
             this.SubmitBtn.TabIndex = 1;
             this.SubmitBtn.Text = "OK";
+            this.SubmitBtn.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             this.SubmitBtn.UseVisualStyleBackColor = false;
-            this.SubmitBtn.KeyUp += new System.Windows.Forms.KeyEventHandler(this.SubmitBtn_KeyUp);
             // 
             // ErrorLabel
             // 
-            this.ErrorLabel.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.ErrorLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
             this.ErrorLabel.AutoSize = true;
+            this.ErrorLabel.BackColor = System.Drawing.Color.Transparent;
+            this.ErrorLabel.Font = new System.Drawing.Font("Comic Sans MS", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.ErrorLabel.ForeColor = System.Drawing.Color.Red;
-            this.ErrorLabel.Location = new System.Drawing.Point(86, 70);
+            this.ErrorLabel.Location = new System.Drawing.Point(48, 71);
             this.ErrorLabel.Name = "ErrorLabel";
             this.ErrorLabel.Padding = new System.Windows.Forms.Padding(5);
-            this.ErrorLabel.Size = new System.Drawing.Size(305, 25);
+            this.ErrorLabel.Size = new System.Drawing.Size(390, 30);
             this.ErrorLabel.TabIndex = 2;
             this.ErrorLabel.Text = "Insert a valid email address like \"name@example.com\"";
             this.ErrorLabel.Visible = false;
@@ -72,12 +86,21 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(484, 191);
+            this.BackColor = System.Drawing.SystemColors.HighlightText;
+            this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
+            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.ClientSize = new System.Drawing.Size(484, 200);
             this.Controls.Add(this.ErrorLabel);
             this.Controls.Add(this.SubmitBtn);
             this.Controls.Add(this.EmailTextBox);
+            this.DoubleBuffered = true;
+            this.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.MaximizeBox = false;
+            this.MaximumSize = new System.Drawing.Size(500, 250);
             this.MinimumSize = new System.Drawing.Size(300, 200);
             this.Name = "EmailForm";
+            this.ShowIcon = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Conference Planner";
             this.ResumeLayout(false);
             this.PerformLayout();
