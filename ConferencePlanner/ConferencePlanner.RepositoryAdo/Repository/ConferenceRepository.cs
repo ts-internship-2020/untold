@@ -58,7 +58,7 @@ namespace ConferencePlanner.Repository.Ado.Repository
         public List<ConferenceModel> AttendeeConferences(string name)
         {
             SqlCommand sqlCommand = _sqlConnection.CreateCommand();
-            sqlCommand.CommandText = "SELECT ConferenceName,StartDate,EndDate,ConferenceTypeName,ConferenceCategoryName,CountryName,CountyName,CityName,FirstName,LastName FROM vwConferenceDetails as vw JOIN Attendee a ON a.ConferenceId = vw.ConferenceId";
+            sqlCommand.CommandText = "SELECT ConferenceName,ConferencePeriod,ConferenceTypeName,ConferenceCategoryName,LocationName,SpeakerName FROM vwConferenceDetails as vw JOIN Attendee a ON a.ConferenceId = vw.ConferenceId";
             SqlDataReader sqlDataReader = sqlCommand.ExecuteReader();
 
             List<ConferenceModel> attendees = new List<ConferenceModel>();

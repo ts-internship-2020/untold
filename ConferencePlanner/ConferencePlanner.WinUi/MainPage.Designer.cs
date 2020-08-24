@@ -152,7 +152,7 @@ namespace ConferencePlanner.WinUi
             this.TabOrganizer.Location = new System.Drawing.Point(4, 24);
             this.TabOrganizer.Name = "TabOrganizer";
             this.TabOrganizer.Padding = new System.Windows.Forms.Padding(3);
-            this.TabOrganizer.Size = new System.Drawing.Size(719, 299);
+            this.TabOrganizer.Size = new System.Drawing.Size(706, 324);
             this.TabOrganizer.TabIndex = 1;
             this.TabOrganizer.Text = "Organizer";
             this.TabOrganizer.UseVisualStyleBackColor = true;
@@ -176,7 +176,7 @@ namespace ConferencePlanner.WinUi
             this.OrganizerDataGrid.Dock = System.Windows.Forms.DockStyle.Fill;
             this.OrganizerDataGrid.Location = new System.Drawing.Point(3, 3);
             this.OrganizerDataGrid.Name = "OrganizerDataGrid";
-            this.OrganizerDataGrid.Size = new System.Drawing.Size(713, 293);
+            this.OrganizerDataGrid.Size = new System.Drawing.Size(700, 318);
             this.OrganizerDataGrid.TabIndex = 0;
             this.OrganizerDataGrid.Text = "organizerDataGrid";
             // 
@@ -208,7 +208,7 @@ namespace ConferencePlanner.WinUi
             // 
             // AddConferenceButton
             // 
-            this.AddConferenceButton.Location = new System.Drawing.Point(769, 42);
+            this.AddConferenceButton.Location = new System.Drawing.Point(696, 42);
             this.AddConferenceButton.Name = "AddConferenceButton";
             this.AddConferenceButton.Size = new System.Drawing.Size(75, 47);
             this.AddConferenceButton.TabIndex = 4;
@@ -288,12 +288,11 @@ namespace ConferencePlanner.WinUi
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(894, 512);
+            this.ClientSize = new System.Drawing.Size(817, 475);
             this.Controls.Add(this.StartDateLabel);
             this.Controls.Add(this.EndDateLable);
             this.Controls.Add(this.EndDatePicker);
             this.Controls.Add(this.StartDatePicker);
-            this.ClientSize = new System.Drawing.Size(817, 475);
             this.Controls.Add(this.AddConferenceButton);
             this.Controls.Add(this.TabControl);
             this.MinimumSize = new System.Drawing.Size(833, 460);
