@@ -30,50 +30,54 @@ namespace ConferencePlanner.WinUi
             InitializeComponent();
         }
 
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label2_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void AddConf_Load(object sender, EventArgs e)
         {
-            var list = _countryRepository.GetListCountry();
-        }
-
-        private void tabPage1_Click(object sender, EventArgs e)
-        {
-            
-        }
-
-        private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void ConferenceName_TextChanged(object sender, EventArgs e)
-        {
-
+            TabControlLocation.SelectedIndex = 0;
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-
+            TabControlLocation.SelectedIndex = 2;
+        }
+      
+        private void button1_Click(object sender, EventArgs e)
+        {
+            TabControlLocation.SelectedIndex = 1;
         }
 
-        private void County_Click(object sender, EventArgs e)
+        private void button3_Click(object sender, EventArgs e)
         {
-
+            RequiredFields();
+            Close();
         }
 
-        private void comboBox3_SelectedIndexChanged(object sender, EventArgs e)
+        private void RequiredFields()
         {
+           // if (ConfName.Text == string.Empty)
+           // {
+           //     errorProvider1.SetError(ConfName, "Insert conference name!");
+           // }
+           // else
+           // {
+           //     errorProvider1.Clear();
+           // }
 
-            
+            /*  if (textBox1.Text == string.Empty)
+              {
+                  MessageBox.Show("Please enter a value to textBox1!");
+                  return;
+              }*/
+        }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            NextBtnCountryTab.Enabled = true;
+        }
+
+        private void comboBox1_Click(object sender, EventArgs e)
+        {
+            var list = _countryRepository.GetListCountry();
+            CountryComboBox.DataSource = list;
         }
     }
 }

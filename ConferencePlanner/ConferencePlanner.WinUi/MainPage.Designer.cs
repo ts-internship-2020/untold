@@ -35,23 +35,23 @@ namespace ConferencePlanner.WinUi
             this.button4 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.TabAttendee = new System.Windows.Forms.TabPage();
+            this.button6 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             this.TabOrganizer = new System.Windows.Forms.TabPage();
             this.NoConferenceLabel = new System.Windows.Forms.Label();
             this.OrganizerDataGrid = new System.Windows.Forms.DataGridView();
-            this.TabControl = new System.Windows.Forms.TabControl();
+            this.MainTabControl = new System.Windows.Forms.TabControl();
             this.AttendeeGridView = new System.Windows.Forms.DataGridView();
             this.AddConferenceButton = new System.Windows.Forms.Button();
             this.StartDateTimePicker = new System.Windows.Forms.DateTimePicker();
             this.EndDateTimePicker = new System.Windows.Forms.DateTimePicker();
             this.StartDateLable = new System.Windows.Forms.Label();
             this.EndDateLabel = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button6 = new System.Windows.Forms.Button();
             this.TabAttendee.SuspendLayout();
             this.TabOrganizer.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.OrganizerDataGrid)).BeginInit();
-            this.TabControl.SuspendLayout();
+            this.MainTabControl.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.AttendeeGridView)).BeginInit();
             this.SuspendLayout();
             // 
@@ -97,6 +97,33 @@ namespace ConferencePlanner.WinUi
             this.TabAttendee.Text = "Attendee";
             this.TabAttendee.UseVisualStyleBackColor = true;
             // 
+            // button6
+            // 
+            this.button6.Location = new System.Drawing.Point(621, 39);
+            this.button6.Name = "button6";
+            this.button6.Size = new System.Drawing.Size(75, 23);
+            this.button6.TabIndex = 2;
+            this.button6.Text = "Withdrawn";
+            this.button6.UseVisualStyleBackColor = true;
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(539, 39);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(75, 23);
+            this.button2.TabIndex = 1;
+            this.button2.Text = "Join";
+            this.button2.UseVisualStyleBackColor = true;
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(458, 39);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 0;
+            this.button1.Text = "Attend";
+            this.button1.UseVisualStyleBackColor = true;
+            // 
             // TabOrganizer
             // 
             this.TabOrganizer.Controls.Add(this.NoConferenceLabel);
@@ -121,27 +148,27 @@ namespace ConferencePlanner.WinUi
             this.NoConferenceLabel.Text = "No conferences ";
             this.NoConferenceLabel.Visible = false;
             // 
-            // organizerDataGrid
+            // OrganizerDataGrid
             // 
             this.OrganizerDataGrid.AllowUserToOrderColumns = true;
             this.OrganizerDataGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.OrganizerDataGrid.Dock = System.Windows.Forms.DockStyle.Fill;
             this.OrganizerDataGrid.Location = new System.Drawing.Point(3, 3);
-            this.OrganizerDataGrid.Name = "organizerDataGrid";
+            this.OrganizerDataGrid.Name = "OrganizerDataGrid";
             this.OrganizerDataGrid.Size = new System.Drawing.Size(718, 277);
             this.OrganizerDataGrid.TabIndex = 0;
             this.OrganizerDataGrid.Text = "organizerDataGrid";
             // 
-            // TabControl
+            // MainTabControl
             // 
-            this.TabControl.Controls.Add(this.TabAttendee);
-            this.TabControl.Controls.Add(this.TabOrganizer);
-            this.TabControl.Location = new System.Drawing.Point(42, 67);
-            this.TabControl.Name = "TabControl";
-            this.TabControl.SelectedIndex = 0;
-            this.TabControl.Size = new System.Drawing.Size(732, 311);
-            this.TabControl.TabIndex = 3;
-            this.TabControl.SelectedIndexChanged += new System.EventHandler(this.TabOrganizer_SelectedIndexChanged);
+            this.MainTabControl.Controls.Add(this.TabAttendee);
+            this.MainTabControl.Controls.Add(this.TabOrganizer);
+            this.MainTabControl.Location = new System.Drawing.Point(42, 67);
+            this.MainTabControl.Name = "MainTabControl";
+            this.MainTabControl.SelectedIndex = 0;
+            this.MainTabControl.Size = new System.Drawing.Size(732, 311);
+            this.MainTabControl.TabIndex = 3;
+            this.MainTabControl.SelectedIndexChanged += new System.EventHandler(this.TabOrganizer_SelectedIndexChanged);
             // 
             // AttendeeGridView
             // 
@@ -199,46 +226,13 @@ namespace ConferencePlanner.WinUi
             this.EndDateLabel.TabIndex = 8;
             this.EndDateLabel.Text = "Select End Date";
             // 
-            // AttendButton
-            // 
-            this.button1.Location = new System.Drawing.Point(458, 39);
-            this.button1.Name = "AttendButton";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "Attend";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button5.Click += new System.EventHandler(this.button5_Click);
-
-            // 
-            // JoinButton
-            // 
-            this.button2.Location = new System.Drawing.Point(539, 39);
-            this.button2.Name = "Join";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 1;
-            this.button2.Text = "Join";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button5.Click += new System.EventHandler(this.JoinButton_Click);
-
-            // 
-            // WithdrawnButton
-            // 
-            this.button6.Location = new System.Drawing.Point(621, 39);
-            this.button6.Name = "Withdrawn";
-            this.button6.Size = new System.Drawing.Size(75, 23);
-            this.button6.TabIndex = 2;
-            this.button6.Text = "Withdrawn";
-            this.button6.UseVisualStyleBackColor = true;
-            this.button5.Click += new System.EventHandler(this.button5_Click);
-
-            // 
             // MainPage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.AddConferenceButton);
-            this.Controls.Add(this.TabControl);
+            this.Controls.Add(this.MainTabControl);
             this.Name = "MainPage";
             this.Text = "MainForm";
             this.Load += new System.EventHandler(this.MainForm_Load);
@@ -246,7 +240,7 @@ namespace ConferencePlanner.WinUi
             this.TabOrganizer.ResumeLayout(false);
             this.TabOrganizer.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.OrganizerDataGrid)).EndInit();
-            this.TabControl.ResumeLayout(false);
+            this.MainTabControl.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.AttendeeGridView)).EndInit();
             this.ResumeLayout(false);
 
@@ -258,7 +252,7 @@ namespace ConferencePlanner.WinUi
         }
 
         #endregion
-        private System.Windows.Forms.TabControl TabControl;
+        private System.Windows.Forms.TabControl MainTabControl;
         private System.Windows.Forms.TabPage TabAttendee;
         private System.Windows.Forms.TabPage TabOrganizer;
         private System.Windows.Forms.Button AddConferenceButton;

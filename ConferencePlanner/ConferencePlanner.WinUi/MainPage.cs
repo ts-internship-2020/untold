@@ -46,7 +46,11 @@ namespace ConferencePlanner.WinUi
         {
             var varAddConf = new AddConf(_conferenceRepository, _countryRepository);
 
+            MainTabControl.SelectedIndex = 1;
             varAddConf.ShowDialog();
+
+
+
         }
 
         private void TabOrganizer_SelectedIndexChanged(object sender, EventArgs e)
