@@ -46,6 +46,9 @@ namespace ConferencePlanner.WinUi
         {
             var varAddConf = new AddConf(_conferenceRepository, _countryRepository);
 
+            //change tabControl to organizer if it's in atendee
+            TabControl.SelectedTab = TabOrganizer;
+
             varAddConf.ShowDialog();
         }
 
@@ -58,9 +61,24 @@ namespace ConferencePlanner.WinUi
                 OrganizerDataGrid.Visible = false;
                 NoConferenceLabel.Visible = true;
             }
+            else
+            {
+                OrganizerDataGrid.DataSource = x.ToList();
 
-            OrganizerDataGrid.DataSource = x.ToList();
-          
+                OrganizerDataGrid.AutoGenerateColumns = false;
+                //if (OrganizerDataGrid.Columns.Remove("ConferenceId"))
+                //{
+
+                //}
+                
+                OrganizerDataGrid.Columns[0].HeaderText = "Name";
+                OrganizerDataGrid.Columns[1].HeaderText = "Category";
+                OrganizerDataGrid.Columns[2].HeaderText = "Type";
+
+                //OrganizerDataGrid.Columns.Add("Location", "Location");
+            }
+
+
         }
 
         private void MainForm_Load(object sender, EventArgs e)
@@ -80,9 +98,23 @@ namespace ConferencePlanner.WinUi
         {
             //var x = _getDemoRepository.GetDemo()
             var x = _conferenceRepository.AttendeeConferences("attendee@test.com");
-            AttendeeGridView.DataSource = x.ToList();
+            AttendeeGridvw.DataSource = x.ToList();
+            AttendeeGridvw.Columns.RemoveAt(0);
+            //AttendeeGridvw.Columns[0].HeaderText = "Conference Name";
+            //AttendeeGridvw.Columns[1].HeaderText = "Category";
+            //AttendeeGridvw.Columns[2].HeaderText = "Type";
+            //AttendeeGridvw.Columns[3].HeaderText = "Country";
+            //AttendeeGridvw.Columns[4].HeaderText = "County";
+            //AttendeeGridvw.Columns[5].HeaderText = "City";
+            //AttendeeGridvw.Columns[6].HeaderText = "Firstname";
+            //AttendeeGridvw.Columns[7].HeaderText = "Lastname";
+            //AttendeeGridvw.Columns[8].HeaderText = "Start Date";
+            //AttendeeGridvw.Columns[9].HeaderText = "End Date";
+            
 
-        }
+
+
+    }
 
         private void button4_Click(object sender, EventArgs e)
         {
@@ -96,7 +128,7 @@ namespace ConferencePlanner.WinUi
 
         private void TabAttendee_Click(object sender, EventArgs e)
         {
-
+            
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -106,12 +138,34 @@ namespace ConferencePlanner.WinUi
 
         private void StartDateTimePicker_ValueChanged(object sender, EventArgs e)
         {
+            string StartDate = StartDatePicker.Value.ToString("yyyy-MM-dd");
+            string EndDate = EndDatePicker.Value.ToString("yyyy-MM-dd");
 
+            string test = TabControl.SelectedTab.Name;
+
+            //var x = _conferenceRepository.FilterConferences(Program.EnteredEmailAddress, StartDate, EndDate);
+
+        }
+
+        private void EndDateTimePicker_ValueChanged(object sender, EventArgs e)
+        {
+            string StartDate = StartDatePicker.Value.ToString("yyyy-MM-dd");
+            string EndDate = EndDatePicker.Value.ToString("yyyy-MM-dd");
         }
 
         private void JoinButton_Click(object sender, EventArgs e)
         {
             _attendeeButtons.AddEmail(Program.EnteredEmailAddress);
+        }
+
+        private void label2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label1_Click_1(object sender, EventArgs e)
+        {
+
         }
     }
 }
