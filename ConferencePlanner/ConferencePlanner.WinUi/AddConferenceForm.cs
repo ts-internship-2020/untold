@@ -7,6 +7,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Data.SqlClient;
 using ConferencePlanner.Abstraction.Repository;
+using ConferencePlanner.Abstraction.Model;
 
 namespace ConferencePlanner.WinUi
 {
@@ -27,7 +28,24 @@ namespace ConferencePlanner.WinUi
 
         public AddConf()
         {
+
             InitializeComponent();
+        }
+        public AddConf(ConferenceModel conference, IConferenceRepository conferenceRepository, ICountryRepository countryRepository)
+        {
+            _conferenceRepository = conferenceRepository;
+            _countryRepository = countryRepository;
+
+            InitializeComponent();
+
+            this.ConferenceName.Text = conference.ConferenceName;
+
+            string[] dates = conference.Period.Split(" - ");
+            this.MonthCalendar.SetSelectionRange(DateTime.Parse(dates[0]), DateTime.Parse(dates[1]));
+
+            string[] places = conference.LocationName.Split(", ");
+            //this.
+
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -43,6 +61,11 @@ namespace ConferencePlanner.WinUi
         private void AddConf_Load(object sender, EventArgs e)
         {
             var list = _countryRepository.GetListCountry();
+        }
+
+        private void AddConf_Load(object sender, EventArgs e, ConferenceModel conf)
+        {
+            
         }
 
         private void tabPage1_Click(object sender, EventArgs e)

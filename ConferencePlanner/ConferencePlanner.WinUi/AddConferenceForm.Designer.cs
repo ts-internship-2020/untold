@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.label1 = new System.Windows.Forms.Label();
-            this.ConfName = new System.Windows.Forms.TextBox();
+            this.ConferenceName = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.MonthCalendar = new System.Windows.Forms.MonthCalendar();
             this.label3 = new System.Windows.Forms.Label();
@@ -37,14 +37,14 @@
             this.label4 = new System.Windows.Forms.Label();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.Country = new System.Windows.Forms.TabPage();
-            this.County = new System.Windows.Forms.TabPage();
-            this.City = new System.Windows.Forms.TabPage();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.comboBox2 = new System.Windows.Forms.ComboBox();
             this.comboBox3 = new System.Windows.Forms.ComboBox();
+            this.button1 = new System.Windows.Forms.Button();
+            this.County = new System.Windows.Forms.TabPage();
+            this.comboBox2 = new System.Windows.Forms.ComboBox();
+            this.button2 = new System.Windows.Forms.Button();
+            this.City = new System.Windows.Forms.TabPage();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.button3 = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.Country.SuspendLayout();
             this.County.SuspendLayout();
@@ -61,13 +61,13 @@
             this.label1.Text = "Conference name:";
             this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
-            // ConfName
+            // ConferenceName
             // 
-            this.ConfName.Location = new System.Drawing.Point(130, 0);
-            this.ConfName.Name = "ConfName";
-            this.ConfName.Size = new System.Drawing.Size(153, 23);
-            this.ConfName.TabIndex = 1;
-            this.ConfName.TextChanged += new System.EventHandler(this.ConferenceName_TextChanged);
+            this.ConferenceName.Location = new System.Drawing.Point(130, 0);
+            this.ConferenceName.Name = "ConferenceName";
+            this.ConferenceName.Size = new System.Drawing.Size(153, 23);
+            this.ConferenceName.TabIndex = 1;
+            this.ConferenceName.TextChanged += new System.EventHandler(this.ConferenceName_TextChanged);
             // 
             // label2
             // 
@@ -136,6 +136,24 @@
             this.Country.UseVisualStyleBackColor = true;
             this.Country.Click += new System.EventHandler(this.tabPage1_Click);
             // 
+            // comboBox3
+            // 
+            this.comboBox3.FormattingEnabled = true;
+            this.comboBox3.Location = new System.Drawing.Point(30, 26);
+            this.comboBox3.Name = "comboBox3";
+            this.comboBox3.Size = new System.Drawing.Size(121, 23);
+            this.comboBox3.TabIndex = 1;
+            this.comboBox3.SelectedIndexChanged += new System.EventHandler(this.comboBox3_SelectedIndexChanged);
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(186, 26);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 0;
+            this.button1.Text = "Next";
+            this.button1.UseVisualStyleBackColor = true;
+            // 
             // County
             // 
             this.County.Controls.Add(this.comboBox2);
@@ -149,6 +167,24 @@
             this.County.UseVisualStyleBackColor = true;
             this.County.Click += new System.EventHandler(this.County_Click);
             // 
+            // comboBox2
+            // 
+            this.comboBox2.FormattingEnabled = true;
+            this.comboBox2.Location = new System.Drawing.Point(30, 27);
+            this.comboBox2.Name = "comboBox2";
+            this.comboBox2.Size = new System.Drawing.Size(121, 23);
+            this.comboBox2.TabIndex = 1;
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(186, 27);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(75, 23);
+            this.button2.TabIndex = 0;
+            this.button2.Text = "Next";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
             // City
             // 
             this.City.Controls.Add(this.comboBox1);
@@ -161,24 +197,13 @@
             this.City.Text = "City";
             this.City.UseVisualStyleBackColor = true;
             // 
-            // button1
+            // comboBox1
             // 
-            this.button1.Location = new System.Drawing.Point(186, 26);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "Next";
-            this.button1.UseVisualStyleBackColor = true;
-            // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(186, 27);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 0;
-            this.button2.Text = "Next";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Location = new System.Drawing.Point(30, 27);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(121, 23);
+            this.comboBox1.TabIndex = 1;
             // 
             // button3
             // 
@@ -188,31 +213,6 @@
             this.button3.TabIndex = 0;
             this.button3.Text = "Save";
             this.button3.UseVisualStyleBackColor = true;
-            // 
-            // comboBox1
-            // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(30, 27);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(121, 23);
-            this.comboBox1.TabIndex = 1;
-            // 
-            // comboBox2
-            // 
-            this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Location = new System.Drawing.Point(30, 27);
-            this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(121, 23);
-            this.comboBox2.TabIndex = 1;
-            // 
-            // comboBox3
-            // 
-            this.comboBox3.FormattingEnabled = true;
-            this.comboBox3.Location = new System.Drawing.Point(30, 26);
-            this.comboBox3.Name = "comboBox3";
-            this.comboBox3.Size = new System.Drawing.Size(121, 23);
-            this.comboBox3.TabIndex = 1;
-            this.comboBox3.SelectedIndexChanged += new System.EventHandler(this.comboBox3_SelectedIndexChanged);
             // 
             // AddConf
             // 
@@ -225,7 +225,7 @@
             this.Controls.Add(this.label3);
             this.Controls.Add(this.MonthCalendar);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.ConfName);
+            this.Controls.Add(this.ConferenceName);
             this.Controls.Add(this.label1);
             this.Name = "AddConf";
             this.Text = "AddConf";
@@ -242,7 +242,7 @@
         #endregion
 
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox ConfName;
+        private System.Windows.Forms.TextBox ConferenceName;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.MonthCalendar MonthCalendar;
         private System.Windows.Forms.Label label3;

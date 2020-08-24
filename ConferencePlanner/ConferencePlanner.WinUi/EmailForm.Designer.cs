@@ -36,12 +36,13 @@
             // 
             // EmailTextBox
             // 
-            this.EmailTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
-            this.EmailTextBox.Font = new System.Drawing.Font("Comic Sans MS", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.EmailTextBox.AcceptsReturn = true;
+            this.EmailTextBox.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.EmailTextBox.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.EmailTextBox.ForeColor = System.Drawing.Color.Silver;
-            this.EmailTextBox.Location = new System.Drawing.Point(110, 44);
+            this.EmailTextBox.Location = new System.Drawing.Point(104, 41);
             this.EmailTextBox.Name = "EmailTextBox";
-            this.EmailTextBox.Size = new System.Drawing.Size(260, 28);
+            this.EmailTextBox.Size = new System.Drawing.Size(260, 27);
             this.EmailTextBox.TabIndex = 0;
             this.EmailTextBox.Text = "Type an email...";
             this.EmailTextBox.Click += new System.EventHandler(this.EmailTextBox_Click);
@@ -51,13 +52,13 @@
             // 
             // SubmitBtn
             // 
-            this.SubmitBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
+            this.SubmitBtn.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.SubmitBtn.FlatAppearance.BorderColor = System.Drawing.SystemColors.Info;
             this.SubmitBtn.FlatAppearance.BorderSize = 0;
             this.SubmitBtn.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Cornsilk;
             this.SubmitBtn.FlatAppearance.MouseOverBackColor = System.Drawing.Color.LightSteelBlue;
             this.SubmitBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.SubmitBtn.Font = new System.Drawing.Font("HoloLens MDL2 Assets", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.SubmitBtn.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.SubmitBtn.Location = new System.Drawing.Point(186, 104);
             this.SubmitBtn.MaximumSize = new System.Drawing.Size(90, 30);
             this.SubmitBtn.Name = "SubmitBtn";
@@ -66,18 +67,19 @@
             this.SubmitBtn.Text = "OK";
             this.SubmitBtn.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             this.SubmitBtn.UseVisualStyleBackColor = false;
+            this.SubmitBtn.Click += new System.EventHandler(this.SubmitBtn_Click);
             // 
             // ErrorLabel
             // 
-            this.ErrorLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
+            this.ErrorLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.ErrorLabel.AutoSize = true;
             this.ErrorLabel.BackColor = System.Drawing.Color.Transparent;
-            this.ErrorLabel.Font = new System.Drawing.Font("Comic Sans MS", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.ErrorLabel.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.ErrorLabel.ForeColor = System.Drawing.Color.Red;
             this.ErrorLabel.Location = new System.Drawing.Point(48, 71);
             this.ErrorLabel.Name = "ErrorLabel";
             this.ErrorLabel.Padding = new System.Windows.Forms.Padding(5);
-            this.ErrorLabel.Size = new System.Drawing.Size(390, 30);
+            this.ErrorLabel.Size = new System.Drawing.Size(382, 30);
             this.ErrorLabel.TabIndex = 2;
             this.ErrorLabel.Text = "Insert a valid email address like \"name@example.com\"";
             this.ErrorLabel.Visible = false;
@@ -96,8 +98,7 @@
             this.DoubleBuffered = true;
             this.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.MaximizeBox = false;
-            this.MaximumSize = new System.Drawing.Size(500, 250);
-            this.MinimumSize = new System.Drawing.Size(300, 200);
+            this.MinimumSize = new System.Drawing.Size(400, 200);
             this.Name = "EmailForm";
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
