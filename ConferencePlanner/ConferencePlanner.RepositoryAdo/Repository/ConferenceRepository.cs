@@ -72,9 +72,7 @@ namespace ConferencePlanner.Repository.Ado.Repository
                     
                     List<ConferenceModel> attendees = new List<ConferenceModel>();
 
-                    if (sqlDataReader.HasRows)
-                    { 
-                        
+                     
                         while (moreResults)
                         {
                             
@@ -97,7 +95,7 @@ namespace ConferencePlanner.Repository.Ado.Repository
                             }
                     moreResults = sqlDataReader.NextResult();
                         }
-                    }
+                    
 
             sqlDataReader.Close();
 

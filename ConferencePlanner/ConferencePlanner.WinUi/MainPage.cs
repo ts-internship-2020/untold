@@ -3,6 +3,7 @@ using ConferencePlanner.Abstraction.Repository;
 using System;
 using System.Linq;
 using System.Windows.Forms;
+using System.Text;
 
 namespace ConferencePlanner.WinUi
 {

@@ -33,9 +33,7 @@ namespace ConferencePlanner.WinUi
         {
             this.TabAttendee = new System.Windows.Forms.TabPage();
             this.AttendeeGridvw = new System.Windows.Forms.DataGridView();
-            //this.button6 = new System.Windows.Forms.Button();
-            //this.button2 = new System.Windows.Forms.Button();
-            //this.button1 = new System.Windows.Forms.Button();
+
             this.button3 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
             this.button5 = new System.Windows.Forms.Button();
@@ -43,7 +41,7 @@ namespace ConferencePlanner.WinUi
             this.NoConferenceLabel = new System.Windows.Forms.Label();
             this.OrganizerDataGrid = new System.Windows.Forms.DataGridView();
             this.TabControl = new System.Windows.Forms.TabControl();
-            this.AttendeeGridView = new System.Windows.Forms.DataGridView();
+
             this.AddConferenceButton = new System.Windows.Forms.Button();
             this.StartDateTimePicker = new System.Windows.Forms.DateTimePicker();
             this.EndDateTimePicker = new System.Windows.Forms.DateTimePicker();
@@ -58,26 +56,12 @@ namespace ConferencePlanner.WinUi
             this.TabOrganizer.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.OrganizerDataGrid)).BeginInit();
             this.TabControl.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.AttendeeGridView)).BeginInit();
-            this.SuspendLayout();
+
             // 
             // TabAttendee
             // 
             // 
-            // AttendeeGridvw
-            // 
-            this.AttendeeGridvw.AllowUserToOrderColumns = true;
-            this.AttendeeGridvw.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.AttendeeGridvw.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.AttendeeGridvw.Location = new System.Drawing.Point(79, 68);
-            this.AttendeeGridvw.Name = "AttendeeGridvw";
-            this.AttendeeGridvw.Size = new System.Drawing.Size(590, 211);
-            this.AttendeeGridvw.TabIndex = 3;
-            this.AttendeeGridvw.Text = "dataGridView1";
-            this.AttendeeGridvw.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.AttendeeGridvw_CellContentClick);
-            this.AttendeeGridvw.Layout += new System.Windows.Forms.LayoutEventHandler(this.tabPage1_Layout);
+
             this.TabAttendee.Controls.Add(this.AttendeeGridvw);
             this.TabAttendee.Controls.Add(this.button5);
             this.TabAttendee.Controls.Add(this.button4);
@@ -156,18 +140,7 @@ namespace ConferencePlanner.WinUi
             this.TabControl.Size = new System.Drawing.Size(798, 338);
             this.TabControl.TabIndex = 3;
             this.TabControl.SelectedIndexChanged += new System.EventHandler(this.TabOrganizer_SelectedIndexChanged);
-            // 
-            // AttendeeGridView
-            // 
-            this.AttendeeGridView.AllowUserToOrderColumns = true;
-            this.AttendeeGridView.BackgroundColor = System.Drawing.Color.Azure;
-            this.AttendeeGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.AttendeeGridView.GridColor = System.Drawing.SystemColors.MenuText;
-            this.AttendeeGridView.Location = new System.Drawing.Point(3, 3);
-            this.AttendeeGridView.Name = "AttendeeGridView";
-            this.AttendeeGridView.Size = new System.Drawing.Size(645, 277);
-            this.AttendeeGridView.TabIndex = 0;
-            this.AttendeeGridView.Text = "AttendeeGridView";
+
             // 
             // AddConferenceButton
             // 
@@ -301,7 +274,6 @@ namespace ConferencePlanner.WinUi
             this.TabOrganizer.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.OrganizerDataGrid)).EndInit();
             this.TabControl.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.AttendeeGridView)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
