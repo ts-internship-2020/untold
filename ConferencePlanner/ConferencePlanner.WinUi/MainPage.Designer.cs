@@ -190,9 +190,9 @@ namespace ConferencePlanner.WinUi
             // 
             this.AddConferenceButton.Location = new System.Drawing.Point(769, 42);
             this.AddConferenceButton.Name = "AddConferenceButton";
-            this.AddConferenceButton.Size = new System.Drawing.Size(75, 23);
+            this.AddConferenceButton.Size = new System.Drawing.Size(75, 47);
             this.AddConferenceButton.TabIndex = 4;
-            this.AddConferenceButton.Text = "AddConf";
+            this.AddConferenceButton.Text = "Add a new conference";
             this.AddConferenceButton.UseVisualStyleBackColor = true;
             this.AddConferenceButton.Click += new System.EventHandler(this.AddConferenceButton_Click);
             // 
