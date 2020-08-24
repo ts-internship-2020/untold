@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 
 namespace ConferencePlanner.Repository.Ado.Repository
@@ -91,33 +92,46 @@ namespace ConferencePlanner.Repository.Ado.Repository
 
             return demos;
             }
-        public List<ConferenceModel> AttendeeConferences(string name)
+        public List<ConferenceModel> AttendeeConferences(string email)
         {
-            SqlCommand sqlCommand = _sqlConnection.CreateCommand();
-            sqlCommand.CommandText = "SELECT ConferenceName,ConferencePeriod,ConferenceTypeName,ConferenceCategoryName,LocationName,SpeakerName FROM vwConferenceDetails as vw JOIN Attendee a ON a.ConferenceId = vw.ConferenceId";
+            //SqlCommand sqlCommand = _sqlConnection.CreateCommand();
+            string commandText = "exec returnconflist @AttendeeEmail";
+            SqlCommand sqlCommand = new SqlCommand(commandText, _sqlConnection);
+            sqlCommand.Parameters.Add("@AttendeeEmail", SqlDbType.NVarChar, 4000);
+            sqlCommand.Parameters["@AttendeeEmail"].Value = email;
+            sqlCommand.ExecuteNonQuery();
             SqlDataReader sqlDataReader = sqlCommand.ExecuteReader();
 
-            List<ConferenceModel> attendees = new List<ConferenceModel>();
+            var moreResults = true;
+            
 
-            if (sqlDataReader.HasRows)
-            {
-                while (sqlDataReader.Read())
-                {
-                    attendees.Add(new ConferenceModel()
-                    {
-                        //ConferenceId = sqlDataReader.GetInt32("ConferenceId"),
-                        ConferenceName = sqlDataReader.GetString("ConferenceName"),
-                        ConferenceTypeName = sqlDataReader.GetString("ConferenceTypeName"),
-                        ConferenceCategoryName = sqlDataReader.GetString("ConferenceCategoryName"),
-                        LocationName = sqlDataReader.GetString("LocationName"),
-                        
-                        SpeakerName = sqlDataReader.GetString("SpeakerName"),
+                    
+                    List<ConferenceModel> attendees = new List<ConferenceModel>();
 
-                        Period = sqlDataReader.GetString("ConferencePeriod"),
-                    });
+                     
+                        while (moreResults)
+                        {
+                            
+                            while (sqlDataReader.Read())
+                            {
+                                
+                                attendees.Add(new ConferenceModel()
+                                {
+                                    //ConferenceId = sqlDataReader.GetInt32("ConferenceId"),
+                                    ConferenceName = sqlDataReader.GetString("ConferenceName"),
+                                    ConferenceTypeName = sqlDataReader.GetString("ConferenceTypeName"),
+                                    ConferenceCategoryName = sqlDataReader.GetString("ConferenceCategoryName"),
+                                    LocationName = sqlDataReader.GetString("LocationName"),
 
-                }
-            }
+                                    SpeakerName = sqlDataReader.GetString("SpeakerName"),
+
+                                    Period = sqlDataReader.GetString("ConferencePeriod"),
+                                });
+
+                            }
+                    moreResults = sqlDataReader.NextResult();
+                        }
+                    
 
             sqlDataReader.Close();
 

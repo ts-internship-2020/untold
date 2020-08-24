@@ -7,5 +7,9 @@ namespace ConferencePlanner.Abstraction.Model
     public class CountryModel
     {
         public string CountryName { get; set; }
+        public override string ToString()
+        {
+            return CountryName;
+        }
     }
 }

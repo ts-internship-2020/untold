@@ -55,10 +55,11 @@ namespace ConferencePlanner.WinUi
         {
             var varAddConf = new AddConf(_conferenceRepository, _countryRepository);
 
-            //change tabControl to organizer if it's in atendee
-            TabControl.SelectedTab = TabOrganizer;
-
+            MainTabControl.SelectedIndex = 1;
             varAddConf.ShowDialog();
+
+
+
         }
 
         private void CheckNumberOfRows(List<ConferenceModel> conferences)
@@ -100,24 +101,18 @@ namespace ConferencePlanner.WinUi
         private void tabPage1_Layout(object sender, LayoutEventArgs e)
         {
             //var x = _getDemoRepository.GetDemo()
-            var x = _conferenceRepository.AttendeeConferences("attendee@test.com");
+            var x = _conferenceRepository.AttendeeConferences(Program.EnteredEmailAddress);
             AttendeeGridvw.DataSource = x.ToList();
             AttendeeGridvw.Columns.RemoveAt(0);
-            //AttendeeGridvw.Columns[0].HeaderText = "Conference Name";
-            //AttendeeGridvw.Columns[1].HeaderText = "Category";
-            //AttendeeGridvw.Columns[2].HeaderText = "Type";
-            //AttendeeGridvw.Columns[3].HeaderText = "Country";
-            //AttendeeGridvw.Columns[4].HeaderText = "County";
-            //AttendeeGridvw.Columns[5].HeaderText = "City";
-            //AttendeeGridvw.Columns[6].HeaderText = "Firstname";
-            //AttendeeGridvw.Columns[7].HeaderText = "Lastname";
-            //AttendeeGridvw.Columns[8].HeaderText = "Start Date";
-            //AttendeeGridvw.Columns[9].HeaderText = "End Date";
-            
+            AttendeeGridvw.Columns[0].HeaderText = "Conference Name";
+            AttendeeGridvw.Columns[1].HeaderText = "Category";
+            AttendeeGridvw.Columns[2].HeaderText = "Type";
+            AttendeeGridvw.Columns[3].HeaderText = "Location";
+            AttendeeGridvw.Columns[4].HeaderText = "Speaker Name";
+        }
 
+       
 
-
-    }
 
         private void TabAttendee_Click(object sender, EventArgs e)
         {
@@ -180,10 +175,10 @@ namespace ConferencePlanner.WinUi
 
         private void Join_Click(object sender, EventArgs e)
         {
-            //a = statusul participantului
+            int statusId = 2;
             var newform = new WebviewForm();
             newform.ShowDialog();
-            _attendeeButtons.JoinCommand();
+            _attendeeButtons.JoinCommand(Program.EnteredEmailAddress, statusId);
         }
 
         private void label2_Click(object sender, EventArgs e)

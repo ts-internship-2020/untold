@@ -41,18 +41,28 @@ namespace ConferencePlanner.Repository.Ado.Repository
         public void WithdrawnCommand(String email, int conferenceId)
         {
             int newConferenceId = 3;
-            string commandText = "update Attendee set StatusId = @NewStatusId where StatusId = @Id";
+            string commandText = "update Attendee set StatusId = @NewStatusId where StatusId = @Id and AttendeeEmail = @Email";
             SqlCommand sqlCommand = new SqlCommand(commandText, _sqlConnection);
             sqlCommand.Parameters.Add("@Id", SqlDbType.Int);
             sqlCommand.Parameters["@Id"].Value = conferenceId;
+            sqlCommand.Parameters.Add("@Email", SqlDbType.NVarChar, 4000);
+            sqlCommand.Parameters["@Email"].Value = email;
             sqlCommand.Parameters.AddWithValue("@NewStatusId", newConferenceId);
             sqlCommand.ExecuteNonQuery();
             //aici mai trebuie dat drop la table si apelata metoda de select 
         }
 
-        public void JoinCommand()
+        public void JoinCommand(String email, int newConferenceId)
         {
-            
+            int conferenceId = 3;
+            string commandText = "update Attendee set StatusId = @NewStatusId where StatusId = @Id and AttendeeEmail = @Email";
+            SqlCommand sqlCommand = new SqlCommand(commandText, _sqlConnection);
+            sqlCommand.Parameters.Add("@Id", SqlDbType.Int);
+            sqlCommand.Parameters["@Id"].Value = conferenceId; 
+            sqlCommand.Parameters.Add("@Email", SqlDbType.NVarChar,4000);
+            sqlCommand.Parameters["@Email"].Value = email;
+            sqlCommand.Parameters.AddWithValue("@NewStatusId", newConferenceId);
+            sqlCommand.ExecuteNonQuery();
         }
 
       
