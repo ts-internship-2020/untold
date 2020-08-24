@@ -148,13 +148,13 @@ namespace ConferencePlanner.WinUi
             //var x = _conferenceRepository.FilterConferences(Program.EnteredEmailAddress, StartDate, EndDate);
         }
 
-        private void button3_Click(object sender, EventArgs e)
+        private void Attend_Click(object sender, EventArgs e)
         {
             string barcodeGenerator = BarcodeGenerator();
-            _attendeeButtons.AddEmail(Program.EnteredEmailAddress, barcodeGenerator);
+            _attendeeButtons.Attend(Program.EnteredEmailAddress, barcodeGenerator);
         }
 
-        private void button4_Click(object sender, EventArgs e)
+        private void Withdraw_Click(object sender, EventArgs e)
         {
 
             //a = statusul participantului
@@ -171,7 +171,7 @@ namespace ConferencePlanner.WinUi
             string EndDate = EndDatePicker.Value.ToString("yyyy-MM-dd");
         }
 
-        private void button5_Click(object sender, EventArgs e)
+        private void Join_Click(object sender, EventArgs e)
         {
             //a = statusul participantului
             var newform = new WebviewForm();

@@ -33,9 +33,12 @@ namespace ConferencePlanner.WinUi
         {
             this.TabAttendee = new System.Windows.Forms.TabPage();
             this.AttendeeGridvw = new System.Windows.Forms.DataGridView();
-            this.button6 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
+            //this.button6 = new System.Windows.Forms.Button();
+            //this.button2 = new System.Windows.Forms.Button();
+            //this.button1 = new System.Windows.Forms.Button();
+            this.button3 = new System.Windows.Forms.Button();
+            this.button4 = new System.Windows.Forms.Button();
+            this.button5 = new System.Windows.Forms.Button();
             this.TabOrganizer = new System.Windows.Forms.TabPage();
             this.NoConferenceLabel = new System.Windows.Forms.Label();
             this.OrganizerDataGrid = new System.Windows.Forms.DataGridView();
@@ -88,33 +91,6 @@ namespace ConferencePlanner.WinUi
             this.AttendeeGridvw.TabIndex = 3;
             this.AttendeeGridvw.Text = "dataGridView1";
             this.AttendeeGridvw.Layout += new System.Windows.Forms.LayoutEventHandler(this.tabPage1_Layout);
-            // 
-            // button6
-            // 
-            this.button6.Location = new System.Drawing.Point(621, 39);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(75, 23);
-            this.button6.TabIndex = 2;
-            this.button6.Text = "Withdrawn";
-            this.button6.UseVisualStyleBackColor = true;
-            // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(539, 39);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 1;
-            this.button2.Text = "Join";
-            this.button2.UseVisualStyleBackColor = true;
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(458, 39);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "Attend";
-            this.button1.UseVisualStyleBackColor = true;
             // 
             // TabOrganizer
             // 
@@ -236,12 +212,12 @@ namespace ConferencePlanner.WinUi
             //
             // 
             this.button3.Location = new System.Drawing.Point(456, 12);
-            this.button3.Name = "button3";
+            this.button3.Name = "AttendButton";
             this.button3.Size = new System.Drawing.Size(75, 23);
             this.button3.TabIndex = 3;
-            this.button3.Text = "button3";
+            this.button3.Text = "Attend";
             this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
+            this.button3.Click += new System.EventHandler(this.Attend_Click);
 
 
             // 
@@ -258,12 +234,12 @@ namespace ConferencePlanner.WinUi
             // 
 
             this.button4.Location = new System.Drawing.Point(538, 12);
-            this.button4.Name = "button4";
+            this.button4.Name = "WithdrawButton";
             this.button4.Size = new System.Drawing.Size(75, 23);
             this.button4.TabIndex = 4;
-            this.button4.Text = "button4";
+            this.button4.Text = "Withdraw";
             this.button4.UseVisualStyleBackColor = true;
-          this.button4.Click += new System.EventHandler(this.button4_Click);
+            this.button4.Click += new System.EventHandler(this.Withdraw_Click);
 
             // 
             // StartDateLabel
@@ -279,12 +255,12 @@ namespace ConferencePlanner.WinUi
             // 
 
             this.button5.Location = new System.Drawing.Point(619, 11);
-            this.button5.Name = "button5";
+            this.button5.Name = "JoinButton";
             this.button5.Size = new System.Drawing.Size(75, 23);
             this.button5.TabIndex = 5;
-            this.button5.Text = "button5";
+            this.button5.Text = "Join";
             this.button5.UseVisualStyleBackColor = true;
-            this.button5.Click += new System.EventHandler(this.button5_Click);
+            this.button5.Click += new System.EventHandler(this.Join_Click);
 
             // 
             // MainPage

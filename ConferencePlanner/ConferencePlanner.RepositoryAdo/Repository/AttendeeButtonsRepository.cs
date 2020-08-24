@@ -17,7 +17,7 @@ namespace ConferencePlanner.Repository.Ado.Repository
             _sqlConnection = sqlConnection;
         }
 
-        public void AddEmail(string email, string barcode)
+        public void Attend(string email, string barcode)
         {
             string commandText = "insert into Attendee values (@ConferenceId, @AttendeeEmail , " +
                 "@StatusId ,@EmailCode)";
@@ -47,11 +47,12 @@ namespace ConferencePlanner.Repository.Ado.Repository
             sqlCommand.Parameters["@Id"].Value = conferenceId;
             sqlCommand.Parameters.AddWithValue("@NewStatusId", newConferenceId);
             sqlCommand.ExecuteNonQuery();
+            //aici mai trebuie dat drop la table si apelata metoda de select 
         }
 
         public void JoinCommand()
         {
-            //webView1.Navigate("http://www.contoso.com");
+            
         }
     }
 }
