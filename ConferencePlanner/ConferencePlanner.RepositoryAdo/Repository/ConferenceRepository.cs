@@ -17,6 +17,13 @@ namespace ConferencePlanner.Repository.Ado.Repository
             _sqlConnection = sqlConnection;
         }
 
+        //public List<ConferenceModel> FilterConferences(string emal, string sDate, string eDate)
+        //{
+        //    throw NotImplementedException;
+        //}
+
+
+
         public List<ConferenceModel> GetConferencesByOrganizer(string email)
         {
         
@@ -36,13 +43,9 @@ namespace ConferencePlanner.Repository.Ado.Repository
                         ConferenceName = sqlDataReader.GetString("ConferenceName"),
                         ConferenceCategoryName = sqlDataReader.GetString("ConferenceCategoryName"),
                         ConferenceTypeName = sqlDataReader.GetString("ConferenceTypeName"),
-                        CountryName = sqlDataReader.GetString("CountryName"),
-                        CountyName = sqlDataReader.GetString("CountyName"),
-                        CityName = sqlDataReader.GetString("CityName"),
-                        //SpeakerFirstName = sqlDataReader.GetString("SpeakerFirstName"),
-                        //SpeakerLastName = sqlDataReader.GetString("SpeakerLastName"),
-                        //StartDate = sqlDataReader.GetDateTime("StartDate"),
-                        //EndDate = sqlDataReader.GetDateTime("EndDate")
+                        LocationName = sqlDataReader.GetString("LocationName"),
+                        SpeakerName = sqlDataReader.GetString("SpeakerName"),
+                        Period = sqlDataReader.GetString("ConferencePeriod")
                     });
                   
                 }
@@ -68,15 +71,13 @@ namespace ConferencePlanner.Repository.Ado.Repository
                     {
                         //ConferenceId = sqlDataReader.GetInt32("ConferenceId"),
                         ConferenceName = sqlDataReader.GetString("ConferenceName"),
-                        StartDate = sqlDataReader.GetDateTime("StartDate"),
-                        EndDate = sqlDataReader.GetDateTime("EndDate"),
                         ConferenceTypeName = sqlDataReader.GetString("ConferenceTypeName"),
                         ConferenceCategoryName = sqlDataReader.GetString("ConferenceCategoryName"),
-                        CountryName = sqlDataReader.GetString("CountryName"),
-                        CountyName = sqlDataReader.GetString("CountyName"),
-                        CityName = sqlDataReader.GetString("CityName"),
-                        SpeakerFirstName = sqlDataReader.GetString("FirstName"),
-                        SpeakerLastName = sqlDataReader.GetString("LastName")
+                        LocationName = sqlDataReader.GetString("LocationName"),
+                        
+                        SpeakerName = sqlDataReader.GetString("SpeakerName"),
+
+                        Period = sqlDataReader.GetString("ConferencePeriod"),
                     });
 
                 }
@@ -86,6 +87,11 @@ namespace ConferencePlanner.Repository.Ado.Repository
 
             return attendees;
 
+        }
+
+        public List<ConferenceModel> FilterConferences(string name)
+        {
+            throw new NotImplementedException();
         }
     }
     }

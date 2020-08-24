@@ -46,6 +46,9 @@ namespace ConferencePlanner.WinUi
         {
             var varAddConf = new AddConf(_conferenceRepository, _countryRepository);
 
+            //change tabControl to organizer if it's in atendee
+            TabControl.SelectedTab = TabOrganizer;
+
             varAddConf.ShowDialog();
         }
 
@@ -58,9 +61,24 @@ namespace ConferencePlanner.WinUi
                 OrganizerDataGrid.Visible = false;
                 NoConferenceLabel.Visible = true;
             }
+            else
+            {
+                OrganizerDataGrid.DataSource = x.ToList();
 
-            OrganizerDataGrid.DataSource = x.ToList();
-          
+                OrganizerDataGrid.AutoGenerateColumns = false;
+                //if (OrganizerDataGrid.Columns.Remove("ConferenceId"))
+                //{
+
+                //}
+                
+                OrganizerDataGrid.Columns[0].HeaderText = "Name";
+                OrganizerDataGrid.Columns[1].HeaderText = "Category";
+                OrganizerDataGrid.Columns[2].HeaderText = "Type";
+
+                //OrganizerDataGrid.Columns.Add("Location", "Location");
+            }
+
+
         }
 
         private void MainForm_Load(object sender, EventArgs e)
@@ -120,7 +138,19 @@ namespace ConferencePlanner.WinUi
 
         private void StartDateTimePicker_ValueChanged(object sender, EventArgs e)
         {
+            string StartDate = StartDatePicker.Value.ToString("yyyy-MM-dd");
+            string EndDate = EndDatePicker.Value.ToString("yyyy-MM-dd");
 
+            string test = TabControl.SelectedTab.Name;
+
+            //var x = _conferenceRepository.FilterConferences(Program.EnteredEmailAddress, StartDate, EndDate);
+
+        }
+
+        private void EndDateTimePicker_ValueChanged(object sender, EventArgs e)
+        {
+            string StartDate = StartDatePicker.Value.ToString("yyyy-MM-dd");
+            string EndDate = EndDatePicker.Value.ToString("yyyy-MM-dd");
         }
 
         private void JoinButton_Click(object sender, EventArgs e)
@@ -128,6 +158,14 @@ namespace ConferencePlanner.WinUi
             _attendeeButtons.AddEmail(Program.EnteredEmailAddress);
         }
 
-        
+        private void label2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label1_Click_1(object sender, EventArgs e)
+        {
+
+        }
     }
 }
