@@ -64,5 +64,7 @@ namespace ConferencePlanner.Repository.Ado.Repository
             sqlCommand.Parameters.AddWithValue("@NewStatusId", newConferenceId);
             sqlCommand.ExecuteNonQuery();
         }
+
+      
     }
 }
