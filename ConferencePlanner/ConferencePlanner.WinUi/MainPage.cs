@@ -60,7 +60,33 @@ namespace ConferencePlanner.WinUi
             }
 
             OrganizerDataGrid.DataSource = x.ToList();
-          
+
+            OrganizerDataGrid.AutoGenerateColumns = false;
+            OrganizerDataGrid.Columns.Remove("ConferenceId");
+            OrganizerDataGrid.Columns[0].HeaderText = "Name";
+            OrganizerDataGrid.Columns[1].HeaderText = "Category";
+            OrganizerDataGrid.Columns[2].HeaderText = "Type";
+
+            OrganizerDataGrid.Columns.Add("Location", "Location");
+
+            
+            //foreach (DataGridViewColumn col in OrganizerDataGrid.Columns)
+            //{
+            //    string LocationName = "";
+            //    if (col. == "CountryName" || col.Name == "CountyName" || col.Name == "CityName")
+            //    {
+            //        foreach (DataGridViewRow row in OrganizerDataGrid.Rows)
+            //            LocationName += row.cell
+            //    }
+
+
+            //}
+
+            //var string test = OrganizerDataGrid.Columns[2].ToString() + OrganizerDataGrid.Columns[3].ToString();
+
+            //OrganizerDataGrid.Columns.Add(test);
+
+
         }
 
         private void MainForm_Load(object sender, EventArgs e)
