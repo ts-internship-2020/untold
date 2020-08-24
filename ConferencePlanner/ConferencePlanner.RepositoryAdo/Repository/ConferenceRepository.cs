@@ -68,8 +68,8 @@ namespace ConferencePlanner.Repository.Ado.Repository
                     {
                         //ConferenceId = sqlDataReader.GetInt32("ConferenceId"),
                         ConferenceName = sqlDataReader.GetString("ConferenceName"),
-                        //StartDate = sqlDataReader.GetDateTime("StartDate"),
-                        //EndDate = sqlDataReader.GetDateTime("EndDate"),
+                        StartDate = sqlDataReader.GetDateTime("StartDate"),
+                        EndDate = sqlDataReader.GetDateTime("EndDate"),
                         ConferenceTypeName = sqlDataReader.GetString("ConferenceTypeName"),
                         ConferenceCategoryName = sqlDataReader.GetString("ConferenceCategoryName"),
                         CountryName = sqlDataReader.GetString("CountryName"),
