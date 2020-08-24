@@ -154,10 +154,10 @@ namespace ConferencePlanner.WinUi
 
         private void Join_Click(object sender, EventArgs e)
         {
-            //a = statusul participantului
+            int statusId = 2;
             var newform = new WebviewForm();
             newform.ShowDialog();
-            _attendeeButtons.JoinCommand();
+            _attendeeButtons.JoinCommand(Program.EnteredEmailAddress, statusId);
         }
 
         private void label2_Click(object sender, EventArgs e)
