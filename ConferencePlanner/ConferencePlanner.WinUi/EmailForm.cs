@@ -43,7 +43,7 @@ namespace ConferencePlanner.WinUi
             ErrorLabel.Visible = false;
         }
 
-        private void EmailTextBox_Leave(object sender, EventArgs e)
+        private bool CheckEmail()
         {
             Regex mRegxExpression;
             if (EmailTextBox.Text.Trim() != string.Empty)
@@ -55,18 +55,15 @@ namespace ConferencePlanner.WinUi
                     ErrorLabel.Visible = true;
                     ErrorLabel.Text="Insert a valid email address like 'name @example.com' ";
                     EmailTextBox.Focus();
+                    return false;
                 }
                 else
-                {
-                    SubmitBtnClick();
+                { 
+                    return true;
                 }
                
             }
-            else
-            {
-                ErrorLabel.Visible = true;
-                ErrorLabel.Text = "Insert an email adress";
-            }
+            return false;
         }
         public void NextPage()
         {
@@ -75,18 +72,11 @@ namespace ConferencePlanner.WinUi
             Program.EnteredEmailAddress = EmailTextBox.Text;
             var NextPage = new MainPage(_conferenceRepository, _countryRepository, _getDemoRepository, _attendeeButtonsRepository);
             NextPage.ShowDialog();
-
-        }
-
-
-        public void SubmitBtnClick()
-        {
-            NextPage();
         }
 
         private void EmailTextBox_KeyUp(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Enter)
+            if (e.KeyCode == Keys.Enter && CheckEmail())
             {
                 NextPage();
             }
@@ -96,6 +86,19 @@ namespace ConferencePlanner.WinUi
         {
             EmailTextBox.Text = "";
             EmailTextBox.ForeColor = Color.Black;
+        }
+
+        private void EmailTextBox_Leave(object sender, EventArgs e)
+        {
+            CheckEmail();
+        }
+
+        private void SubmitBtn_Click(object sender, EventArgs e)
+        {
+            if (CheckEmail())
+            {
+                NextPage();
+            }
         }
     }
 }
