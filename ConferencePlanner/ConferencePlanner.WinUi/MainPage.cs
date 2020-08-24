@@ -16,7 +16,8 @@ namespace ConferencePlanner.WinUi
 
         private readonly IAttendeeButtonsRepository _attendeeButtons;
 
-        public MainPage(IConferenceRepository conferenceRepository, ICountryRepository countryRepository, IGetDemoRepository getDemoRepository, IAttendeeButtonsRepository attendeeButtonsRepository)
+        public MainPage(IConferenceRepository conferenceRepository, ICountryRepository countryRepository, IGetDemoRepository getDemoRepository, 
+            IAttendeeButtonsRepository attendeeButtonsRepository)
         {
             _conferenceRepository = conferenceRepository;
 
@@ -34,7 +35,19 @@ namespace ConferencePlanner.WinUi
 
             InitializeComponent();
         }
+        //metoda de generat codul de bare.
 
+        public String BarcodeGenerator()
+        {
+            Random random = new Random();
+            int length = 10;
+            StringBuilder sb = new StringBuilder();
+            for (var i = 0; i < length; i++)
+            {
+                sb.Append((char)(random.Next(1, 26) + 64)).ToString();
+            }
+            return sb.ToString().ToLower();
+        }
 
         private void AddConferenceButton_Click(object sender, EventArgs e)
         {
@@ -102,19 +115,9 @@ namespace ConferencePlanner.WinUi
 
     }
 
-        private void button4_Click(object sender, EventArgs e)
-        {
-            
-        }
-
-        private void button5_Click(object sender, EventArgs e)
-        {
-            //WebView1.Navigate(new Uri(@"http://www.google.com"));
-        }
-
         private void TabAttendee_Click(object sender, EventArgs e)
         {
-            
+
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -128,20 +131,38 @@ namespace ConferencePlanner.WinUi
             string EndDate = EndDatePicker.Value.ToString("yyyy-MM-dd");
 
             string test = TabControl.SelectedTab.Name;
-
             //var x = _conferenceRepository.FilterConferences(Program.EnteredEmailAddress, StartDate, EndDate);
+        }
+
+        private void Attend_Click(object sender, EventArgs e)
+        {
+            string barcodeGenerator = BarcodeGenerator();
+            _attendeeButtons.Attend(Program.EnteredEmailAddress, barcodeGenerator);
+        }
+
+        private void Withdraw_Click(object sender, EventArgs e)
+        {
+
+            //a = statusul participantului
+            int a = 1;
+            _attendeeButtons.WithdrawnCommand(Program.EnteredEmailAddress, a);
+            
 
         }
 
+            
         private void EndDateTimePicker_ValueChanged(object sender, EventArgs e)
         {
             string StartDate = StartDatePicker.Value.ToString("yyyy-MM-dd");
             string EndDate = EndDatePicker.Value.ToString("yyyy-MM-dd");
         }
 
-        private void JoinButton_Click(object sender, EventArgs e)
+        private void Join_Click(object sender, EventArgs e)
         {
-            _attendeeButtons.AddEmail(Program.EnteredEmailAddress);
+            //a = statusul participantului
+            var newform = new WebviewForm();
+            newform.ShowDialog();
+            _attendeeButtons.JoinCommand();
         }
 
         private void label2_Click(object sender, EventArgs e)

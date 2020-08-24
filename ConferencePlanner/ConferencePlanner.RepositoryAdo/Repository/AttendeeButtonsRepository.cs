@@ -1,4 +1,5 @@
 ﻿using ConferencePlanner.Abstraction.Repository;
+using Microsoft.Toolkit.Forms.UI.Controls;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -15,24 +16,12 @@ namespace ConferencePlanner.Repository.Ado.Repository
         {
             _sqlConnection = sqlConnection;
         }
-        public String BarcodeGenerator()
-        {
-            Random random = new Random();
-            int length = 16;
-            var rString = "";
-            for (var i = 0; i < length; i++)
-            {
-                rString += ((char)(random.Next(1, 26) + 64)).ToString().ToLower();
-            }
-            return rString;
-        }
 
-        public void AddEmail(string email)
+        public void Attend(string email, string barcode)
         {
             string commandText = "insert into Attendee values (@ConferenceId, @AttendeeEmail , " +
                 "@StatusId ,@EmailCode)";
-            string barcode = BarcodeGenerator();
-            int confId = 1;
+            int confId = 2;
             //statusId va fi hardcodat pentru ca 1 este pentru attend in tabela DictionaryStatus
             int statusId = 1;
 
@@ -45,8 +34,25 @@ namespace ConferencePlanner.Repository.Ado.Repository
             sqlCommand.Parameters["@StatusId"].Value = statusId;
             sqlCommand.Parameters.Add("@EmailCode", SqlDbType.NVarChar, 4000);
             sqlCommand.Parameters["@EmailCode"].Value = barcode;
-            SqlDataReader sqlDataReader = sqlCommand.ExecuteReader();
-            sqlDataReader.Close();
+            sqlCommand.ExecuteNonQuery();
+            //aici mai trebuie dat drop la table si apelata metoda de select 
+        }
+
+        public void WithdrawnCommand(String email, int conferenceId)
+        {
+            int newConferenceId = 3;
+            string commandText = "update Attendee set StatusId = @NewStatusId where StatusId = @Id";
+            SqlCommand sqlCommand = new SqlCommand(commandText, _sqlConnection);
+            sqlCommand.Parameters.Add("@Id", SqlDbType.Int);
+            sqlCommand.Parameters["@Id"].Value = conferenceId;
+            sqlCommand.Parameters.AddWithValue("@NewStatusId", newConferenceId);
+            sqlCommand.ExecuteNonQuery();
+            //aici mai trebuie dat drop la table si apelata metoda de select 
+        }
+
+        public void JoinCommand()
+        {
+            
         }
 
       
