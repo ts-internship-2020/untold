@@ -13,5 +13,7 @@ namespace ConferencePlanner.Abstraction.Repository
 
         List<ConferenceModel> FilterConferences(String name);
 
+        ConferenceModel GetConferenceById(int id);
+
     }
 }

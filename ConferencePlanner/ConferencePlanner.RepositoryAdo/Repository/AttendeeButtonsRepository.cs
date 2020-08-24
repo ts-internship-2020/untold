@@ -48,5 +48,7 @@ namespace ConferencePlanner.Repository.Ado.Repository
             SqlDataReader sqlDataReader = sqlCommand.ExecuteReader();
             sqlDataReader.Close();
         }
+
+      
     }
 }

@@ -53,6 +53,7 @@ namespace ConferencePlanner.WinUi
             this.EndDatePicker = new System.Windows.Forms.DateTimePicker();
             this.EndDateLable = new System.Windows.Forms.Label();
             this.StartDateLabel = new System.Windows.Forms.Label();
+            this.listBox1 = new System.Windows.Forms.ListBox();
             this.TabAttendee.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.AttendeeGridvw)).BeginInit();
             this.TabOrganizer.SuspendLayout();
@@ -179,6 +180,7 @@ namespace ConferencePlanner.WinUi
             this.OrganizerDataGrid.Size = new System.Drawing.Size(700, 318);
             this.OrganizerDataGrid.TabIndex = 0;
             this.OrganizerDataGrid.Text = "organizerDataGrid";
+            this.OrganizerDataGrid.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.OrganizerDataGrid_DataBindingComplete);
             // 
             // TabControl
             // 
@@ -284,11 +286,21 @@ namespace ConferencePlanner.WinUi
             this.StartDateLabel.Text = "Select a start date";
             this.StartDateLabel.Click += new System.EventHandler(this.label2_Click);
             // 
+            // listBox1
+            // 
+            this.listBox1.FormattingEnabled = true;
+            this.listBox1.ItemHeight = 15;
+            this.listBox1.Location = new System.Drawing.Point(47, 12);
+            this.listBox1.Name = "listBox1";
+            this.listBox1.Size = new System.Drawing.Size(655, 124);
+            this.listBox1.TabIndex = 4;
+            // 
             // MainPage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(817, 475);
+            this.Controls.Add(this.listBox1);
             this.Controls.Add(this.StartDateLabel);
             this.Controls.Add(this.EndDateLable);
             this.Controls.Add(this.EndDatePicker);
@@ -341,5 +353,6 @@ namespace ConferencePlanner.WinUi
         private DateTimePicker EndDatePicker;
         private Label EndDateLable;
         private DataGridView AttendeeGridvw;
+        private ListBox listBox1;
     }
 }

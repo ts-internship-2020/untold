@@ -1,13 +1,7 @@
-﻿using ConferencePlanner.Abstraction.Repository;
-using ConferencePlanner.Repository.Ado.Repository;
+﻿using ConferencePlanner.Abstraction.Model;
+using ConferencePlanner.Abstraction.Repository;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Diagnostics;
-using System.Drawing;
 using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 
 namespace ConferencePlanner.WinUi
@@ -52,6 +46,8 @@ namespace ConferencePlanner.WinUi
             varAddConf.ShowDialog();
         }
 
+        //private void TabOrganizer_Initiali
+
         private void TabOrganizer_SelectedIndexChanged(object sender, EventArgs e)
         { //Program.EnteredEmailAddress
             var x = _conferenceRepository.GetConferencesByOrganizer(Program.EnteredEmailAddress);
@@ -64,18 +60,8 @@ namespace ConferencePlanner.WinUi
             else
             {
                 OrganizerDataGrid.DataSource = x.ToList();
-
                 OrganizerDataGrid.AutoGenerateColumns = false;
-                //if (OrganizerDataGrid.Columns.Remove("ConferenceId"))
-                //{
 
-                //}
-                
-                OrganizerDataGrid.Columns[0].HeaderText = "Name";
-                OrganizerDataGrid.Columns[1].HeaderText = "Category";
-                OrganizerDataGrid.Columns[2].HeaderText = "Type";
-
-                //OrganizerDataGrid.Columns.Add("Location", "Location");
             }
 
 
@@ -166,6 +152,48 @@ namespace ConferencePlanner.WinUi
         private void label1_Click_1(object sender, EventArgs e)
         {
 
+        }
+
+        private void OrganizerDataGrid_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+            //if (OrganizerDataGrid.Columns.Remove("ConferenceId"))
+            //{
+            //    OrganizerDataGrid.Columns.Remove("ConferenceId");
+            //}
+
+            DataGridViewButtonColumn editButtonColumn = new DataGridViewButtonColumn();
+            editButtonColumn.Name = "edit_column";
+            editButtonColumn.Text = "Edit";
+            int columnIndex = OrganizerDataGrid.ColumnCount;
+
+            OrganizerDataGrid.Columns.Insert(columnIndex, editButtonColumn);
+            OrganizerDataGrid.CellClick += OrganizerDataGrid_CellClick;
+
+            OrganizerDataGrid.Columns[0].HeaderText = "Id";
+            OrganizerDataGrid.Columns[1].HeaderText = "Name";
+            OrganizerDataGrid.Columns[2].HeaderText = "Category";
+            OrganizerDataGrid.Columns[3].HeaderText = "Type";
+            OrganizerDataGrid.Columns[4].HeaderText = "Location";
+            OrganizerDataGrid.Columns[5].HeaderText = "Main Speaker Name";
+            OrganizerDataGrid.Columns[6].HeaderText = "Period";
+
+        }
+
+        private void OrganizerDataGrid_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            //listBox1.Items.Add(e.ToString());
+            if (e.ColumnIndex == OrganizerDataGrid.Columns["edit_column"].Index)
+            {
+                var id = (int) OrganizerDataGrid.Rows[e.RowIndex].Cells[0].Value;
+
+                ConferenceModel conference = _conferenceRepository.GetConferenceById(id);
+
+                var varAddConf = new AddConf(conference, _conferenceRepository, _countryRepository);
+
+                varAddConf.ShowDialog();
+
+
+            }
         }
     }
 }

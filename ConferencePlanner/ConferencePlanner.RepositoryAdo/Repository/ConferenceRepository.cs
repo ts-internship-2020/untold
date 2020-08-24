@@ -93,6 +93,31 @@ namespace ConferencePlanner.Repository.Ado.Repository
         {
             throw new NotImplementedException();
         }
+
+        public ConferenceModel GetConferenceById(int id)
+        {
+            string commandText = "select ConferenceName, LocationName, ConferencePeriod from vwConferenceDetails where ConferenceId = @Id ";
+
+            SqlCommand sqlCommand = new SqlCommand(commandText, _sqlConnection);
+            sqlCommand.Parameters.Add("@Id", SqlDbType.Int);
+            sqlCommand.Parameters["@Id"].Value =id;
+            
+            SqlDataReader sqlDataReader = sqlCommand.ExecuteReader();
+
+
+            ConferenceModel conference = new ConferenceModel();
+            //Console.WriteLine(sqlDataReader);
+            sqlDataReader.Read();
+            conference.ConferenceName = sqlDataReader.GetString("ConferenceName");
+
+            conference.LocationName = sqlDataReader.GetString("LocationName");
+            conference.Period = sqlDataReader.GetString("ConferencePeriod");
+
+            sqlDataReader.Close();
+
+            return conference;
+
+        }
     }
     }
 
