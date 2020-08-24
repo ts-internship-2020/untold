@@ -58,33 +58,18 @@ namespace ConferencePlanner.WinUi
                 OrganizerDataGrid.Visible = false;
                 NoConferenceLabel.Visible = true;
             }
+            else
+            {
+                OrganizerDataGrid.DataSource = x.ToList();
 
-            OrganizerDataGrid.DataSource = x.ToList();
+                OrganizerDataGrid.AutoGenerateColumns = false;
+                OrganizerDataGrid.Columns.Remove("ConferenceId");
+                OrganizerDataGrid.Columns[0].HeaderText = "Name";
+                OrganizerDataGrid.Columns[1].HeaderText = "Category";
+                OrganizerDataGrid.Columns[2].HeaderText = "Type";
 
-            OrganizerDataGrid.AutoGenerateColumns = false;
-            OrganizerDataGrid.Columns.Remove("ConferenceId");
-            OrganizerDataGrid.Columns[0].HeaderText = "Name";
-            OrganizerDataGrid.Columns[1].HeaderText = "Category";
-            OrganizerDataGrid.Columns[2].HeaderText = "Type";
-
-            OrganizerDataGrid.Columns.Add("Location", "Location");
-
-            
-            //foreach (DataGridViewColumn col in OrganizerDataGrid.Columns)
-            //{
-            //    string LocationName = "";
-            //    if (col. == "CountryName" || col.Name == "CountyName" || col.Name == "CityName")
-            //    {
-            //        foreach (DataGridViewRow row in OrganizerDataGrid.Rows)
-            //            LocationName += row.cell
-            //    }
-
-
-            //}
-
-            //var string test = OrganizerDataGrid.Columns[2].ToString() + OrganizerDataGrid.Columns[3].ToString();
-
-            //OrganizerDataGrid.Columns.Add(test);
+                //OrganizerDataGrid.Columns.Add("Location", "Location");
+            }
 
 
         }
@@ -132,12 +117,31 @@ namespace ConferencePlanner.WinUi
 
         private void StartDateTimePicker_ValueChanged(object sender, EventArgs e)
         {
+            string StartDate = StartDatePicker.Value.ToString("yyyy-MM-dd");
+            string EndDate = EndDatePicker.Value.ToString("yyyy-MM-dd");
 
+            
+        }
+
+        private void EndDateTimePicker_ValueChanged(object sender, EventArgs e)
+        {
+            string StartDate = StartDatePicker.Value.ToString("yyyy-MM-dd");
+            string EndDate = EndDatePicker.Value.ToString("yyyy-MM-dd");
         }
 
         private void JoinButton_Click(object sender, EventArgs e)
         {
             _attendeeButtons.AddEmail(Program.EnteredEmailAddress);
+        }
+
+        private void label2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label1_Click_1(object sender, EventArgs e)
+        {
+
         }
     }
 }
