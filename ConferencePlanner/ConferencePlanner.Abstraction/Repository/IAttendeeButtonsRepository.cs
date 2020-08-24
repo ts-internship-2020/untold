@@ -6,6 +6,9 @@ namespace ConferencePlanner.Abstraction.Repository
 {
     public interface IAttendeeButtonsRepository
     {
-       void AddEmail(string email);
+        void Attend(string email, string barcode);
+        void WithdrawnCommand(string email, int statusId);
+
+        void JoinCommand(string email, int statusId);
     }
 }

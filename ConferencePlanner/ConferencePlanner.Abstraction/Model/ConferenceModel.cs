@@ -10,14 +10,9 @@ namespace ConferencePlanner.Abstraction.Model
         public string ConferenceName { get; set; }
         public string ConferenceCategoryName { get; set; }
         public string ConferenceTypeName { get; set; }
-        public string CountryName { get; set; }
-        public string CountyName { get; set; }
-        public string CityName { get; set; }
-        public string SpeakerFirstName { get; set; }
-        public string SpeakerLastName { get; set; }
-        public DateTime StartDate { get; set; }
-        public DateTime EndDate { get; set; }
-
+        public string LocationName { get; set; }
+        public string SpeakerName { get; set; }
+        public string Period { get; set; }
     }
 
     

@@ -62,7 +62,7 @@
             this.ConferenceNameLabel.TabIndex = 0;
             this.ConferenceNameLabel.Text = "Conference name:";
             // 
-            // ConfName
+            // ConferenceName
             // 
             this.ConfName.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
@@ -177,6 +177,24 @@
             this.NextBtnCountryTab.UseVisualStyleBackColor = true;
             this.NextBtnCountryTab.Click += new System.EventHandler(this.button1_Click);
             // 
+            // comboBox3
+            // 
+            this.comboBox3.FormattingEnabled = true;
+            this.comboBox3.Location = new System.Drawing.Point(30, 26);
+            this.comboBox3.Name = "comboBox3";
+            this.comboBox3.Size = new System.Drawing.Size(121, 23);
+            this.comboBox3.TabIndex = 1;
+            this.comboBox3.SelectedIndexChanged += new System.EventHandler(this.comboBox3_SelectedIndexChanged);
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(186, 26);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 0;
+            this.button1.Text = "Next";
+            this.button1.UseVisualStyleBackColor = true;
+            // 
             // County
             // 
             this.County.Controls.Add(this.NextBtnCountyTab);
@@ -198,7 +216,7 @@
             this.NextBtnCountyTab.UseVisualStyleBackColor = true;
             this.NextBtnCountyTab.Click += new System.EventHandler(this.button2_Click);
             // 
-            // City
+            // comboBox2
             // 
             this.City.Controls.Add(this.SaveAndNewBtnCityTab);
             this.City.Controls.Add(this.SaveBtnCityTab);
