@@ -3,6 +3,8 @@ using ConferencePlanner.Abstraction.Repository;
 using System;
 using System.Linq;
 using System.Windows.Forms;
+using System.Text;
+using System.Collections.Generic;
 
 namespace ConferencePlanner.WinUi
 {
@@ -59,24 +61,26 @@ namespace ConferencePlanner.WinUi
             varAddConf.ShowDialog();
         }
 
-        //private void TabOrganizer_Initiali
-
-        private void TabOrganizer_SelectedIndexChanged(object sender, EventArgs e)
-        { //Program.EnteredEmailAddress
-            var x = _conferenceRepository.GetConferencesByOrganizer(Program.EnteredEmailAddress);
-
-            if (x.Count() == 0)
+        private void CheckNumberOfRows(List<ConferenceModel> conferences)
+        {
+            if (conferences.Count() == 0)
             {
                 OrganizerDataGrid.Visible = false;
                 NoConferenceLabel.Visible = true;
             }
             else
             {
-                OrganizerDataGrid.DataSource = x.ToList();
+                OrganizerDataGrid.DataSource = conferences.ToList();
                 OrganizerDataGrid.AutoGenerateColumns = false;
 
             }
+        }
 
+        private void TabOrganizer_SelectedIndexChanged(object sender, EventArgs e)
+        { 
+            var x = _conferenceRepository.GetConferencesByOrganizer(Program.EnteredEmailAddress);
+
+            CheckNumberOfRows(x);
 
         }
 
@@ -125,13 +129,20 @@ namespace ConferencePlanner.WinUi
 
         }
 
-        private void StartDateTimePicker_ValueChanged(object sender, EventArgs e)
+        private void StartDatePicker_ValueChanged(object sender, EventArgs e)
         {
-            string StartDate = StartDatePicker.Value.ToString("yyyy-MM-dd");
-            string EndDate = EndDatePicker.Value.ToString("yyyy-MM-dd");
+            OrganizerDataGrid.DataSource = null;
+
+            DateTime StartDate = StartDatePicker.Value;
+            DateTime EndDate = EndDatePicker.Value;
+            //DateTime EndDate = EndDatePicker.Value;
+
+            listBox1.Items.Add(StartDate);
 
             string test = TabControl.SelectedTab.Name;
-            //var x = _conferenceRepository.FilterConferences(Program.EnteredEmailAddress, StartDate, EndDate);
+            var conferences = _conferenceRepository.FilterConferences(Program.EnteredEmailAddress, StartDate, EndDate);
+
+            CheckNumberOfRows(conferences);
         }
 
         private void Attend_Click(object sender, EventArgs e)
@@ -151,10 +162,20 @@ namespace ConferencePlanner.WinUi
         }
 
             
-        private void EndDateTimePicker_ValueChanged(object sender, EventArgs e)
+        private void EndDatePicker_ValueChanged(object sender, EventArgs e)
         {
-            string StartDate = StartDatePicker.Value.ToString("yyyy-MM-dd");
-            string EndDate = EndDatePicker.Value.ToString("yyyy-MM-dd");
+            OrganizerDataGrid.DataSource = null;
+
+            DateTime StartDate = StartDatePicker.Value;
+            DateTime EndDate = EndDatePicker.Value;
+            //DateTime EndDate = EndDatePicker.Value;
+
+            listBox1.Items.Add(StartDate);
+
+            string test = TabControl.SelectedTab.Name;
+            var conferences = _conferenceRepository.FilterConferences(Program.EnteredEmailAddress, StartDate, EndDate);
+
+            CheckNumberOfRows(conferences);
         }
 
         private void Join_Click(object sender, EventArgs e)
@@ -177,10 +198,10 @@ namespace ConferencePlanner.WinUi
 
         private void OrganizerDataGrid_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
-            //if (OrganizerDataGrid.Columns.Remove("ConferenceId"))
-            //{
-            //    OrganizerDataGrid.Columns.Remove("ConferenceId");
-            //}
+            if (OrganizerDataGrid.Columns.Contains("ConferenceId") && OrganizerDataGrid.Columns["ConferenceId"].Visible)
+            {
+                OrganizerDataGrid.Columns["ConferenceId"].Visible = false;
+            }
 
             DataGridViewButtonColumn editButtonColumn = new DataGridViewButtonColumn();
             editButtonColumn.Name = "edit_column";
@@ -198,6 +219,15 @@ namespace ConferencePlanner.WinUi
             OrganizerDataGrid.Columns[5].HeaderText = "Main Speaker Name";
             OrganizerDataGrid.Columns[6].HeaderText = "Period";
 
+            OrganizerDataGrid.Columns["Period"].DisplayIndex = 2;
+            OrganizerDataGrid.Columns["ConferenceCategoryName"].DisplayIndex = 3;
+            OrganizerDataGrid.Columns["ConferenceTypeName"].DisplayIndex = 4;
+            OrganizerDataGrid.Columns["LocationName"].DisplayIndex = 5;
+            OrganizerDataGrid.Columns["SpeakerName"].DisplayIndex = 6;
+
+            OrganizerDataGrid.AutoResizeColumns();
+            //OrganizerDataGrid.DefaultCellStyle.WrapMode = DataGridViewTriState.True;
+            //OrganizerDataGrid.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
         }
 
         private void OrganizerDataGrid_CellClick(object sender, DataGridViewCellEventArgs e)

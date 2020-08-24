@@ -17,15 +17,51 @@ namespace ConferencePlanner.Repository.Ado.Repository
             _sqlConnection = sqlConnection;
         }
 
-        //public List<ConferenceModel> FilterConferences(string emal, string sDate, string eDate)
-        //{
-        //    throw NotImplementedException;
-        //}
+        public List<ConferenceModel> FilterConferences(string email, DateTime sDate, DateTime eDate)
+        {
+            string commandText = "select ConferenceId, ConferenceName, LocationName, ConferencePeriod from vwConferenceDetails where Email = @Email and StartDate >= @StartDate and EndDate <= @EndDate ";
+
+            SqlCommand sqlCommand = new SqlCommand(commandText, _sqlConnection);
+            sqlCommand.Parameters.Add("@Email", SqlDbType.NVarChar);
+            sqlCommand.Parameters["@Email"].Value = email;
+            sqlCommand.Parameters.Add("@StartDate", SqlDbType.DateTime);
+            sqlCommand.Parameters["@StartDate"].Value = sDate;
+            sqlCommand.Parameters.Add("@EndDate", SqlDbType.DateTime);
+            sqlCommand.Parameters["@EndDate"].Value = eDate;
+
+            SqlDataReader sqlDataReader = sqlCommand.ExecuteReader();
+
+            List<ConferenceModel> conferences = new List<ConferenceModel>();
+
+
+            if (sqlDataReader.HasRows)
+            {
+                while (sqlDataReader.Read())
+                {
+                    conferences.Add(new ConferenceModel()
+                    {
+                        ConferenceId = sqlDataReader.GetInt32("ConferenceId"),
+                        ConferenceName = sqlDataReader.GetString("ConferenceName"),
+                        ConferenceCategoryName = sqlDataReader.GetString("ConferenceCategoryName"),
+                        ConferenceTypeName = sqlDataReader.GetString("ConferenceTypeName"),
+                        LocationName = sqlDataReader.GetString("LocationName"),
+                        SpeakerName = sqlDataReader.GetString("SpeakerName"),
+                        Period = sqlDataReader.GetString("ConferencePeriod")
+                    });
+
+                }
+            }
+
+            sqlDataReader.Close();
+
+            return conferences;
+        }
 
 
 
         public List<ConferenceModel> GetConferencesByOrganizer(string email)
         {
+            
         
             SqlCommand sqlCommand = _sqlConnection.CreateCommand();
             sqlCommand.CommandText = "select * from vwConferenceDetails where EmailOrganizer = '"+email + "'";
@@ -89,10 +125,6 @@ namespace ConferencePlanner.Repository.Ado.Repository
 
         }
 
-        public List<ConferenceModel> FilterConferences(string name)
-        {
-            throw new NotImplementedException();
-        }
 
         public ConferenceModel GetConferenceById(int id)
         {
