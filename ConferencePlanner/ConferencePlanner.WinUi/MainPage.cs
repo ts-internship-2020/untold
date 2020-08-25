@@ -196,8 +196,13 @@ namespace ConferencePlanner.WinUi
             }
 
             DataGridViewButtonColumn editButtonColumn = new DataGridViewButtonColumn();
-            editButtonColumn.Name = "edit_column";
+            editButtonColumn.UseColumnTextForButtonValue = true;
             editButtonColumn.Text = "Edit";
+            editButtonColumn.Width = 25;
+            editButtonColumn.HeaderText = "";
+            editButtonColumn.Name = "edit_column";
+            
+            //editButtonColumn.Text.
             int columnIndex = OrganizerDataGrid.ColumnCount;
 
             OrganizerDataGrid.Columns.Insert(columnIndex, editButtonColumn);

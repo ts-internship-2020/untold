@@ -39,13 +39,17 @@ namespace ConferencePlanner.WinUi
 
             InitializeComponent();
 
-            //this.ConferenceName.Text = conference.ConferenceName;
-
+            this.ConfName.Text = conference.ConferenceName;
+            
             string[] dates = conference.Period.Split(" - ");
             this.MonthCalendar.SetSelectionRange(DateTime.Parse(dates[0]), DateTime.Parse(dates[1]));
 
             string[] places = conference.LocationName.Split(", ");
-            //this.
+
+            this.ConfAddress.Text = conference.LocationName;
+
+            this.CountryComboBox.Text = places[0];
+            
 
         }
 
@@ -76,6 +80,8 @@ namespace ConferencePlanner.WinUi
 
         private void button3_Click(object sender, EventArgs e)
         {
+            ComboBoxCityTab.Enabled = true;
+            RequiredFields();
             Close();
         }
 
@@ -89,6 +95,31 @@ namespace ConferencePlanner.WinUi
         {
             var list = _countryRepository.GetListCountry();
             CountryComboBox.DataSource = list;
+        }
+
+        private void BackBtnCountyTab_Click(object sender, EventArgs e)
+        {
+            TabControlLocation.SelectedIndex = 0;
+        }
+
+        private void BackBtnCityTab_Click(object sender, EventArgs e)
+        {
+            TabControlLocation.SelectedIndex = 1;
+        }
+
+        private void SaveAndNewBtnCityTab_Click(object sender, EventArgs e)
+        {
+            SaveAndNewBtnCityTab.Enabled = true;
+            ConfName.Text = string.Empty;
+            ConfAddress.Text = string.Empty;
+            CountryComboBox.SelectedItem = string.Empty;
+            ComboBoxCountyTab.SelectedItem = string.Empty;
+            ComboBoxCityTab.SelectedItem = string.Empty;
+        }
+
+        private void ComboBoxCountyTab_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            NextBtnCountyTab.Enabled = true;
         }
     }
 }
