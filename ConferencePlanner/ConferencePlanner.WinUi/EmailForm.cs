@@ -20,7 +20,7 @@ namespace ConferencePlanner.WinUi
 
         private static ICountryRepository _countryRepository;
 
-        private static IGetDemoRepository _getDemoRepository;
+        //private static IGetDemoRepository _getDemoRepository;
 
         private static IAttendeeButtonsRepository _attendeeButtonsRepository;
 
@@ -70,7 +70,7 @@ namespace ConferencePlanner.WinUi
             init();
             Hide();
             Program.EnteredEmailAddress = EmailTextBox.Text;
-            var NextPage = new MainPage(_conferenceRepository, _countryRepository, _getDemoRepository, _attendeeButtonsRepository);
+            var NextPage = new MainPage(_conferenceRepository, _countryRepository, _attendeeButtonsRepository);
             NextPage.ShowDialog();
         }
 

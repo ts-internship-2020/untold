@@ -14,18 +14,15 @@ namespace ConferencePlanner.WinUi
 
         private readonly ICountryRepository _countryRepository;
 
-        private readonly IGetDemoRepository _getDemoRepository;
 
         private readonly IAttendeeButtonsRepository _attendeeButtons;
 
-        public MainPage(IConferenceRepository conferenceRepository, ICountryRepository countryRepository, IGetDemoRepository getDemoRepository, 
+        public MainPage(IConferenceRepository conferenceRepository, ICountryRepository countryRepository,
             IAttendeeButtonsRepository attendeeButtonsRepository)
         {
             _conferenceRepository = conferenceRepository;
 
             _countryRepository = countryRepository;
-
-            _getDemoRepository = getDemoRepository;
 
             _attendeeButtons = attendeeButtonsRepository;
 
