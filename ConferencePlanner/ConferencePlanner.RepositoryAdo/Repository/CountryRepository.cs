@@ -2,6 +2,7 @@
 using ConferencePlanner.Abstraction.Repository;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Text;
 
@@ -18,7 +19,7 @@ namespace ConferencePlanner.Repository.Ado.Repository
         public List<CountryModel> GetListCountry()
         {
             SqlCommand sqlCommandCountry = _sqlConnection.CreateCommand();
-            sqlCommandCountry.CommandText = "select CountryName from DictionaryCountry";
+            sqlCommandCountry.CommandText = "select CountryName from DictionaryCountry ";
             SqlDataReader sqlDataReader = sqlCommandCountry.ExecuteReader();
 
             List<CountryModel> countrylist = new List<CountryModel>();
@@ -29,9 +30,9 @@ namespace ConferencePlanner.Repository.Ado.Repository
                 {
                     countrylist.Add(new CountryModel()
                     {
-                        CountryName = sqlDataReader.GetString(0)
+                        CountryName = sqlDataReader.GetString("CountryName")
 
-                    });
+                    }) ;
                 }
             }
 

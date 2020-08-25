@@ -20,7 +20,7 @@ namespace ConferencePlanner.WinUi
 
         private static ICountryRepository _countryRepository;
 
-        private static IGetDemoRepository _getDemoRepository;
+        //private static IGetDemoRepository _getDemoRepository;
 
         private static IAttendeeButtonsRepository _attendeeButtonsRepository;
 
@@ -39,8 +39,10 @@ namespace ConferencePlanner.WinUi
         }
         private void EmailTextBox_TextChanged(object sender, EventArgs e)
         {
+
             EmailTextBox.ForeColor = Color.Black;
             ErrorLabel.Visible = false;
+            ErrorLabel2.Visible = false;
         }
 
         private bool CheckEmail()
@@ -53,24 +55,28 @@ namespace ConferencePlanner.WinUi
                 if (!mRegxExpression.IsMatch(EmailTextBox.Text.Trim()))
                 {
                     ErrorLabel.Visible = true;
-                    ErrorLabel.Text="Insert a valid email address like 'name @example.com' ";
                     EmailTextBox.Focus();
                     return false;
                 }
                 else
-                { 
+                {
                     return true;
                 }
-               
+
             }
-            return false;
+            else
+            {
+                ErrorLabel2.Visible = true;
+                EmailTextBox.Focus();
+                return false;
+            }
         }
         public void NextPage()
         {
             init();
             Hide();
             Program.EnteredEmailAddress = EmailTextBox.Text;
-            var NextPage = new MainPage(_conferenceRepository, _countryRepository, _getDemoRepository, _attendeeButtonsRepository);
+            var NextPage = new MainPage(_conferenceRepository, _countryRepository, _attendeeButtonsRepository);
             NextPage.ShowDialog();
         }
 

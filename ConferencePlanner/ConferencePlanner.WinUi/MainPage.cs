@@ -4,6 +4,11 @@ using System;
 using System.Linq;
 using System.Windows.Forms;
 using System.Text;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using System.Drawing;
+using Tulpep.NotificationWindow;
+using System.Data.SqlClient;
 
 namespace ConferencePlanner.WinUi
 {
@@ -13,18 +18,15 @@ namespace ConferencePlanner.WinUi
 
         private readonly ICountryRepository _countryRepository;
 
-        private readonly IGetDemoRepository _getDemoRepository;
 
         private readonly IAttendeeButtonsRepository _attendeeButtons;
 
-        public MainPage(IConferenceRepository conferenceRepository, ICountryRepository countryRepository, IGetDemoRepository getDemoRepository,
+        public MainPage(IConferenceRepository conferenceRepository, ICountryRepository countryRepository,
             IAttendeeButtonsRepository attendeeButtonsRepository)
         {
             _conferenceRepository = conferenceRepository;
 
             _countryRepository = countryRepository;
-
-            _getDemoRepository = getDemoRepository;
 
             _attendeeButtons = attendeeButtonsRepository;
 
@@ -55,41 +57,38 @@ namespace ConferencePlanner.WinUi
         {
             var varAddConf = new AddConf(_conferenceRepository, _countryRepository);
 
-            //change tabControl to organizer if it's in atendee
-            TabControl.SelectedTab = TabOrganizer;
-
+            TabControl.SelectedIndex = 1;
             varAddConf.ShowDialog();
+
+
+
         }
 
-        //private void TabOrganizer_Initiali
-
-        private void TabOrganizer_SelectedIndexChanged(object sender, EventArgs e)
-        { //Program.EnteredEmailAddress
-            var x = _conferenceRepository.GetConferencesByOrganizer(Program.EnteredEmailAddress);
-
-            if (x.Count() == 0)
+        private void CheckNumberOfRows(List<ConferenceModel> conferences)
+        {
+            if (conferences.Count() == 0)
             {
                 OrganizerDataGrid.Visible = false;
                 NoConferenceLabel.Visible = true;
             }
             else
             {
-                OrganizerDataGrid.DataSource = x.ToList();
+                OrganizerDataGrid.DataSource = conferences.ToList();
                 OrganizerDataGrid.AutoGenerateColumns = false;
 
             }
+        }
 
+        private void TabOrganizer_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            var x = _conferenceRepository.GetConferencesByOrganizer(Program.EnteredEmailAddress);
+
+            CheckNumberOfRows(x);
 
         }
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-
-        }
-
-        private void dataGridView1_CellContentClick(object sender, EventArgs e)
-        {
-            // var x = _getDemoRepository.GetDemo()
 
         }
 
@@ -157,29 +156,6 @@ namespace ConferencePlanner.WinUi
         }
 
 
-        //private void AttendeeGridvw_SourceChanged(object sender, DataGridViewBindingCompleteEventArgs e)
-        //{
-
-        //    DataGridViewButtonColumn attendButtonColumn = new DataGridViewButtonColumn();
-        //    //attendButtonColumn.Name = "attend_column";
-        //    //attendButtonColumn.Text = "Attend";
-
-        //    //int columnIndex = AttendeeGridvw.ColumnCount;
-
-        //    //AttendeeGridvw.Columns.Insert(columnIndex,attendButtonColumn);
-
-        //    ////
-        //    //DataGridViewButtonColumn withdrawButtonColumn = new DataGridViewButtonColumn();
-        //    //withdrawButtonColumn.Name = "withdraw_column";
-        //    //withdrawButtonColumn.Text = "Withdraw";
-
-        //    //AttendeeGridvw.Columns.Insert(columnIndex: columnIndex + 1, withdrawButtonColumn);
-
-
-        //    //DataGridViewButtonColumn joinButtonColumn = new DataGridViewButtonColumn();
-        //    //joinButtonColumn.Name = "join_column";
-        //    //joinButtonColumn.Text = "Join";
-
 
 
         //    //AttendeeGridvw.Columns.Insert(columnIndex: columnIndex + 2, joinButtonColumn);
@@ -197,24 +173,76 @@ namespace ConferencePlanner.WinUi
 
         }
 
-        private void label1_Click(object sender, EventArgs e)
+        private void StartDatePicker_ValueChanged(object sender, EventArgs e)
         {
+
+            DateTime StartDate = StartDatePicker.Value;
+            DateTime EndDate = EndDatePicker.Value;
+
+            if (TabControl.SelectedTab.Name == "TabOrganizer")
+            {
+                OrganizerDataGrid.DataSource = null;
+                var conferences = _conferenceRepository.FilterConferencesByDate(Program.EnteredEmailAddress, StartDate.ToString("yyyy'-'MM'-'dd' 'HH':'mm':'ss"), EndDate.ToString("yyyy'-'MM'-'dd' 'HH':'mm':'ss"));
+
+                CheckNumberOfRows(conferences);
+
+            }
+            else
+            {
+                AttendeeGridvw.DataSource = null;
+                var allConferences = _conferenceRepository.FilterConfAttendeeByDate(Program.EnteredEmailAddress, StartDate.ToString("yyyy'-'MM'-'dd' 'HH':'mm':'ss"), EndDate.ToString("yyyy'-'MM'-'dd' 'HH':'mm':'ss"));
+
+                //var conferences = FilterAttendee(allConferences, StartDate, EndDate);
+
+                UpdateAttendee(FilterAttendee(allConferences, StartDate, EndDate));
+
+            }
 
         }
 
-        private void StartDateTimePicker_ValueChanged(object sender, EventArgs e)
+        private void UpdateAttendee(List<ConferenceModel> conf)
         {
-            string StartDate = StartDatePicker.Value.ToString("yyyy-MM-dd");
-            string EndDate = EndDatePicker.Value.ToString("yyyy-MM-dd");
+            AttendeeGridvw.DataSource = conf.ToList();
+            listBox1.Items.Add("been here");
 
-            string test = TabControl.SelectedTab.Name;
-            //var x = _conferenceRepository.FilterConferences(Program.EnteredEmailAddress, StartDate, EndDate);
         }
+
+        private List<ConferenceModel> FilterAttendee(List<ConferenceModel> allConferences, DateTime StartDate, DateTime EndDate)
+        {
+            List<ConferenceModel> conferences = new List<ConferenceModel>();
+
+            foreach (ConferenceModel conf in allConferences)
+            {
+                string[] aux = conf.Period.Split(" - ");
+                DateTime sDate = DateTime.Parse(aux[0]);
+                DateTime eDate = DateTime.Parse(aux[1]);
+                //listBox1.Items.Add(sDate);
+                //listBox1.Items.Add(StartDate.Date);
+                if ( DateTime.Compare(StartDate.Date, sDate) <=0 && DateTime.Compare(eDate, EndDate.Date) <= 0)
+                {
+                    listBox1.Items.Add(conf.ConferenceName);
+                    conferences.Append(conf);
+                }
+            }
+            return conferences;
+        }
+    
 
         private void Attend_Click(object sender, EventArgs e)
         {
             string barcodeGenerator = BarcodeGenerator();
-            _attendeeButtons.Attend(Program.EnteredEmailAddress, barcodeGenerator, 2);
+            _attendeeButtons.Attend(Program.EnteredEmailAddress, barcodeGenerator);
+            //var w = new Form();
+            //Size = new Size(0, 0);
+            //Task.Delay(TimeSpan.FromSeconds(3))
+            //    .ContinueWith((t) => w.Close(), TaskScheduler.FromCurrentSynchronizationContext());
+
+            //MessageBox.Show(w, "Felicitari, te-ai inscris cu succes!");
+            PopupNotifier popup = new PopupNotifier();
+            popup.Image = Properties.Resources.info;
+            popup.TitleText = "FoxLearn";
+            popup.ContentText = "Another Text";
+            popup.Popup();
         }
 
         private void Withdraw_Click(object sender, EventArgs e)
@@ -223,15 +251,37 @@ namespace ConferencePlanner.WinUi
             //a = statusul participantului
             int a = 1;
             _attendeeButtons.WithdrawnCommand(Program.EnteredEmailAddress, a);
+            var w = new Form();
+            Size = new Size(0, 0);
+            Task.Delay(TimeSpan.FromSeconds(3))
+                .ContinueWith((t) => w.Close(), TaskScheduler.FromCurrentSynchronizationContext());
 
-
+            MessageBox.Show(w, "Te-ai retras de la aceasta conferinta. Poti alege oricand o conferinta disponibila!");
         }
 
-
-        private void EndDateTimePicker_ValueChanged(object sender, EventArgs e)
+            
+        private void EndDatePicker_ValueChanged(object sender, EventArgs e)
         {
-            string StartDate = StartDatePicker.Value.ToString("yyyy-MM-dd");
-            string EndDate = EndDatePicker.Value.ToString("yyyy-MM-dd");
+            OrganizerDataGrid.DataSource = null;
+
+            DateTime StartDate = StartDatePicker.Value;
+            DateTime EndDate = EndDatePicker.Value;
+
+            if (TabControl.SelectedTab.Name == "TabOrganizer")
+            {
+                var conferences = _conferenceRepository.FilterConferencesByDate(Program.EnteredEmailAddress, StartDate.ToString("yyyy'-'MM'-'dd' 'HH':'mm':'ss"), EndDate.ToString("yyyy'-'MM'-'dd' 'HH':'mm':'ss"));
+
+                CheckNumberOfRows(conferences);
+            }
+            else
+            {
+                var allConferences = _conferenceRepository.FilterConfAttendeeByDate(Program.EnteredEmailAddress, StartDate.ToString("yyyy'-'MM'-'dd' 'HH':'mm':'ss"), EndDate.ToString("yyyy'-'MM'-'dd' 'HH':'mm':'ss"));
+
+                var conferences = FilterAttendee(allConferences, StartDate, EndDate);
+
+                UpdateAttendee(conferences);
+
+            }
         }
 
         private void Join_Click(object sender, EventArgs e)
@@ -242,31 +292,27 @@ namespace ConferencePlanner.WinUi
             _attendeeButtons.JoinCommand(Program.EnteredEmailAddress, statusId);
         }
 
-        private void label2_Click(object sender, EventArgs e)
-        {
-
-
-        }
-
-        private void label1_Click_1(object sender, EventArgs e)
-        {
-
-        }
 
         private void OrganizerDataGrid_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
-            //if (OrganizerDataGrid.Columns.Remove("ConferenceId"))
-            //{
-            //    OrganizerDataGrid.Columns.Remove("ConferenceId");
-            //}
+            if (OrganizerDataGrid.Columns.Contains("ConferenceId") && OrganizerDataGrid.Columns["ConferenceId"].Visible)
+            {
+                OrganizerDataGrid.Columns["ConferenceId"].Visible = false;
+                DataGridViewButtonColumn editButtonColumn = new DataGridViewButtonColumn();
+                editButtonColumn.UseColumnTextForButtonValue = true;
+                editButtonColumn.Text = "Edit";
+                editButtonColumn.Width = 25;
+                editButtonColumn.HeaderText = "";
+                editButtonColumn.Name = "edit_column";
 
-            DataGridViewButtonColumn editButtonColumn = new DataGridViewButtonColumn();
-            editButtonColumn.Name = "edit_column";
-            editButtonColumn.Text = "Edit";
-            int columnIndex = OrganizerDataGrid.ColumnCount;
+                //editButtonColumn.Text.
+                int columnIndex = OrganizerDataGrid.ColumnCount;
 
-            OrganizerDataGrid.Columns.Insert(columnIndex, editButtonColumn);
-            OrganizerDataGrid.CellClick += OrganizerDataGrid_CellClick;
+                OrganizerDataGrid.Columns.Insert(columnIndex, editButtonColumn);
+                OrganizerDataGrid.CellClick += OrganizerDataGrid_CellClick;
+
+            }
+
 
             OrganizerDataGrid.Columns[0].HeaderText = "Id";
             OrganizerDataGrid.Columns[1].HeaderText = "Name";
@@ -276,6 +322,15 @@ namespace ConferencePlanner.WinUi
             OrganizerDataGrid.Columns[5].HeaderText = "Main Speaker Name";
             OrganizerDataGrid.Columns[6].HeaderText = "Period";
 
+            OrganizerDataGrid.Columns["Period"].DisplayIndex = 2;
+            OrganizerDataGrid.Columns["ConferenceCategoryName"].DisplayIndex = 3;
+            OrganizerDataGrid.Columns["ConferenceTypeName"].DisplayIndex = 4;
+            OrganizerDataGrid.Columns["LocationName"].DisplayIndex = 5;
+            OrganizerDataGrid.Columns["SpeakerName"].DisplayIndex = 6;
+
+            OrganizerDataGrid.AutoResizeColumns();
+            //OrganizerDataGrid.DefaultCellStyle.WrapMode = DataGridViewTriState.True;
+            //OrganizerDataGrid.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
         }
 
         private void OrganizerDataGrid_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -290,7 +345,6 @@ namespace ConferencePlanner.WinUi
                 var varAddConf = new AddConf(conference, _conferenceRepository, _countryRepository);
 
                 varAddConf.ShowDialog();
-
 
             }
         }
