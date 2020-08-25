@@ -456,6 +456,15 @@ namespace ConferencePlanner.WinUi
 
         }
 
+        private void TabAttendee_Click_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void AttendeeGridvw_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
     }
 }
 

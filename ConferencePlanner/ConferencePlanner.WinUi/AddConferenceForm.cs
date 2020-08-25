@@ -50,7 +50,7 @@ namespace ConferencePlanner.WinUi
 
             //this.CountryComboBox.Text = places[0];
             //this.CountyComboBox.Text = places[1];
-            this.CityComboBox.Text = places[2];
+           // this.CityComboBox.Text = places[2];
 
 
         }
@@ -85,7 +85,7 @@ namespace ConferencePlanner.WinUi
 
         private void button3_Click(object sender, EventArgs e)
         {
-            CityComboBox.Enabled = true;
+            //CityComboBox.Enabled = true;
            
             Close();
         }
@@ -115,17 +115,17 @@ namespace ConferencePlanner.WinUi
 
         private void SaveAndNewBtnCityTab_Click(object sender, EventArgs e)
         {
-            SaveAndNewBtnCityTab.Enabled = true;
+            //SaveAndNewBtnCityTab.Enabled = true;
             ConfName.Text = string.Empty;
             ConfEmailAddress.Text = string.Empty;
             //CountryComboBox.SelectedItem = string.Empty;
             //CountyComboBox.SelectedItem = string.Empty;
-            CityComboBox.SelectedItem = string.Empty;
+            //CityComboBox.SelectedItem = string.Empty;
         }
 
         private void ComboBoxCountyTab_SelectedIndexChanged(object sender, EventArgs e)
         {
-            NextBtnCountyTab.Enabled = true;
+            //NextBtnCountyTab.Enabled = true;
         }
 
         private void ConferenceNameLabel_Click(object sender, EventArgs e)
@@ -133,6 +133,24 @@ namespace ConferencePlanner.WinUi
 
         }
 
+        private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e)
+        {
 
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void TabControlLocation_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Country_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
