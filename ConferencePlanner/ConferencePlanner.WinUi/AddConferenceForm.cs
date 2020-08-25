@@ -38,13 +38,17 @@ namespace ConferencePlanner.WinUi
 
             InitializeComponent();
 
-            //this.ConferenceName.Text = conference.ConferenceName;
-
+            this.ConfName.Text = conference.ConferenceName;
+            
             string[] dates = conference.Period.Split(" - ");
             this.MonthCalendar.SetSelectionRange(DateTime.Parse(dates[0]), DateTime.Parse(dates[1]));
 
             string[] places = conference.LocationName.Split(", ");
-            //this.
+
+            this.ConfAddress.Text = conference.LocationName;
+
+            this.CountryComboBox.Text = places[0];
+            
 
         }
 
