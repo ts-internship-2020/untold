@@ -280,7 +280,7 @@ namespace ConferencePlanner.WinUi
         }
 
         #endregion
-        private System.Windows.Forms.TabControl MainTabControl;
+        private System.Windows.Forms.TabControl TabControl;
         private System.Windows.Forms.TabPage TabAttendee;
         private System.Windows.Forms.TabPage TabOrganizer;
         private System.Windows.Forms.Button AddConferenceButton;
@@ -290,9 +290,9 @@ namespace ConferencePlanner.WinUi
         private DateTimePicker EndDateTimePicker;
         private Label StartDateLable;
         private Label EndDateLabel;
-        private Button button6;
-        private Button button2;
-        private Button button1;
+       // private Button button6;
+        //private Button button2;
+        //private Button button1;
         private Label NoConferenceLabel;
         private DateTimePicker StartDatePicker;
         private DateTimePicker dateTimePicker2;

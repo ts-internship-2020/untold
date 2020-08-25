@@ -38,7 +38,7 @@ namespace ConferencePlanner.WinUi
 
             InitializeComponent();
 
-            this.ConferenceName.Text = conference.ConferenceName;
+            //this.ConferenceName.Text = conference.ConferenceName;
 
             string[] dates = conference.Period.Split(" - ");
             this.MonthCalendar.SetSelectionRange(DateTime.Parse(dates[0]), DateTime.Parse(dates[1]));
@@ -56,7 +56,7 @@ namespace ConferencePlanner.WinUi
         {
             TabControlLocation.SelectedIndex = 2;
         }
-      
+        
         private void button1_Click(object sender, EventArgs e)
         {
             TabControlLocation.SelectedIndex = 1;
