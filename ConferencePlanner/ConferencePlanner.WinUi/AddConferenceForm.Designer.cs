@@ -41,11 +41,11 @@
             this.CountryComboBox = new System.Windows.Forms.ComboBox();
             this.NextBtnCountryTab = new System.Windows.Forms.Button();
             this.County = new System.Windows.Forms.TabPage();
-            this.ComboBoxCountyTab = new System.Windows.Forms.ComboBox();
+            this.CountyComboBox = new System.Windows.Forms.ComboBox();
             this.BackBtnCountyTab = new System.Windows.Forms.Button();
             this.NextBtnCountyTab = new System.Windows.Forms.Button();
             this.City = new System.Windows.Forms.TabPage();
-            this.ComboBoxCityTab = new System.Windows.Forms.ComboBox();
+            this.CityComboBox = new System.Windows.Forms.ComboBox();
             this.BackBtnCityTab = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.SaveAndNewBtnCityTab = new System.Windows.Forms.Button();
@@ -189,7 +189,7 @@
             // 
             // County
             // 
-            this.County.Controls.Add(this.ComboBoxCountyTab);
+            this.County.Controls.Add(this.CountyComboBox);
             this.County.Controls.Add(this.BackBtnCountyTab);
             this.County.Controls.Add(this.NextBtnCountyTab);
             this.County.Location = new System.Drawing.Point(4, 24);
@@ -200,14 +200,14 @@
             this.County.Text = "County";
             this.County.UseVisualStyleBackColor = true;
             // 
-            // ComboBoxCountyTab
+            // CountyComboBox
             // 
-            this.ComboBoxCountyTab.FormattingEnabled = true;
-            this.ComboBoxCountyTab.Location = new System.Drawing.Point(3, 27);
-            this.ComboBoxCountyTab.Name = "ComboBoxCountyTab";
-            this.ComboBoxCountyTab.Size = new System.Drawing.Size(183, 23);
-            this.ComboBoxCountyTab.TabIndex = 2;
-            this.ComboBoxCountyTab.SelectedIndexChanged += new System.EventHandler(this.ComboBoxCountyTab_SelectedIndexChanged);
+            this.CountyComboBox.FormattingEnabled = true;
+            this.CountyComboBox.Location = new System.Drawing.Point(3, 27);
+            this.CountyComboBox.Name = "CountyComboBox";
+            this.CountyComboBox.Size = new System.Drawing.Size(183, 23);
+            this.CountyComboBox.TabIndex = 2;
+            this.CountyComboBox.SelectedIndexChanged += new System.EventHandler(this.ComboBoxCountyTab_SelectedIndexChanged);
             // 
             // BackBtnCountyTab
             // 
@@ -231,7 +231,7 @@
             // 
             // City
             // 
-            this.City.Controls.Add(this.ComboBoxCityTab);
+            this.City.Controls.Add(this.CityComboBox);
             this.City.Controls.Add(this.BackBtnCityTab);
             this.City.Controls.Add(this.button1);
             this.City.Controls.Add(this.SaveAndNewBtnCityTab);
@@ -244,13 +244,13 @@
             this.City.Text = "City";
             this.City.UseVisualStyleBackColor = true;
             // 
-            // ComboBoxCityTab
+            // CityComboBox
             // 
-            this.ComboBoxCityTab.FormattingEnabled = true;
-            this.ComboBoxCityTab.Location = new System.Drawing.Point(3, 27);
-            this.ComboBoxCityTab.Name = "ComboBoxCityTab";
-            this.ComboBoxCityTab.Size = new System.Drawing.Size(183, 23);
-            this.ComboBoxCityTab.TabIndex = 4;
+            this.CityComboBox.FormattingEnabled = true;
+            this.CityComboBox.Location = new System.Drawing.Point(3, 27);
+            this.CityComboBox.Name = "CityComboBox";
+            this.CityComboBox.Size = new System.Drawing.Size(183, 23);
+            this.CityComboBox.TabIndex = 4;
             // 
             // BackBtnCityTab
             // 
@@ -348,9 +348,9 @@
         private System.Windows.Forms.ComboBox CountryComboBox;
         private System.Windows.Forms.Button BackBtnCountyTab;
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.ComboBox ComboBoxCountyTab;
+        private System.Windows.Forms.ComboBox CountyComboBox;
         private System.Windows.Forms.Button BackBtnCityTab;
-        private System.Windows.Forms.ComboBox ComboBoxCityTab;
+        private System.Windows.Forms.ComboBox CityComboBox;
         private System.Windows.Forms.ErrorProvider ErrorName;
         private System.Windows.Forms.ErrorProvider ErrorAddress;
     }

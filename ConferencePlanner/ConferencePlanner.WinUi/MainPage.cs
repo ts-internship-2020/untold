@@ -21,6 +21,10 @@ namespace ConferencePlanner.WinUi
 
         private readonly IAttendeeButtonsRepository _attendeeButtons;
 
+        private int PageSize = 1;
+        private int CurrentPageIndex = 1;
+        private int TotalPage = 0;
+
         public MainPage(IConferenceRepository conferenceRepository, ICountryRepository countryRepository,
             IAttendeeButtonsRepository attendeeButtonsRepository)
         {
@@ -73,7 +77,7 @@ namespace ConferencePlanner.WinUi
             }
             else
             {
-                OrganizerDataGrid.DataSource = conferences.ToList();
+                OrganizerDataGrid.DataSource = GetCurrentRecords(CurrentPageIndex, conferences).ToList();
                 OrganizerDataGrid.AutoGenerateColumns = false;
 
             }
@@ -81,11 +85,54 @@ namespace ConferencePlanner.WinUi
 
         private void TabOrganizer_SelectedIndexChanged(object sender, EventArgs e)
         {
-            var x = _conferenceRepository.GetConferencesByOrganizer(Program.EnteredEmailAddress);
+            var conferences = _conferenceRepository.GetConferencesByOrganizer(Program.EnteredEmailAddress);
 
-            CheckNumberOfRows(x);
+            CalculateTotalPages(conferences);
+
+            CheckNumberOfRows(conferences);
 
         }
+
+        private void CalculateTotalPages(List<ConferenceModel> allConferences)
+        {
+            int rowCount = allConferences.Count();
+            TotalPage = rowCount / PageSize;
+            // if any row left after calculated pages, add one more page 
+            if (rowCount % PageSize > 0)
+                TotalPage += 1;
+        }
+
+        private List<ConferenceModel> GetCurrentRecords(int page, List<ConferenceModel> allConferences)
+        {
+            List<ConferenceModel> displayConf = new List<ConferenceModel>();
+            int PreviousPageOffSet = (page - 1) * PageSize;
+            
+            try
+            {
+                displayConf = allConferences.GetRange(PreviousPageOffSet, PreviousPageOffSet + PageSize);
+
+            }
+            catch (IndexOutOfRangeException ex)
+            {
+                displayConf = allConferences.GetRange(PreviousPageOffSet, allConferences.Count());
+            }
+
+        return displayConf;
+        }
+
+        //private void RightArrowPag_Click(object sender, EventArgs e)
+        //{
+        //    if (this.CurrentPageIndex < this.TotalPage)
+        //    {
+        //        this.CurrentPageIndex++;
+        //        this.dataGridView1.DataSource =
+        //    GetCurrentRecords(this.CurrentPageIndex, con);
+        //    }
+        //    else
+        //    {
+        //        this.RightArrowPagButton.Visible = false;
+        //    }
+        //}
 
         private void MainForm_Load(object sender, EventArgs e)
         {
@@ -231,7 +278,7 @@ namespace ConferencePlanner.WinUi
         private void Attend_Click(object sender, EventArgs e)
         {
             string barcodeGenerator = BarcodeGenerator();
-            _attendeeButtons.Attend(Program.EnteredEmailAddress, barcodeGenerator);
+           // _attendeeButtons.Attend(Program.EnteredEmailAddress, barcodeGenerator);
             //var w = new Form();
             //Size = new Size(0, 0);
             //Task.Delay(TimeSpan.FromSeconds(3))

@@ -49,7 +49,9 @@ namespace ConferencePlanner.WinUi
             this.ConfAddress.Text = conference.LocationName;
 
             this.CountryComboBox.Text = places[0];
-            
+            this.CountyComboBox.Text = places[1];
+            this.CityComboBox.Text = places[2];
+
 
         }
 
@@ -83,7 +85,7 @@ namespace ConferencePlanner.WinUi
 
         private void button3_Click(object sender, EventArgs e)
         {
-            ComboBoxCityTab.Enabled = true;
+            CityComboBox.Enabled = true;
            
             Close();
         }
@@ -116,8 +118,8 @@ namespace ConferencePlanner.WinUi
             ConfName.Text = string.Empty;
             ConfAddress.Text = string.Empty;
             CountryComboBox.SelectedItem = string.Empty;
-            ComboBoxCountyTab.SelectedItem = string.Empty;
-            ComboBoxCityTab.SelectedItem = string.Empty;
+            CountyComboBox.SelectedItem = string.Empty;
+            CityComboBox.SelectedItem = string.Empty;
         }
 
         private void ComboBoxCountyTab_SelectedIndexChanged(object sender, EventArgs e)
