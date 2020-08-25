@@ -39,8 +39,10 @@ namespace ConferencePlanner.WinUi
         }
         private void EmailTextBox_TextChanged(object sender, EventArgs e)
         {
+
             EmailTextBox.ForeColor = Color.Black;
             ErrorLabel.Visible = false;
+            ErrorLabel2.Visible = false;
         }
 
         private bool CheckEmail()
@@ -53,17 +55,21 @@ namespace ConferencePlanner.WinUi
                 if (!mRegxExpression.IsMatch(EmailTextBox.Text.Trim()))
                 {
                     ErrorLabel.Visible = true;
-                    ErrorLabel.Text="Insert a valid email address like 'name @example.com' ";
                     EmailTextBox.Focus();
                     return false;
                 }
                 else
-                { 
+                {
                     return true;
                 }
-               
+
             }
-            return false;
+            else
+            {
+                ErrorLabel2.Visible = true;
+                EmailTextBox.Focus();
+                return false;
+            }
         }
         public void NextPage()
         {

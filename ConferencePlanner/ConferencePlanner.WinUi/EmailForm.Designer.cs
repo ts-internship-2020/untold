@@ -32,6 +32,7 @@
             this.EmailTextBox = new System.Windows.Forms.TextBox();
             this.SubmitBtn = new System.Windows.Forms.Button();
             this.ErrorLabel = new System.Windows.Forms.Label();
+            this.ErrorLabel2 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // EmailTextBox
@@ -84,6 +85,19 @@
             this.ErrorLabel.Text = "Insert a valid email address like \"name@example.com\"";
             this.ErrorLabel.Visible = false;
             // 
+            // ErrorLabel2
+            // 
+            this.ErrorLabel2.AutoSize = true;
+            this.ErrorLabel2.BackColor = System.Drawing.Color.Transparent;
+            this.ErrorLabel2.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.ErrorLabel2.ForeColor = System.Drawing.Color.Red;
+            this.ErrorLabel2.Location = new System.Drawing.Point(154, 81);
+            this.ErrorLabel2.Name = "ErrorLabel2";
+            this.ErrorLabel2.Size = new System.Drawing.Size(157, 20);
+            this.ErrorLabel2.TabIndex = 3;
+            this.ErrorLabel2.Text = "Insert a email address!";
+            this.ErrorLabel2.Visible = false;
+            // 
             // EmailForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -92,6 +106,7 @@
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(484, 200);
+            this.Controls.Add(this.ErrorLabel2);
             this.Controls.Add(this.ErrorLabel);
             this.Controls.Add(this.SubmitBtn);
             this.Controls.Add(this.EmailTextBox);
@@ -113,5 +128,6 @@
         private System.Windows.Forms.TextBox EmailTextBox;
         private System.Windows.Forms.Button SubmitBtn;
         private System.Windows.Forms.Label ErrorLabel;
+        private System.Windows.Forms.Label ErrorLabel2;
     }
 }
