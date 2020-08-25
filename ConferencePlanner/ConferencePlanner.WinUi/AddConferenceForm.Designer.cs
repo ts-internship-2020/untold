@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.ConferenceNameLabel = new System.Windows.Forms.Label();
             this.ConfName = new System.Windows.Forms.TextBox();
             this.ConferencePeriodLabel = new System.Windows.Forms.Label();
@@ -49,10 +50,14 @@
             this.button1 = new System.Windows.Forms.Button();
             this.SaveAndNewBtnCityTab = new System.Windows.Forms.Button();
             this.SaveBtnCityTab = new System.Windows.Forms.Button();
+            this.ErrorName = new System.Windows.Forms.ErrorProvider(this.components);
+            this.ErrorAddress = new System.Windows.Forms.ErrorProvider(this.components);
             this.TabControlLocation.SuspendLayout();
             this.Country.SuspendLayout();
             this.County.SuspendLayout();
             this.City.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.ErrorName)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ErrorAddress)).BeginInit();
             this.SuspendLayout();
             // 
             // ConferenceNameLabel
@@ -286,6 +291,14 @@
             this.SaveBtnCityTab.UseVisualStyleBackColor = true;
             this.SaveBtnCityTab.Click += new System.EventHandler(this.button3_Click);
             // 
+            // ErrorName
+            // 
+            this.ErrorName.ContainerControl = this;
+            // 
+            // ErrorAddress
+            // 
+            this.ErrorAddress.ContainerControl = this;
+            // 
             // AddConf
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -308,6 +321,8 @@
             this.Country.ResumeLayout(false);
             this.County.ResumeLayout(false);
             this.City.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.ErrorName)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ErrorAddress)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -336,5 +351,7 @@
         private System.Windows.Forms.ComboBox ComboBoxCountyTab;
         private System.Windows.Forms.Button BackBtnCityTab;
         private System.Windows.Forms.ComboBox ComboBoxCityTab;
+        private System.Windows.Forms.ErrorProvider ErrorName;
+        private System.Windows.Forms.ErrorProvider ErrorAddress;
     }
 }

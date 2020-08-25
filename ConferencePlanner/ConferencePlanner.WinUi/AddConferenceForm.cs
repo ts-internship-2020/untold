@@ -66,22 +66,25 @@ namespace ConferencePlanner.WinUi
         {
             if(ConfName.Text == string.Empty)
             {
-                MessageBox.Show("Please enter a value in the conference name fild!");
+                ErrorName.SetError(ConfName, "Please enter a value in the conference name fild!");
                 return;
             }
             else if(ConfAddress.Text == string.Empty)
             {
-                MessageBox.Show("Please enter a value in the conference address fild!");
+                ErrorAddress.SetError(ConfAddress, "Please enter a value in the conference address fild!");
                 return;
             }
             else
             TabControlLocation.SelectedIndex = 1;
+            ErrorName.Clear();
+            ErrorAddress.Clear();
+
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
             ComboBoxCityTab.Enabled = true;
-            RequiredFields();
+           
             Close();
         }
 
