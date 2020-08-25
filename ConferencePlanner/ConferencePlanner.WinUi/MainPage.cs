@@ -17,7 +17,7 @@ namespace ConferencePlanner.WinUi
 
         private readonly IAttendeeButtonsRepository _attendeeButtons;
 
-        public MainPage(IConferenceRepository conferenceRepository, ICountryRepository countryRepository, IGetDemoRepository getDemoRepository, 
+        public MainPage(IConferenceRepository conferenceRepository, ICountryRepository countryRepository, IGetDemoRepository getDemoRepository,
             IAttendeeButtonsRepository attendeeButtonsRepository)
         {
             _conferenceRepository = conferenceRepository;
@@ -28,11 +28,12 @@ namespace ConferencePlanner.WinUi
 
             _attendeeButtons = attendeeButtonsRepository;
 
-        InitializeComponent();
-            
+            InitializeComponent();
+
         }
 
-        public MainPage() {
+        public MainPage()
+        {
 
             InitializeComponent();
         }
@@ -89,25 +90,106 @@ namespace ConferencePlanner.WinUi
         private void dataGridView1_CellContentClick(object sender, EventArgs e)
         {
             // var x = _getDemoRepository.GetDemo()
-            
+
         }
 
-       
+        int a = 0;
 
         private void tabPage1_Layout(object sender, LayoutEventArgs e)
         {
             //var x = _getDemoRepository.GetDemo()
-            var x = _conferenceRepository.AttendeeConferences(Program.EnteredEmailAddress);
-            AttendeeGridvw.DataSource = x.ToList();
-            AttendeeGridvw.Columns.RemoveAt(0);
-            AttendeeGridvw.Columns[0].HeaderText = "Conference Name";
-            AttendeeGridvw.Columns[1].HeaderText = "Category";
-            AttendeeGridvw.Columns[2].HeaderText = "Type";
-            AttendeeGridvw.Columns[3].HeaderText = "Location";
-            AttendeeGridvw.Columns[4].HeaderText = "Speaker Name";
+            
+            var listattendee = _conferenceRepository.AttendeeConferences(Program.EnteredEmailAddress);
+            AttendeeGridvw.DataSource = listattendee.ToList();
+            AttendeeGridvw.AutoGenerateColumns = false;
+            AttendeeGridvw.Columns["ConferenceId"].Visible = false;
+            
+            AttendeeGridvw.Columns[1].HeaderText = "Conference Name";
+            AttendeeGridvw.Columns[2].HeaderText = "Category";
+            AttendeeGridvw.Columns[3].HeaderText = "Type";
+            AttendeeGridvw.Columns[4].HeaderText = "Location";
+            AttendeeGridvw.Columns[5].HeaderText = "Speaker Name";
+            AttendeeGridvw.Columns[6].HeaderText = "Period";
+
+
+            if (a == 0)
+            {
+
+                a++;
+                DataGridViewButtonColumn attendButtonColumn = new DataGridViewButtonColumn();
+                attendButtonColumn.Name = "attend_column";
+                attendButtonColumn.Text = "Attend";
+
+                int columnIndex = AttendeeGridvw.ColumnCount;
+
+                
+                AttendeeGridvw.Columns.Insert(columnIndex,attendButtonColumn);
+
+                columnIndex = AttendeeGridvw.ColumnCount;
+                DataGridViewButtonColumn withdrawButtonColumn = new DataGridViewButtonColumn();
+                withdrawButtonColumn.Name = "withdraw_column";
+                withdrawButtonColumn.Text = "Withdraw";
+
+                AttendeeGridvw.Columns.Insert(columnIndex, withdrawButtonColumn);
+                columnIndex = AttendeeGridvw.ColumnCount;
+
+                DataGridViewButtonColumn joinButtonColumn = new DataGridViewButtonColumn();
+                joinButtonColumn.Name = "join_column";
+                joinButtonColumn.Text = "Join";
+
+
+
+                AttendeeGridvw.Columns.Insert(columnIndex, joinButtonColumn);
+
+                AttendeeGridvw.CellClick += AttendeeGridvw_CellClick;
+                AttendeeGridvw.Columns[7].HeaderText = "Attend";
+                AttendeeGridvw.Columns[8].HeaderText = "Withdraw";
+                AttendeeGridvw.Columns[9].HeaderText = "Join";
+                AttendeeGridvw.Columns.Add("Column", "Test");
+                AttendeeGridvw.Columns["Column"].Visible = false;
+                AttendeeGridvw.Columns[7].Tag = "test";
+                
+
+            }
+
+
+
         }
 
-       
+
+        //private void AttendeeGridvw_SourceChanged(object sender, DataGridViewBindingCompleteEventArgs e)
+        //{
+
+        //    DataGridViewButtonColumn attendButtonColumn = new DataGridViewButtonColumn();
+        //    //attendButtonColumn.Name = "attend_column";
+        //    //attendButtonColumn.Text = "Attend";
+
+        //    //int columnIndex = AttendeeGridvw.ColumnCount;
+
+        //    //AttendeeGridvw.Columns.Insert(columnIndex,attendButtonColumn);
+
+        //    ////
+        //    //DataGridViewButtonColumn withdrawButtonColumn = new DataGridViewButtonColumn();
+        //    //withdrawButtonColumn.Name = "withdraw_column";
+        //    //withdrawButtonColumn.Text = "Withdraw";
+
+        //    //AttendeeGridvw.Columns.Insert(columnIndex: columnIndex + 1, withdrawButtonColumn);
+
+
+        //    //DataGridViewButtonColumn joinButtonColumn = new DataGridViewButtonColumn();
+        //    //joinButtonColumn.Name = "join_column";
+        //    //joinButtonColumn.Text = "Join";
+
+
+
+        //    //AttendeeGridvw.Columns.Insert(columnIndex: columnIndex + 2, joinButtonColumn);
+
+        //    //AttendeeGridvw.CellClick += AttendeeGridvw_CellClick;
+
+
+        //}
+
+        
 
 
         private void TabAttendee_Click(object sender, EventArgs e)
@@ -132,7 +214,7 @@ namespace ConferencePlanner.WinUi
         private void Attend_Click(object sender, EventArgs e)
         {
             string barcodeGenerator = BarcodeGenerator();
-            _attendeeButtons.Attend(Program.EnteredEmailAddress, barcodeGenerator);
+            _attendeeButtons.Attend(Program.EnteredEmailAddress, barcodeGenerator, 2);
         }
 
         private void Withdraw_Click(object sender, EventArgs e)
@@ -141,11 +223,11 @@ namespace ConferencePlanner.WinUi
             //a = statusul participantului
             int a = 1;
             _attendeeButtons.WithdrawnCommand(Program.EnteredEmailAddress, a);
-            
+
 
         }
 
-            
+
         private void EndDateTimePicker_ValueChanged(object sender, EventArgs e)
         {
             string StartDate = StartDatePicker.Value.ToString("yyyy-MM-dd");
@@ -162,6 +244,7 @@ namespace ConferencePlanner.WinUi
 
         private void label2_Click(object sender, EventArgs e)
         {
+
 
         }
 
@@ -200,7 +283,7 @@ namespace ConferencePlanner.WinUi
             //listBox1.Items.Add(e.ToString());
             if (e.ColumnIndex == OrganizerDataGrid.Columns["edit_column"].Index)
             {
-                var id = (int) OrganizerDataGrid.Rows[e.RowIndex].Cells[0].Value;
+                var id = (int)OrganizerDataGrid.Rows[e.RowIndex].Cells[0].Value;
 
                 ConferenceModel conference = _conferenceRepository.GetConferenceById(id);
 
@@ -211,5 +294,44 @@ namespace ConferencePlanner.WinUi
 
             }
         }
+        private void AttendeeGridvw_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            
+            if (e.ColumnIndex == AttendeeGridvw.Columns["attend_column"].Index)
+            {
+
+
+                //AttendeeGridvw.Rows[e.RowIndex].Cells[7].ReadOnly = true;
+                //AttendeeGridvw.Rows[e.RowIndex].Cells[7].Visible = false;
+                AttendeeGridvw.Rows[e.RowIndex].Cells[10].Value = "test";
+                if (AttendeeGridvw.Rows[e.RowIndex].Cells[10].Value == "test")
+                {
+                    
+                    return;
+                }
+                int confid = (int)AttendeeGridvw.Rows[e.RowIndex].Cells[0].Value;
+                string barcodeGenerator = BarcodeGenerator();
+                _attendeeButtons.Attend(Program.EnteredEmailAddress, barcodeGenerator,confid);
+            }
+
+            if (e.ColumnIndex == AttendeeGridvw.Columns["withdraw_column"].Index)
+            {
+                int statusid = 1;
+                _attendeeButtons.WithdrawnCommand(Program.EnteredEmailAddress, statusid);
+            }
+
+            if (e.ColumnIndex == AttendeeGridvw.Columns["join_column"].Index)
+            {
+                int statusId = 3;
+                //int confid = (int)AttendeeGridvw.Rows[e.RowIndex].Cells[0].Value;
+                var newform = new WebviewForm();
+                newform.ShowDialog();
+                _attendeeButtons.JoinCommand(Program.EnteredEmailAddress, statusId);
+            }
+
+        }
+
+
     }
 }
+

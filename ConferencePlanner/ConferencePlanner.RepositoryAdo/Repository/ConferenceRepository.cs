@@ -81,7 +81,8 @@ namespace ConferencePlanner.Repository.Ado.Repository
                                 
                                 attendees.Add(new ConferenceModel()
                                 {
-                                    //ConferenceId = sqlDataReader.GetInt32("ConferenceId"),
+                                    
+                                    ConferenceId = sqlDataReader.GetInt32("ConferenceId"),
                                     ConferenceName = sqlDataReader.GetString("ConferenceName"),
                                     ConferenceTypeName = sqlDataReader.GetString("ConferenceTypeName"),
                                     ConferenceCategoryName = sqlDataReader.GetString("ConferenceCategoryName"),
@@ -89,7 +90,7 @@ namespace ConferencePlanner.Repository.Ado.Repository
 
                                     SpeakerName = sqlDataReader.GetString("SpeakerName"),
 
-                                    Period = sqlDataReader.GetString("ConferencePeriod"),
+                                    Period = sqlDataReader.GetString("ConferencePeriod")
                                 });
 
                             }

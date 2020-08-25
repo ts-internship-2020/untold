@@ -17,11 +17,11 @@ namespace ConferencePlanner.Repository.Ado.Repository
             _sqlConnection = sqlConnection;
         }
 
-        public void Attend(string email, string barcode)
+        public void Attend(string email, string barcode, int confId)
         {
             string commandText = "insert into Attendee values (@ConferenceId, @AttendeeEmail , " +
                 "@StatusId ,@EmailCode)";
-            int confId = 2;
+            //int confId = 2;
             //statusId va fi hardcodat pentru ca 1 este pentru attend in tabela DictionaryStatus
             int statusId = 1;
 
@@ -38,30 +38,30 @@ namespace ConferencePlanner.Repository.Ado.Repository
             //aici mai trebuie dat drop la table si apelata metoda de select 
         }
 
-        public void WithdrawnCommand(String email, int conferenceId)
+        public void WithdrawnCommand(String email, int statusId)
         {
-            int newConferenceId = 3;
+            int newStatusId = 3;
             string commandText = "update Attendee set StatusId = @NewStatusId where StatusId = @Id and AttendeeEmail = @Email";
             SqlCommand sqlCommand = new SqlCommand(commandText, _sqlConnection);
             sqlCommand.Parameters.Add("@Id", SqlDbType.Int);
-            sqlCommand.Parameters["@Id"].Value = conferenceId;
+            sqlCommand.Parameters["@Id"].Value = statusId;
             sqlCommand.Parameters.Add("@Email", SqlDbType.NVarChar, 4000);
             sqlCommand.Parameters["@Email"].Value = email;
-            sqlCommand.Parameters.AddWithValue("@NewStatusId", newConferenceId);
+            sqlCommand.Parameters.AddWithValue("@NewStatusId", newStatusId);
             sqlCommand.ExecuteNonQuery();
             //aici mai trebuie dat drop la table si apelata metoda de select 
         }
 
-        public void JoinCommand(String email, int newConferenceId)
+        public void JoinCommand(String email, int newStatusId)
         {
-            int conferenceId = 3;
+            int statusId = 3;
             string commandText = "update Attendee set StatusId = @NewStatusId where StatusId = @Id and AttendeeEmail = @Email";
             SqlCommand sqlCommand = new SqlCommand(commandText, _sqlConnection);
             sqlCommand.Parameters.Add("@Id", SqlDbType.Int);
-            sqlCommand.Parameters["@Id"].Value = conferenceId; 
+            sqlCommand.Parameters["@Id"].Value = statusId; 
             sqlCommand.Parameters.Add("@Email", SqlDbType.NVarChar,4000);
             sqlCommand.Parameters["@Email"].Value = email;
-            sqlCommand.Parameters.AddWithValue("@NewStatusId", newConferenceId);
+            sqlCommand.Parameters.AddWithValue("@NewStatusId", newStatusId);
             sqlCommand.ExecuteNonQuery();
         }
 
