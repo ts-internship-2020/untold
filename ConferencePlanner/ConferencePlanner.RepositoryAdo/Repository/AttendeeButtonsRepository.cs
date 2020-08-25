@@ -35,6 +35,7 @@ namespace ConferencePlanner.Repository.Ado.Repository
             sqlCommand.Parameters.Add("@EmailCode", SqlDbType.NVarChar, 4000);
             sqlCommand.Parameters["@EmailCode"].Value = barcode;
             sqlCommand.ExecuteNonQuery();
+            
             //aici mai trebuie dat drop la table si apelata metoda de select 
         }
 

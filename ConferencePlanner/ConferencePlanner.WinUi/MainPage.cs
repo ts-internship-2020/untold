@@ -5,6 +5,10 @@ using System.Linq;
 using System.Windows.Forms;
 using System.Text;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using System.Drawing;
+using Tulpep.NotificationWindow;
+using System.Data.SqlClient;
 
 namespace ConferencePlanner.WinUi
 {
@@ -85,11 +89,6 @@ namespace ConferencePlanner.WinUi
 
         }
 
-        private void MainForm_Load(object sender, EventArgs e)
-        {
-
-        }
-
         private void dataGridView1_CellContentClick(object sender, EventArgs e)
         {
             // var x = _getDemoRepository.GetDemo()
@@ -144,6 +143,17 @@ namespace ConferencePlanner.WinUi
         {
             string barcodeGenerator = BarcodeGenerator();
             _attendeeButtons.Attend(Program.EnteredEmailAddress, barcodeGenerator);
+            //var w = new Form();
+            //Size = new Size(0, 0);
+            //Task.Delay(TimeSpan.FromSeconds(3))
+            //    .ContinueWith((t) => w.Close(), TaskScheduler.FromCurrentSynchronizationContext());
+
+            //MessageBox.Show(w, "Felicitari, te-ai inscris cu succes!");
+            PopupNotifier popup = new PopupNotifier();
+            popup.Image = Properties.Resources.info;
+            popup.TitleText = "FoxLearn";
+            popup.ContentText = "Another Text";
+            popup.Popup();
         }
 
         private void Withdraw_Click(object sender, EventArgs e)
@@ -152,8 +162,12 @@ namespace ConferencePlanner.WinUi
             //a = statusul participantului
             int a = 1;
             _attendeeButtons.WithdrawnCommand(Program.EnteredEmailAddress, a);
-            
+            var w = new Form();
+            Size = new Size(0, 0);
+            Task.Delay(TimeSpan.FromSeconds(3))
+                .ContinueWith((t) => w.Close(), TaskScheduler.FromCurrentSynchronizationContext());
 
+            MessageBox.Show(w, "Te-ai retras de la aceasta conferinta. Poti alege oricand o conferinta disponibila!");
         }
 
             
@@ -238,8 +252,9 @@ namespace ConferencePlanner.WinUi
 
                 varAddConf.ShowDialog();
 
-
             }
         }
+
+
     }
 }
