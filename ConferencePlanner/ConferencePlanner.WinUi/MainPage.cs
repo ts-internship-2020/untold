@@ -118,20 +118,23 @@ namespace ConferencePlanner.WinUi
 
         private void StartDatePicker_ValueChanged(object sender, EventArgs e)
         {
-            OrganizerDataGrid.DataSource = null;
+            if (TabControl.SelectedTab.Name == "TabOrganizer")
+            {
+                OrganizerDataGrid.DataSource = null;
 
-            DateTime StartDate = StartDatePicker.Value;
-            DateTime EndDate = EndDatePicker.Value;
-            //DateTime EndDate = EndDatePicker.Value;
-            //listBox1.Items.Add(StartDate);
-            //listBox1.Items.Add(EndDate);
+                DateTime StartDate = StartDatePicker.Value;
+                DateTime EndDate = EndDatePicker.Value;
 
-            //listBox1.Items.Add(StartDate);
+                var conferences = _conferenceRepository.FilterConferencesByDate(Program.EnteredEmailAddress, StartDate.ToString("yyyy'-'MM'-'dd' 'HH':'mm':'ss"), EndDate.ToString("yyyy'-'MM'-'dd' 'HH':'mm':'ss"));
 
-            //string test = System.Windows.Forms.TabControl.SelectedTab.Name;
-            var conferences = _conferenceRepository.FilterConferencesByDate(Program.EnteredEmailAddress, StartDate.ToString(), EndDate.ToString());
+                CheckNumberOfRows(conferences);
 
-            //CheckNumberOfRows(conferences);
+            }
+            //else
+            //{
+
+            //}
+            
         }
 
         private void Attend_Click(object sender, EventArgs e)
@@ -153,18 +156,18 @@ namespace ConferencePlanner.WinUi
             
         private void EndDatePicker_ValueChanged(object sender, EventArgs e)
         {
-            //OrganizerDataGrid.DataSource = null;
+            if (TabControl.SelectedTab.Name == "TabOrganizer")
+            {
+                OrganizerDataGrid.DataSource = null;
 
-            DateTime StartDate = StartDatePicker.Value;
-            DateTime EndDate = EndDatePicker.Value;
-            //DateTime EndDate = EndDatePicker.Value;
-            //listBox1.Items.Add(StartDate.ToString());
-            //listBox1.Items.Add(EndDate.ToString());
+                DateTime StartDate = StartDatePicker.Value;
+                DateTime EndDate = EndDatePicker.Value;
 
-            //string test = System.Windows.Forms.TabControl.SelectedTab.Name;
-            var conferences = _conferenceRepository.FilterConferencesByDate(Program.EnteredEmailAddress, StartDate.ToString(), EndDate.ToString());
+                var conferences = _conferenceRepository.FilterConferencesByDate(Program.EnteredEmailAddress, StartDate.ToString("yyyy'-'MM'-'dd' 'HH':'mm':'ss"), EndDate.ToString("yyyy'-'MM'-'dd' 'HH':'mm':'ss"));
 
-            //CheckNumberOfRows(conferences);
+                CheckNumberOfRows(conferences);
+            }
+            
         }
 
         private void Join_Click(object sender, EventArgs e)

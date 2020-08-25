@@ -45,7 +45,7 @@ namespace ConferencePlanner.WinUi
             this.StartDatePicker = new System.Windows.Forms.DateTimePicker();
             this.EndDatePicker = new System.Windows.Forms.DateTimePicker();
             this.EndDateLable = new System.Windows.Forms.Label();
-            //this.listBox1 = new System.Windows.Forms.ListBox();
+            this.listBox1 = new System.Windows.Forms.ListBox();
             this.TabAttendee.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.AttendeeGridvw)).BeginInit();
             this.TabOrganizer.SuspendLayout();
@@ -212,19 +212,20 @@ namespace ConferencePlanner.WinUi
             // 
             // listBox1
             // 
-            //this.listBox1.FormattingEnabled = true;
-            //this.listBox1.ItemHeight = 15;
-            //this.listBox1.Location = new System.Drawing.Point(506, 31);
-            //this.listBox1.Name = "listBox1";
-            //this.listBox1.Size = new System.Drawing.Size(172, 94);
-            //this.listBox1.TabIndex = 9;
-            // 
+            this.listBox1.FormattingEnabled = true;
+            this.listBox1.ItemHeight = 15;
+            this.listBox1.Location = new System.Drawing.Point(506, 31);
+            this.listBox1.Name = "listBox1";
+            this.listBox1.Size = new System.Drawing.Size(172, 94);
+            this.listBox1.TabIndex = 9;
+
             // MainPage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(901, 461);
-            //this.Controls.Add(this.listBox1);
+            
+            this.Controls.Add(this.listBox1);
             this.Controls.Add(this.StartDateLable);
             this.Controls.Add(this.EndDateLable);
             this.Controls.Add(this.EndDatePicker);
@@ -274,6 +275,6 @@ namespace ConferencePlanner.WinUi
         private Button button5;
         private Button button4;
         private Button button3;
-        //private ListBox listBox1;
+        private ListBox listBox1;
     }
 }
