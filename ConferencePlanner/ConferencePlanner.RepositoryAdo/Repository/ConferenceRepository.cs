@@ -18,16 +18,18 @@ namespace ConferencePlanner.Repository.Ado.Repository
             _sqlConnection = sqlConnection;
         }
 
-        public List<ConferenceModel> FilterConferences(string email, DateTime sDate, DateTime eDate)
+        public List<ConferenceModel> FilterConferencesByDate(string email, string sDate, string eDate)
         {
-            string commandText = "select ConferenceId, ConferenceName, LocationName, ConferencePeriod from vwConferenceDetails where Email = @Email and StartDate >= @StartDate and EndDate <= @EndDate ";
+            string commandText = "select C.ConferenceId, C.ConferenceName, vw.SpeakerName, vw.ConferenceCategoryName, vw.ConferenceTypeName, vw.LocationName, vw.ConferencePeriod from vwConferenceDetails vw " +
+                "join Conference C on C.ConferenceId = vw.ConferenceId " +
+                "where C.EmailOrganizer = @Email and C.StartDate >= @StartDate and C.EndDate <= @EndDate ";
 
             SqlCommand sqlCommand = new SqlCommand(commandText, _sqlConnection);
             sqlCommand.Parameters.Add("@Email", SqlDbType.NVarChar);
             sqlCommand.Parameters["@Email"].Value = email;
-            sqlCommand.Parameters.Add("@StartDate", SqlDbType.DateTime);
+            sqlCommand.Parameters.Add("@StartDate", SqlDbType.NVarChar);
             sqlCommand.Parameters["@StartDate"].Value = sDate;
-            sqlCommand.Parameters.Add("@EndDate", SqlDbType.DateTime);
+            sqlCommand.Parameters.Add("@EndDate", SqlDbType.NVarChar);
             sqlCommand.Parameters["@EndDate"].Value = eDate;
 
             SqlDataReader sqlDataReader = sqlCommand.ExecuteReader();
@@ -92,6 +94,8 @@ namespace ConferencePlanner.Repository.Ado.Repository
 
             return demos;
             }
+
+
         public List<ConferenceModel> AttendeeConferences(string email)
         {
             //SqlCommand sqlCommand = _sqlConnection.CreateCommand();
@@ -137,6 +141,15 @@ namespace ConferencePlanner.Repository.Ado.Repository
 
             return attendees;
 
+        }
+
+        public List<ConferenceModel> FilterConfAttendeeByDate(string email, string sDate, string eDate)
+        {
+            var conferences = AttendeeConferences(email);
+
+
+
+            return conferences;
         }
 
 
