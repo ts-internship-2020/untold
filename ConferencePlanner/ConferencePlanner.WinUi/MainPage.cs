@@ -132,9 +132,9 @@ namespace ConferencePlanner.WinUi
             DateTime EndDate = EndDatePicker.Value;
             //DateTime EndDate = EndDatePicker.Value;
 
-            listBox1.Items.Add(StartDate);
+            //listBox1.Items.Add(StartDate);
 
-            string test = System.Windows.Forms.TabControl.SelectedTab.Name;
+            //string test = System.Windows.Forms.TabControl.SelectedTab.Name;
             var conferences = _conferenceRepository.FilterConferences(Program.EnteredEmailAddress, StartDate, EndDate);
 
             CheckNumberOfRows(conferences);
@@ -167,7 +167,7 @@ namespace ConferencePlanner.WinUi
 
             //listBox1.Items.Add(StartDate);
 
-            string test = System.Windows.Forms.TabControl.SelectedTab.Name;
+            //string test = System.Windows.Forms.TabControl.SelectedTab.Name;
             var conferences = _conferenceRepository.FilterConferences(Program.EnteredEmailAddress, StartDate, EndDate);
 
             CheckNumberOfRows(conferences);
