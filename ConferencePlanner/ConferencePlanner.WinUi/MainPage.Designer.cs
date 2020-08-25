@@ -48,7 +48,7 @@ namespace ConferencePlanner.WinUi
 
             ((System.ComponentModel.ISupportInitialize)(this.AttendeeGridvw)).BeginInit();
             this.TabAttendee.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.AttendeeGridvw)).BeginInit();
+            //((System.ComponentModel.ISupportInitialize)(this.AttendeeGridvw)).BeginInit();
             this.TabOrganizer.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.OrganizerDataGrid)).BeginInit();
             this.TabControl.SuspendLayout();
@@ -126,15 +126,15 @@ namespace ConferencePlanner.WinUi
             // 
             // NoConferenceLabel
             // 
-            this.NoConferenceLabel.AutoSize = true;
-            this.NoConferenceLabel.Font = new System.Drawing.Font("Segoe UI", 30F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.NoConferenceLabel.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.NoConferenceLabel.Location = new System.Drawing.Point(201, 94);
-            this.NoConferenceLabel.Name = "NoConferenceLabel";
-            this.NoConferenceLabel.Size = new System.Drawing.Size(310, 54);
-            this.NoConferenceLabel.TabIndex = 1;
-            this.NoConferenceLabel.Text = "No conferences ";
-            this.NoConferenceLabel.Visible = false;
+            this.NoConferenceLable.AutoSize = true;
+            this.NoConferenceLable.Font = new System.Drawing.Font("Segoe UI", 30F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.NoConferenceLable.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.NoConferenceLable.Location = new System.Drawing.Point(201, 94);
+            this.NoConferenceLable.Name = "NoConferenceLabel";
+            this.NoConferenceLable.Size = new System.Drawing.Size(310, 54);
+            this.NoConferenceLable.TabIndex = 1;
+            this.NoConferenceLable.Text = "No conferences ";
+            this.NoConferenceLable.Visible = false;
             // 
             // OrganizerDataGrid
             // 
@@ -232,7 +232,7 @@ namespace ConferencePlanner.WinUi
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1138, 479);
-            this.Controls.Add(this.StartDateLabel);
+           // this.Controls.Add(this.StartDateLabel);
             this.Controls.Add(this.EndDateLable);
             this.Controls.Add(this.EndDatePicker);
             this.Controls.Add(this.StartDatePicker);
@@ -264,7 +264,6 @@ namespace ConferencePlanner.WinUi
         private System.Windows.Forms.TabPage TabOrganizer;
         private System.Windows.Forms.Button AddConferenceButton;
         private System.Windows.Forms.DataGridView OrganizerDataGrid;
-        private System.Windows.Forms.DataGridView AttendeeGridView;
     
         
  
