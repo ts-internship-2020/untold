@@ -22,8 +22,12 @@ namespace ConferencePlanner.WinUi
         private readonly IAttendeeButtonsRepository _attendeeButtons;
 
         private int PageSize = 1;
+        //public int CurrentPageIndex { get; set; } //1
+        //public int TotalPage {get; set;} //0
         private int CurrentPageIndex = 1;
         private int TotalPage = 0;
+
+
 
         public MainPage(IConferenceRepository conferenceRepository, ICountryRepository countryRepository,
             IAttendeeButtonsRepository attendeeButtonsRepository)
@@ -77,7 +81,7 @@ namespace ConferencePlanner.WinUi
             }
             else
             {
-                OrganizerDataGrid.DataSource = GetCurrentRecords(CurrentPageIndex, conferences).ToList();
+                OrganizerDataGrid.DataSource = conferences.ToList();
                 OrganizerDataGrid.AutoGenerateColumns = false;
 
             }
@@ -85,9 +89,14 @@ namespace ConferencePlanner.WinUi
 
         private void TabOrganizer_SelectedIndexChanged(object sender, EventArgs e)
         {
-            var conferences = _conferenceRepository.GetConferencesByOrganizer(Program.EnteredEmailAddress);
+            int PreviousPageOffSet = (this.CurrentPageIndex - 1) * this.PageSize;
 
-            CalculateTotalPages(conferences);
+            var allConferences = _conferenceRepository.GetConferencesByOrganizer(Program.EnteredEmailAddress);
+            var conferences = _conferenceRepository.GetConferencesByPage(Program.EnteredEmailAddress, PreviousPageOffSet + 1, PreviousPageOffSet+this.PageSize+1);
+            
+            this.CheckPaginationButtonsVisibility();
+            
+            CalculateTotalPages(allConferences);
 
             CheckNumberOfRows(conferences);
 
@@ -102,41 +111,56 @@ namespace ConferencePlanner.WinUi
                 TotalPage += 1;
         }
 
-        private List<ConferenceModel> GetCurrentRecords(int page, List<ConferenceModel> allConferences)
+        private void CheckPaginationButtonsVisibility()
         {
-            List<ConferenceModel> displayConf = new List<ConferenceModel>();
-            int PreviousPageOffSet = (page - 1) * PageSize;
-            
-            try
+            if (this.CurrentPageIndex == this.TotalPage)
             {
-                displayConf = allConferences.GetRange(PreviousPageOffSet, PreviousPageOffSet + PageSize);
-
+                this.RightArrowPagButton.Visible = false;
             }
-            catch (IndexOutOfRangeException ex)
+            if (this.CurrentPageIndex == 1)
             {
-                displayConf = allConferences.GetRange(PreviousPageOffSet, allConferences.Count());
+                this.LeftArrowPagButton.Visible = false;
             }
-
-        return displayConf;
+            if (this.CurrentPageIndex < this.TotalPage)
+            {
+                this.RightArrowPagButton.Visible = true;
+            }
+            if (this.CurrentPageIndex > 1)
+            {
+                this.LeftArrowPagButton.Visible = true;
+            }
         }
 
-        //private void RightArrowPag_Click(object sender, EventArgs e)
-        //{
-        //    if (this.CurrentPageIndex < this.TotalPage)
-        //    {
-        //        this.CurrentPageIndex++;
-        //        this.dataGridView1.DataSource =
-        //    GetCurrentRecords(this.CurrentPageIndex, con);
-        //    }
-        //    else
-        //    {
-        //        this.RightArrowPagButton.Visible = false;
-        //    }
-        //}
+
+        private void RightArrowPagButton_MouseClick(object sender, EventArgs e)
+        {
+
+            this.CurrentPageIndex++;
+            this.CheckPaginationButtonsVisibility();
+
+            int PreviousPageOffSet = (this.CurrentPageIndex - 1) * this.PageSize; 
+            CheckNumberOfRows(_conferenceRepository.GetConferencesByPage(
+                Program.EnteredEmailAddress, PreviousPageOffSet + 1, PreviousPageOffSet + this.PageSize + 1));
+         
+        }
+
+        private void LeftArrowPagButton_MouseClick(object sender, EventArgs e)
+        {
+            this.CurrentPageIndex--;
+            this.CheckPaginationButtonsVisibility();
+
+            int PresentPageOffSet = (this.CurrentPageIndex - 1) * this.PageSize;
+            CheckNumberOfRows(_conferenceRepository.GetConferencesByPage(
+                Program.EnteredEmailAddress, PresentPageOffSet + 1, PresentPageOffSet + this.PageSize + 1));
+
+        }
+
 
         private void MainForm_Load(object sender, EventArgs e)
         {
+            //this.CurrentPageIndex = 1;
 
+            //DisplayNumOfPages.DataBindings.Add("Text", this, "CurrentPageIndex");
         }
 
         int a = 0;
@@ -431,7 +455,6 @@ namespace ConferencePlanner.WinUi
             }
 
         }
-
 
     }
 }

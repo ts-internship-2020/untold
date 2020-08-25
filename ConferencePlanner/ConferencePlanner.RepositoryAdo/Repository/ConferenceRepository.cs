@@ -60,6 +60,50 @@ namespace ConferencePlanner.Repository.Ado.Repository
             return conferences;
         }
 
+        public List<ConferenceModel> GetConferencesByPage(string email, int startIndex, int endIndex)
+        {
+            string commandText = "with ConferencesForPagination AS( SELECT ROW_NUMBER() OVER( ORDER BY ConferenceId) row_num, ConferenceId, ConferenceName, " +
+                "SpeakerName, ConferenceCategoryName, ConferenceTypeName, LocationName, ConferencePeriod " +
+                "FROM vwConferenceDetails " +
+                "where EmailOrganizer = @Email) select * from ConferencesForPagination " +
+                "where row_num >= @startIndex and row_num < @endIndex";
+
+            SqlCommand sqlCommand = new SqlCommand(commandText, _sqlConnection);
+            sqlCommand.Parameters.Add("@Email", SqlDbType.NVarChar);
+            sqlCommand.Parameters["@Email"].Value = email;
+            sqlCommand.Parameters.Add("@startIndex", SqlDbType.Int);
+            sqlCommand.Parameters["@startIndex"].Value = startIndex;
+            sqlCommand.Parameters.Add("@endIndex", SqlDbType.Int);
+            sqlCommand.Parameters["@endIndex"].Value = endIndex;
+
+            SqlDataReader sqlDataReader = sqlCommand.ExecuteReader();
+
+            List<ConferenceModel> conferences = new List<ConferenceModel>();
+
+
+            if (sqlDataReader.HasRows)
+            {
+                while (sqlDataReader.Read())
+                {
+                    conferences.Add(new ConferenceModel()
+                    {
+                        ConferenceId = sqlDataReader.GetInt32("ConferenceId"),
+                        ConferenceName = sqlDataReader.GetString("ConferenceName"),
+                        ConferenceCategoryName = sqlDataReader.GetString("ConferenceCategoryName"),
+                        ConferenceTypeName = sqlDataReader.GetString("ConferenceTypeName"),
+                        LocationName = sqlDataReader.GetString("LocationName"),
+                        SpeakerName = sqlDataReader.GetString("SpeakerName"),
+                        Period = sqlDataReader.GetString("ConferencePeriod")
+                    });
+
+                }
+            }
+
+            sqlDataReader.Close();
+
+            return conferences;
+        }
+
 
 
         public List<ConferenceModel> GetConferencesByOrganizer(string email)
