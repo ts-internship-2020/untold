@@ -11,7 +11,7 @@ namespace ConferencePlanner.Abstraction.Repository
         List<ConferenceModel> GetConferencesByOrganizer(string email);
         List<ConferenceModel> AttendeeConferences(String name);
 
-        List<ConferenceModel> FilterConferences(String email, DateTime sDate, DateTime eDate);
+        List<ConferenceModel> FilterConferencesByDate(String email, string sDate, string eDate);
         ConferenceModel GetConferenceById(int id);
 
     }

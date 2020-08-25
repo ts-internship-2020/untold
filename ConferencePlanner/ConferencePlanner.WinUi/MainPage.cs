@@ -64,7 +64,7 @@ namespace ConferencePlanner.WinUi
             if (conferences.Count() == 0)
             {
                 OrganizerDataGrid.Visible = false;
-                NoConferenceLabel.Visible = true;
+                NoConferenceLable.Visible = true;
             }
             else
             {
@@ -116,25 +116,25 @@ namespace ConferencePlanner.WinUi
 
         }
 
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void StartDatePicker_ValueChanged(object sender, EventArgs e)
         {
-            OrganizerDataGrid.DataSource = null;
+            if (TabControl.SelectedTab.Name == "TabOrganizer")
+            {
+                OrganizerDataGrid.DataSource = null;
 
-            DateTime StartDate = StartDatePicker.Value;
-            DateTime EndDate = EndDatePicker.Value;
-            //DateTime EndDate = EndDatePicker.Value;
+                DateTime StartDate = StartDatePicker.Value;
+                DateTime EndDate = EndDatePicker.Value;
 
-            //listBox1.Items.Add(StartDate);
+                var conferences = _conferenceRepository.FilterConferencesByDate(Program.EnteredEmailAddress, StartDate.ToString("yyyy'-'MM'-'dd' 'HH':'mm':'ss"), EndDate.ToString("yyyy'-'MM'-'dd' 'HH':'mm':'ss"));
 
-            //string test = System.Windows.Forms.TabControl.SelectedTab.Name;
-            var conferences = _conferenceRepository.FilterConferences(Program.EnteredEmailAddress, StartDate, EndDate);
+                CheckNumberOfRows(conferences);
 
-            CheckNumberOfRows(conferences);
+            }
+            //else
+            //{
+
+            //}
+            
         }
 
         private void Attend_Click(object sender, EventArgs e)
@@ -156,18 +156,18 @@ namespace ConferencePlanner.WinUi
             
         private void EndDatePicker_ValueChanged(object sender, EventArgs e)
         {
-            OrganizerDataGrid.DataSource = null;
+            if (TabControl.SelectedTab.Name == "TabOrganizer")
+            {
+                OrganizerDataGrid.DataSource = null;
 
-            DateTime StartDate = StartDatePicker.Value;
-            DateTime EndDate = EndDatePicker.Value;
-            //DateTime EndDate = EndDatePicker.Value;
+                DateTime StartDate = StartDatePicker.Value;
+                DateTime EndDate = EndDatePicker.Value;
 
-            //listBox1.Items.Add(StartDate);
+                var conferences = _conferenceRepository.FilterConferencesByDate(Program.EnteredEmailAddress, StartDate.ToString("yyyy'-'MM'-'dd' 'HH':'mm':'ss"), EndDate.ToString("yyyy'-'MM'-'dd' 'HH':'mm':'ss"));
 
-            //string test = System.Windows.Forms.TabControl.SelectedTab.Name;
-            var conferences = _conferenceRepository.FilterConferences(Program.EnteredEmailAddress, StartDate, EndDate);
-
-            CheckNumberOfRows(conferences);
+                CheckNumberOfRows(conferences);
+            }
+            
         }
 
         private void Join_Click(object sender, EventArgs e)
@@ -178,35 +178,27 @@ namespace ConferencePlanner.WinUi
             _attendeeButtons.JoinCommand(Program.EnteredEmailAddress, statusId);
         }
 
-        private void label2_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label1_Click_1(object sender, EventArgs e)
-        {
-
-        }
 
         private void OrganizerDataGrid_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
             if (OrganizerDataGrid.Columns.Contains("ConferenceId") && OrganizerDataGrid.Columns["ConferenceId"].Visible)
             {
                 OrganizerDataGrid.Columns["ConferenceId"].Visible = false;
+                DataGridViewButtonColumn editButtonColumn = new DataGridViewButtonColumn();
+                editButtonColumn.UseColumnTextForButtonValue = true;
+                editButtonColumn.Text = "Edit";
+                editButtonColumn.Width = 25;
+                editButtonColumn.HeaderText = "";
+                editButtonColumn.Name = "edit_column";
+
+                //editButtonColumn.Text.
+                int columnIndex = OrganizerDataGrid.ColumnCount;
+
+                OrganizerDataGrid.Columns.Insert(columnIndex, editButtonColumn);
+                OrganizerDataGrid.CellClick += OrganizerDataGrid_CellClick;
+
             }
 
-            DataGridViewButtonColumn editButtonColumn = new DataGridViewButtonColumn();
-            editButtonColumn.UseColumnTextForButtonValue = true;
-            editButtonColumn.Text = "Edit";
-            editButtonColumn.Width = 25;
-            editButtonColumn.HeaderText = "";
-            editButtonColumn.Name = "edit_column";
-            
-            //editButtonColumn.Text.
-            int columnIndex = OrganizerDataGrid.ColumnCount;
-
-            OrganizerDataGrid.Columns.Insert(columnIndex, editButtonColumn);
-            OrganizerDataGrid.CellClick += OrganizerDataGrid_CellClick;
 
             OrganizerDataGrid.Columns[0].HeaderText = "Id";
             OrganizerDataGrid.Columns[1].HeaderText = "Name";

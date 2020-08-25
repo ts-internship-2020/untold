@@ -37,18 +37,16 @@ namespace ConferencePlanner.WinUi
             this.button4 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.TabOrganizer = new System.Windows.Forms.TabPage();
-            this.NoConferenceLabel = new System.Windows.Forms.Label();
+            this.NoConferenceLable = new System.Windows.Forms.Label();
             this.OrganizerDataGrid = new System.Windows.Forms.DataGridView();
             this.TabControl = new System.Windows.Forms.TabControl();
             this.AddConferenceButton = new System.Windows.Forms.Button();
-            this.StartDateTimePicker = new System.Windows.Forms.DateTimePicker();
-            this.EndDateTimePicker = new System.Windows.Forms.DateTimePicker();
             this.StartDateLable = new System.Windows.Forms.Label();
-            this.EndDateLabel = new System.Windows.Forms.Label();
             this.StartDatePicker = new System.Windows.Forms.DateTimePicker();
             this.EndDatePicker = new System.Windows.Forms.DateTimePicker();
             this.EndDateLable = new System.Windows.Forms.Label();
-            this.StartDateLabel = new System.Windows.Forms.Label();
+
+            ((System.ComponentModel.ISupportInitialize)(this.AttendeeGridvw)).BeginInit();
             this.TabAttendee.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.AttendeeGridvw)).BeginInit();
             this.TabOrganizer.SuspendLayout();
@@ -116,7 +114,7 @@ namespace ConferencePlanner.WinUi
             // 
             // TabOrganizer
             // 
-            this.TabOrganizer.Controls.Add(this.NoConferenceLabel);
+            this.TabOrganizer.Controls.Add(this.NoConferenceLable);
             this.TabOrganizer.Controls.Add(this.OrganizerDataGrid);
             this.TabOrganizer.Location = new System.Drawing.Point(4, 24);
             this.TabOrganizer.Name = "TabOrganizer";
@@ -173,57 +171,35 @@ namespace ConferencePlanner.WinUi
             this.AddConferenceButton.UseVisualStyleBackColor = true;
             this.AddConferenceButton.Click += new System.EventHandler(this.AddConferenceButton_Click);
             // 
-            // StartDateTimePicker
-            // 
-            this.StartDateTimePicker.Location = new System.Drawing.Point(0, 0);
-            this.StartDateTimePicker.Name = "StartDateTimePicker";
-            this.StartDateTimePicker.Size = new System.Drawing.Size(200, 23);
-            this.StartDateTimePicker.TabIndex = 0;
-            // 
-            // EndDateTimePicker
-            // 
-            this.EndDateTimePicker.Location = new System.Drawing.Point(0, 0);
-            this.EndDateTimePicker.Name = "EndDateTimePicker";
-            this.EndDateTimePicker.Size = new System.Drawing.Size(200, 23);
-            this.EndDateTimePicker.TabIndex = 0;
-            // 
             // StartDateLable
             // 
             this.StartDateLable.AutoSize = true;
-            this.StartDateLable.Location = new System.Drawing.Point(50, 36);
+            this.StartDateLable.Location = new System.Drawing.Point(61, 42);
             this.StartDateLable.Name = "StartDateLable";
-            this.StartDateLable.Size = new System.Drawing.Size(92, 15);
-            this.StartDateLable.TabIndex = 7;
-            this.StartDateLable.Text = "Select Start Date";
-            this.StartDateLable.Click += new System.EventHandler(this.label1_Click);
-            // 
-            // EndDateLabel
-            // 
-            this.EndDateLabel.AutoSize = true;
-            this.EndDateLabel.Location = new System.Drawing.Point(255, 36);
-            this.EndDateLabel.Name = "EndDateLabel";
-            this.EndDateLabel.Size = new System.Drawing.Size(88, 15);
-            this.EndDateLabel.TabIndex = 8;
-            this.EndDateLabel.Text = "Select End Date";
+            this.StartDateLable.Size = new System.Drawing.Size(99, 15);
+            this.StartDateLable.TabIndex = 8;
+            this.StartDateLable.Text = "Select a start date";
+        
             // 
             // StartDatePicker
             // 
-            this.StartDatePicker.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.StartDatePicker.CustomFormat = "yyyy-MM-dd hh:mm:ss";
             this.StartDatePicker.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.StartDatePicker.Location = new System.Drawing.Point(179, 75);
+            this.StartDatePicker.Location = new System.Drawing.Point(61, 66);
             this.StartDatePicker.Name = "StartDatePicker";
-            this.StartDatePicker.Size = new System.Drawing.Size(202, 23);
+            this.StartDatePicker.Size = new System.Drawing.Size(200, 23);
             this.StartDatePicker.TabIndex = 5;
             this.StartDatePicker.ValueChanged += new System.EventHandler(this.StartDatePicker_ValueChanged);
             // 
             // EndDatePicker
             // 
-            this.EndDatePicker.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.EndDatePicker.Location = new System.Drawing.Point(425, 75);
+            this.EndDatePicker.CustomFormat = "yyyy-MM-dd hh:mm:ss";
+            this.StartDatePicker.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.EndDatePicker.Location = new System.Drawing.Point(307, 66);
             this.EndDatePicker.Name = "EndDatePicker";
-            this.EndDatePicker.Size = new System.Drawing.Size(202, 23);
+            this.EndDatePicker.Size = new System.Drawing.Size(200, 23);
             this.EndDatePicker.TabIndex = 6;
+            this.EndDatePicker.ValueChanged += new System.EventHandler(this.EndDatePicker_ValueChanged);
             // 
             // EndDateLable
             // 
@@ -234,18 +210,22 @@ namespace ConferencePlanner.WinUi
             this.EndDateLable.Size = new System.Drawing.Size(103, 15);
             this.EndDateLable.TabIndex = 7;
             this.EndDateLable.Text = "Select an end date";
-            this.EndDateLable.Click += new System.EventHandler(this.label1_Click_1);
             // 
-            // StartDateLabel
+            // listBox1
             // 
-            this.StartDateLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.StartDateLabel.AutoSize = true;
-            this.StartDateLabel.Location = new System.Drawing.Point(179, 51);
-            this.StartDateLabel.Name = "StartDateLabel";
-            this.StartDateLabel.Size = new System.Drawing.Size(99, 15);
-            this.StartDateLabel.TabIndex = 8;
-            this.StartDateLabel.Text = "Select a start date";
-            this.StartDateLabel.Click += new System.EventHandler(this.label2_Click);
+
+            //
+            // button5
+            // 
+
+            this.button5.Location = new System.Drawing.Point(619, 11);
+            this.button5.Name = "JoinButton";
+            this.button5.Size = new System.Drawing.Size(75, 23);
+            this.button5.TabIndex = 5;
+            this.button5.Text = "Join";
+            this.button5.UseVisualStyleBackColor = true;
+            this.button5.Click += new System.EventHandler(this.Join_Click);
+
             // 
             // MainPage
             // 
@@ -284,24 +264,22 @@ namespace ConferencePlanner.WinUi
         private System.Windows.Forms.TabPage TabOrganizer;
         private System.Windows.Forms.Button AddConferenceButton;
         private System.Windows.Forms.DataGridView OrganizerDataGrid;
-        //private System.Windows.Forms.DataGridView AttendeeGridView;
-        private DateTimePicker StartDateTimePicker;
-        private DateTimePicker EndDateTimePicker;
-        private Label StartDateLable;
-        private Label EndDateLabel;
+        private System.Windows.Forms.DataGridView AttendeeGridView;
+    
+        
+ 
        // private Button button6;
         //private Button button2;
         //private Button button1;
-        private Label NoConferenceLabel;
+        private Label NoConferenceLable;
         private DateTimePicker StartDatePicker;
-        private DateTimePicker dateTimePicker2;
-        private Label label1;
-        private Label StartDateLabel;
+        private Label StartDateLable;
         private DateTimePicker EndDatePicker;
         private Label EndDateLable;
         private DataGridView AttendeeGridvw;
         private Button button5;
         private Button button4;
         private Button button3;
+        private ListBox listBox1;
     }
 }
