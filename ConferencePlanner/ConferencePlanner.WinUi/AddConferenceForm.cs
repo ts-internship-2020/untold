@@ -8,6 +8,7 @@ using System.Windows.Forms;
 using System.Data.SqlClient;
 using ConferencePlanner.Abstraction.Repository;
 using ConferencePlanner.Abstraction.Model;
+using System.ComponentModel.Design;
 
 namespace ConferencePlanner.WinUi
 {
@@ -38,13 +39,17 @@ namespace ConferencePlanner.WinUi
 
             InitializeComponent();
 
-            //this.ConferenceName.Text = conference.ConferenceName;
-
+            this.ConfName.Text = conference.ConferenceName;
+            
             string[] dates = conference.Period.Split(" - ");
             this.MonthCalendar.SetSelectionRange(DateTime.Parse(dates[0]), DateTime.Parse(dates[1]));
 
             string[] places = conference.LocationName.Split(", ");
-            //this.
+
+            this.ConfAddress.Text = conference.LocationName;
+
+            this.CountryComboBox.Text = places[0];
+            
 
         }
 
@@ -59,6 +64,17 @@ namespace ConferencePlanner.WinUi
         
         private void button1_Click(object sender, EventArgs e)
         {
+            if(ConfName.Text == string.Empty)
+            {
+                MessageBox.Show("Please enter a value in the conference name fild!");
+                return;
+            }
+            else if(ConfAddress.Text == string.Empty)
+            {
+                MessageBox.Show("Please enter a value in the conference address fild!");
+                return;
+            }
+            else
             TabControlLocation.SelectedIndex = 1;
         }
 
@@ -69,23 +85,6 @@ namespace ConferencePlanner.WinUi
             Close();
         }
 
-        private void RequiredFields()
-        {
-           // if (ConfName.Text == string.Empty)
-           // {
-           //     errorProvider1.SetError(ConfName, "Insert conference name!");
-           // }
-           // else
-           // {
-           //     errorProvider1.Clear();
-           // }
-
-            /*  if (textBox1.Text == string.Empty)
-              {
-                  MessageBox.Show("Please enter a value to textBox1!");
-                  return;
-              }*/
-        }
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {

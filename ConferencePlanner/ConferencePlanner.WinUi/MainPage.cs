@@ -14,18 +14,15 @@ namespace ConferencePlanner.WinUi
 
         private readonly ICountryRepository _countryRepository;
 
-        private readonly IGetDemoRepository _getDemoRepository;
 
         private readonly IAttendeeButtonsRepository _attendeeButtons;
 
-        public MainPage(IConferenceRepository conferenceRepository, ICountryRepository countryRepository, IGetDemoRepository getDemoRepository, 
+        public MainPage(IConferenceRepository conferenceRepository, ICountryRepository countryRepository,
             IAttendeeButtonsRepository attendeeButtonsRepository)
         {
             _conferenceRepository = conferenceRepository;
 
             _countryRepository = countryRepository;
-
-            _getDemoRepository = getDemoRepository;
 
             _attendeeButtons = attendeeButtonsRepository;
 
@@ -199,8 +196,13 @@ namespace ConferencePlanner.WinUi
             }
 
             DataGridViewButtonColumn editButtonColumn = new DataGridViewButtonColumn();
-            editButtonColumn.Name = "edit_column";
+            editButtonColumn.UseColumnTextForButtonValue = true;
             editButtonColumn.Text = "Edit";
+            editButtonColumn.Width = 25;
+            editButtonColumn.HeaderText = "";
+            editButtonColumn.Name = "edit_column";
+            
+            //editButtonColumn.Text.
             int columnIndex = OrganizerDataGrid.ColumnCount;
 
             OrganizerDataGrid.Columns.Insert(columnIndex, editButtonColumn);
