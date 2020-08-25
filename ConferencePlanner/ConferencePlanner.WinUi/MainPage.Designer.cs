@@ -258,9 +258,7 @@ namespace ConferencePlanner.WinUi
         private System.Windows.Forms.TabPage TabAttendee;
         private System.Windows.Forms.TabPage TabOrganizer;
         private System.Windows.Forms.Button AddConferenceButton;
-        private System.Windows.Forms.DataGridView OrganizerDataGrid;
-        private System.Windows.Forms.DataGridView AttendeeGridView;
-    
+        private System.Windows.Forms.DataGridView OrganizerDataGrid;  
         
  
        // private Button button6;

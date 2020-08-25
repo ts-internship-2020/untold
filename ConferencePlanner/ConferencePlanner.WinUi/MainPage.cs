@@ -26,8 +26,8 @@ namespace ConferencePlanner.WinUi
 
             _attendeeButtons = attendeeButtonsRepository;
 
-        InitializeComponent();
-            
+            InitializeComponent();
+
         }
 
         public MainPage() {
@@ -75,7 +75,7 @@ namespace ConferencePlanner.WinUi
         }
 
         private void TabOrganizer_SelectedIndexChanged(object sender, EventArgs e)
-        { 
+        {
             var x = _conferenceRepository.GetConferencesByOrganizer(Program.EnteredEmailAddress);
 
             CheckNumberOfRows(x);
@@ -87,13 +87,7 @@ namespace ConferencePlanner.WinUi
 
         }
 
-        private void dataGridView1_CellContentClick(object sender, EventArgs e)
-        {
-            // var x = _getDemoRepository.GetDemo()
-            
-        }
 
-       
 
         private void tabPage1_Layout(object sender, LayoutEventArgs e)
         {
@@ -108,7 +102,7 @@ namespace ConferencePlanner.WinUi
             AttendeeGridvw.Columns[4].HeaderText = "Speaker Name";
         }
 
-       
+
 
 
         private void TabAttendee_Click(object sender, EventArgs e)
@@ -118,24 +112,58 @@ namespace ConferencePlanner.WinUi
 
         private void StartDatePicker_ValueChanged(object sender, EventArgs e)
         {
+
+            DateTime StartDate = StartDatePicker.Value;
+            DateTime EndDate = EndDatePicker.Value;
+
             if (TabControl.SelectedTab.Name == "TabOrganizer")
             {
                 OrganizerDataGrid.DataSource = null;
-
-                DateTime StartDate = StartDatePicker.Value;
-                DateTime EndDate = EndDatePicker.Value;
-
                 var conferences = _conferenceRepository.FilterConferencesByDate(Program.EnteredEmailAddress, StartDate.ToString("yyyy'-'MM'-'dd' 'HH':'mm':'ss"), EndDate.ToString("yyyy'-'MM'-'dd' 'HH':'mm':'ss"));
 
                 CheckNumberOfRows(conferences);
 
             }
-            //else
-            //{
+            else
+            {
+                AttendeeGridvw.DataSource = null;
+                var allConferences = _conferenceRepository.FilterConfAttendeeByDate(Program.EnteredEmailAddress, StartDate.ToString("yyyy'-'MM'-'dd' 'HH':'mm':'ss"), EndDate.ToString("yyyy'-'MM'-'dd' 'HH':'mm':'ss"));
 
-            //}
-            
+                //var conferences = FilterAttendee(allConferences, StartDate, EndDate);
+
+                UpdateAttendee(FilterAttendee(allConferences, StartDate, EndDate));
+
+            }
+
         }
+
+        private void UpdateAttendee(List<ConferenceModel> conf)
+        {
+            AttendeeGridvw.DataSource = conf.ToList();
+            listBox1.Items.Add("been here");
+
+        }
+
+        private List<ConferenceModel> FilterAttendee(List<ConferenceModel> allConferences, DateTime StartDate, DateTime EndDate)
+        {
+            List<ConferenceModel> conferences = new List<ConferenceModel>();
+
+            foreach (ConferenceModel conf in allConferences)
+            {
+                string[] aux = conf.Period.Split(" - ");
+                DateTime sDate = DateTime.Parse(aux[0]);
+                DateTime eDate = DateTime.Parse(aux[1]);
+                //listBox1.Items.Add(sDate);
+                //listBox1.Items.Add(StartDate.Date);
+                if ( DateTime.Compare(StartDate.Date, sDate) <=0 && DateTime.Compare(eDate, EndDate.Date) <= 0)
+                {
+                    listBox1.Items.Add(conf.ConferenceName);
+                    conferences.Append(conf);
+                }
+            }
+            return conferences;
+        }
+    
 
         private void Attend_Click(object sender, EventArgs e)
         {
@@ -156,18 +184,26 @@ namespace ConferencePlanner.WinUi
             
         private void EndDatePicker_ValueChanged(object sender, EventArgs e)
         {
+            OrganizerDataGrid.DataSource = null;
+
+            DateTime StartDate = StartDatePicker.Value;
+            DateTime EndDate = EndDatePicker.Value;
+
             if (TabControl.SelectedTab.Name == "TabOrganizer")
             {
-                OrganizerDataGrid.DataSource = null;
-
-                DateTime StartDate = StartDatePicker.Value;
-                DateTime EndDate = EndDatePicker.Value;
-
                 var conferences = _conferenceRepository.FilterConferencesByDate(Program.EnteredEmailAddress, StartDate.ToString("yyyy'-'MM'-'dd' 'HH':'mm':'ss"), EndDate.ToString("yyyy'-'MM'-'dd' 'HH':'mm':'ss"));
 
                 CheckNumberOfRows(conferences);
             }
-            
+            else
+            {
+                var allConferences = _conferenceRepository.FilterConfAttendeeByDate(Program.EnteredEmailAddress, StartDate.ToString("yyyy'-'MM'-'dd' 'HH':'mm':'ss"), EndDate.ToString("yyyy'-'MM'-'dd' 'HH':'mm':'ss"));
+
+                var conferences = FilterAttendee(allConferences, StartDate, EndDate);
+
+                UpdateAttendee(conferences);
+
+            }
         }
 
         private void Join_Click(object sender, EventArgs e)

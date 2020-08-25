@@ -94,6 +94,8 @@ namespace ConferencePlanner.Repository.Ado.Repository
 
             return demos;
             }
+
+
         public List<ConferenceModel> AttendeeConferences(string email)
         {
             //SqlCommand sqlCommand = _sqlConnection.CreateCommand();
@@ -139,6 +141,15 @@ namespace ConferencePlanner.Repository.Ado.Repository
 
             return attendees;
 
+        }
+
+        public List<ConferenceModel> FilterConfAttendeeByDate(string email, string sDate, string eDate)
+        {
+            var conferences = AttendeeConferences(email);
+
+
+
+            return conferences;
         }
 
 
