@@ -31,6 +31,7 @@ namespace ConferencePlanner.WinUi
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainPage));
             this.TabAttendee = new System.Windows.Forms.TabPage();
             this.AttendeeGridvw = new System.Windows.Forms.DataGridView();
             this.button5 = new System.Windows.Forms.Button();
@@ -236,6 +237,7 @@ namespace ConferencePlanner.WinUi
             this.Controls.Add(this.StartDatePicker);
             this.Controls.Add(this.AddConferenceButton);
             this.Controls.Add(this.TabControl);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(915, 500);
             this.Name = "MainPage";
             this.Text = "MainForm";

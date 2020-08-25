@@ -42,14 +42,14 @@ namespace ConferencePlanner.WinUi
             this.ConfName.Text = conference.ConferenceName;
             
             string[] dates = conference.Period.Split(" - ");
-            this.MonthCalendar.SetSelectionRange(DateTime.Parse(dates[0]), DateTime.Parse(dates[1]));
+            //this.MonthCalendar.SetSelectionRange(DateTime.Parse(dates[0]), DateTime.Parse(dates[1]));
 
             string[] places = conference.LocationName.Split(", ");
 
-            this.ConfAddress.Text = conference.LocationName;
+            this.ConfEmailAddress.Text = conference.LocationName;
 
-            this.CountryComboBox.Text = places[0];
-            this.CountyComboBox.Text = places[1];
+            //this.CountryComboBox.Text = places[0];
+            //this.CountyComboBox.Text = places[1];
             this.CityComboBox.Text = places[2];
 
 
@@ -71,9 +71,9 @@ namespace ConferencePlanner.WinUi
                 ErrorName.SetError(ConfName, "Please enter a value in the conference name fild!");
                 return;
             }
-            else if(ConfAddress.Text == string.Empty)
+            else if(ConfEmailAddress.Text == string.Empty)
             {
-                ErrorAddress.SetError(ConfAddress, "Please enter a value in the conference address fild!");
+                ErrorAddress.SetError(ConfEmailAddress, "Please enter a value in the conference address fild!");
                 return;
             }
             else
@@ -98,9 +98,10 @@ namespace ConferencePlanner.WinUi
 
         private void comboBox1_Click(object sender, EventArgs e)
         {
-            var list = _countryRepository.GetListCountry();
-            CountryComboBox.DataSource = list;
+            
         }
+        //var list = _countryRepository.GetListCountry();
+        //CountryComboBox.DataSource = list;
 
         private void BackBtnCountyTab_Click(object sender, EventArgs e)
         {
@@ -116,9 +117,9 @@ namespace ConferencePlanner.WinUi
         {
             SaveAndNewBtnCityTab.Enabled = true;
             ConfName.Text = string.Empty;
-            ConfAddress.Text = string.Empty;
-            CountryComboBox.SelectedItem = string.Empty;
-            CountyComboBox.SelectedItem = string.Empty;
+            ConfEmailAddress.Text = string.Empty;
+            //CountryComboBox.SelectedItem = string.Empty;
+            //CountyComboBox.SelectedItem = string.Empty;
             CityComboBox.SelectedItem = string.Empty;
         }
 
@@ -126,5 +127,12 @@ namespace ConferencePlanner.WinUi
         {
             NextBtnCountyTab.Enabled = true;
         }
+
+        private void ConferenceNameLabel_Click(object sender, EventArgs e)
+        {
+
+        }
+
+
     }
 }

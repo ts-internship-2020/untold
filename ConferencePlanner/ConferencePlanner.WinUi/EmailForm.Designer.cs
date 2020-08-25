@@ -112,10 +112,10 @@
             this.Controls.Add(this.EmailTextBox);
             this.DoubleBuffered = true;
             this.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimumSize = new System.Drawing.Size(400, 200);
             this.Name = "EmailForm";
-            this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Conference Planner";
             this.ResumeLayout(false);
