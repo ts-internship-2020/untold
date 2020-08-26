@@ -9,6 +9,8 @@ using System.Data.SqlClient;
 using ConferencePlanner.Abstraction.Repository;
 using ConferencePlanner.Abstraction.Model;
 using System.ComponentModel.Design;
+using System.Configuration;
+using System.Linq;
 
 namespace ConferencePlanner.WinUi
 {
@@ -50,7 +52,7 @@ namespace ConferencePlanner.WinUi
 
             //this.CountryComboBox.Text = places[0];
             //this.CountyComboBox.Text = places[1];
-           // this.CityComboBox.Text = places[2];
+            //this.CityComboBox.Text = places[2];
 
 
         }
@@ -58,7 +60,20 @@ namespace ConferencePlanner.WinUi
         private void AddConf_Load(object sender, EventArgs e)
         {
             TabControlLocation.SelectedIndex = 0;
+
+            // dataGridViewCountryTab.ColumnCount = 2;
+            // dataGridViewCountryTab.Columns[0].Name = "Country Code";
+            // dataGridViewCountryTab.Columns[1].Name = "Country Name";
+
+           
+
+
         }
+
+       
+
+
+
         private void button2_Click(object sender, EventArgs e)
         {
             TabControlLocation.SelectedIndex = 2;
@@ -93,31 +108,29 @@ namespace ConferencePlanner.WinUi
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            NextBtnCountryTab.Enabled = true;
+            NextTabBtn.Enabled = true;
         }
 
         private void comboBox1_Click(object sender, EventArgs e)
         {
             
         }
-        //var list = _countryRepository.GetListCountry();
-        //CountryComboBox.DataSource = list;
+        
 
         private void BackBtnCountyTab_Click(object sender, EventArgs e)
         {
-            TabControlLocation.SelectedIndex = 0;
+
         }
 
-        private void BackBtnCityTab_Click(object sender, EventArgs e)
-        {
-            TabControlLocation.SelectedIndex = 1;
-        }
+        //private void BackBtnCityTab_Click(object sender, EventArgs e)
+        //{
+        //    TabControlLocation.SelectedIndex = 1;
+        //}
 
         private void SaveAndNewBtnCityTab_Click(object sender, EventArgs e)
         {
             //SaveAndNewBtnCityTab.Enabled = true;
-            ConfName.Text = string.Empty;
-            ConfEmailAddress.Text = string.Empty;
+            
             //CountryComboBox.SelectedItem = string.Empty;
             //CountyComboBox.SelectedItem = string.Empty;
             //CityComboBox.SelectedItem = string.Empty;
@@ -125,7 +138,7 @@ namespace ConferencePlanner.WinUi
 
         private void ComboBoxCountyTab_SelectedIndexChanged(object sender, EventArgs e)
         {
-            //NextBtnCountyTab.Enabled = true;
+           // NextBtnCountyTab.Enabled = true;
         }
 
         private void ConferenceNameLabel_Click(object sender, EventArgs e)
@@ -133,24 +146,63 @@ namespace ConferencePlanner.WinUi
 
         }
 
-        private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e)
+        private void BackBtnTab_Click(object sender, EventArgs e)
         {
-
+            TabControlLocation.SelectedIndex--;
         }
 
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        private void NextBtn_Click(object sender, EventArgs e)
         {
-
+            
+            if (NextTabBtn.Text=="Next>>")
+            {
+                TabControlLocation.SelectedIndex++;
+            }
+            else
+            {
+                //save       
+            }
         }
 
         private void TabControlLocation_SelectedIndexChanged(object sender, EventArgs e)
         {
-
+            if(TabControlLocation.SelectedIndex > 0)
+            {
+                BackTabBtn.Enabled = true;
+            }
+            else
+            {
+                BackTabBtn.Enabled = false;
+            }
+            if(TabControlLocation.SelectedIndex >= 5)
+            {
+                SaveNew.Visible = true; 
+                NextTabBtn.Text = "Save";
+            }
+            else
+            {
+                SaveNew.Visible = false;
+                NextTabBtn.Text = "Next>>";
+            }
         }
 
-        private void Country_Click(object sender, EventArgs e)
+        private void SaveNew_Click(object sender, EventArgs e)
         {
+            ConfName.Text = string.Empty;
+            ConfEmailAddress.Text = string.Empty;
+            StardDatePicker.Value = DateTime.Today;
+            EndDatePicker.Value = DateTime.Today;
+        }
 
+        private void CountryListDataGridView_Layout(object sender, LayoutEventArgs e)
+        {
+            var list = _countryRepository.GetListCountry();
+            CountryListDataGridView.DataSource = list.ToList();
+            CountryListDataGridView.AutoGenerateColumns = false;
+            //trebuie sa sparg coloanele sa fac vizibil
+            //CountryListDataGridView.Columns["DictionaryCountryId"].Visible = false;
+            //CountryListDataGridView.Columns[1].HeaderText = "Country Code";
+            //CountryListDataGridView.Columns[2].HeaderText = "Country Name";
         }
     }
 }

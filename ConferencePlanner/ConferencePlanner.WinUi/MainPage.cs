@@ -12,6 +12,7 @@ using System.Data.SqlClient;
 using System.Net.Mail;
 using System.Net;
 using QRCoder;
+using ConferencePlanner.Repository.Ado.Repository;
 
 namespace ConferencePlanner.WinUi
 {
@@ -23,23 +24,28 @@ namespace ConferencePlanner.WinUi
 
 
         private readonly IAttendeeButtonsRepository _attendeeButtons;
+        private readonly ISpeakerRepository _speakerRepository;
 
         private int PageSize = 3;
         //public int CurrentPageIndex { get; set; } //1
         //public int TotalPage {get; set;} //0
         private int OrganizerCurrentPageIndex = 1;
         private int OrganizerTotalPage = 0;
+
+
         private int AttendeeCurrentPageIndex = 1;
         private int AttendeeTotalPage = 0;
 
         public MainPage(IConferenceRepository conferenceRepository, ICountryRepository countryRepository,
-            IAttendeeButtonsRepository attendeeButtonsRepository)
+            IAttendeeButtonsRepository attendeeButtonsRepository, ISpeakerRepository speakerRepository)
         {
             _conferenceRepository = conferenceRepository;
 
             _countryRepository = countryRepository;
 
             _attendeeButtons = attendeeButtonsRepository;
+
+            _speakerRepository = speakerRepository;
 
             InitializeComponent();
 
@@ -202,6 +208,7 @@ namespace ConferencePlanner.WinUi
             AttendeeGridvw.Columns[3].HeaderText = "Type";
             AttendeeGridvw.Columns[4].HeaderText = "Location";
             AttendeeGridvw.Columns[5].HeaderText = "Speaker Name";
+            AttendeeGridvw.Columns[5].Name = "speaker_name";
             AttendeeGridvw.Columns[6].HeaderText = "Period";
 
 
@@ -302,7 +309,7 @@ namespace ConferencePlanner.WinUi
         private void UpdateAttendee(List<ConferenceModel> conf)
         {
             AttendeeGridvw.DataSource = conf.ToList();
-            listBox1.Items.Add("been here");
+            //listBox1.Items.Add("been here");
 
         }
 
@@ -457,6 +464,19 @@ namespace ConferencePlanner.WinUi
                     
                     return;
                 }
+
+            }
+            if (e.ColumnIndex == AttendeeGridvw.Columns["speaker_name"].Index)
+            {
+                string[] names = AttendeeGridvw.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString().Split(" ");
+                SpeakerModel speaker = this._speakerRepository.GetSpeakerByName(names);
+
+                var varSpeakerDetails = new SpeakerDetails(speaker);
+                varSpeakerDetails.ShowDialog();
+
+                //listBox1.Items.Add(speaker.Rating);
+                //listBox1.Items.Add(speaker.ImagePath);
+                //AttendeeGridvw.Rows[e.RowIndex].Cells[e.ColumnIndex].Value;
 
             }
 
