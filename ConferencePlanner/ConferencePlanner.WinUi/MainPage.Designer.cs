@@ -82,6 +82,7 @@ namespace ConferencePlanner.WinUi
             this.AttendeeGridvw.Location = new System.Drawing.Point(3, 3);
             this.AttendeeGridvw.Name = "AttendeeGridvw";
             this.AttendeeGridvw.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
+            this.AttendeeGridvw.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
             this.AttendeeGridvw.Size = new System.Drawing.Size(1315, 504);
             this.AttendeeGridvw.TabIndex = 3;
             this.AttendeeGridvw.Text = "dataGridView1";
@@ -96,7 +97,6 @@ namespace ConferencePlanner.WinUi
             this.button5.TabIndex = 5;
             this.button5.Text = "Join";
             this.button5.UseVisualStyleBackColor = true;
-           // this.button5.Click += new System.EventHandler(this.Join_Click);
             // 
             // button4
             // 
@@ -106,7 +106,6 @@ namespace ConferencePlanner.WinUi
             this.button4.TabIndex = 4;
             this.button4.Text = "Withdraw";
             this.button4.UseVisualStyleBackColor = true;
-            //this.button4.Click += new System.EventHandler(this.Withdraw_Click);
             // 
             // button3
             // 
@@ -116,7 +115,6 @@ namespace ConferencePlanner.WinUi
             this.button3.TabIndex = 3;
             this.button3.Text = "Attend";
             this.button3.UseVisualStyleBackColor = true;
-            //this.button3.Click += new System.EventHandler(this.Attend_Click);
             // 
             // TabOrganizer
             // 
