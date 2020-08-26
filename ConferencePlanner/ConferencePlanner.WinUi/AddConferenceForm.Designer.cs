@@ -40,7 +40,7 @@
             this.Country = new System.Windows.Forms.TabPage();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.County = new System.Windows.Forms.TabPage();
-            this.dataGridView2 = new System.Windows.Forms.DataGridView();
+            this.ContyGridView = new System.Windows.Forms.DataGridView();
             this.City = new System.Windows.Forms.TabPage();
             this.dataGridView6 = new System.Windows.Forms.DataGridView();
             this.TypeTab = new System.Windows.Forms.TabPage();
@@ -63,7 +63,7 @@
             this.Country.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.County.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ContyGridView)).BeginInit();
             this.City.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView6)).BeginInit();
             this.TypeTab.SuspendLayout();
@@ -194,7 +194,7 @@
             // 
             // County
             // 
-            this.County.Controls.Add(this.dataGridView2);
+            this.County.Controls.Add(this.ContyGridView);
             this.County.Location = new System.Drawing.Point(4, 29);
             this.County.Name = "County";
             this.County.Padding = new System.Windows.Forms.Padding(3);
@@ -203,15 +203,15 @@
             this.County.Text = "County";
             this.County.UseVisualStyleBackColor = true;
             // 
-            // dataGridView2
+            // ContyGridView
             // 
-            this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGridView2.Location = new System.Drawing.Point(3, 3);
-            this.dataGridView2.Name = "dataGridView2";
-            this.dataGridView2.Size = new System.Drawing.Size(1207, 360);
-            this.dataGridView2.TabIndex = 2;
-            this.dataGridView2.Text = "dataGridView2";
+            this.ContyGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.ContyGridView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ContyGridView.Location = new System.Drawing.Point(3, 3);
+            this.ContyGridView.Name = "ContyGridView";
+            this.ContyGridView.Size = new System.Drawing.Size(1207, 360);
+            this.ContyGridView.TabIndex = 2;
+            this.ContyGridView.Text = "dataGridView2";
             // 
             // City
             // 
@@ -437,7 +437,7 @@
             this.Country.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.County.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ContyGridView)).EndInit();
             this.City.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView6)).EndInit();
             this.TypeTab.ResumeLayout(false);
@@ -481,7 +481,7 @@
         private System.Windows.Forms.TabPage SpeakerTab;
         private System.Windows.Forms.TabPage CategoryTab;
         private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.DataGridView dataGridView2;
+        private System.Windows.Forms.DataGridView ContyGridView;
         private System.Windows.Forms.DataGridView dataGridView3;
         private System.Windows.Forms.DataGridView dataGridView4;
         private System.Windows.Forms.DataGridView dataGridView5;
