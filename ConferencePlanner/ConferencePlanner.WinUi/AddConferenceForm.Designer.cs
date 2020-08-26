@@ -42,6 +42,7 @@
             this.County = new System.Windows.Forms.TabPage();
             this.dataGridView2 = new System.Windows.Forms.DataGridView();
             this.City = new System.Windows.Forms.TabPage();
+            this.dataGridView6 = new System.Windows.Forms.DataGridView();
             this.TypeTab = new System.Windows.Forms.TabPage();
             this.dataGridView3 = new System.Windows.Forms.DataGridView();
             this.SpeakerTab = new System.Windows.Forms.TabPage();
@@ -57,13 +58,13 @@
             this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
             this.dateTimePicker2 = new System.Windows.Forms.DateTimePicker();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.dataGridView6 = new System.Windows.Forms.DataGridView();
             this.TabControlLocation.SuspendLayout();
             this.Country.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.County.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
             this.City.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView6)).BeginInit();
             this.TypeTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView3)).BeginInit();
             this.SpeakerTab.SuspendLayout();
@@ -78,7 +79,6 @@
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView6)).BeginInit();
             this.SuspendLayout();
             // 
             // ConferenceNameLabel
@@ -187,7 +187,7 @@
             this.County.Location = new System.Drawing.Point(4, 29);
             this.County.Name = "County";
             this.County.Padding = new System.Windows.Forms.Padding(3);
-            this.County.Size = new System.Drawing.Size(1107, 214);
+            this.County.Size = new System.Drawing.Size(1107, 217);
             this.County.TabIndex = 1;
             this.County.Text = "County";
             this.County.UseVisualStyleBackColor = true;
@@ -198,7 +198,7 @@
             this.dataGridView2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridView2.Location = new System.Drawing.Point(3, 3);
             this.dataGridView2.Name = "dataGridView2";
-            this.dataGridView2.Size = new System.Drawing.Size(1101, 208);
+            this.dataGridView2.Size = new System.Drawing.Size(1101, 211);
             this.dataGridView2.TabIndex = 2;
             this.dataGridView2.Text = "dataGridView2";
             // 
@@ -208,10 +208,20 @@
             this.City.Location = new System.Drawing.Point(4, 29);
             this.City.Name = "City";
             this.City.Padding = new System.Windows.Forms.Padding(3);
-            this.City.Size = new System.Drawing.Size(1107, 214);
+            this.City.Size = new System.Drawing.Size(1107, 217);
             this.City.TabIndex = 2;
             this.City.Text = "City";
             this.City.UseVisualStyleBackColor = true;
+            // 
+            // dataGridView6
+            // 
+            this.dataGridView6.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView6.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dataGridView6.Location = new System.Drawing.Point(3, 3);
+            this.dataGridView6.Name = "dataGridView6";
+            this.dataGridView6.Size = new System.Drawing.Size(1101, 211);
+            this.dataGridView6.TabIndex = 0;
+            this.dataGridView6.Text = "dataGridView6";
             // 
             // TypeTab
             // 
@@ -219,7 +229,7 @@
             this.TypeTab.Location = new System.Drawing.Point(4, 29);
             this.TypeTab.Name = "TypeTab";
             this.TypeTab.Padding = new System.Windows.Forms.Padding(3);
-            this.TypeTab.Size = new System.Drawing.Size(1107, 214);
+            this.TypeTab.Size = new System.Drawing.Size(1107, 217);
             this.TypeTab.TabIndex = 4;
             this.TypeTab.Text = "Type";
             this.TypeTab.UseVisualStyleBackColor = true;
@@ -230,7 +240,7 @@
             this.dataGridView3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridView3.Location = new System.Drawing.Point(3, 3);
             this.dataGridView3.Name = "dataGridView3";
-            this.dataGridView3.Size = new System.Drawing.Size(1101, 208);
+            this.dataGridView3.Size = new System.Drawing.Size(1101, 211);
             this.dataGridView3.TabIndex = 0;
             this.dataGridView3.Text = "dataGridView3";
             // 
@@ -240,7 +250,7 @@
             this.SpeakerTab.Location = new System.Drawing.Point(4, 29);
             this.SpeakerTab.Name = "SpeakerTab";
             this.SpeakerTab.Padding = new System.Windows.Forms.Padding(3);
-            this.SpeakerTab.Size = new System.Drawing.Size(1107, 214);
+            this.SpeakerTab.Size = new System.Drawing.Size(1107, 217);
             this.SpeakerTab.TabIndex = 5;
             this.SpeakerTab.Text = "Speaker";
             this.SpeakerTab.UseVisualStyleBackColor = true;
@@ -251,7 +261,7 @@
             this.dataGridView4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridView4.Location = new System.Drawing.Point(3, 3);
             this.dataGridView4.Name = "dataGridView4";
-            this.dataGridView4.Size = new System.Drawing.Size(1101, 208);
+            this.dataGridView4.Size = new System.Drawing.Size(1101, 211);
             this.dataGridView4.TabIndex = 0;
             this.dataGridView4.Text = "dataGridView4";
             // 
@@ -380,16 +390,6 @@
             this.splitContainer1.TabIndex = 8;
             this.splitContainer1.Text = "splitContainer1";
             // 
-            // dataGridView6
-            // 
-            this.dataGridView6.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView6.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGridView6.Location = new System.Drawing.Point(3, 3);
-            this.dataGridView6.Name = "dataGridView6";
-            this.dataGridView6.Size = new System.Drawing.Size(1101, 208);
-            this.dataGridView6.TabIndex = 0;
-            this.dataGridView6.Text = "dataGridView6";
-            // 
             // AddConf
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -408,6 +408,7 @@
             this.County.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
             this.City.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView6)).EndInit();
             this.TypeTab.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView3)).EndInit();
             this.SpeakerTab.ResumeLayout(false);
@@ -423,7 +424,6 @@
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView6)).EndInit();
             this.ResumeLayout(false);
 
         }
