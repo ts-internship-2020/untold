@@ -46,7 +46,7 @@
             this.TypeTab = new System.Windows.Forms.TabPage();
             this.dataGridView3 = new System.Windows.Forms.DataGridView();
             this.SpeakerTab = new System.Windows.Forms.TabPage();
-            this.dataGridView4 = new System.Windows.Forms.DataGridView();
+            this.SpeakerListDataGrid = new System.Windows.Forms.DataGridView();
             this.CategoryTab = new System.Windows.Forms.TabPage();
             this.dataGridView5 = new System.Windows.Forms.DataGridView();
             this.BackTabBtn = new System.Windows.Forms.Button();
@@ -69,7 +69,7 @@
             this.TypeTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView3)).BeginInit();
             this.SpeakerTab.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView4)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.SpeakerListDataGrid)).BeginInit();
             this.CategoryTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView5)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ErrorName)).BeginInit();
@@ -256,7 +256,7 @@
             // 
             // SpeakerTab
             // 
-            this.SpeakerTab.Controls.Add(this.dataGridView4);
+            this.SpeakerTab.Controls.Add(this.SpeakerListDataGrid);
             this.SpeakerTab.Location = new System.Drawing.Point(4, 29);
             this.SpeakerTab.Name = "SpeakerTab";
             this.SpeakerTab.Padding = new System.Windows.Forms.Padding(3);
@@ -265,15 +265,15 @@
             this.SpeakerTab.Text = "Speaker";
             this.SpeakerTab.UseVisualStyleBackColor = true;
             // 
-            // dataGridView4
+            // SpeakerListDataGrid
             // 
-            this.dataGridView4.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGridView4.Location = new System.Drawing.Point(3, 3);
-            this.dataGridView4.Name = "dataGridView4";
-            this.dataGridView4.Size = new System.Drawing.Size(1207, 360);
-            this.dataGridView4.TabIndex = 0;
-            this.dataGridView4.Text = "dataGridView4";
+            this.SpeakerListDataGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.SpeakerListDataGrid.Dock = System.Windows.Forms.DockStyle.Top;
+            this.SpeakerListDataGrid.Location = new System.Drawing.Point(3, 3);
+            this.SpeakerListDataGrid.Name = "SpeakerListDataGrid";
+            this.SpeakerListDataGrid.Size = new System.Drawing.Size(1207, 309);
+            this.SpeakerListDataGrid.TabIndex = 0;
+            this.SpeakerListDataGrid.Text = "dataGridView4";
             // 
             // CategoryTab
             // 
@@ -442,7 +442,7 @@
             this.TypeTab.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView3)).EndInit();
             this.SpeakerTab.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView4)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.SpeakerListDataGrid)).EndInit();
             this.CategoryTab.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView5)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ErrorName)).EndInit();
@@ -482,7 +482,7 @@
         private System.Windows.Forms.DataGridView CountryListDataGridView;
         private System.Windows.Forms.DataGridView dataGridView2;
         private System.Windows.Forms.DataGridView dataGridView3;
-        private System.Windows.Forms.DataGridView dataGridView4;
+        private System.Windows.Forms.DataGridView SpeakerListDataGrid;
         private System.Windows.Forms.DataGridView dataGridView5;
         private System.Windows.Forms.DataGridView dataGridView6;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
