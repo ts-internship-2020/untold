@@ -457,10 +457,7 @@ namespace ConferencePlanner.WinUi
 
         }
 
-        private void AttendeeGridvw_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-        }
+        
     }
 }
 

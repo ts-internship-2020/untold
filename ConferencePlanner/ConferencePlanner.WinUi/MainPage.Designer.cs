@@ -86,7 +86,6 @@ namespace ConferencePlanner.WinUi
             this.AttendeeGridvw.Size = new System.Drawing.Size(1315, 504);
             this.AttendeeGridvw.TabIndex = 3;
             this.AttendeeGridvw.Text = "dataGridView1";
-            this.AttendeeGridvw.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.AttendeeGridvw_CellContentClick);
             this.AttendeeGridvw.Layout += new System.Windows.Forms.LayoutEventHandler(this.tabPage1_Layout);
             // 
             // button5
@@ -97,7 +96,6 @@ namespace ConferencePlanner.WinUi
             this.button5.TabIndex = 5;
             this.button5.Text = "Join";
             this.button5.UseVisualStyleBackColor = true;
-           // this.button5.Click += new System.EventHandler(this.Join_Click);
             // 
             // button4
             // 
@@ -107,7 +105,6 @@ namespace ConferencePlanner.WinUi
             this.button4.TabIndex = 4;
             this.button4.Text = "Withdraw";
             this.button4.UseVisualStyleBackColor = true;
-            //this.button4.Click += new System.EventHandler(this.Withdraw_Click);
             // 
             // button3
             // 
@@ -117,7 +114,6 @@ namespace ConferencePlanner.WinUi
             this.button3.TabIndex = 3;
             this.button3.Text = "Attend";
             this.button3.UseVisualStyleBackColor = true;
-            //this.button3.Click += new System.EventHandler(this.Attend_Click);
             // 
             // TabOrganizer
             // 
@@ -201,16 +197,13 @@ namespace ConferencePlanner.WinUi
             // 
             // EndDateLabel
             // 
-
             this.EndDateLabel.Location = new System.Drawing.Point(0, 0);
             this.EndDateLabel.Name = "EndDateLabel";
             this.EndDateLabel.Size = new System.Drawing.Size(100, 23);
             this.EndDateLabel.TabIndex = 8;
-            this.EndDateLabel.Visible = true;
             // 
             // StartDateLabel
-            //
-            this.StartDateLabel.Visible = true;
+            // 
             this.StartDateLabel.AutoSize = true;
             this.StartDateLabel.Location = new System.Drawing.Point(61, 42);
             this.StartDateLabel.Name = "StartDateLabel";
