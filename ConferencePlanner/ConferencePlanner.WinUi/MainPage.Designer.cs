@@ -43,7 +43,7 @@ namespace ConferencePlanner.WinUi
             this.AddConferenceButton = new System.Windows.Forms.Button();
             this.StartDatePicker = new System.Windows.Forms.DateTimePicker();
             this.EndDatePicker = new System.Windows.Forms.DateTimePicker();
-            this.EndDateLable = new System.Windows.Forms.Label();
+            this.EndDateLabel = new System.Windows.Forms.Label();
             this.StartDateLabel = new System.Windows.Forms.Label();
             this.LeftArrowPagButton = new System.Windows.Forms.Button();
             this.RightArrowPagButton = new System.Windows.Forms.Button();
@@ -188,15 +188,18 @@ namespace ConferencePlanner.WinUi
             this.EndDatePicker.TabIndex = 6;
             this.EndDatePicker.ValueChanged += new System.EventHandler(this.EndDatePicker_ValueChanged);
             // 
-            // EndDateLable
+            // EndDateLabel
             // 
-            this.EndDateLable.Location = new System.Drawing.Point(0, 0);
-            this.EndDateLable.Name = "EndDateLable";
-            this.EndDateLable.Size = new System.Drawing.Size(100, 23);
-            this.EndDateLable.TabIndex = 0;
+
+            this.EndDateLabel.Location = new System.Drawing.Point(0, 0);
+            this.EndDateLabel.Name = "EndDateLabel";
+            this.EndDateLabel.Size = new System.Drawing.Size(100, 23);
+            this.EndDateLabel.TabIndex = 8;
+            this.EndDateLabel.Visible = true;
             // 
             // StartDateLabel
-            // 
+            //
+            this.StartDateLabel.Visible = true;
             this.StartDateLabel.AutoSize = true;
             this.StartDateLabel.Location = new System.Drawing.Point(61, 42);
             this.StartDateLabel.Name = "StartDateLabel";
@@ -231,7 +234,7 @@ namespace ConferencePlanner.WinUi
             this.ClientSize = new System.Drawing.Size(1138, 479);
             this.Controls.Add(this.RightArrowPagButton);
             this.Controls.Add(this.LeftArrowPagButton);
-            this.Controls.Add(this.EndDateLable);
+            this.Controls.Add(this.EndDateLabel);
             this.Controls.Add(this.EndDatePicker);
             this.Controls.Add(this.StartDatePicker);
             this.Controls.Add(this.AddConferenceButton);
@@ -270,7 +273,7 @@ namespace ConferencePlanner.WinUi
         private DateTimePicker StartDatePicker;
         private Label StartDateLabel;
         private DateTimePicker EndDatePicker;
-        private Label EndDateLable;
+        private Label EndDateLabel;
         private DataGridView AttendeeGridvw;
         private Button button5;
         private Button button4;
