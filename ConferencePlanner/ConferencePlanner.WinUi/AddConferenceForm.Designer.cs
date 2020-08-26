@@ -161,7 +161,6 @@
             this.TabControlLocation.SelectedIndex = 6;
             this.TabControlLocation.Size = new System.Drawing.Size(1115, 250);
             this.TabControlLocation.TabIndex = 7;
-            this.TabControlLocation.SelectedIndexChanged += new System.EventHandler(this.TabControlLocation_SelectedIndexChanged);
             // 
             // Country
             // 
@@ -173,7 +172,6 @@
             this.Country.TabIndex = 0;
             this.Country.Text = "Country";
             this.Country.UseVisualStyleBackColor = true;
-            this.Country.Click += new System.EventHandler(this.Country_Click);
             // 
             // dataGridView1
             // 
@@ -186,7 +184,6 @@
             this.dataGridView1.Size = new System.Drawing.Size(1101, 211);
             this.dataGridView1.TabIndex = 1;
             this.dataGridView1.Text = "dataGridView1";
-            this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
             // County
             // 
@@ -342,7 +339,6 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 8.471208F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(1121, 462);
             this.tableLayoutPanel1.TabIndex = 8;
-            this.tableLayoutPanel1.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel1_Paint);
             // 
             // tableLayoutPanel2
             // 
