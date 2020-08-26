@@ -1,25 +1,26 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+﻿
+<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
 
-  <PropertyGroup>
-    <OutputType>WinExe</OutputType>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
-    <UseWindowsForms>true</UseWindowsForms>
-    <ApplicationManifest>app.manifest</ApplicationManifest>
-  </PropertyGroup>
-    
-  <ItemGroup>
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="3.1.7" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="3.1.7" />
-    <PackageReference Include="Tulpep.NotificationWindow" Version="1.1.37" />
-  </ItemGroup>
+<PropertyGroup>
+<OutputType>WinExe</OutputType>
+<TargetFramework>netcoreapp3.1</TargetFramework>
+<UseWindowsForms>true</UseWindowsForms>
+<ApplicationManifest>app.manifest</ApplicationManifest>
+</PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\ConferencePlanner.Abstraction\ConferencePlanner.Abstraction.csproj" />
-    <ProjectReference Include="..\ConferencePlanner.RepositoryAdo\ConferencePlanner.Repository.Ado.csproj" />
-    <ProjectReference Include="..\ConferencePlanner.RepositoryApi\ConferencePlanner.Repository.Api.csproj" />
-  </ItemGroup>
+<ItemGroup>
+<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="3.1.7" />
+<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="3.1.7" />
+<PackageReference Include="Tulpep.NotificationWindow" Version="1.1.37" />
+</ItemGroup>
 
-  <ItemGroup>
+<ItemGroup>
+<ProjectReference Include="..\ConferencePlanner.Abstraction\ConferencePlanner.Abstraction.csproj" />
+<ProjectReference Include="..\ConferencePlanner.RepositoryAdo\ConferencePlanner.Repository.Ado.csproj" />
+<ProjectReference Include="..\ConferencePlanner.RepositoryApi\ConferencePlanner.Repository.Api.csproj" />
+</ItemGroup>
+
+<ItemGroup>
     <Compile Update="Properties\Resources.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
