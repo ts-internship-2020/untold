@@ -37,8 +37,8 @@ namespace ConferencePlanner.Repository.Ado.Repository
             speaker.FirstName = names[0];
             speaker.LastName = names[1];
             speaker.Nationality = sqlDataReader.GetString("Nationality");
-            //speaker.Rating= sqlDataReader.GetSqlDouble("Rating");
-            //speaker.ImagePath = sqlDataReader.GetString("ImagePath");
+            speaker.Rating= (float)sqlDataReader.GetDouble("Rating");
+            speaker.ImagePath = sqlDataReader.GetString("ImagePath");
 
             sqlDataReader.Close();
 
