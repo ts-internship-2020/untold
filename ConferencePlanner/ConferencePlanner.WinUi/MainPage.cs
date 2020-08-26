@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 using System.Drawing;
 using Tulpep.NotificationWindow;
 using System.Data.SqlClient;
+using System.Net.Mail;
+using System.Net;
+using QRCoder;
 using ConferencePlanner.Repository.Ado.Repository;
 
 namespace ConferencePlanner.WinUi
@@ -32,8 +35,6 @@ namespace ConferencePlanner.WinUi
 
         private int AttendeeCurrentPageIndex = 1;
         private int AttendeeTotalPage = 0;
-
-
 
         public MainPage(IConferenceRepository conferenceRepository, ICountryRepository countryRepository,
             IAttendeeButtonsRepository attendeeButtonsRepository, ISpeakerRepository speakerRepository)
@@ -331,31 +332,26 @@ namespace ConferencePlanner.WinUi
             }
             return conferences;
         }
-    
 
         private void Attend_Click(int confId)
         {
-            string barcodeGenerator = BarcodeGenerator();
-           _attendeeButtons.Attend(Program.EnteredEmailAddress, barcodeGenerator, confId);
-
-            //var w = new Form();
-            //Size = new Size(0, 0);
-            //Task.Delay(TimeSpan.FromSeconds(3))
-            //    .ContinueWith((t) => w.Close(), TaskScheduler.FromCurrentSynchronizationContext());
-
-            //MessageBox.Show(w, "Felicitari, te-ai inscris cu succes!");
+            Program.qrCode = BarcodeGenerator();
+            string copyqrCode = Program.qrCode;
+            //qrCode = setMyQrCode(BarcodeGenerator());
+            //BarcodeGenerator();
+            _attendeeButtons.Attend(Program.EnteredEmailAddress, copyqrCode, confId);
             PopupNotifier popup = new PopupNotifier();
             popup.Image = Properties.Resources.info;
             popup.TitleText = "Congratulation!";
             popup.ContentText = "You succesfully attended to this conference!";
             popup.Popup();
             fillAttendeeGrid();
+            var newForm = new QRCodeForm();
+            newForm.ShowDialog();
         }
 
         private void Withdraw_Click(int confId)
         {
-
-            //a = statusul participantului
             _attendeeButtons.WithdrawnCommand(Program.EnteredEmailAddress, confId);
             PopupNotifier popup = new PopupNotifier();
             popup.Image = Properties.Resources.info;
@@ -365,7 +361,13 @@ namespace ConferencePlanner.WinUi
             fillAttendeeGrid();
         }
 
-            
+        private void Join_Click(int statusId)
+        {
+            var newform = new WebviewForm();
+            newform.ShowDialog();
+            _attendeeButtons.JoinCommand(Program.EnteredEmailAddress, statusId);
+        }
+
         private void EndDatePicker_ValueChanged(object sender, EventArgs e)
         {
             OrganizerDataGrid.DataSource = null;
@@ -389,14 +391,6 @@ namespace ConferencePlanner.WinUi
 
             }
         }
-
-        private void Join_Click(int statusId)
-        {
-            var newform = new WebviewForm();
-            newform.ShowDialog();
-            _attendeeButtons.JoinCommand(Program.EnteredEmailAddress, statusId);
-        }
-
 
         private void OrganizerDataGrid_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {

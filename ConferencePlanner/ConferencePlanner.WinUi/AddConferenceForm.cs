@@ -195,7 +195,9 @@ namespace ConferencePlanner.WinUi
         }
 
         private void TabControlLocation_SelectedIndexChanged(object sender, EventArgs e)
-        {
+        {  
+            
+            
             if(TabControlLocation.SelectedIndex > 0)
             {
                 BackTabBtn.Enabled = true;
@@ -224,6 +226,7 @@ namespace ConferencePlanner.WinUi
 
         private void SaveNew_Click(object sender, EventArgs e)
         {
+
             ConfName.Text = string.Empty;
             ConfEmailAddress.Text = string.Empty;
             StardDatePicker.Value = DateTime.Today;
