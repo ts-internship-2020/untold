@@ -50,7 +50,7 @@ namespace ConferencePlanner.WinUi
 
             //this.CountryComboBox.Text = places[0];
             //this.CountyComboBox.Text = places[1];
-           // this.CityComboBox.Text = places[2];
+            //this.CityComboBox.Text = places[2];
 
 
         }
@@ -125,7 +125,7 @@ namespace ConferencePlanner.WinUi
 
         private void ComboBoxCountyTab_SelectedIndexChanged(object sender, EventArgs e)
         {
-            //NextBtnCountyTab.Enabled = true;
+           // NextBtnCountyTab.Enabled = true;
         }
 
         private void ConferenceNameLabel_Click(object sender, EventArgs e)
@@ -133,24 +133,6 @@ namespace ConferencePlanner.WinUi
 
         }
 
-        private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e)
-        {
 
-        }
-
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-        }
-
-        private void TabControlLocation_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void Country_Click(object sender, EventArgs e)
-        {
-
-        }
     }
 }

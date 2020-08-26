@@ -84,6 +84,7 @@ namespace ConferencePlanner.WinUi
             this.AttendeeGridvw.Location = new System.Drawing.Point(3, 3);
             this.AttendeeGridvw.Name = "AttendeeGridvw";
             this.AttendeeGridvw.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
+            this.AttendeeGridvw.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
             this.AttendeeGridvw.Size = new System.Drawing.Size(1315, 504);
             this.AttendeeGridvw.TabIndex = 3;
             this.AttendeeGridvw.Text = "dataGridView1";

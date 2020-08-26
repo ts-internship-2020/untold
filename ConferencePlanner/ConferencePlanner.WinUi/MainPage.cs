@@ -195,15 +195,13 @@ namespace ConferencePlanner.WinUi
 
         int a = 0;
 
-        private void tabPage1_Layout(object sender, LayoutEventArgs e)
+        private void fillAttendeeGrid()
         {
-            //var x = _getDemoRepository.GetDemo()
-            
             var listattendee = _conferenceRepository.AttendeeConferences(Program.EnteredEmailAddress);
             AttendeeGridvw.DataSource = listattendee.ToList();
             AttendeeGridvw.AutoGenerateColumns = false;
             AttendeeGridvw.Columns["ConferenceId"].Visible = false;
-            
+
             AttendeeGridvw.Columns[1].HeaderText = "Conference Name";
             AttendeeGridvw.Columns[2].HeaderText = "Category";
             AttendeeGridvw.Columns[3].HeaderText = "Type";
@@ -223,8 +221,8 @@ namespace ConferencePlanner.WinUi
 
                 int columnIndex = AttendeeGridvw.ColumnCount;
 
-                
-                AttendeeGridvw.Columns.Insert(columnIndex,attendButtonColumn);
+
+                AttendeeGridvw.Columns.Insert(columnIndex, attendButtonColumn);
 
                 columnIndex = AttendeeGridvw.ColumnCount;
                 DataGridViewButtonColumn withdrawButtonColumn = new DataGridViewButtonColumn();
@@ -242,20 +240,25 @@ namespace ConferencePlanner.WinUi
 
                 AttendeeGridvw.Columns.Insert(columnIndex, joinButtonColumn);
 
-                AttendeeGridvw.CellClick += AttendeeGridvw_CellClick;
+                AttendeeGridvw.CellClick += this.AttendeeGridvw_CellClick;
                 AttendeeGridvw.Columns[7].HeaderText = "Attend";
                 AttendeeGridvw.Columns[8].HeaderText = "Withdraw";
                 AttendeeGridvw.Columns[9].HeaderText = "Join";
                 AttendeeGridvw.Columns.Add("Column", "Test");
                 AttendeeGridvw.Columns["Column"].Visible = false;
                 AttendeeGridvw.Columns[7].Tag = "test";
-                
 
+            }
+        }
+
+            private void tabPage1_Layout(object sender, LayoutEventArgs e)
+        {
+            //var x = _getDemoRepository.GetDemo()
+            fillAttendeeGrid();
             }
 
 
 
-        }
 
 
 
@@ -346,18 +349,20 @@ namespace ConferencePlanner.WinUi
             popup.TitleText = "Congratulation!";
             popup.ContentText = "You succesfully attended to this conference!";
             popup.Popup();
+            fillAttendeeGrid();
         }
 
-        private void Withdraw_Click(int statusId)
+        private void Withdraw_Click(int confId)
         {
 
             //a = statusul participantului
-            _attendeeButtons.WithdrawnCommand(Program.EnteredEmailAddress, statusId);
+            _attendeeButtons.WithdrawnCommand(Program.EnteredEmailAddress, confId);
             PopupNotifier popup = new PopupNotifier();
             popup.Image = Properties.Resources.info;
             popup.TitleText = "You withdraw this conference!";
             popup.ContentText = "You can choose from the available ones";
             popup.Popup();
+            fillAttendeeGrid();
         }
 
             
@@ -483,15 +488,14 @@ namespace ConferencePlanner.WinUi
 
             if (e.ColumnIndex == AttendeeGridvw.Columns["withdraw_column"].Index)
             {
-                int statusid = 1;
-                Withdraw_Click(statusid);
+                int confid = (int)AttendeeGridvw.Rows[e.RowIndex].Cells[0].Value;
+                Withdraw_Click(confid);
             }
 
             if (e.ColumnIndex == AttendeeGridvw.Columns["join_column"].Index)
             {
-                int statusId = 3;
-                //int confid = (int)AttendeeGridvw.Rows[e.RowIndex].Cells[0].Value;
-               Join_Click(statusId);
+               int confid = (int)AttendeeGridvw.Rows[e.RowIndex].Cells[0].Value;
+               Join_Click(confid);
             }
 
         }
@@ -505,6 +509,7 @@ namespace ConferencePlanner.WinUi
         {
 
         }
+
     }
 }
 
