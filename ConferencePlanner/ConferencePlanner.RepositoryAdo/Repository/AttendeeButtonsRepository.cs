@@ -53,9 +53,9 @@ namespace ConferencePlanner.Repository.Ado.Repository
             //aici mai trebuie dat drop la table si apelata metoda de select 
         }
 
-        public void JoinCommand(String email, int newStatusId)
+        public void JoinCommand(String email, int statusId)
         {
-            int statusId = 3;
+            int newStatusId = 2;
             string commandText = "update Attendee set StatusId = @NewStatusId where StatusId = @Id and AttendeeEmail = @Email";
             SqlCommand sqlCommand = new SqlCommand(commandText, _sqlConnection);
             sqlCommand.Parameters.Add("@Id", SqlDbType.Int);

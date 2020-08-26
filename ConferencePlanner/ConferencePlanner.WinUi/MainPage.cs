@@ -299,10 +299,11 @@ namespace ConferencePlanner.WinUi
         }
     
 
-        private void Attend_Click(object sender, EventArgs e)
+        private void Attend_Click(int confId)
         {
             string barcodeGenerator = BarcodeGenerator();
-           // _attendeeButtons.Attend(Program.EnteredEmailAddress, barcodeGenerator);
+           _attendeeButtons.Attend(Program.EnteredEmailAddress, barcodeGenerator, confId);
+
             //var w = new Form();
             //Size = new Size(0, 0);
             //Task.Delay(TimeSpan.FromSeconds(3))
@@ -311,23 +312,21 @@ namespace ConferencePlanner.WinUi
             //MessageBox.Show(w, "Felicitari, te-ai inscris cu succes!");
             PopupNotifier popup = new PopupNotifier();
             popup.Image = Properties.Resources.info;
-            popup.TitleText = "FoxLearn";
-            popup.ContentText = "Another Text";
+            popup.TitleText = "Felicitari!";
+            popup.ContentText = "Te-ai inscris cu succes!";
             popup.Popup();
         }
 
-        private void Withdraw_Click(object sender, EventArgs e)
+        private void Withdraw_Click(int statusId)
         {
 
             //a = statusul participantului
-            int a = 1;
-            _attendeeButtons.WithdrawnCommand(Program.EnteredEmailAddress, a);
-            var w = new Form();
-            Size = new Size(0, 0);
-            Task.Delay(TimeSpan.FromSeconds(3))
-                .ContinueWith((t) => w.Close(), TaskScheduler.FromCurrentSynchronizationContext());
-
-            MessageBox.Show(w, "Te-ai retras de la aceasta conferinta. Poti alege oricand o conferinta disponibila!");
+            _attendeeButtons.WithdrawnCommand(Program.EnteredEmailAddress, statusId);
+            PopupNotifier popup = new PopupNotifier();
+            popup.Image = Properties.Resources.info;
+            popup.TitleText = "Ai renuntat la aceasta conferinta!";
+            popup.ContentText = "Poti alege oricand din cele disponibile";
+            popup.Popup();
         }
 
             
@@ -355,9 +354,8 @@ namespace ConferencePlanner.WinUi
             }
         }
 
-        private void Join_Click(object sender, EventArgs e)
+        private void Join_Click(int statusId)
         {
-            int statusId = 2;
             var newform = new WebviewForm();
             newform.ShowDialog();
             _attendeeButtons.JoinCommand(Program.EnteredEmailAddress, statusId);
@@ -428,34 +426,41 @@ namespace ConferencePlanner.WinUi
 
                 //AttendeeGridvw.Rows[e.RowIndex].Cells[7].ReadOnly = true;
                 //AttendeeGridvw.Rows[e.RowIndex].Cells[7].Visible = false;
+                int confid = (int)AttendeeGridvw.Rows[e.RowIndex].Cells[0].Value;
+                Attend_Click(confid);
                 AttendeeGridvw.Rows[e.RowIndex].Cells[10].Value = "test";
                 if (AttendeeGridvw.Rows[e.RowIndex].Cells[10].Value == "test")
                 {
                     
                     return;
                 }
-                int confid = (int)AttendeeGridvw.Rows[e.RowIndex].Cells[0].Value;
-                string barcodeGenerator = BarcodeGenerator();
-                _attendeeButtons.Attend(Program.EnteredEmailAddress, barcodeGenerator,confid);
+
             }
 
             if (e.ColumnIndex == AttendeeGridvw.Columns["withdraw_column"].Index)
             {
                 int statusid = 1;
-                _attendeeButtons.WithdrawnCommand(Program.EnteredEmailAddress, statusid);
+                Withdraw_Click(statusid);
             }
 
             if (e.ColumnIndex == AttendeeGridvw.Columns["join_column"].Index)
             {
                 int statusId = 3;
                 //int confid = (int)AttendeeGridvw.Rows[e.RowIndex].Cells[0].Value;
-                var newform = new WebviewForm();
-                newform.ShowDialog();
-                _attendeeButtons.JoinCommand(Program.EnteredEmailAddress, statusId);
+               Join_Click(statusId);
             }
 
         }
 
+        private void TabAttendee_Click_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void AttendeeGridvw_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
     }
 }
 
