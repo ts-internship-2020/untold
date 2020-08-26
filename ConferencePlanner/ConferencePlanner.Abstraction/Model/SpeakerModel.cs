@@ -11,7 +11,7 @@ namespace ConferencePlanner.Abstraction.Model
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Nationality { get; set; }
-        public SqlDouble Rating { get; set; }
+        public float Rating { get; set; }
         public string ImagePath { get; set; }
 
     }
