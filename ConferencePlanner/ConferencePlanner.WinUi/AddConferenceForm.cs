@@ -93,7 +93,7 @@ namespace ConferencePlanner.WinUi
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            NextBtnCountryTab.Enabled = true;
+            NextTabBtn.Enabled = true;
         }
 
         private void comboBox1_Click(object sender, EventArgs e)
@@ -105,19 +105,18 @@ namespace ConferencePlanner.WinUi
 
         private void BackBtnCountyTab_Click(object sender, EventArgs e)
         {
-            TabControlLocation.SelectedIndex = 0;
+
         }
 
-        private void BackBtnCityTab_Click(object sender, EventArgs e)
-        {
-            TabControlLocation.SelectedIndex = 1;
-        }
+        //private void BackBtnCityTab_Click(object sender, EventArgs e)
+        //{
+        //    TabControlLocation.SelectedIndex = 1;
+        //}
 
         private void SaveAndNewBtnCityTab_Click(object sender, EventArgs e)
         {
             //SaveAndNewBtnCityTab.Enabled = true;
-            ConfName.Text = string.Empty;
-            ConfEmailAddress.Text = string.Empty;
+            
             //CountryComboBox.SelectedItem = string.Empty;
             //CountyComboBox.SelectedItem = string.Empty;
             //CityComboBox.SelectedItem = string.Empty;
@@ -133,6 +132,52 @@ namespace ConferencePlanner.WinUi
 
         }
 
+        private void BackBtnTab_Click(object sender, EventArgs e)
+        {
+            TabControlLocation.SelectedIndex--;
+        }
 
+        private void NextBtn_Click(object sender, EventArgs e)
+        {
+            
+            if (NextTabBtn.Text=="Next>>")
+            {
+                TabControlLocation.SelectedIndex++;
+            }
+            else
+            {
+                //save       
+            }
+        }
+
+        private void TabControlLocation_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if(TabControlLocation.SelectedIndex > 0)
+            {
+                BackTabBtn.Enabled = true;
+            }
+            else
+            {
+                BackTabBtn.Enabled = false;
+            }
+            if(TabControlLocation.SelectedIndex >= 5)
+            {
+                SaveNew.Visible = true; 
+                NextTabBtn.Text = "Save";
+            }
+            else
+            {
+                SaveNew.Visible = false;
+                NextTabBtn.Text = "Next>>";
+            }
+        }
+
+        private void SaveNew_Click(object sender, EventArgs e)
+        {
+            ConfName.Text = string.Empty;
+            ConfEmailAddress.Text = string.Empty;
+            StardDatePicker.Value = DateTime.Today;
+            EndDatePicker.Value = DateTime.Today;
+        }
     }
 }
