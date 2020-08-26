@@ -42,15 +42,15 @@ namespace ConferencePlanner.WinUi
             this.ConfName.Text = conference.ConferenceName;
             
             string[] dates = conference.Period.Split(" - ");
-            this.MonthCalendar.SetSelectionRange(DateTime.Parse(dates[0]), DateTime.Parse(dates[1]));
+            //this.MonthCalendar.SetSelectionRange(DateTime.Parse(dates[0]), DateTime.Parse(dates[1]));
 
             string[] places = conference.LocationName.Split(", ");
 
-            this.ConfAddress.Text = conference.LocationName;
+            this.ConfEmailAddress.Text = conference.LocationName;
 
-            this.CountryComboBox.Text = places[0];
-            this.CountyComboBox.Text = places[1];
-            this.CityComboBox.Text = places[2];
+            //this.CountryComboBox.Text = places[0];
+            //this.CountyComboBox.Text = places[1];
+           // this.CityComboBox.Text = places[2];
 
 
         }
@@ -71,9 +71,9 @@ namespace ConferencePlanner.WinUi
                 ErrorName.SetError(ConfName, "Please enter a value in the conference name fild!");
                 return;
             }
-            else if(ConfAddress.Text == string.Empty)
+            else if(ConfEmailAddress.Text == string.Empty)
             {
-                ErrorAddress.SetError(ConfAddress, "Please enter a value in the conference address fild!");
+                ErrorAddress.SetError(ConfEmailAddress, "Please enter a value in the conference address fild!");
                 return;
             }
             else
@@ -85,7 +85,7 @@ namespace ConferencePlanner.WinUi
 
         private void button3_Click(object sender, EventArgs e)
         {
-            CityComboBox.Enabled = true;
+            //CityComboBox.Enabled = true;
            
             Close();
         }
@@ -98,9 +98,10 @@ namespace ConferencePlanner.WinUi
 
         private void comboBox1_Click(object sender, EventArgs e)
         {
-            var list = _countryRepository.GetListCountry();
-            CountryComboBox.DataSource = list;
+            
         }
+        //var list = _countryRepository.GetListCountry();
+        //CountryComboBox.DataSource = list;
 
         private void BackBtnCountyTab_Click(object sender, EventArgs e)
         {
@@ -114,17 +115,42 @@ namespace ConferencePlanner.WinUi
 
         private void SaveAndNewBtnCityTab_Click(object sender, EventArgs e)
         {
-            SaveAndNewBtnCityTab.Enabled = true;
+            //SaveAndNewBtnCityTab.Enabled = true;
             ConfName.Text = string.Empty;
-            ConfAddress.Text = string.Empty;
-            CountryComboBox.SelectedItem = string.Empty;
-            CountyComboBox.SelectedItem = string.Empty;
-            CityComboBox.SelectedItem = string.Empty;
+            ConfEmailAddress.Text = string.Empty;
+            //CountryComboBox.SelectedItem = string.Empty;
+            //CountyComboBox.SelectedItem = string.Empty;
+            //CityComboBox.SelectedItem = string.Empty;
         }
 
         private void ComboBoxCountyTab_SelectedIndexChanged(object sender, EventArgs e)
         {
-            NextBtnCountyTab.Enabled = true;
+            //NextBtnCountyTab.Enabled = true;
+        }
+
+        private void ConferenceNameLabel_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void TabControlLocation_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Country_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
