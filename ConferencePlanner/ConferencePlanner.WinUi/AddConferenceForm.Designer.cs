@@ -165,6 +165,7 @@
             this.TabControlLocation.SelectedIndex = 6;
             this.TabControlLocation.Size = new System.Drawing.Size(1221, 399);
             this.TabControlLocation.TabIndex = 7;
+            this.TabControlLocation.SelectedIndexChanged += new System.EventHandler(this.TabControlLocation_SelectedIndexChanged);
             // 
             // Country
             // 
@@ -182,14 +183,15 @@
             this.CountryListDataGridView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.CountryListDataGridView.BackgroundColor = System.Drawing.SystemColors.ActiveBorder;
+            this.CountryListDataGridView.BackgroundColor = System.Drawing.Color.Cornsilk;
             this.CountryListDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.CountryListDataGridView.GridColor = System.Drawing.SystemColors.ActiveCaption;
+            this.CountryListDataGridView.GridColor = System.Drawing.Color.DarkBlue;
             this.CountryListDataGridView.Location = new System.Drawing.Point(1, 0);
             this.CountryListDataGridView.Name = "CountryListDataGridView";
-            this.CountryListDataGridView.Size = new System.Drawing.Size(1207, 324);
+            this.CountryListDataGridView.Size = new System.Drawing.Size(808, 298);
             this.CountryListDataGridView.TabIndex = 1;
             this.CountryListDataGridView.Text = "dataGridView1";
+            this.CountryListDataGridView.Click += new System.EventHandler(this.CountryListDataGridView_Click);
             // 
             // County
             // 
@@ -300,6 +302,7 @@
             // 
             this.BackTabBtn.Dock = System.Windows.Forms.DockStyle.Right;
             this.BackTabBtn.Enabled = false;
+            this.BackTabBtn.ForeColor = System.Drawing.SystemColors.ControlText;
             this.BackTabBtn.Location = new System.Drawing.Point(493, 3);
             this.BackTabBtn.Name = "BackTabBtn";
             this.BackTabBtn.Size = new System.Drawing.Size(80, 34);
@@ -311,6 +314,7 @@
             // NextTabBtn
             // 
             this.NextTabBtn.Dock = System.Windows.Forms.DockStyle.Left;
+            this.NextTabBtn.ForeColor = System.Drawing.SystemColors.ControlText;
             this.NextTabBtn.Location = new System.Drawing.Point(579, 3);
             this.NextTabBtn.Name = "NextTabBtn";
             this.NextTabBtn.Size = new System.Drawing.Size(80, 34);
@@ -411,6 +415,7 @@
             // 
             // SaveNew
             // 
+            this.SaveNew.ForeColor = System.Drawing.SystemColors.ControlText;
             this.SaveNew.Location = new System.Drawing.Point(671, 3);
             this.SaveNew.Name = "SaveNew";
             this.SaveNew.Size = new System.Drawing.Size(114, 34);

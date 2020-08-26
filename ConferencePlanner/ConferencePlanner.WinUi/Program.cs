@@ -14,6 +14,7 @@ namespace ConferencePlanner.WinUi
     {
 
         public static string EnteredEmailAddress;
+        public static string qrCode;
         /// <summary>
         ///  The main entry point for the application.
         /// </summary>

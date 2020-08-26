@@ -65,7 +65,14 @@ namespace ConferencePlanner.WinUi
             // dataGridViewCountryTab.Columns[0].Name = "Country Code";
             // dataGridViewCountryTab.Columns[1].Name = "Country Name";
 
-           
+            var list = _countryRepository.GetListCountry();
+            CountryListDataGridView.DataSource = list.ToList();
+            CountryListDataGridView.AutoGenerateColumns = false;
+
+            CountryListDataGridView.Columns["DictionaryCountryId"].Visible = false;
+            CountryListDataGridView.Columns["CountryCode"].HeaderText = "Country Code";
+            CountryListDataGridView.Columns["CountryName"].HeaderText = "Country Name";
+            CountryListDataGridView.DefaultCellStyle.ForeColor = Color.Black;
 
 
         }
@@ -151,21 +158,46 @@ namespace ConferencePlanner.WinUi
             TabControlLocation.SelectedIndex--;
         }
 
+        public int selectedRow;
+
+
         private void NextBtn_Click(object sender, EventArgs e)
         {
-            
+            int selectedRowCount = CountryListDataGridView.Rows.GetRowCount(DataGridViewElementStates.Selected);
+
             if (NextTabBtn.Text=="Next>>")
             {
-                TabControlLocation.SelectedIndex++;
+                if(selectedRowCount == 1)
+                {
+
+                    //  selectedRow = CountryListDataGridView.ColumnCount;
+                    //  CountryListDataGridView.Columns.Insert(DictionaryCountryId);
+
+                    //selectedRow = CountryListDataGridView.SelectedRows.Index.ToString();
+
+                        //sb.Append(dataGridView1.SelectedRows[i].Index.ToString());
+
+                    TabControlLocation.SelectedIndex++;
+
+                }
+
+                else
+                {
+                    //label cu mesaj
+                }
             }
-            else
+            else 
             {
                 //save       
+                
+
             }
         }
 
         private void TabControlLocation_SelectedIndexChanged(object sender, EventArgs e)
-        {
+        {  
+            
+            
             if(TabControlLocation.SelectedIndex > 0)
             {
                 BackTabBtn.Enabled = true;
@@ -186,8 +218,15 @@ namespace ConferencePlanner.WinUi
             }
         }
 
+        //private void save care face insert in baza de date
+        //si pe care o apelez mai jos si la else next btn
+
+
+
+
         private void SaveNew_Click(object sender, EventArgs e)
         {
+
             ConfName.Text = string.Empty;
             ConfEmailAddress.Text = string.Empty;
             StardDatePicker.Value = DateTime.Today;
@@ -196,13 +235,12 @@ namespace ConferencePlanner.WinUi
 
         private void CountryListDataGridView_Layout(object sender, LayoutEventArgs e)
         {
-            var list = _countryRepository.GetListCountry();
-            CountryListDataGridView.DataSource = list.ToList();
-            CountryListDataGridView.AutoGenerateColumns = false;
-            //trebuie sa sparg coloanele sa fac vizibil
-            //CountryListDataGridView.Columns["DictionaryCountryId"].Visible = false;
-            //CountryListDataGridView.Columns[1].HeaderText = "Country Code";
-            //CountryListDataGridView.Columns[2].HeaderText = "Country Name";
+            
+        }
+
+        private void CountryListDataGridView_Click(object sender, EventArgs e)
+        {
+            
         }
 
 
