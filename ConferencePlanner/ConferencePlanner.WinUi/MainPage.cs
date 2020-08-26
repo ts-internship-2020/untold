@@ -21,11 +21,14 @@ namespace ConferencePlanner.WinUi
 
         private readonly IAttendeeButtonsRepository _attendeeButtons;
 
-        private int PageSize = 1;
+        private int PageSize = 3;
         //public int CurrentPageIndex { get; set; } //1
         //public int TotalPage {get; set;} //0
-        private int CurrentPageIndex = 1;
-        private int TotalPage = 0;
+        private int OrganizerCurrentPageIndex = 1;
+        private int OrganizerTotalPage = 0;
+
+        private int AttendeeCurrentPageIndex = 1;
+        private int AttendeeTotalPage = 0;
 
 
 
@@ -89,69 +92,91 @@ namespace ConferencePlanner.WinUi
 
         private void TabOrganizer_SelectedIndexChanged(object sender, EventArgs e)
         {
-            int PreviousPageOffSet = (this.CurrentPageIndex - 1) * this.PageSize;
+            int PreviousPageOffSet = (this.OrganizerCurrentPageIndex - 1) * this.PageSize;
 
             var allConferences = _conferenceRepository.GetConferencesByOrganizer(Program.EnteredEmailAddress);
-            var conferences = _conferenceRepository.GetConferencesByPage(Program.EnteredEmailAddress, PreviousPageOffSet + 1, PreviousPageOffSet+this.PageSize+1);
-            
+            var conferences = _conferenceRepository.GetConferencesByPage(Program.EnteredEmailAddress, PreviousPageOffSet + 1, PreviousPageOffSet + this.PageSize + 1);
+
             this.CheckPaginationButtonsVisibility();
-            
-            CalculateTotalPages(allConferences);
+
+            CalculateTotalPages(allConferences, this.TabControl.SelectedTab);
 
             CheckNumberOfRows(conferences);
 
         }
 
-        private void CalculateTotalPages(List<ConferenceModel> allConferences)
+        private void CalculateTotalPages(List<ConferenceModel> allConferences, TabPage test)
         {
             int rowCount = allConferences.Count();
-            TotalPage = rowCount / PageSize;
-            // if any row left after calculated pages, add one more page 
-            if (rowCount % PageSize > 0)
-                TotalPage += 1;
+
+            if (test.Name == "TabOrganizer")
+            {
+                this.OrganizerTotalPage = rowCount / this.PageSize;
+                // if any row left after calculated pages, add one more page 
+                if (rowCount % this.PageSize > 0)
+                    this.OrganizerTotalPage += 1;
+
+            }
+            else
+            {
+                this.AttendeeTotalPage = rowCount / this.PageSize;
+                // if any row left after calculated pages, add one more page 
+                if (rowCount % this.PageSize > 0)
+                    this.AttendeeTotalPage += 1;
+
+            }
+
         }
 
         private void CheckPaginationButtonsVisibility()
         {
-            if (this.CurrentPageIndex == this.TotalPage)
+            if (this.OrganizerCurrentPageIndex == this.OrganizerTotalPage)
             {
                 this.RightArrowPagButton.Visible = false;
             }
-            if (this.CurrentPageIndex == 1)
+            if (this.OrganizerCurrentPageIndex == 1)
             {
                 this.LeftArrowPagButton.Visible = false;
             }
-            if (this.CurrentPageIndex < this.TotalPage)
+            if (this.OrganizerCurrentPageIndex < this.OrganizerTotalPage)
             {
                 this.RightArrowPagButton.Visible = true;
             }
-            if (this.CurrentPageIndex > 1)
+            if (this.OrganizerCurrentPageIndex > 1)
             {
                 this.LeftArrowPagButton.Visible = true;
             }
         }
 
+        private void CreatePage(){
+            this.CheckPaginationButtonsVisibility();
+
+            int PreviousPageOffSet = (this.OrganizerCurrentPageIndex - 1) * this.PageSize;
+            CheckNumberOfRows(_conferenceRepository.GetConferencesByPage(
+                Program.EnteredEmailAddress, PreviousPageOffSet + 1, PreviousPageOffSet + this.PageSize + 1));
+            }
+
 
         private void RightArrowPagButton_MouseClick(object sender, EventArgs e)
         {
+            if (this.TabControl.SelectedTab.Name == "TabOrganizer")
+            {
+                this.OrganizerCurrentPageIndex++;
+                this.CreatePage();
+            }
+            else { }
 
-            this.CurrentPageIndex++;
-            this.CheckPaginationButtonsVisibility();
-
-            int PreviousPageOffSet = (this.CurrentPageIndex - 1) * this.PageSize; 
-            CheckNumberOfRows(_conferenceRepository.GetConferencesByPage(
-                Program.EnteredEmailAddress, PreviousPageOffSet + 1, PreviousPageOffSet + this.PageSize + 1));
          
         }
 
         private void LeftArrowPagButton_MouseClick(object sender, EventArgs e)
         {
-            this.CurrentPageIndex--;
-            this.CheckPaginationButtonsVisibility();
-
-            int PresentPageOffSet = (this.CurrentPageIndex - 1) * this.PageSize;
-            CheckNumberOfRows(_conferenceRepository.GetConferencesByPage(
-                Program.EnteredEmailAddress, PresentPageOffSet + 1, PresentPageOffSet + this.PageSize + 1));
+            if (this.TabControl.SelectedTab.Name == "TabOrganizer")
+            {
+                this.OrganizerCurrentPageIndex--;
+                this.CreatePage();
+            }
+            else { }
 
         }
 
@@ -315,8 +340,8 @@ namespace ConferencePlanner.WinUi
             //MessageBox.Show(w, "Felicitari, te-ai inscris cu succes!");
             PopupNotifier popup = new PopupNotifier();
             popup.Image = Properties.Resources.info;
-            popup.TitleText = "Felicitari!";
-            popup.ContentText = "Te-ai inscris cu succes!";
+            popup.TitleText = "Congratulation!";
+            popup.ContentText = "You succesfully attended to this conference!";
             popup.Popup();
             fillAttendeeGrid();
         }
@@ -328,8 +353,8 @@ namespace ConferencePlanner.WinUi
             _attendeeButtons.WithdrawnCommand(Program.EnteredEmailAddress, confId);
             PopupNotifier popup = new PopupNotifier();
             popup.Image = Properties.Resources.info;
-            popup.TitleText = "Ai renuntat la aceasta conferinta!";
-            popup.ContentText = "Poti alege oricand din cele disponibile";
+            popup.TitleText = "You withdraw this conference!";
+            popup.ContentText = "You can choose from the available ones";
             popup.Popup();
             fillAttendeeGrid();
         }
