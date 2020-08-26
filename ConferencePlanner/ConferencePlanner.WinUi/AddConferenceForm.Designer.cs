@@ -38,7 +38,7 @@
             this.EndDatelabel = new System.Windows.Forms.Label();
             this.TabControlLocation = new System.Windows.Forms.TabControl();
             this.Country = new System.Windows.Forms.TabPage();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.CountryListDataGridView = new System.Windows.Forms.DataGridView();
             this.County = new System.Windows.Forms.TabPage();
             this.dataGridView2 = new System.Windows.Forms.DataGridView();
             this.City = new System.Windows.Forms.TabPage();
@@ -61,7 +61,7 @@
             this.SaveNew = new System.Windows.Forms.Button();
             this.TabControlLocation.SuspendLayout();
             this.Country.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CountryListDataGridView)).BeginInit();
             this.County.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
             this.City.SuspendLayout();
@@ -168,7 +168,7 @@
             // 
             // Country
             // 
-            this.Country.Controls.Add(this.dataGridView1);
+            this.Country.Controls.Add(this.CountryListDataGridView);
             this.Country.Location = new System.Drawing.Point(4, 29);
             this.Country.Name = "Country";
             this.Country.Padding = new System.Windows.Forms.Padding(3);
@@ -177,19 +177,19 @@
             this.Country.Text = "Country";
             this.Country.UseVisualStyleBackColor = true;
             // 
-            // dataGridView1
+            // CountryListDataGridView
             // 
-            this.dataGridView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.CountryListDataGridView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.dataGridView1.BackgroundColor = System.Drawing.SystemColors.ActiveBorder;
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.GridColor = System.Drawing.SystemColors.ActiveCaption;
-            this.dataGridView1.Location = new System.Drawing.Point(1, 0);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(1207, 324);
-            this.dataGridView1.TabIndex = 1;
-            this.dataGridView1.Text = "dataGridView1";
+            this.CountryListDataGridView.BackgroundColor = System.Drawing.SystemColors.ActiveBorder;
+            this.CountryListDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.CountryListDataGridView.GridColor = System.Drawing.SystemColors.ActiveCaption;
+            this.CountryListDataGridView.Location = new System.Drawing.Point(1, 0);
+            this.CountryListDataGridView.Name = "CountryListDataGridView";
+            this.CountryListDataGridView.Size = new System.Drawing.Size(1207, 324);
+            this.CountryListDataGridView.TabIndex = 1;
+            this.CountryListDataGridView.Text = "dataGridView1";
             // 
             // County
             // 
@@ -434,7 +434,7 @@
             this.Load += new System.EventHandler(this.AddConf_Load);
             this.TabControlLocation.ResumeLayout(false);
             this.Country.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CountryListDataGridView)).EndInit();
             this.County.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
             this.City.ResumeLayout(false);
@@ -479,7 +479,7 @@
         private System.Windows.Forms.TabPage TypeTab;
         private System.Windows.Forms.TabPage SpeakerTab;
         private System.Windows.Forms.TabPage CategoryTab;
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridView CountryListDataGridView;
         private System.Windows.Forms.DataGridView dataGridView2;
         private System.Windows.Forms.DataGridView dataGridView3;
         private System.Windows.Forms.DataGridView dataGridView4;
