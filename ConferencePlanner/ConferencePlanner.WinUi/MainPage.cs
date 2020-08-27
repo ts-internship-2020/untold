@@ -325,7 +325,7 @@ namespace ConferencePlanner.WinUi
                 //listBox1.Items.Add(StartDate.Date);
                 if ( DateTime.Compare(StartDate.Date, sDate) <=0 && DateTime.Compare(eDate, EndDate.Date) <= 0)
                 {
-                    listBox1.Items.Add(conf.ConferenceName);
+                    //listBox1.Items.Add(conf.ConferenceName);
                     conferences.Append(conf);
                 }
             }

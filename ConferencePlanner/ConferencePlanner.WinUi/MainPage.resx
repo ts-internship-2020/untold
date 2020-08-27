@@ -102,10 +102,54 @@
   <metadata name="RightArrowPagButton.Locked" type="System.Boolean, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e">
     <value>True</value>
   </metadata>
+  <assembly alias="System.Drawing.Common" name="System.Drawing.Common, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51" />
+  <data name="RightArrowPagButton.Image" type="System.Drawing.Bitmap, System.Drawing.Common" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        /9j/4AAQSkZJRgABAQEAYABgAAD/4QT2RXhpZgAATU0AKgAAAAgABQESAAMAAAABAAEAAAExAAIAAAAm
+        AAAASgEyAAIAAAAUAAAAcIdpAAQAAAABAAAAhIglAAQAAAABAAAA8AAAAShXaW5kb3dzIFBob3RvIEVk
+        aXRvciAxMC4wLjEwMDExLjE2Mzg0ADIwMjA6MDg6MjcgMTM6MTQ6MDcAAAWQAwACAAAAFAAAAMaQBAAC
+        AAAAFAAAANqSkQACAAAAAzU2AACSkgACAAAAAzU2AACgAQADAAAAAQABAAAAAAAAMjAyMDowODoyNyAx
+        MzowNzozNQAyMDIwOjA4OjI3IDEzOjA3OjM1AAAAAAEACwACAAAAJgAAAQIAAAAAV2luZG93cyBQaG90
+        byBFZGl0b3IgMTAuMC4xMDAxMS4xNjM4NAAABgEDAAMAAAABAAYAAAEaAAUAAAABAAABdgEbAAUAAAAB
+        AAABfgEoAAMAAAABAAIAAAIBAAQAAAABAAABhgICAAQAAAABAAADaAAAAAAAAABgAAAAAQAAAGAAAAAB
+        /9j/2wBDAAgGBgcGBQgHBwcJCQgKDBQNDAsLDBkSEw8UHRofHh0aHBwgJC4nICIsIxwcKDcpLDAxNDQ0
+        Hyc5PTgyPC4zNDL/2wBDAQkJCQwLDBgNDRgyIRwhMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIy
+        MjIyMjIyMjIyMjIyMjIyMjIyMjL/wAARCAATABQDASEAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAA
+        AAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0Kx
+        wRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4
+        eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl
+        5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQD
+        BAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygp
+        KjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOk
+        paanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIR
+        AxEAPwDl/EfiZ5ria3hujbafASiIj7TNjgsxHJBPQdMY4zWlqfhbUNB0Ow8SaPq4vtNuI1Z7yyYhYnJw
+        Qw7rnjJHUEMAcAsR1vhLVbTV9GM97JDBdJKY5RjAcgD5gOwII/HNFIZxujeLdd+H93qthZR2LFptzi6i
+        kckAfKV2uvBBB/GvQ/EnxNitPCVrBFdabqmr31vuke1iP2aJWznKuSSccbW5OCWAHyliOT8EeHW1HQWu
+        nmECPO3l7h99QANw9sgj8KKALWqaZZ6noMl1eQCS4t4/3UuSrKM9MjGR7HiuX8I6TY6pqjRXsAmjRSwQ
+        sQMgdwDyPY0DPQraV1V1U7VVtqqoAAAAwAOwopAf/9n/2wBDAAIBAQIBAQICAgICAgICAwUDAwMDAwYE
+        BAMFBwYHBwcGBwcICQsJCAgKCAcHCg0KCgsMDAwMBwkODw0MDgsMDAz/2wBDAQICAgMDAwYDAwYMCAcI
+        DAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAz/wAARCAATABQD
+        ASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQA
+        AAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6
+        Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKz
+        tLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEB
+        AQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEI
+        FEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hp
+        anN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX
+        2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwD5f/bS/bjvPE/irWtB0nxFJ4V+H/h6Wazt
+        bWyuzaSa75JKPczupDyrIykxxH5FTZlS+5j6R8cv2BvHH7JH7OvgH4+/Cn4oR+P/AIc+KNOgub3xZ4On
+        mit9GvWco0U0bHMlr5mYd8yKRKrxTwwuVR8v9mf/AIKI/Gb/AII/+Nfip4L8IWPw/uZLnVxc3i+JtLv7
+        ySRIYyttLB9nvLceVNCySDKsT5g5ByB+hv7a3/BczTfh7+w94Z0fT/Enwv8Ai38W/iN4dM+pXvhzTJV8
+        KaRbXKurNLa3cs0rOEJiFrcMHdo3eeKFSLdq9CPU86/4J4fHzw1+0Z8ApNa8XXmi+HvFFlqcmnakmzy4
+        b2VIoWFzEoB2rIjoSvRXEgHyhaK8R/4Ja/sZ3Hxl/ZruvEd1q0OgWeoa3P8A2aLmI5vrdIoY/PXA+4ZF
+        lUdM+XkcEElFkO7Oq+PPwP8ACvx0/Zp1HxF4q0eHVNe8K2K/2ZqIke3ubdWfmMyRMrSR5ZiI3LIGYsFB
+        JNfLv/BOj9nzwf8AHv4xTab4u0ZNZ06xt5LiK1e4ljhLopZd6o6iRcgZR8qw4IIJFFFC2DqfoV4H8Q3l
+        pbX1vDItvb2tyIIIYY1jjgjWKNVRFUAKqqAAoAAAAHFFFFSUf//Z
+</value>
+  </data>
   <metadata name="$this.Locked" type="System.Boolean, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e">
     <value>True</value>
   </metadata>
-  <assembly alias="System.Drawing.Common" name="System.Drawing.Common, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51" />
   <data name="$this.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing.Common" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         /9j/4AAQSkZJRgABAQEAAAAAAAD/7gAOQWRvYmUAZAAAAAAB/9sAQwABAQEBAQEBAQEBAQEBAQEBAQEB
