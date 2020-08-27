@@ -74,6 +74,8 @@ namespace ConferencePlanner.WinUi
             CountryListDataGridView.Columns["CountryName"].HeaderText = "Country Name";
             CountryListDataGridView.DefaultCellStyle.ForeColor = Color.Black;
 
+          
+
 
         }
 
@@ -236,6 +238,16 @@ namespace ConferencePlanner.WinUi
             EndDatePicker.Value = DateTime.Today;
         }
 
-     
+        private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
+        {
+           // dateTimePicker1 = new DateTimePicker();
+            StartTimePickerConf.Format = DateTimePickerFormat.Time;
+            StartTimePickerConf.ShowUpDown = true;
+        }
+
+        private void Country_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
