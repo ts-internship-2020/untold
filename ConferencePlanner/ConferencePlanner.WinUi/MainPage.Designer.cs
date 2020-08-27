@@ -44,7 +44,6 @@ namespace ConferencePlanner.WinUi
             this.AddConferenceButton = new System.Windows.Forms.Button();
             this.StartDatePicker = new System.Windows.Forms.DateTimePicker();
             this.EndDatePicker = new System.Windows.Forms.DateTimePicker();
-            this.EndDateLabel = new System.Windows.Forms.Label();
             this.StartDateLabel = new System.Windows.Forms.Label();
             this.LeftArrowPagButton = new System.Windows.Forms.Button();
             this.RightArrowPagButton = new System.Windows.Forms.Button();
@@ -83,10 +82,10 @@ namespace ConferencePlanner.WinUi
             this.AttendeeGridvw.Location = new System.Drawing.Point(3, 3);
             this.AttendeeGridvw.Name = "AttendeeGridvw";
             this.AttendeeGridvw.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
+            this.AttendeeGridvw.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
             this.AttendeeGridvw.Size = new System.Drawing.Size(1315, 504);
             this.AttendeeGridvw.TabIndex = 3;
             this.AttendeeGridvw.Text = "dataGridView1";
-            this.AttendeeGridvw.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.AttendeeGridvw_CellContentClick);
             this.AttendeeGridvw.Layout += new System.Windows.Forms.LayoutEventHandler(this.tabPage1_Layout);
             // 
             // button5
@@ -190,6 +189,7 @@ namespace ConferencePlanner.WinUi
             // EndDatePicker
             // 
             this.EndDatePicker.CustomFormat = "yyyy-MM-dd hh:mm:ss";
+            this.EndDatePicker.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.EndDatePicker.Location = new System.Drawing.Point(222, 12);
             this.EndDatePicker.Name = "EndDatePicker";
             this.EndDatePicker.Size = new System.Drawing.Size(200, 23);
@@ -198,10 +198,12 @@ namespace ConferencePlanner.WinUi
             // 
             // EndDateLabel
             // 
+
             this.EndDateLabel.Location = new System.Drawing.Point(0, 0);
             this.EndDateLabel.Name = "EndDateLabel";
             this.EndDateLabel.Size = new System.Drawing.Size(100, 23);
             this.EndDateLabel.TabIndex = 8;
+            this.EndDateLabel.Visible = true;
             // 
             // StartDateLabel
             // 
@@ -242,7 +244,6 @@ namespace ConferencePlanner.WinUi
             this.ClientSize = new System.Drawing.Size(1353, 646);
             this.Controls.Add(this.RightArrowPagButton);
             this.Controls.Add(this.LeftArrowPagButton);
-            this.Controls.Add(this.EndDateLabel);
             this.Controls.Add(this.EndDatePicker);
             this.Controls.Add(this.StartDatePicker);
             this.Controls.Add(this.AddConferenceButton);
@@ -282,12 +283,11 @@ namespace ConferencePlanner.WinUi
         private DateTimePicker StartDatePicker;
         private Label StartDateLabel;
         private DateTimePicker EndDatePicker;
-        private Label EndDateLabel;
         private DataGridView AttendeeGridvw;
         private Button button5;
         private Button button4;
         private Button button3;
-       
+        private ListBox listBox1;
         private Button LeftArrowPagButton;
         private Button RightArrowPagButton;
     }

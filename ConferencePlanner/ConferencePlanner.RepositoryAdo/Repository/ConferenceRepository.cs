@@ -60,13 +60,16 @@ namespace ConferencePlanner.Repository.Ado.Repository
             return conferences;
         }
 
-        public List<ConferenceModel> GetConferencesByPage(string email, int startIndex, int endIndex)
+        public List<ConferenceModel> GetConferencesByPage(string email, int startIndex, int endIndex, string sDate, string eDate)
         {
-            string commandText = "with ConferencesForPagination AS( SELECT ROW_NUMBER() OVER( ORDER BY ConferenceId) row_num, ConferenceId, ConferenceName, " +
-                "SpeakerName, ConferenceCategoryName, ConferenceTypeName, LocationName, ConferencePeriod " +
-                "FROM vwConferenceDetails " +
-                "where EmailOrganizer = @Email) select * from ConferencesForPagination " +
-                "where row_num >= @startIndex and row_num < @endIndex";
+            string commandText = "with ConferencesForPagination AS(SELECT ROW_NUMBER() OVER(ORDER BY vw.ConferenceId) row_num,vw.ConferenceId, vw.ConferenceName, " +
+                "vw.SpeakerName, vw.ConferenceCategoryName, vw.ConferenceTypeName, vw.LocationName, vw.ConferencePeriod, " +
+                "C.StartDate, C.EndDate " +
+                "FROM vwConferenceDetails vw " +
+                "join Conference C on vw.ConferenceId = C.ConferenceId " +
+                "where C.EmailOrganizer = @Email and C.StartDate >= @startDate and C.EndDate <= @endDate) " +
+                "select * from ConferencesForPagination " +
+                "where row_num >= @startIndex and row_num< @endIndex";
 
             SqlCommand sqlCommand = new SqlCommand(commandText, _sqlConnection);
             sqlCommand.Parameters.Add("@Email", SqlDbType.NVarChar);
@@ -75,6 +78,10 @@ namespace ConferencePlanner.Repository.Ado.Repository
             sqlCommand.Parameters["@startIndex"].Value = startIndex;
             sqlCommand.Parameters.Add("@endIndex", SqlDbType.Int);
             sqlCommand.Parameters["@endIndex"].Value = endIndex;
+            sqlCommand.Parameters.Add("@startDate", SqlDbType.NVarChar);
+            sqlCommand.Parameters["@startDate"].Value = sDate;
+            sqlCommand.Parameters.Add("@endDate", SqlDbType.NVarChar);
+            sqlCommand.Parameters["@endDate"].Value = eDate;
 
             SqlDataReader sqlDataReader = sqlCommand.ExecuteReader();
 

@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 using System.Drawing;
 using Tulpep.NotificationWindow;
 using System.Data.SqlClient;
+using System.Net.Mail;
+using System.Net;
+using ConferencePlanner.Repository.Ado.Repository;
 
 namespace ConferencePlanner.WinUi
 {
@@ -20,6 +23,7 @@ namespace ConferencePlanner.WinUi
 
 
         private readonly IAttendeeButtonsRepository _attendeeButtons;
+        private readonly ISpeakerRepository _speakerRepository;
 
         private int PageSize = 3;
         //public int CurrentPageIndex { get; set; } //1
@@ -27,19 +31,20 @@ namespace ConferencePlanner.WinUi
         private int OrganizerCurrentPageIndex = 1;
         private int OrganizerTotalPage = 0;
 
+
         private int AttendeeCurrentPageIndex = 1;
         private int AttendeeTotalPage = 0;
 
-
-
         public MainPage(IConferenceRepository conferenceRepository, ICountryRepository countryRepository,
-            IAttendeeButtonsRepository attendeeButtonsRepository)
+            IAttendeeButtonsRepository attendeeButtonsRepository, ISpeakerRepository speakerRepository)
         {
             _conferenceRepository = conferenceRepository;
 
             _countryRepository = countryRepository;
 
             _attendeeButtons = attendeeButtonsRepository;
+
+            _speakerRepository = speakerRepository;
 
             InitializeComponent();
 
@@ -64,9 +69,11 @@ namespace ConferencePlanner.WinUi
             return sb.ToString().ToLower();
         }
 
+        int check = 0;
+
         private void AddConferenceButton_Click(object sender, EventArgs e)
         {
-            var varAddConf = new AddConf(_conferenceRepository, _countryRepository);
+            var varAddConf = new AddConf(_conferenceRepository, _countryRepository, _speakerRepository);
 
             TabControl.SelectedIndex = 1;
             varAddConf.ShowDialog();
@@ -105,10 +112,21 @@ namespace ConferencePlanner.WinUi
 
         private void TabOrganizer_SelectedIndexChanged(object sender, EventArgs e)
         {
+            string[] dates = new string[2];
+            if (check==0)
+            {
+                dates = new string[] { DateTime.Parse("1900-01-01 00:00:00").ToString("yyyy'-'MM'-'dd' 'HH':'mm':'ss"), DateTime.Parse("2050-01-01 00:00:00").ToString("yyyy'-'MM'-'dd' 'HH':'mm':'ss") };
+            }
+            else
+            {
+                dates = GetCurrentDateFilterSelection();
+            }
+            
             int PreviousPageOffSet = (this.OrganizerCurrentPageIndex - 1) * this.PageSize;
 
             var allConferences = _conferenceRepository.GetConferencesByOrganizer(Program.EnteredEmailAddress);
-            var conferences = _conferenceRepository.GetConferencesByPage(Program.EnteredEmailAddress, PreviousPageOffSet + 1, PreviousPageOffSet + this.PageSize + 1);
+            
+            var conferences = _conferenceRepository.GetConferencesByPage(Program.EnteredEmailAddress, PreviousPageOffSet + 1, PreviousPageOffSet + this.PageSize + 1, dates[0], dates[1]);
 
             this.CheckPaginationButtonsVisibility();
 
@@ -125,7 +143,7 @@ namespace ConferencePlanner.WinUi
             if (test.Name == "TabOrganizer")
             {
                 this.OrganizerTotalPage = rowCount / this.PageSize;
-                // if any row left after calculated pages, add one more page 
+                
                 if (rowCount % this.PageSize > 0)
                     this.OrganizerTotalPage += 1;
 
@@ -134,7 +152,7 @@ namespace ConferencePlanner.WinUi
             {
 
                 this.AttendeeTotalPage = rowCount / this.PageSize;
-                // if any row left after calculated pages, add one more page 
+                
                 if (rowCount % this.PageSize > 0)
                     this.AttendeeTotalPage += 1;
 
@@ -183,11 +201,21 @@ namespace ConferencePlanner.WinUi
         }
 
         private void CreatePage(){
+            string[] dates = new string[2];
+            if (check == 0)
+            {
+                dates = new string[] { DateTime.Parse("1900-01-01 00:00:00").ToString("yyyy'-'MM'-'dd' 'HH':'mm':'ss"), DateTime.Parse("2050-01-01 00:00:00").ToString("yyyy'-'MM'-'dd' 'HH':'mm':'ss") };
+            }
+            else
+            {
+                dates = GetCurrentDateFilterSelection();
+            }
+            
             this.CheckPaginationButtonsVisibility();
 
             int PreviousPageOffSet = (this.OrganizerCurrentPageIndex - 1) * this.PageSize;
             CheckNumberOfRows(_conferenceRepository.GetConferencesByPage(
-                Program.EnteredEmailAddress, PreviousPageOffSet + 1, PreviousPageOffSet + this.PageSize + 1));
+                Program.EnteredEmailAddress, PreviousPageOffSet + 1, PreviousPageOffSet + this.PageSize + 1, dates[0], dates[1]));
             }
 
         private void CreateAttendeePage()
@@ -217,6 +245,8 @@ namespace ConferencePlanner.WinUi
                 this.CreateAttendeePage();
             }
 
+           
+
          
         }
 
@@ -238,9 +268,7 @@ namespace ConferencePlanner.WinUi
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            //this.CurrentPageIndex = 1;
-
-            //DisplayNumOfPages.DataBindings.Add("Text", this, "CurrentPageIndex");
+           
         }
 
         int a = 0;
@@ -340,10 +368,10 @@ namespace ConferencePlanner.WinUi
 
 
 
+            }
 
 
 
-        }
 
 
 
@@ -363,28 +391,43 @@ namespace ConferencePlanner.WinUi
 
         }
 
+        private string[] GetCurrentDateFilterSelection()
+        {
+            string[] dates = new string[2];
+            
+            dates[0] = StartDatePicker.Value.ToString("yyyy'-'MM'-'dd' 'HH':'mm':'ss");
+            dates[1] = EndDatePicker.Value.ToString("yyyy'-'MM'-'dd' 'HH':'mm':'ss");
+
+            return dates;
+        }
+
         private void StartDatePicker_ValueChanged(object sender, EventArgs e)
         {
+            check = 1;
 
-            DateTime StartDate = StartDatePicker.Value;
-            DateTime EndDate = EndDatePicker.Value;
+            string[] dates = this.GetCurrentDateFilterSelection();
 
             if (TabControl.SelectedTab.Name == "TabOrganizer")
             {
                 OrganizerDataGrid.DataSource = null;
-                var conferences = _conferenceRepository.FilterConferencesByDate(Program.EnteredEmailAddress, StartDate.ToString("yyyy'-'MM'-'dd' 'HH':'mm':'ss"), EndDate.ToString("yyyy'-'MM'-'dd' 'HH':'mm':'ss"));
+                this.OrganizerCurrentPageIndex = 1;
+                var allConferences = _conferenceRepository.FilterConferencesByDate(Program.EnteredEmailAddress, dates[0], dates[1]);
+              
+                this.CalculateTotalPages(allConferences, TabControl.SelectedTab);
+                var conferences = _conferenceRepository.GetConferencesByPage(Program.EnteredEmailAddress,1 ,this.PageSize+1, dates[0], dates[1]);
 
+                this.CheckPaginationButtonsVisibility();
                 CheckNumberOfRows(conferences);
 
             }
             else
             {
                 AttendeeGridvw.DataSource = null;
-                var allConferences = _conferenceRepository.FilterConfAttendeeByDate(Program.EnteredEmailAddress, StartDate.ToString("yyyy'-'MM'-'dd' 'HH':'mm':'ss"), EndDate.ToString("yyyy'-'MM'-'dd' 'HH':'mm':'ss"));
+                var allConferences = _conferenceRepository.FilterConfAttendeeByDate(Program.EnteredEmailAddress, dates[0], dates[1]);
 
                 //var conferences = FilterAttendee(allConferences, StartDate, EndDate);
 
-                UpdateAttendee(FilterAttendee(allConferences, StartDate, EndDate));
+                //UpdateAttendee(FilterAttendee(allConferences, dates[0], dates[1]));
 
             }
 
@@ -393,7 +436,7 @@ namespace ConferencePlanner.WinUi
         private void UpdateAttendee(List<ConferenceModel> conf)
         {
             AttendeeGridvw.DataSource = conf.ToList();
-            //listBox1.Items.Add("been here");
+          
 
         }
 
@@ -406,71 +449,41 @@ namespace ConferencePlanner.WinUi
                 string[] aux = conf.Period.Split(" - ");
                 DateTime sDate = DateTime.Parse(aux[0]);
                 DateTime eDate = DateTime.Parse(aux[1]);
-                //listBox1.Items.Add(sDate);
-                //listBox1.Items.Add(StartDate.Date);
+                
                 if ( DateTime.Compare(StartDate.Date, sDate) <=0 && DateTime.Compare(eDate, EndDate.Date) <= 0)
                 {
-                    //listBox1.Items.Add(conf.ConferenceName);
                     conferences.Append(conf);
                 }
             }
             return conferences;
         }
-    
 
         private void Attend_Click(int confId)
         {
-            string barcodeGenerator = BarcodeGenerator();
-           _attendeeButtons.Attend(Program.EnteredEmailAddress, barcodeGenerator, confId);
-
-            //var w = new Form();
-            //Size = new Size(0, 0);
-            //Task.Delay(TimeSpan.FromSeconds(3))
-            //    .ContinueWith((t) => w.Close(), TaskScheduler.FromCurrentSynchronizationContext());
-
-            //MessageBox.Show(w, "Felicitari, te-ai inscris cu succes!");
+            Program.qrCode = BarcodeGenerator();
+            string copyqrCode = Program.qrCode;
+            //qrCode = setMyQrCode(BarcodeGenerator());
+            //BarcodeGenerator();
+            _attendeeButtons.Attend(Program.EnteredEmailAddress, copyqrCode, confId);
             PopupNotifier popup = new PopupNotifier();
             popup.Image = Properties.Resources.info;
             popup.TitleText = "Congratulation!";
             popup.ContentText = "You succesfully attended to this conference!";
             popup.Popup();
+            //fillAttendeeGrid();
+            var newForm = new QRCodeForm();
+            newForm.ShowDialog();
         }
 
-        private void Withdraw_Click(int statusId)
+        private void Withdraw_Click(int confId)
         {
-
-            //a = statusul participantului
-            _attendeeButtons.WithdrawnCommand(Program.EnteredEmailAddress, statusId);
+            _attendeeButtons.WithdrawnCommand(Program.EnteredEmailAddress, confId);
             PopupNotifier popup = new PopupNotifier();
             popup.Image = Properties.Resources.info;
             popup.TitleText = "You withdraw this conference!";
             popup.ContentText = "You can choose from the available ones";
             popup.Popup();
-        }
-
-            
-        private void EndDatePicker_ValueChanged(object sender, EventArgs e)
-        {
-            OrganizerDataGrid.DataSource = null;
-
-            DateTime StartDate = StartDatePicker.Value;
-            DateTime EndDate = EndDatePicker.Value;
-
-            if (TabControl.SelectedTab.Name == "TabOrganizer")
-            {
-                var conferences = _conferenceRepository.FilterConferencesByDate(Program.EnteredEmailAddress, StartDate.ToString("yyyy'-'MM'-'dd' 'HH':'mm':'ss"), EndDate.ToString("yyyy'-'MM'-'dd' 'HH':'mm':'ss"));
-
-                CheckNumberOfRows(conferences);
-            }
-            else
-            {
-                var allConferences = _conferenceRepository.FilterConfAttendeeByDate(Program.EnteredEmailAddress, StartDate.ToString("yyyy'-'MM'-'dd' 'HH':'mm':'ss"), EndDate.ToString("yyyy'-'MM'-'dd' 'HH':'mm':'ss"));
-
-                var conferences = FilterAttendee(allConferences, StartDate, EndDate);
-
-                UpdateAttendee(conferences);
-
-            }
+            //fillAttendeeGrid();
         }
 
         private void Join_Click(int statusId)
@@ -480,6 +493,34 @@ namespace ConferencePlanner.WinUi
             _attendeeButtons.JoinCommand(Program.EnteredEmailAddress, statusId);
         }
 
+        private void EndDatePicker_ValueChanged(object sender, EventArgs e)
+        {
+            check = 1;
+            OrganizerDataGrid.DataSource = null;
+
+            string[] dates = GetCurrentDateFilterSelection();
+
+            if (TabControl.SelectedTab.Name == "TabOrganizer")
+            {
+                this.OrganizerCurrentPageIndex = 1;
+
+                var allConferences = _conferenceRepository.FilterConferencesByDate(Program.EnteredEmailAddress, dates[0], dates[1]);
+                this.CalculateTotalPages(allConferences, TabControl.SelectedTab);
+                var conferences = _conferenceRepository.GetConferencesByPage(Program.EnteredEmailAddress, 1, this.PageSize+1, dates[0], dates[1]);
+
+                this.CheckPaginationButtonsVisibility();
+                CheckNumberOfRows(conferences);
+            }
+            else
+            {
+                //var allConferences = _conferenceRepository.FilterConfAttendeeByDate(Program.EnteredEmailAddress, dates[0],dates[1]);
+
+                //var conferences = FilterAttendee(allConferences, dates[0], dates[1]);
+
+                //UpdateAttendee(conferences);
+
+            }
+        }
 
         private void OrganizerDataGrid_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
@@ -541,8 +582,6 @@ namespace ConferencePlanner.WinUi
             
             if (e.ColumnIndex == AttendeeGridvw.Columns["attend_column"].Index)
             {
-
-
                 //AttendeeGridvw.Rows[e.RowIndex].Cells[7].ReadOnly = true;
                 //AttendeeGridvw.Rows[e.RowIndex].Cells[7].Visible = false;
                 int confid = (int)AttendeeGridvw.Rows[e.RowIndex].Cells[5].Value;
@@ -551,8 +590,21 @@ namespace ConferencePlanner.WinUi
               //  if (AttendeeGridvw.Rows[e.RowIndex].Cells[10].Value == "test")
                 //{
                     
-                //    return;
-                //}
+                    return;
+                }
+
+            
+            if (e.ColumnIndex == AttendeeGridvw.Columns["speaker_name"].Index)
+            {
+                string[] names = AttendeeGridvw.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString().Split(" ");
+                SpeakerModel speaker = this._speakerRepository.GetSpeakerByName(names);
+
+                var varSpeakerDetails = new SpeakerDetails(speaker);
+                varSpeakerDetails.ShowDialog();
+
+                //listBox1.Items.Add(speaker.Rating);
+                //listBox1.Items.Add(speaker.ImagePath);
+                //AttendeeGridvw.Rows[e.RowIndex].Cells[e.ColumnIndex].Value;
 
             }
 
@@ -582,9 +634,6 @@ namespace ConferencePlanner.WinUi
 
         }
 
-       
-
-        
     }
 }
 
