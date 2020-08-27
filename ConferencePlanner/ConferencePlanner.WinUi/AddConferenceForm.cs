@@ -11,6 +11,7 @@ using ConferencePlanner.Abstraction.Model;
 using System.ComponentModel.Design;
 using System.Configuration;
 using System.Linq;
+using ConferencePlanner.Repository.Ado.Repository;
 
 namespace ConferencePlanner.WinUi
 {
@@ -20,11 +21,17 @@ namespace ConferencePlanner.WinUi
         private readonly IConferenceRepository _conferenceRepository;
 
         private readonly ICountryRepository _countryRepository;
+        private readonly ISpeakerRepository _speakerRepository;
 
-        public AddConf(IConferenceRepository conferenceRepository, ICountryRepository  countryRepository)
+
+
+        private List<SpeakerModel> Speakers;
+
+        public AddConf(IConferenceRepository conferenceRepository, ICountryRepository  countryRepository, ISpeakerRepository speakerRepository)
         {
             _conferenceRepository = conferenceRepository;
             _countryRepository = countryRepository;
+            _speakerRepository = speakerRepository;
             InitializeComponent();
 
         }
@@ -46,11 +53,12 @@ namespace ConferencePlanner.WinUi
             string[] dates = conference.Period.Split(" - ");
             //this.MonthCalendar.SetSelectionRange(DateTime.Parse(dates[0]), DateTime.Parse(dates[1]));
 
-            string[] places = conference.LocationName.Split(", ");
+            string[] places = conference.Location.Split(", ");
 
-            this.ConfEmailAddress.Text = conference.LocationName;
+            this.ConfEmailAddress.Text = conference.Location;
 
             //this.CountryComboBox.Text = places[0];
+            //this.CountryListDataGridView.SelectR
             //this.CountyComboBox.Text = places[1];
             //this.CityComboBox.Text = places[2];
 
@@ -112,17 +120,6 @@ namespace ConferencePlanner.WinUi
             //CityComboBox.Enabled = true;
            
             Close();
-        }
-
-
-        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            NextTabBtn.Enabled = true;
-        }
-
-        private void comboBox1_Click(object sender, EventArgs e)
-        {
-            
         }
         
 
@@ -198,6 +195,10 @@ namespace ConferencePlanner.WinUi
 
         private void TabControlLocation_SelectedIndexChanged(object sender, EventArgs e)
         {  
+            if(TabControlLocation.SelectedTab.Name == "SpeakerTab")
+            {
+                this.LoadSpeakersTab();
+            }
             
             if(TabControlLocation.SelectedIndex > 0)
             {
@@ -238,15 +239,41 @@ namespace ConferencePlanner.WinUi
             EndDatePicker.Value = DateTime.Today;
         }
 
-        private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
+        private void FormatSpeakersDataGrid()
         {
-           // dateTimePicker1 = new DateTimePicker();
-            StartTimePickerConf.Format = DateTimePickerFormat.Time;
-            StartTimePickerConf.ShowUpDown = true;
+
         }
 
-        private void Country_Click(object sender, EventArgs e)
+
+        private void LoadSpeakersTab()
         {
+            this.Speakers = _speakerRepository.GetAllSpeakers();
+            SpeakerListDataGrid.DefaultCellStyle.ForeColor = Color.Black;
+            SpeakerListDataGrid.DataSource = this.Speakers;
+        }
+
+        private void SpeakerListDataGrid_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+            if (SpeakerListDataGrid.Columns.Contains("ImagePath"))
+            {
+                this.SpeakerListDataGrid.Columns.Remove("ImagePath");
+            }
+            if(SpeakerListDataGrid.Columns.Contains("SpeakerId") && SpeakerListDataGrid.Columns["SpeakerId"].Visible)
+            {
+                SpeakerListDataGrid.Columns["SpeakerId"].Visible = false;
+            }
+            if (SpeakerListDataGrid.Columns.Contains("main_speaker")==false)
+            {
+                DataGridViewCheckBoxColumn MainSpeaker = new DataGridViewCheckBoxColumn();
+                MainSpeaker.ValueType = typeof(bool);
+                MainSpeaker.Name = "main_speaker";
+                MainSpeaker.HeaderText = "Main Speaker";
+                SpeakerListDataGrid.Columns.Add(MainSpeaker);
+            }
+
+
+
+            
 
         }
     }

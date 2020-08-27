@@ -10,14 +10,10 @@ namespace ConferencePlanner.Abstraction.Repository
     {
         SpeakerModel GetSpeakerById(int id);
         SpeakerModel GetSpeakerByName(string[] names);
-        //List<ConferenceModel> AttendeeConferences(String name);
 
-        //List<ConferenceModel> FilterConferencesByDate(String email, string sDate, string eDate);
+        List<SpeakerModel> GetAllSpeakers();
 
-        //List<ConferenceModel> FilterConfAttendeeByDate(String email, string sDate, string eDate);
-
-        //List<ConferenceModel> GetConferencesByPage(string email, int startIndex, int endIndex);
-        //ConferenceModel GetConferenceById(int id);
+        
 
     }
 }
