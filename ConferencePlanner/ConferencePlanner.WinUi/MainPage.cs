@@ -11,7 +11,6 @@ using Tulpep.NotificationWindow;
 using System.Data.SqlClient;
 using System.Net.Mail;
 using System.Net;
-using QRCoder;
 using ConferencePlanner.Repository.Ado.Repository;
 
 namespace ConferencePlanner.WinUi
