@@ -65,8 +65,8 @@ namespace ConferencePlanner.WinUi
             // dataGridViewCountryTab.Columns[0].Name = "Country Code";
             // dataGridViewCountryTab.Columns[1].Name = "Country Name";
 
-            var list = _countryRepository.GetListCountry();
-            CountryListDataGridView.DataSource = list.ToList();
+            var countryList = _countryRepository.GetListCountry();
+            CountryListDataGridView.DataSource = countryList.ToList();
             CountryListDataGridView.AutoGenerateColumns = false;
 
             CountryListDataGridView.Columns["DictionaryCountryId"].Visible = false;
@@ -175,7 +175,7 @@ namespace ConferencePlanner.WinUi
 
                     //selectedRow = CountryListDataGridView.SelectedRows.Index.ToString();
 
-                        //sb.Append(dataGridView1.SelectedRows[i].Index.ToString());
+                    //sb.Append(dataGridView1.SelectedRows[i].Index.ToString());
 
                     TabControlLocation.SelectedIndex++;
 
@@ -188,7 +188,7 @@ namespace ConferencePlanner.WinUi
             }
             else 
             {
-                //save       
+                //aici face save   
                 
 
             }
@@ -196,7 +196,6 @@ namespace ConferencePlanner.WinUi
 
         private void TabControlLocation_SelectedIndexChanged(object sender, EventArgs e)
         {  
-            
             
             if(TabControlLocation.SelectedIndex > 0)
             {
@@ -218,9 +217,13 @@ namespace ConferencePlanner.WinUi
             }
         }
 
-        //private void save care face insert in baza de date
-        //si pe care o apelez mai jos si la else next btn
-
+        private void SaveInDataBase()
+        {
+            
+            
+            //insert in bd
+            //o sa fie apelata si la else in next btn
+        }
 
 
 
@@ -233,16 +236,6 @@ namespace ConferencePlanner.WinUi
             EndDatePicker.Value = DateTime.Today;
         }
 
-        private void CountryListDataGridView_Layout(object sender, LayoutEventArgs e)
-        {
-            
-        }
-
-        private void CountryListDataGridView_Click(object sender, EventArgs e)
-        {
-            
-        }
-
-
+     
     }
 }

@@ -191,7 +191,6 @@
             this.CountryListDataGridView.Size = new System.Drawing.Size(808, 298);
             this.CountryListDataGridView.TabIndex = 1;
             this.CountryListDataGridView.Text = "dataGridView1";
-            this.CountryListDataGridView.Click += new System.EventHandler(this.CountryListDataGridView_Click);
             // 
             // County
             // 
