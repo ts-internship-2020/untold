@@ -423,7 +423,7 @@ namespace ConferencePlanner.WinUi
             else
             {
                 AttendeeGridvw.DataSource = null;
-                var allConferences = _conferenceRepository.FilterConfAttendeeByDate(Program.EnteredEmailAddress, dates[0], dates[1]);
+                //var allConferences = _conferenceRepository.FilterConfAttendeeByDate(Program.EnteredEmailAddress, dates[0], dates[1]);
 
                 //var conferences = FilterAttendee(allConferences, StartDate, EndDate);
 
@@ -435,7 +435,7 @@ namespace ConferencePlanner.WinUi
 
         private void UpdateAttendee(List<ConferenceModel> conf)
         {
-            AttendeeGridvw.DataSource = conf.ToList();
+            //AttendeeGridvw.DataSource = conf.ToList();
           
 
         }
@@ -527,6 +527,8 @@ namespace ConferencePlanner.WinUi
             if (OrganizerDataGrid.Columns.Contains("ConferenceId") && OrganizerDataGrid.Columns["ConferenceId"].Visible)
             {
                 OrganizerDataGrid.Columns["ConferenceId"].Visible = false;
+                OrganizerDataGrid.Columns["RowNum"].Visible = false;
+                OrganizerDataGrid.Columns["StatusId"].Visible = false;
                 DataGridViewButtonColumn editButtonColumn = new DataGridViewButtonColumn();
                 editButtonColumn.UseColumnTextForButtonValue = true;
                 editButtonColumn.Text = "Edit";
@@ -543,19 +545,21 @@ namespace ConferencePlanner.WinUi
             }
 
 
-            OrganizerDataGrid.Columns[0].HeaderText = "Id";
-            OrganizerDataGrid.Columns[1].HeaderText = "Name";
-            OrganizerDataGrid.Columns[2].HeaderText = "Category";
-            OrganizerDataGrid.Columns[3].HeaderText = "Type";
-            OrganizerDataGrid.Columns[4].HeaderText = "Location";
-            OrganizerDataGrid.Columns[5].HeaderText = "Main Speaker Name";
-            OrganizerDataGrid.Columns[6].HeaderText = "Period";
+            OrganizerDataGrid.Columns[0].HeaderText = "row_num";
+            OrganizerDataGrid.Columns[1].HeaderText = "status";
+            OrganizerDataGrid.Columns[2].HeaderText = "confId";
+            OrganizerDataGrid.Columns[3].HeaderText = "Name";
+            OrganizerDataGrid.Columns[4].HeaderText = "Category";
+            OrganizerDataGrid.Columns[5].HeaderText = "Type";
+            OrganizerDataGrid.Columns[6].HeaderText = "Location";
+            OrganizerDataGrid.Columns[7].HeaderText = "Main Speaker Name";
+            OrganizerDataGrid.Columns[8].HeaderText = "Period";
 
-            OrganizerDataGrid.Columns["Period"].DisplayIndex = 2;
-            OrganizerDataGrid.Columns["ConferenceCategoryName"].DisplayIndex = 3;
-            OrganizerDataGrid.Columns["ConferenceTypeName"].DisplayIndex = 4;
-            OrganizerDataGrid.Columns["LocationName"].DisplayIndex = 5;
-            OrganizerDataGrid.Columns["SpeakerName"].DisplayIndex = 6;
+            OrganizerDataGrid.Columns["Period"].DisplayIndex = 4;
+            OrganizerDataGrid.Columns["ConferenceCategoryName"].DisplayIndex = 5;
+            OrganizerDataGrid.Columns["ConferenceTypeName"].DisplayIndex = 6;
+            OrganizerDataGrid.Columns["Location"].DisplayIndex = 7;
+            OrganizerDataGrid.Columns["Speaker"].DisplayIndex = 8;
 
             OrganizerDataGrid.AutoResizeColumns();
             //OrganizerDataGrid.DefaultCellStyle.WrapMode = DataGridViewTriState.True;

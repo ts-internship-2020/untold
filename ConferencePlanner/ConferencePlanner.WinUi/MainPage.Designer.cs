@@ -195,15 +195,7 @@ namespace ConferencePlanner.WinUi
             this.EndDatePicker.Size = new System.Drawing.Size(200, 23);
             this.EndDatePicker.TabIndex = 6;
             this.EndDatePicker.ValueChanged += new System.EventHandler(this.EndDatePicker_ValueChanged);
-            // 
-            // EndDateLabel
-            // 
 
-            this.EndDateLabel.Location = new System.Drawing.Point(0, 0);
-            this.EndDateLabel.Name = "EndDateLabel";
-            this.EndDateLabel.Size = new System.Drawing.Size(100, 23);
-            this.EndDateLabel.TabIndex = 8;
-            this.EndDateLabel.Visible = true;
             // 
             // StartDateLabel
             // 
