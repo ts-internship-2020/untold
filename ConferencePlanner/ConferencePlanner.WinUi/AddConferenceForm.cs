@@ -23,9 +23,13 @@ namespace ConferencePlanner.WinUi
         private readonly ICountryRepository _countryRepository;
         private readonly ISpeakerRepository _speakerRepository;
 
-
+        private int PageSize;
 
         private List<SpeakerModel> Speakers;
+        private int SpeakersTotalPages;
+        private int SpeakersCurrentPage;
+        
+        //lista de ce facem
 
         public AddConf(IConferenceRepository conferenceRepository, ICountryRepository  countryRepository, ISpeakerRepository speakerRepository)
         {
@@ -38,6 +42,8 @@ namespace ConferencePlanner.WinUi
 
         public AddConf()
         {
+            // functionalitati la tab control
+            // 
 
             InitializeComponent();
         }
@@ -74,6 +80,7 @@ namespace ConferencePlanner.WinUi
             // dataGridViewCountryTab.Columns[1].Name = "Country Name";
 
             var countryList = _countryRepository.GetListCountry();
+
             CountryListDataGridView.DataSource = countryList.ToList();
             CountryListDataGridView.AutoGenerateColumns = false;
 
@@ -82,7 +89,7 @@ namespace ConferencePlanner.WinUi
             CountryListDataGridView.Columns["CountryName"].HeaderText = "Country Name";
             CountryListDataGridView.DefaultCellStyle.ForeColor = Color.Black;
 
-
+            //functie load country tab
 
         }
 

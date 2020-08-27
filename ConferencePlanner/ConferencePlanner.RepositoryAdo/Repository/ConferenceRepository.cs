@@ -135,10 +135,18 @@ namespace ConferencePlanner.Repository.Ado.Repository
             {
                 while (sqlDataReader.Read())
                 {
-                    string StatusIdTemp=" ";
+                    string StatusIdTemp = " ";
                     if (!sqlDataReader.IsDBNull("StatusId"))
                     {
-                        StatusIdTemp = sqlDataReader.GetString("StatusId");
+                        try
+                        {
+                            StatusIdTemp = (string)sqlDataReader.GetString("StatusId");
+                        }
+                        catch (Exception e)
+                        {
+                            //StatusIdTemp = (string) sqlDataReader.GetInt32("StatusId");
+                        }
+                        
                     }
                     attendees.Add(new ConferenceModel()
                     {

@@ -12,7 +12,6 @@ namespace ConferencePlanner.Abstraction.Repository
         SpeakerModel GetSpeakerByName(string[] names);
 
         List<SpeakerModel> GetAllSpeakers();
-
         
 
     }
