@@ -11,6 +11,7 @@ using ConferencePlanner.Abstraction.Model;
 using System.ComponentModel.Design;
 using System.Configuration;
 using System.Linq;
+using ConferencePlanner.Repository.Ado.Repository;
 
 namespace ConferencePlanner.WinUi
 {
@@ -20,11 +21,17 @@ namespace ConferencePlanner.WinUi
         private readonly IConferenceRepository _conferenceRepository;
 
         private readonly ICountryRepository _countryRepository;
+        private readonly ISpeakerRepository _speakerRepository;
 
-        public AddConf(IConferenceRepository conferenceRepository, ICountryRepository  countryRepository)
+
+
+        private List<SpeakerModel> Speakers;
+
+        public AddConf(IConferenceRepository conferenceRepository, ICountryRepository  countryRepository, ISpeakerRepository speakerRepository)
         {
             _conferenceRepository = conferenceRepository;
             _countryRepository = countryRepository;
+            _speakerRepository = speakerRepository;
             InitializeComponent();
 
         }
@@ -38,6 +45,7 @@ namespace ConferencePlanner.WinUi
         {
             _conferenceRepository = conferenceRepository;
             _countryRepository = countryRepository;
+           // _speakerRepository = speakerRepository;
 
             InitializeComponent();
 
@@ -51,6 +59,7 @@ namespace ConferencePlanner.WinUi
             this.ConfEmailAddress.Text = conference.LocationName;
 
             //this.CountryComboBox.Text = places[0];
+            //this.CountryListDataGridView.SelectR
             //this.CountyComboBox.Text = places[1];
             //this.CityComboBox.Text = places[2];
 
@@ -73,6 +82,8 @@ namespace ConferencePlanner.WinUi
             CountryListDataGridView.Columns["CountryCode"].HeaderText = "Country Code";
             CountryListDataGridView.Columns["CountryName"].HeaderText = "Country Name";
             CountryListDataGridView.DefaultCellStyle.ForeColor = Color.Black;
+
+            this.Speakers = _speakerRepository.GetAllSpeakers();
 
 
         }
@@ -110,17 +121,6 @@ namespace ConferencePlanner.WinUi
             //CityComboBox.Enabled = true;
            
             Close();
-        }
-
-
-        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            NextTabBtn.Enabled = true;
-        }
-
-        private void comboBox1_Click(object sender, EventArgs e)
-        {
-            
         }
         
 
@@ -196,6 +196,10 @@ namespace ConferencePlanner.WinUi
 
         private void TabControlLocation_SelectedIndexChanged(object sender, EventArgs e)
         {  
+            if(TabControlLocation.SelectedTab.Name == "SpeakerTab")
+            {
+                this.LoadSpeakersTab();
+            }
             
             
             if(TabControlLocation.SelectedIndex > 0)
@@ -241,6 +245,11 @@ namespace ConferencePlanner.WinUi
         private void CountryListDataGridView_Click(object sender, EventArgs e)
         {
             
+        }
+
+        private void LoadSpeakersTab()
+        {
+            SpeakerListDataGrid.DataSource = this.Speakers;
         }
 
 

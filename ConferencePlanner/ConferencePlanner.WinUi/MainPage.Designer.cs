@@ -44,11 +44,9 @@ namespace ConferencePlanner.WinUi
             this.AddConferenceButton = new System.Windows.Forms.Button();
             this.StartDatePicker = new System.Windows.Forms.DateTimePicker();
             this.EndDatePicker = new System.Windows.Forms.DateTimePicker();
-            this.EndDateLabel = new System.Windows.Forms.Label();
             this.StartDateLabel = new System.Windows.Forms.Label();
             this.LeftArrowPagButton = new System.Windows.Forms.Button();
             this.RightArrowPagButton = new System.Windows.Forms.Button();
-            this.listBox1 = new System.Windows.Forms.ListBox();
             this.TabAttendee.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.AttendeeGridvw)).BeginInit();
             this.TabOrganizer.SuspendLayout();
@@ -191,18 +189,12 @@ namespace ConferencePlanner.WinUi
             // EndDatePicker
             // 
             this.EndDatePicker.CustomFormat = "yyyy-MM-dd hh:mm:ss";
+            this.EndDatePicker.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.EndDatePicker.Location = new System.Drawing.Point(222, 12);
             this.EndDatePicker.Name = "EndDatePicker";
             this.EndDatePicker.Size = new System.Drawing.Size(200, 23);
             this.EndDatePicker.TabIndex = 6;
             this.EndDatePicker.ValueChanged += new System.EventHandler(this.EndDatePicker_ValueChanged);
-            // 
-            // EndDateLabel
-            // 
-            this.EndDateLabel.Location = new System.Drawing.Point(0, 0);
-            this.EndDateLabel.Name = "EndDateLabel";
-            this.EndDateLabel.Size = new System.Drawing.Size(100, 23);
-            this.EndDateLabel.TabIndex = 8;
             // 
             // StartDateLabel
             // 
@@ -235,25 +227,14 @@ namespace ConferencePlanner.WinUi
             this.RightArrowPagButton.UseVisualStyleBackColor = true;
             this.RightArrowPagButton.MouseClick += new System.Windows.Forms.MouseEventHandler(this.RightArrowPagButton_MouseClick);
             // 
-            // listBox1
-            // 
-            this.listBox1.FormattingEnabled = true;
-            this.listBox1.ItemHeight = 15;
-            this.listBox1.Location = new System.Drawing.Point(568, 30);
-            this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(120, 94);
-            this.listBox1.TabIndex = 9;
-            // 
             // MainPage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.ClientSize = new System.Drawing.Size(1353, 646);
-            this.Controls.Add(this.listBox1);
             this.Controls.Add(this.RightArrowPagButton);
             this.Controls.Add(this.LeftArrowPagButton);
-            this.Controls.Add(this.EndDateLabel);
             this.Controls.Add(this.EndDatePicker);
             this.Controls.Add(this.StartDatePicker);
             this.Controls.Add(this.AddConferenceButton);
@@ -293,7 +274,6 @@ namespace ConferencePlanner.WinUi
         private DateTimePicker StartDatePicker;
         private Label StartDateLabel;
         private DateTimePicker EndDatePicker;
-        private Label EndDateLabel;
         private DataGridView AttendeeGridvw;
         private Button button5;
         private Button button4;
@@ -301,6 +281,5 @@ namespace ConferencePlanner.WinUi
 
         private Button LeftArrowPagButton;
         private Button RightArrowPagButton;
-        private ListBox listBox1;
     }
 }

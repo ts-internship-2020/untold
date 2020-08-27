@@ -269,6 +269,7 @@
             // 
             // SpeakerListDataGrid
             // 
+            this.SpeakerListDataGrid.CausesValidation = false;
             this.SpeakerListDataGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.SpeakerListDataGrid.Dock = System.Windows.Forms.DockStyle.Top;
             this.SpeakerListDataGrid.Location = new System.Drawing.Point(3, 3);
