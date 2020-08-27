@@ -46,7 +46,7 @@
             this.TypeTab = new System.Windows.Forms.TabPage();
             this.dataGridView3 = new System.Windows.Forms.DataGridView();
             this.SpeakerTab = new System.Windows.Forms.TabPage();
-            this.dataGridView4 = new System.Windows.Forms.DataGridView();
+            this.SpeakerListDataGrid = new System.Windows.Forms.DataGridView();
             this.CategoryTab = new System.Windows.Forms.TabPage();
             this.dataGridView5 = new System.Windows.Forms.DataGridView();
             this.BackTabBtn = new System.Windows.Forms.Button();
@@ -69,7 +69,7 @@
             this.TypeTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView3)).BeginInit();
             this.SpeakerTab.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView4)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.SpeakerListDataGrid)).BeginInit();
             this.CategoryTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView5)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ErrorName)).BeginInit();
@@ -165,6 +165,7 @@
             this.TabControlLocation.SelectedIndex = 6;
             this.TabControlLocation.Size = new System.Drawing.Size(1221, 399);
             this.TabControlLocation.TabIndex = 7;
+            this.TabControlLocation.SelectedIndexChanged += new System.EventHandler(this.TabControlLocation_SelectedIndexChanged);
             // 
             // Country
             // 
@@ -182,14 +183,15 @@
             this.CountryListDataGridView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.CountryListDataGridView.BackgroundColor = System.Drawing.SystemColors.ActiveBorder;
+            this.CountryListDataGridView.BackgroundColor = System.Drawing.Color.Cornsilk;
             this.CountryListDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.CountryListDataGridView.GridColor = System.Drawing.SystemColors.ActiveCaption;
+            this.CountryListDataGridView.GridColor = System.Drawing.Color.DarkBlue;
             this.CountryListDataGridView.Location = new System.Drawing.Point(1, 0);
             this.CountryListDataGridView.Name = "CountryListDataGridView";
-            this.CountryListDataGridView.Size = new System.Drawing.Size(1207, 324);
+            this.CountryListDataGridView.Size = new System.Drawing.Size(808, 298);
             this.CountryListDataGridView.TabIndex = 1;
             this.CountryListDataGridView.Text = "dataGridView1";
+            this.CountryListDataGridView.Click += new System.EventHandler(this.CountryListDataGridView_Click);
             // 
             // County
             // 
@@ -256,7 +258,7 @@
             // 
             // SpeakerTab
             // 
-            this.SpeakerTab.Controls.Add(this.dataGridView4);
+            this.SpeakerTab.Controls.Add(this.SpeakerListDataGrid);
             this.SpeakerTab.Location = new System.Drawing.Point(4, 29);
             this.SpeakerTab.Name = "SpeakerTab";
             this.SpeakerTab.Padding = new System.Windows.Forms.Padding(3);
@@ -265,15 +267,15 @@
             this.SpeakerTab.Text = "Speaker";
             this.SpeakerTab.UseVisualStyleBackColor = true;
             // 
-            // dataGridView4
+            // SpeakerListDataGrid
             // 
-            this.dataGridView4.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGridView4.Location = new System.Drawing.Point(3, 3);
-            this.dataGridView4.Name = "dataGridView4";
-            this.dataGridView4.Size = new System.Drawing.Size(1207, 360);
-            this.dataGridView4.TabIndex = 0;
-            this.dataGridView4.Text = "dataGridView4";
+            this.SpeakerListDataGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.SpeakerListDataGrid.Dock = System.Windows.Forms.DockStyle.Top;
+            this.SpeakerListDataGrid.Location = new System.Drawing.Point(3, 3);
+            this.SpeakerListDataGrid.Name = "SpeakerListDataGrid";
+            this.SpeakerListDataGrid.Size = new System.Drawing.Size(1207, 309);
+            this.SpeakerListDataGrid.TabIndex = 0;
+            this.SpeakerListDataGrid.Text = "dataGridView4";
             // 
             // CategoryTab
             // 
@@ -300,6 +302,7 @@
             // 
             this.BackTabBtn.Dock = System.Windows.Forms.DockStyle.Right;
             this.BackTabBtn.Enabled = false;
+            this.BackTabBtn.ForeColor = System.Drawing.SystemColors.ControlText;
             this.BackTabBtn.Location = new System.Drawing.Point(493, 3);
             this.BackTabBtn.Name = "BackTabBtn";
             this.BackTabBtn.Size = new System.Drawing.Size(80, 34);
@@ -311,6 +314,7 @@
             // NextTabBtn
             // 
             this.NextTabBtn.Dock = System.Windows.Forms.DockStyle.Left;
+            this.NextTabBtn.ForeColor = System.Drawing.SystemColors.ControlText;
             this.NextTabBtn.Location = new System.Drawing.Point(579, 3);
             this.NextTabBtn.Name = "NextTabBtn";
             this.NextTabBtn.Size = new System.Drawing.Size(80, 34);
@@ -411,6 +415,7 @@
             // 
             // SaveNew
             // 
+            this.SaveNew.ForeColor = System.Drawing.SystemColors.ControlText;
             this.SaveNew.Location = new System.Drawing.Point(671, 3);
             this.SaveNew.Name = "SaveNew";
             this.SaveNew.Size = new System.Drawing.Size(114, 34);
@@ -442,7 +447,7 @@
             this.TypeTab.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView3)).EndInit();
             this.SpeakerTab.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView4)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.SpeakerListDataGrid)).EndInit();
             this.CategoryTab.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView5)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ErrorName)).EndInit();
@@ -482,7 +487,7 @@
         private System.Windows.Forms.DataGridView CountryListDataGridView;
         private System.Windows.Forms.DataGridView dataGridView2;
         private System.Windows.Forms.DataGridView dataGridView3;
-        private System.Windows.Forms.DataGridView dataGridView4;
+        private System.Windows.Forms.DataGridView SpeakerListDataGrid;
         private System.Windows.Forms.DataGridView dataGridView5;
         private System.Windows.Forms.DataGridView dataGridView6;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
