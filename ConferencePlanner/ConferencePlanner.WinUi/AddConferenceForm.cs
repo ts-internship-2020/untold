@@ -44,9 +44,9 @@ namespace ConferencePlanner.WinUi
             string[] dates = conference.Period.Split(" - ");
             //this.MonthCalendar.SetSelectionRange(DateTime.Parse(dates[0]), DateTime.Parse(dates[1]));
 
-            string[] places = conference.LocationName.Split(", ");
+            string[] places = conference.Location.Split(", ");
 
-            this.ConfEmailAddress.Text = conference.LocationName;
+            this.ConfEmailAddress.Text = conference.Location;
 
             //this.CountryComboBox.Text = places[0];
             //this.CountyComboBox.Text = places[1];

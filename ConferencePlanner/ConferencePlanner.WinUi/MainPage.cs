@@ -70,9 +70,6 @@ namespace ConferencePlanner.WinUi
 
             TabControl.SelectedIndex = 1;
             varAddConf.ShowDialog();
-
-
-
         }
 
         private void CheckNumberOfRows(List<ConferenceModel> conferences)
@@ -89,6 +86,22 @@ namespace ConferencePlanner.WinUi
 
             }
         }
+        private void CheckNumberOfRowsAttendee(List<ConferenceModel> attendees)
+        {
+            //if (attendees.Count() == 0)
+            //{
+            //    AttendeeGridvw.Visible = false;
+            //    NoConferenceLabel.Visible = true;
+            //}
+            //else
+            //{
+                AttendeeGridvw.DataSource = attendees.ToList();
+                AttendeeGridvw.AutoGenerateColumns = false;
+
+           //}
+        }
+
+
 
         private void TabOrganizer_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -117,8 +130,9 @@ namespace ConferencePlanner.WinUi
                     this.OrganizerTotalPage += 1;
 
             }
-            else
+            else if(test.Name== "TabAttendee")
             {
+
                 this.AttendeeTotalPage = rowCount / this.PageSize;
                 // if any row left after calculated pages, add one more page 
                 if (rowCount % this.PageSize > 0)
@@ -148,6 +162,26 @@ namespace ConferencePlanner.WinUi
             }
         }
 
+        private void CheckPaginationButtonsVisibilityAttendee()
+        {
+            if (this.AttendeeCurrentPageIndex == this.AttendeeTotalPage)
+            {
+                this.RightArrowPagButton.Visible = false;
+            }
+            if (this.AttendeeCurrentPageIndex == 1)
+            {
+                this.LeftArrowPagButton.Visible = false;
+            }
+            if (this.AttendeeCurrentPageIndex < this.AttendeeTotalPage)
+            {
+                this.RightArrowPagButton.Visible = true;
+            }
+            if (this.AttendeeCurrentPageIndex > 1)
+            {
+                this.LeftArrowPagButton.Visible = true;
+            }
+        }
+
         private void CreatePage(){
             this.CheckPaginationButtonsVisibility();
 
@@ -156,15 +190,32 @@ namespace ConferencePlanner.WinUi
                 Program.EnteredEmailAddress, PreviousPageOffSet + 1, PreviousPageOffSet + this.PageSize + 1));
             }
 
+        private void CreateAttendeePage()
+        {
+            this.CheckPaginationButtonsVisibilityAttendee();
+
+            int PreviousPageOffSet = (this.AttendeeCurrentPageIndex - 1) * this.PageSize;
+            CheckNumberOfRowsAttendee(_conferenceRepository.GetAttendeesByPage(
+                Program.EnteredEmailAddress, PreviousPageOffSet + 1, PreviousPageOffSet + this.PageSize + 1));
+
+
+        }
+
 
         private void RightArrowPagButton_MouseClick(object sender, EventArgs e)
         {
             if (this.TabControl.SelectedTab.Name == "TabOrganizer")
             {
+
                 this.OrganizerCurrentPageIndex++;
                 this.CreatePage();
             }
-            else { }
+            else if(this.TabControl.SelectedTab.Name == "TabAttendee")
+            {
+                //listBox1.Items.Add(this.TabControl.SelectedTab.Name);
+                this.AttendeeCurrentPageIndex++;
+                this.CreateAttendeePage();
+            }
 
          
         }
@@ -176,7 +227,11 @@ namespace ConferencePlanner.WinUi
                 this.OrganizerCurrentPageIndex--;
                 this.CreatePage();
             }
-            else { }
+            else if(this.TabControl.SelectedTab.Name == "TabAttendee")
+            {
+                this.AttendeeCurrentPageIndex--;
+                this.CreateAttendeePage();
+            }
 
         }
 
@@ -193,27 +248,64 @@ namespace ConferencePlanner.WinUi
         private void tabPage1_Layout(object sender, LayoutEventArgs e)
         {
             //var x = _getDemoRepository.GetDemo()
-            
-            var listattendee = _conferenceRepository.AttendeeConferences(Program.EnteredEmailAddress);
-            AttendeeGridvw.DataSource = listattendee.ToList();
-            AttendeeGridvw.AutoGenerateColumns = false;
+
+            //var listattendee = _conferenceRepository.AttendeeConferences(Program.EnteredEmailAddress);
+            //AttendeeGridvw.DataSource = listattendee.ToList();
+
+            int PreviousPageOffSet = (this.AttendeeCurrentPageIndex - 1) * this.PageSize;
+
+            var allConferences = _conferenceRepository.AttendeeConferences(Program.EnteredEmailAddress);
+            //listBox1.Items.Add(PreviousPageOffSet);
+            var attendees = _conferenceRepository.GetAttendeesByPage(Program.EnteredEmailAddress, PreviousPageOffSet + 1, PreviousPageOffSet + this.PageSize + 1);
+
+            //listBox1.Items.Add(attendees[0].);
+            this.CheckPaginationButtonsVisibilityAttendee();
+
+            CalculateTotalPages(allConferences, this.TabControl.SelectedTab);
+
+            AttendeeGridvw.DataSource = attendees;
+            //AttendeeGridvw.Columns[0].HeaderText = "row_num";
+            //AttendeeGridvw.Columns[1].HeaderText = "StatusId";
+            //AttendeeGridvw.Columns[2].HeaderText = "ConferenceId";
+            AttendeeGridvw.Columns["RowNum"].Visible = false;
+            AttendeeGridvw.Columns["StatusId"].Visible = false;
             AttendeeGridvw.Columns["ConferenceId"].Visible = false;
-            
-            AttendeeGridvw.Columns[1].HeaderText = "Conference Name";
-            AttendeeGridvw.Columns[2].HeaderText = "Category";
-            AttendeeGridvw.Columns[3].HeaderText = "Type";
-            AttendeeGridvw.Columns[4].HeaderText = "Location";
-            AttendeeGridvw.Columns[5].HeaderText = "Speaker Name";
-            AttendeeGridvw.Columns[6].HeaderText = "Period";
+
+            //AttendeeGridvw.Columns[0].HeaderText = "RowNum";
+            //AttendeeGridvw.Columns[1].HeaderText = "StatusId";
+            //AttendeeGridvw.Columns[2].HeaderText = "ConferenceId";
+            AttendeeGridvw.Columns[3].HeaderText = "Name";
+            AttendeeGridvw.Columns[4].HeaderText = "Category";
+            AttendeeGridvw.Columns[5].HeaderText = "Type";
+            //AttendeeGridvw.Columns[6].HeaderText = "Category";
+            //AttendeeGridvw.Columns[7].HeaderText = "Location";
+           //AttendeeGridvw.Columns[8].HeaderText = "Speaker";
+
+
+            //AttendeeGridvw.Columns["ConferenceName"].DisplayIndex = 3;
+            //AttendeeGridvw.Columns["Period"].DisplayIndex = 4;
+            //AttendeeGridvw.Columns["ConferenceTypeName"].DisplayIndex = 5;
+            //AttendeeGridvw.Columns["ConferenceCategoryName"].DisplayIndex = 6;
+            //AttendeeGridvw.Columns["Location"].DisplayIndex = 7;
+            //AttendeeGridvw.Columns["Speaker"].DisplayIndex = 8;
+
+            //AttendeeGridvw.Columns[9].HeaderText = "Period";
+            //AttendeeGridvw.Columns[10].HeaderText = "Period";
+            //AttendeeGridvw.Columns[11].HeaderText = "Period";
+            //AttendeeGridvw.Columns["CategoryTypeName"].HeaderText = "Type";
 
 
             if (a == 0)
             {
+                
+
+                //AttendeeGridvw.AutoGenerateColumns = false;
 
                 a++;
                 DataGridViewButtonColumn attendButtonColumn = new DataGridViewButtonColumn();
                 attendButtonColumn.Name = "attend_column";
                 attendButtonColumn.Text = "Attend";
+                attendButtonColumn.HeaderText = "Attend";
 
                 int columnIndex = AttendeeGridvw.ColumnCount;
 
@@ -224,28 +316,30 @@ namespace ConferencePlanner.WinUi
                 DataGridViewButtonColumn withdrawButtonColumn = new DataGridViewButtonColumn();
                 withdrawButtonColumn.Name = "withdraw_column";
                 withdrawButtonColumn.Text = "Withdraw";
-
+                withdrawButtonColumn.HeaderText = "Withdraw";
                 AttendeeGridvw.Columns.Insert(columnIndex, withdrawButtonColumn);
                 columnIndex = AttendeeGridvw.ColumnCount;
 
                 DataGridViewButtonColumn joinButtonColumn = new DataGridViewButtonColumn();
                 joinButtonColumn.Name = "join_column";
                 joinButtonColumn.Text = "Join";
-
+                joinButtonColumn.HeaderText = "Join";
 
 
                 AttendeeGridvw.Columns.Insert(columnIndex, joinButtonColumn);
-
-                AttendeeGridvw.CellClick += AttendeeGridvw_CellClick;
-                AttendeeGridvw.Columns[7].HeaderText = "Attend";
-                AttendeeGridvw.Columns[8].HeaderText = "Withdraw";
-                AttendeeGridvw.Columns[9].HeaderText = "Join";
-                AttendeeGridvw.Columns.Add("Column", "Test");
-                AttendeeGridvw.Columns["Column"].Visible = false;
-                AttendeeGridvw.Columns[7].Tag = "test";
                 
-
+                AttendeeGridvw.CellClick += AttendeeGridvw_CellClick;
+                //AttendeeGridvw.Columns[12].HeaderText = "Attend";
+                // AttendeeGridvw.Columns[13].HeaderText = "Withdraw";
+                // AttendeeGridvw.Columns[14].HeaderText = "Join";
+                //AttendeeGridvw.Columns.Add("Column", "Test");
+                //AttendeeGridvw.Columns["Column"].Visible = false;
+                //AttendeeGridvw.Columns[7].Tag = "test";
+               
             }
+
+
+
 
 
 
@@ -299,7 +393,7 @@ namespace ConferencePlanner.WinUi
         private void UpdateAttendee(List<ConferenceModel> conf)
         {
             AttendeeGridvw.DataSource = conf.ToList();
-            listBox1.Items.Add("been here");
+            //listBox1.Items.Add("been here");
 
         }
 
@@ -316,7 +410,7 @@ namespace ConferencePlanner.WinUi
                 //listBox1.Items.Add(StartDate.Date);
                 if ( DateTime.Compare(StartDate.Date, sDate) <=0 && DateTime.Compare(eDate, EndDate.Date) <= 0)
                 {
-                    listBox1.Items.Add(conf.ConferenceName);
+                    //listBox1.Items.Add(conf.ConferenceName);
                     conferences.Append(conf);
                 }
             }
@@ -451,14 +545,14 @@ namespace ConferencePlanner.WinUi
 
                 //AttendeeGridvw.Rows[e.RowIndex].Cells[7].ReadOnly = true;
                 //AttendeeGridvw.Rows[e.RowIndex].Cells[7].Visible = false;
-                int confid = (int)AttendeeGridvw.Rows[e.RowIndex].Cells[0].Value;
+                int confid = (int)AttendeeGridvw.Rows[e.RowIndex].Cells[5].Value;
                 Attend_Click(confid);
-                AttendeeGridvw.Rows[e.RowIndex].Cells[10].Value = "test";
-                if (AttendeeGridvw.Rows[e.RowIndex].Cells[10].Value == "test")
-                {
+               // AttendeeGridvw.Rows[e.RowIndex].Cells[10].Value = "test";
+              //  if (AttendeeGridvw.Rows[e.RowIndex].Cells[10].Value == "test")
+                //{
                     
-                    return;
-                }
+                //    return;
+                //}
 
             }
 
@@ -466,11 +560,12 @@ namespace ConferencePlanner.WinUi
             {
                 int statusid = 1;
                 Withdraw_Click(statusid);
+                
             }
 
             if (e.ColumnIndex == AttendeeGridvw.Columns["join_column"].Index)
             {
-                int statusId = 3;
+                int statusId = 1;
                 //int confid = (int)AttendeeGridvw.Rows[e.RowIndex].Cells[0].Value;
                Join_Click(statusId);
             }
@@ -486,6 +581,10 @@ namespace ConferencePlanner.WinUi
         {
 
         }
+
+       
+
+        
     }
 }
 
