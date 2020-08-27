@@ -77,7 +77,7 @@
             this.SpeakersNextBtn = new System.Windows.Forms.Button();
             this.SpeakersLastPage = new System.Windows.Forms.Button();
             this.SpeakersPages = new System.Windows.Forms.TextBox();
-            this.dataGridView4 = new System.Windows.Forms.DataGridView();
+           // this.dataGridView4 = new System.Windows.Forms.DataGridView();
             this.CategoryTab = new System.Windows.Forms.TabPage();
             this.CategoriesLayoutPanelBtn = new System.Windows.Forms.TableLayoutPanel();
             this.CategoriesFirstPage = new System.Windows.Forms.Button();
@@ -272,7 +272,7 @@
             this.CountriesNextBtn.TabIndex = 2;
             this.CountriesNextBtn.Text = ">";
             this.CountriesNextBtn.UseVisualStyleBackColor = true;
-            this.CountriesNextBtn.Click += new System.EventHandler(this.button4_Click);
+         //   this.CountriesNextBtn.Click += new System.EventHandler(this.button4_Click);
             // 
             // CountriesLastPage
             // 
