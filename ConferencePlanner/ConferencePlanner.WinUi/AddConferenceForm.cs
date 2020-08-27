@@ -45,7 +45,6 @@ namespace ConferencePlanner.WinUi
         {
             _conferenceRepository = conferenceRepository;
             _countryRepository = countryRepository;
-           // _speakerRepository = speakerRepository;
 
             InitializeComponent();
 
@@ -83,7 +82,6 @@ namespace ConferencePlanner.WinUi
             CountryListDataGridView.Columns["CountryName"].HeaderText = "Country Name";
             CountryListDataGridView.DefaultCellStyle.ForeColor = Color.Black;
 
-            this.Speakers = _speakerRepository.GetAllSpeakers();
 
 
         }
@@ -240,12 +238,42 @@ namespace ConferencePlanner.WinUi
             EndDatePicker.Value = DateTime.Today;
         }
 
-
-        private void LoadSpeakersTab()
+        private void FormatSpeakersDataGrid()
         {
-            SpeakerListDataGrid.DataSource = this.Speakers;
+
         }
 
 
+        private void LoadSpeakersTab()
+        {
+            this.Speakers = _speakerRepository.GetAllSpeakers();
+            SpeakerListDataGrid.DefaultCellStyle.ForeColor = Color.Black;
+            SpeakerListDataGrid.DataSource = this.Speakers;
+        }
+
+        private void SpeakerListDataGrid_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+            if (SpeakerListDataGrid.Columns.Contains("ImagePath"))
+            {
+                this.SpeakerListDataGrid.Columns.Remove("ImagePath");
+            }
+            if(SpeakerListDataGrid.Columns.Contains("SpeakerId") && SpeakerListDataGrid.Columns["SpeakerId"].Visible)
+            {
+                SpeakerListDataGrid.Columns["SpeakerId"].Visible = false;
+            }
+            if (SpeakerListDataGrid.Columns.Contains("main_speaker")==false)
+            {
+                DataGridViewCheckBoxColumn MainSpeaker = new DataGridViewCheckBoxColumn();
+                MainSpeaker.ValueType = typeof(bool);
+                MainSpeaker.Name = "main_speaker";
+                MainSpeaker.HeaderText = "Main Speaker";
+                SpeakerListDataGrid.Columns.Add(MainSpeaker);
+            }
+
+
+
+            
+
+        }
     }
 }
