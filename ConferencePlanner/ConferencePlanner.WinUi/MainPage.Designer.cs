@@ -189,11 +189,13 @@ namespace ConferencePlanner.WinUi
             // EndDatePicker
             // 
             this.EndDatePicker.CustomFormat = "yyyy-MM-dd hh:mm:ss";
+            this.EndDatePicker.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.EndDatePicker.Location = new System.Drawing.Point(222, 12);
             this.EndDatePicker.Name = "EndDatePicker";
             this.EndDatePicker.Size = new System.Drawing.Size(200, 23);
             this.EndDatePicker.TabIndex = 6;
             this.EndDatePicker.ValueChanged += new System.EventHandler(this.EndDatePicker_ValueChanged);
+
             // 
             // StartDateLabel
             // 

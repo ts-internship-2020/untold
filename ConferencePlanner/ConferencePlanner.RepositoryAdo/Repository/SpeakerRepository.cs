@@ -18,6 +18,36 @@ namespace ConferencePlanner.Repository.Ado.Repository
             _sqlConnection = sqlConnection;
         }
 
+        public List<SpeakerModel> GetAllSpeakers()
+        {
+            string commandText = "select SpeakerId, FirstName, LastName, Nationality, Rating from Speaker";
+
+            SqlCommand sqlCommand = new SqlCommand(commandText, _sqlConnection);
+
+            SqlDataReader sqlDataReader = sqlCommand.ExecuteReader();
+            List<SpeakerModel> speakers = new List<SpeakerModel>();
+
+            if (sqlDataReader.HasRows)
+            {
+                while (sqlDataReader.Read())
+                {
+                    speakers.Add(new SpeakerModel()
+                    {
+                        SpeakerId = sqlDataReader.GetInt32("SpeakerId"),
+                        FirstName = sqlDataReader.GetString("FirstName"),
+                        LastName = sqlDataReader.GetString("LastName"),
+                        Nationality = sqlDataReader.GetString("Nationality"),
+                        Rating = (float)sqlDataReader.GetDouble("Rating"),
+
+                    }); ;
+
+                }
+            }
+
+            return speakers;
+
+        }
+
 
         public SpeakerModel GetSpeakerByName(string[] names)
         {
@@ -63,9 +93,6 @@ namespace ConferencePlanner.Repository.Ado.Repository
             SqlDataReader sqlDataReader = sqlCommand.ExecuteReader();
 
             SpeakerModel speaker = new SpeakerModel();
-
-
-
 
             sqlDataReader.Close();
 
