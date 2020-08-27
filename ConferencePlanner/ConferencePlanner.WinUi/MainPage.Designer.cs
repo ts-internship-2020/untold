@@ -195,6 +195,7 @@ namespace ConferencePlanner.WinUi
             this.EndDatePicker.Size = new System.Drawing.Size(200, 23);
             this.EndDatePicker.TabIndex = 6;
             this.EndDatePicker.ValueChanged += new System.EventHandler(this.EndDatePicker_ValueChanged);
+
             // 
             // StartDateLabel
             // 
@@ -278,7 +279,7 @@ namespace ConferencePlanner.WinUi
         private Button button5;
         private Button button4;
         private Button button3;
-
+        private ListBox listBox1;
         private Button LeftArrowPagButton;
         private Button RightArrowPagButton;
     }
