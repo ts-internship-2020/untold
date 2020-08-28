@@ -89,6 +89,7 @@ namespace ConferencePlanner.WinUi
             else
             {
                 NoConferenceLabel.Visible = false;
+                OrganizerDataGrid.Visible = true;
                 OrganizerDataGrid.DataSource = conferences.ToList();
                 OrganizerDataGrid.AutoGenerateColumns = false;
 
