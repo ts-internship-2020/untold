@@ -288,6 +288,17 @@ namespace ConferencePlanner.Repository.Ado.Repository
             return conference;
 
         }
+
+        void IConferenceRepository.DeleteConferenceById(int id)
+        {
+            string commandText = "delete from Conference where ConferenceId = @Id";
+            SqlCommand sqlCommand = new SqlCommand(commandText, _sqlConnection);
+            sqlCommand.Parameters.Add("@Id", SqlDbType.Int);
+            sqlCommand.Parameters["@Id"].Value = id;
+
+            //sqlCommand.ExecuteNonQuery();
+
+        }
     }
     }
 

@@ -550,19 +550,29 @@ namespace ConferencePlanner.WinUi
                 OrganizerDataGrid.Columns["ConferenceId"].Visible = false;
                 OrganizerDataGrid.Columns["RowNum"].Visible = false;
                 OrganizerDataGrid.Columns["StatusId"].Visible = false;
+
                 DataGridViewButtonColumn editButtonColumn = new DataGridViewButtonColumn();
                 editButtonColumn.UseColumnTextForButtonValue = true;
                 editButtonColumn.Text = "Edit";
                 editButtonColumn.Width = 25;
                 editButtonColumn.HeaderText = "";
                 editButtonColumn.Name = "edit_column";
-
+                DataGridViewButtonColumn deleteButtonColumn = new DataGridViewButtonColumn();
+                editButtonColumn.UseColumnTextForButtonValue = true;
+                editButtonColumn.Text = "Delete";
+                editButtonColumn.Width = 25;
+                editButtonColumn.HeaderText = "";
+                editButtonColumn.Name = "delete_column";
                 //editButtonColumn.Text.
                 int columnIndex = OrganizerDataGrid.ColumnCount;
 
                 OrganizerDataGrid.Columns.Insert(columnIndex, editButtonColumn);
                 OrganizerDataGrid.CellClick += OrganizerDataGrid_CellClick;
 
+                columnIndex += 1;
+
+                OrganizerDataGrid.Columns.Insert(columnIndex, deleteButtonColumn);
+                OrganizerDataGrid.CellClick += OrganizerDataGrid_CellClick;
             }
 
 
@@ -599,6 +609,14 @@ namespace ConferencePlanner.WinUi
 
                 varAddConf.ShowDialog();        
 
+            }
+            if (e.ColumnIndex == OrganizerDataGrid.Columns["delete_column"].Index && e.RowIndex >= 0)
+            {
+                int id = (int)OrganizerDataGrid.Rows[e.RowIndex].Cells["ConferenceId"].Value;
+
+
+                var varDeleteConference = new AreYouSure();
+                varDeleteConference.ShowDialog();
             }
         }
         private void AttendeeGridvw_CellClick(object sender, DataGridViewCellEventArgs e)
