@@ -23,6 +23,7 @@ namespace ConferencePlanner.Repository.Ado.Repository
                 "@StatusId ,@EmailCode)";
             //statusId va fi hardcodat pentru ca 1 este pentru attend in tabela DictionaryStatus
             int statusId = 1;
+            
             SqlCommand sqlCommand = new SqlCommand(commandText, _sqlConnection);
             sqlCommand.Parameters.Add("@ConferenceId", SqlDbType.Int);
             sqlCommand.Parameters["@ConferenceId"].Value = confId;

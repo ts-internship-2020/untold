@@ -315,7 +315,8 @@ namespace ConferencePlanner.WinUi
 
         private void LoadContryTab()
         {
-            CountryListDataGridView.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.Fill);
+            CountryListDataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            CountryListDataGridView.AllowUserToOrderColumns = true;
             this.Countries = _countryRepository.GetCountriesList();
             CountryListDataGridView.DefaultCellStyle.ForeColor = Color.Black;
             CountryListDataGridView.DataSource = this.Countries;
@@ -445,6 +446,7 @@ namespace ConferencePlanner.WinUi
             {
                 CountiesListGridView.Columns["CountryId"].Visible = false;
             }
+
             CountiesListGridView.Columns["CountyName"].HeaderText = "County Name";
             
         }
