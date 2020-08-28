@@ -19,22 +19,26 @@ namespace ConferencePlanner.WinUi
     {
 
         private readonly IConferenceRepository _conferenceRepository;
-
         private readonly ICountryRepository _countryRepository;
+        private readonly ICountyRepository _countyRepository;
         private readonly ISpeakerRepository _speakerRepository;
 
         private int PageSize;
 
+        private int CountryId = 70;
+
+        private BindingList<CountyModel> Counties;
         private BindingList<SpeakerModel> Speakers;
         private int SpeakersTotalPages;
         private int SpeakersCurrentPage;
         
         //lista de ce facem
 
-        public AddConf(IConferenceRepository conferenceRepository, ICountryRepository  countryRepository, ISpeakerRepository speakerRepository)
+        public AddConf(IConferenceRepository conferenceRepository, ICountryRepository  countryRepository, ICountyRepository countyRepository, ISpeakerRepository speakerRepository)
         {
             _conferenceRepository = conferenceRepository;
             _countryRepository = countryRepository;
+            _countyRepository = countyRepository;
             _speakerRepository = speakerRepository;
             InitializeComponent();
 
@@ -42,9 +46,7 @@ namespace ConferencePlanner.WinUi
 
         public AddConf()
         {
-            // functionalitati la tab control
-            // 
-
+          
             InitializeComponent();
         }
         public AddConf(ConferenceModel conference, IConferenceRepository conferenceRepository, ICountryRepository countryRepository)
@@ -54,7 +56,7 @@ namespace ConferencePlanner.WinUi
 
             InitializeComponent();
 
-            this.PopulateForm(conference);
+            //this.PopulateForm(conference);
 
         }
         private void PopulateForm(ConferenceModel conference)
@@ -156,10 +158,7 @@ namespace ConferencePlanner.WinUi
         }
         
 
-        private void BackBtnCountyTab_Click(object sender, EventArgs e)
-        {
 
-        }
 
         //private void BackBtnCityTab_Click(object sender, EventArgs e)
         //{
@@ -227,7 +226,12 @@ namespace ConferencePlanner.WinUi
         }
 
         private void TabControlLocation_SelectedIndexChanged(object sender, EventArgs e)
-        {  
+        {
+            if (TabControlLocation.SelectedIndex == 1)
+            {
+                this.LoadCountyTab();
+            }
+            
             if(TabControlLocation.SelectedTab.Name == "SpeakerTab")
             {
                 this.LoadSpeakersTab();
@@ -278,6 +282,9 @@ namespace ConferencePlanner.WinUi
         }
 
 
+
+
+
         private void LoadSpeakersTab()
         {
             this.Speakers = _speakerRepository.GetAllSpeakers();
@@ -324,9 +331,25 @@ namespace ConferencePlanner.WinUi
 
         }
 
-        private void tableLayoutPanel3_Paint(object sender, PaintEventArgs e)
+        private void LoadCountyTab()
         {
+            this.Counties = _countyRepository.GetCountyListBind(this.CountryId);
+            CountiesListGridView.DefaultCellStyle.ForeColor = Color.Black;
+            CountiesListGridView.DataSource = this.Counties;
 
+        }
+
+        private void CountiesListGridView_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+            if(CountiesListGridView.Columns.Contains("DictionaryCountyId")&& CountiesListGridView.Columns["DictionaryCountyId"].Visible)
+            {
+                CountiesListGridView.Columns["DictionaryCountyId"].Visible = false;
+            }
+            if(CountiesListGridView.Columns.Contains("CountryId") && CountiesListGridView.Columns["CountryId"].Visible)
+            {
+                CountiesListGridView.Columns["CountryId"].Visible = false;
+            }
+            this.CountiesListGridView.Columns["CountyName"].HeaderText = "County Name";
         }
     }
 }

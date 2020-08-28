@@ -1,4 +1,6 @@
-﻿namespace ConferencePlanner.WinUi
+﻿using System.Drawing;
+
+namespace ConferencePlanner.WinUi
 {
     partial class SpeakerDetails
     {
@@ -45,6 +47,7 @@
             // 
             // speakerName
             // 
+            this.speakerName.BackColor = System.Drawing.SystemColors.HotTrack;
             this.speakerName.Location = new System.Drawing.Point(320, 54);
             this.speakerName.Name = "speakerName";
             this.speakerName.Size = new System.Drawing.Size(156, 23);

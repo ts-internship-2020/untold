@@ -19,6 +19,7 @@ namespace ConferencePlanner.WinUi
         private static IConferenceRepository _conferenceRepository;
 
         private static ICountryRepository _countryRepository;
+        private static ICountyRepository _countyRepository;
 
         private static ISpeakerRepository _speakerRepository;
 
@@ -36,6 +37,7 @@ namespace ConferencePlanner.WinUi
             _countryRepository = _ServiceProvider.GetRequiredService<ICountryRepository>();
             _attendeeButtonsRepository = _ServiceProvider.GetRequiredService<IAttendeeButtonsRepository>();
             _speakerRepository = _ServiceProvider.GetRequiredService<ISpeakerRepository>();
+            _countyRepository = _ServiceProvider.GetRequiredService<ICountyRepository>();
 
         }
         private void EmailTextBox_TextChanged(object sender, EventArgs e)
@@ -77,7 +79,7 @@ namespace ConferencePlanner.WinUi
             init();
             Hide();
             Program.EnteredEmailAddress = EmailTextBox.Text;
-            var NextPage = new MainPage(_conferenceRepository, _countryRepository, _attendeeButtonsRepository, _speakerRepository);
+            var NextPage = new MainPage(_conferenceRepository, _countryRepository, _attendeeButtonsRepository, _speakerRepository, _countyRepository);
             NextPage.ShowDialog();
         }
 

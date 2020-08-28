@@ -20,7 +20,7 @@ namespace ConferencePlanner.WinUi
         private readonly IConferenceRepository _conferenceRepository;
 
         private readonly ICountryRepository _countryRepository;
-
+        private readonly ICountyRepository _countyRepository;
 
         private readonly IAttendeeButtonsRepository _attendeeButtons;
         private readonly ISpeakerRepository _speakerRepository;
@@ -36,7 +36,8 @@ namespace ConferencePlanner.WinUi
         private int AttendeeTotalPage = 0;
 
         public MainPage(IConferenceRepository conferenceRepository, ICountryRepository countryRepository,
-            IAttendeeButtonsRepository attendeeButtonsRepository, ISpeakerRepository speakerRepository)
+            IAttendeeButtonsRepository attendeeButtonsRepository, ISpeakerRepository speakerRepository, ICountyRepository 
+            countyRepository)
         {
             _conferenceRepository = conferenceRepository;
 
@@ -45,6 +46,7 @@ namespace ConferencePlanner.WinUi
             _attendeeButtons = attendeeButtonsRepository;
 
             _speakerRepository = speakerRepository;
+            _countyRepository = countyRepository;
 
             InitializeComponent();
 
@@ -73,7 +75,7 @@ namespace ConferencePlanner.WinUi
 
         private void AddConferenceButton_Click(object sender, EventArgs e)
         {
-            var varAddConf = new AddConf(_conferenceRepository, _countryRepository, _speakerRepository);
+            var varAddConf = new AddConf(_conferenceRepository, _countryRepository, _countyRepository, _speakerRepository );
 
             TabControl.SelectedIndex = 1;
             varAddConf.ShowDialog();
@@ -627,19 +629,17 @@ namespace ConferencePlanner.WinUi
                 }
 
 
-            //if (e.ColumnIndex == AttendeeGridvw.Columns["speaker_name"].Index)
-            //{
-            //    string[] names = AttendeeGridvw.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString().Split(" ");
-            //    SpeakerModel speaker = this._speakerRepository.GetSpeakerByName(names);
+            if (e.ColumnIndex == AttendeeGridvw.Columns["Speaker"].Index)
+            {
+                string[] names = AttendeeGridvw.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString().Split(" ");
+                SpeakerModel speaker = this._speakerRepository.GetSpeakerByName(names);
 
-            //    var varSpeakerDetails = new SpeakerDetails(speaker);
-            //    varSpeakerDetails.ShowDialog();
+                var varSpeakerDetails = new SpeakerDetails(speaker);
+                varSpeakerDetails.ShowDialog();
+ 
 
-            //    //listBox1.Items.Add(speaker.Rating);
-            //    //listBox1.Items.Add(speaker.ImagePath);
-            //    //AttendeeGridvw.Rows[e.RowIndex].Cells[e.ColumnIndex].Value;
+            }
 
-            //}
             if (e.ColumnIndex == AttendeeGridvw.Columns["withdraw_column"].Index)
             {
                 int confid = (int)AttendeeGridvw.Rows[e.RowIndex].Cells[5].Value;
@@ -666,6 +666,10 @@ namespace ConferencePlanner.WinUi
 
         }
 
+        private void OrganizerDataGrid_Layout(object sender, LayoutEventArgs e)
+        {
+            this.OrganizerDataGrid.ReadOnly = true;
+        }
     }
 }
 

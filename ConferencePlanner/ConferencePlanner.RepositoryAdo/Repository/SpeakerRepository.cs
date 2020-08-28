@@ -63,13 +63,15 @@ namespace ConferencePlanner.Repository.Ado.Repository
 
             SqlDataReader sqlDataReader = sqlCommand.ExecuteReader();
             SpeakerModel speaker = new SpeakerModel();
-            sqlDataReader.Read();
+            if (sqlDataReader.Read())
+            {
+                speaker.FirstName = names[0];
+                speaker.LastName = names[1];
+                speaker.Nationality = sqlDataReader.GetString("Nationality");
+                speaker.Rating = (float)sqlDataReader.GetDouble("Rating");
+                speaker.ImagePath = sqlDataReader.GetString("ImagePath");
+            }
 
-            speaker.FirstName = names[0];
-            speaker.LastName = names[1];
-            speaker.Nationality = sqlDataReader.GetString("Nationality");
-            speaker.Rating= (float)sqlDataReader.GetDouble("Rating");
-            speaker.ImagePath = sqlDataReader.GetString("ImagePath");
 
             sqlDataReader.Close();
 
@@ -77,23 +79,27 @@ namespace ConferencePlanner.Repository.Ado.Repository
         }
         public SpeakerModel GetSpeakerById(int id)
         {
-            string commandText = "with ConferencesForPagination AS( SELECT ROW_NUMBER() OVER( ORDER BY ConferenceId) row_num, ConferenceId, ConferenceName, " +
-                "SpeakerName, ConferenceCategoryName, ConferenceTypeName, LocationName, ConferencePeriod " +
-                "FROM vwConferenceDetails " +
-                "where EmailOrganizer = @Email) select * from ConferencesForPagination " +
-                "where row_num >= @startIndex and row_num < @endIndex";
+            string commandText = "select FisrName, LastName, Nationality, Rating, ImagePath from Speaker where SpeakerId = @Id";
 
             SqlCommand sqlCommand = new SqlCommand(commandText, _sqlConnection);
-            //sqlCommand.Parameters.Add("@Email", SqlDbType.NVarChar);
-            //sqlCommand.Parameters["@Email"].Value = email;
-            //sqlCommand.Parameters.Add("@startIndex", SqlDbType.Int);
-            //sqlCommand.Parameters["@startIndex"].Value = startIndex;
-            //sqlCommand.Parameters.Add("@endIndex", SqlDbType.Int);
-            //sqlCommand.Parameters["@endIndex"].Value = endIndex;
+            sqlCommand.Parameters.Add("@Id", SqlDbType.Int);
+            sqlCommand.Parameters["@Id"].Value = id;
+           
 
             SqlDataReader sqlDataReader = sqlCommand.ExecuteReader();
 
             SpeakerModel speaker = new SpeakerModel();
+
+            if (sqlDataReader.Read())
+            {
+                speaker.FirstName = sqlDataReader.GetString("FirstName");
+                speaker.LastName = sqlDataReader.GetString("LastName");
+                speaker.Nationality = sqlDataReader.GetString("Nationality");
+                speaker.Rating = (float)sqlDataReader.GetDouble("Rating");
+                speaker.ImagePath = sqlDataReader.GetString("ImagePath");
+            }
+
+            
 
             sqlDataReader.Close();
 
