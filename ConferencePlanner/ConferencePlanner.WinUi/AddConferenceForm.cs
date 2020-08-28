@@ -12,6 +12,7 @@ using System.ComponentModel.Design;
 using System.Configuration;
 using System.Linq;
 using ConferencePlanner.Repository.Ado.Repository;
+using System.Transactions;
 
 namespace ConferencePlanner.WinUi
 {
@@ -19,18 +20,28 @@ namespace ConferencePlanner.WinUi
     {
 
         private readonly IConferenceRepository _conferenceRepository;
-
         private readonly ICountryRepository _countryRepository;
+        private readonly ICountyRepository _countyRepository;
         private readonly ISpeakerRepository _speakerRepository;
 
+        private int PageSize;
 
+        private int SelectedCountryId = 70;
 
-        private List<SpeakerModel> Speakers;
+        private BindingList<CountryModel> Countries;
+        private BindingList<CountyModel> Counties;
+        private BindingList<SpeakerModel> Speakers;
+        private int SpeakersTotalPages;
+        private int SpeakersCurrentPage;
+        private int UpdateSpeakerRow;
+        
+        //lista de ce facem
 
-        public AddConf(IConferenceRepository conferenceRepository, ICountryRepository  countryRepository, ISpeakerRepository speakerRepository)
+        public AddConf(IConferenceRepository conferenceRepository, ICountryRepository  countryRepository, ICountyRepository countyRepository, ISpeakerRepository speakerRepository)
         {
             _conferenceRepository = conferenceRepository;
             _countryRepository = countryRepository;
+            _countyRepository = countyRepository;
             _speakerRepository = speakerRepository;
             InitializeComponent();
 
@@ -38,7 +49,7 @@ namespace ConferencePlanner.WinUi
 
         public AddConf()
         {
-
+          
             InitializeComponent();
         }
         public AddConf(ConferenceModel conference, IConferenceRepository conferenceRepository, ICountryRepository countryRepository)
@@ -48,44 +59,49 @@ namespace ConferencePlanner.WinUi
 
             InitializeComponent();
 
+            //this.PopulateForm(conference);
+
+        }
+        private void PopulateForm(ConferenceModel conference)
+        {
             this.ConfName.Text = conference.ConferenceName;
-            
+
             string[] dates = conference.Period.Split(" - ");
-            //this.MonthCalendar.SetSelectionRange(DateTime.Parse(dates[0]), DateTime.Parse(dates[1]));
+            this.StardDatePicker.Value = DateTime.Parse(dates[0]);
+            this.EndDatePicker.Value = DateTime.Parse(dates[1]);
+
+            this.ConfName.Text = conference.ConferenceId.ToString();
+
+
+            int selectedCountryId = this._countryRepository.GetCountryIdByConferenceId(conference.ConferenceId);
+            int selectedRowId = this.SearchIdInDataGrid(selectedCountryId, "DictionaryCountryId", this.CountryListDataGridView);
+            this.ConfName.Text = selectedRowId.ToString();
+
+            if (selectedRowId > 0)
+            {
+                this.CountryListDataGridView.Rows[selectedRowId].Selected = true;
+            }
+
 
             string[] places = conference.Location.Split(", ");
 
             this.ConfEmailAddress.Text = conference.Location;
-
-            //this.CountryComboBox.Text = places[0];
-            //this.CountryListDataGridView.SelectR
-            //this.CountyComboBox.Text = places[1];
-            //this.CityComboBox.Text = places[2];
-
-
         }
 
-        private void AddConf_Load(object sender, EventArgs e)
+        private int SearchIdInDataGrid(int value, string col_name, DataGridView dgv)
         {
-            TabControlLocation.SelectedIndex = 0;
-
-            // dataGridViewCountryTab.ColumnCount = 2;
-            // dataGridViewCountryTab.Columns[0].Name = "Country Code";
-            // dataGridViewCountryTab.Columns[1].Name = "Country Name";
-
-            var countryList = _countryRepository.GetListCountry();
-            CountryListDataGridView.DataSource = countryList.ToList();
-            CountryListDataGridView.AutoGenerateColumns = false;
-
-            CountryListDataGridView.Columns["DictionaryCountryId"].Visible = false;
-            CountryListDataGridView.Columns["CountryCode"].HeaderText = "Country Code";
-            CountryListDataGridView.Columns["CountryName"].HeaderText = "Country Name";
-            CountryListDataGridView.DefaultCellStyle.ForeColor = Color.Black;
-
-          
-
-
+            int rowIndex = -1;
+            foreach (DataGridViewRow row in dgv.Rows)
+            {
+                if ((int)row.Cells[col_name].Value == value)
+                {
+                    rowIndex = row.Index;
+                    break;
+                }
+            }
+            return rowIndex;
         }
+
 
        
 
@@ -123,10 +139,7 @@ namespace ConferencePlanner.WinUi
         }
         
 
-        private void BackBtnCountyTab_Click(object sender, EventArgs e)
-        {
 
-        }
 
         //private void BackBtnCityTab_Click(object sender, EventArgs e)
         //{
@@ -194,7 +207,13 @@ namespace ConferencePlanner.WinUi
         }
 
         private void TabControlLocation_SelectedIndexChanged(object sender, EventArgs e)
-        {  
+        {
+            if (TabControlLocation.SelectedIndex == 1)
+            {
+                this.LoadCountyTab();
+                
+            }
+            
             if(TabControlLocation.SelectedTab.Name == "SpeakerTab")
             {
                 this.LoadSpeakersTab();
@@ -271,10 +290,144 @@ namespace ConferencePlanner.WinUi
                 SpeakerListDataGrid.Columns.Add(MainSpeaker);
             }
 
+            this.SpeakerListDataGrid.Columns["FirstName"].HeaderText = "First Name";
+            this.SpeakerListDataGrid.Columns["LastName"].HeaderText = "Last Name";
 
 
+
+
+
+        }
+
+        private void SpeakerListDataGrid_UserAddedRow(object sender, DataGridViewRowEventArgs e)
+        {
+
+        }
+
+        private void SpeakerListDataGrid_MouseClick(object sender, MouseEventArgs e)
+        {
+           // this.SpeakerListDataGrid.ContextMenuStrip.
+
+        }
+        private void AddConf_Load(object sender, EventArgs e)
+        {
+            TabControlLocation.SelectedIndex = 0;
+
+            LoadContryTab();
+
+
+        }
+
+        private void LoadContryTab()
+        {
+            CountryListDataGridView.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.Fill);
+            this.Countries = _countryRepository.GetCountriesList();
+            CountryListDataGridView.DefaultCellStyle.ForeColor = Color.Black;
+            CountryListDataGridView.DataSource = this.Countries;
+
+        }
+
+        private void CountryListDataGridView_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+            if(CountryListDataGridView.Columns.Contains("DictionaryCountryId") && CountryListDataGridView.Columns["DictionaryCountryId"].Visible)
+            {
+                CountryListDataGridView.Columns["DictionaryCountryId"].Visible = false;
+            }
+            CountryListDataGridView.Columns["CountryCode"].HeaderText = "Country Code";
+            CountryListDataGridView.Columns["CountryName"].HeaderText = "Country Name";
             
 
         }
+
+        private void tableLayoutPanel3_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void AddUpdateMessage(string fName, string lName)
+        {
+            this.SpeakerUserMessagesBox.ForeColor = Color.MediumSeaGreen;
+            string sName = fName +" "+ lName;
+            this.SpeakerUserMessagesBox.Text = "You are now editing speaker " + sName + "'s informations. Press Enter to Save.";
+            this.SpeakerUserMessagesBox.Visible = true;
+            this.SpeakerSaveButton.Visible = true;
+        }
+
+        private void SpeakerListDataGrid_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
+        {
+            if (SpeakerUserMessagesBox.Visible == false)
+            {
+                this.UpdateSpeakerRow = e.RowIndex;
+                string fName = this.SpeakerListDataGrid.Rows[e.RowIndex].Cells["FirstName"].Value.ToString();
+                string lName = this.SpeakerListDataGrid.Rows[e.RowIndex].Cells["LastName"].Value.ToString();
+                this.AddUpdateMessage(fName, lName);
+            }
+            //else ()
+            
+
+
+
+
+        }
+        System.Windows.Forms.Timer timerHideLabel = new System.Windows.Forms.Timer();
+        private void DisplayMessage()
+        {
+
+            timerHideLabel.Interval = 3000; // Five seconds.
+            timerHideLabel.Tick += TimerHideLabel_Tick;
+            timerHideLabel.Start();
+        }
+        private void TimerHideLabel_Tick(object sender, EventArgs e)
+        {
+            this.SpeakerUserMessagesBox.Visible = false;
+            timerHideLabel.Stop();
+        }
+
+        private SpeakerModel GetSpeakerToUpdate()
+        {
+            SpeakerModel speaker = new SpeakerModel();
+            speaker.FirstName = this.SpeakerListDataGrid.Rows[this.UpdateSpeakerRow].Cells["FirstName"].Value.ToString();
+            speaker.LastName = this.SpeakerListDataGrid.Rows[this.UpdateSpeakerRow].Cells["LastName"].Value.ToString();
+            speaker.Nationality = this.SpeakerListDataGrid.Rows[this.UpdateSpeakerRow].Cells["Nationality"].Value.ToString();
+            speaker.Rating = (float) this.SpeakerListDataGrid.Rows[this.UpdateSpeakerRow].Cells["Rating"].Value;
+            speaker.SpeakerId = (int)this.SpeakerListDataGrid.Rows[this.UpdateSpeakerRow].Cells["SpeakerId"].Value;
+
+            return speaker;
+        }
+
+        private void SpeakerSaveButton_Click(object sender, EventArgs e)
+        {
+            _speakerRepository.UpdateSpeaker(GetSpeakerToUpdate());
+            this.SpeakerUserMessagesBox.Text = "Succesfully modified speaker :)";
+
+            DisplayMessage();
+            this.SpeakerSaveButton.Visible = false;
+        }  
+        private void LoadCountyTab()
+        {
+            CountiesListGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            CountiesListGridView.AllowUserToOrderColumns = true;
+            this.Counties = _countyRepository.GetCountyListBind(this.SelectedCountryId);
+            CountiesListGridView.DefaultCellStyle.ForeColor = Color.Black;
+            CountiesListGridView.DataSource = this.Counties;
+            
+
+        }
+
+        private void CountiesListGridView_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+            if (CountiesListGridView.Columns.Contains("CountyId") && CountiesListGridView.Columns["CountyId"].Visible)
+            {
+                CountiesListGridView.Columns["CountyId"].Visible = false;
+            }
+            if (CountiesListGridView.Columns.Contains("CountryId") && CountiesListGridView.Columns["CountryId"].Visible)
+            {
+                CountiesListGridView.Columns["CountryId"].Visible = false;
+            }
+            CountiesListGridView.Columns["CountyName"].HeaderText = "County Name";
+            
+        }
+
+        
     }
 }

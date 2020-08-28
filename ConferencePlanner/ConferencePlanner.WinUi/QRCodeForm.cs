@@ -37,7 +37,15 @@ namespace ConferencePlanner.WinUi
                         smtp.UseDefaultCredentials = false;
                         smtp.Credentials = new NetworkCredential("testare.aplicatie.ts@gmail.com", "testing1.");
                         smtp.EnableSsl = true;
+                    try
+                    {
                         smtp.Send(mail);
+                    }
+                    catch (Exception ex)
+                    {
+
+                    }
+                    //catch (System.Net.Email)
                     }
                 }
                 Visible = false;

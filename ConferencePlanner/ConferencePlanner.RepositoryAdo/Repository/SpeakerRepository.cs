@@ -2,6 +2,7 @@
 using ConferencePlanner.Abstraction.Repository;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
 using System.Security.Cryptography.X509Certificates;
@@ -18,14 +19,14 @@ namespace ConferencePlanner.Repository.Ado.Repository
             _sqlConnection = sqlConnection;
         }
 
-        public List<SpeakerModel> GetAllSpeakers()
+        public BindingList<SpeakerModel> GetAllSpeakers()
         {
             string commandText = "select SpeakerId, FirstName, LastName, Nationality, Rating from Speaker";
 
             SqlCommand sqlCommand = new SqlCommand(commandText, _sqlConnection);
 
             SqlDataReader sqlDataReader = sqlCommand.ExecuteReader();
-            List<SpeakerModel> speakers = new List<SpeakerModel>();
+            BindingList<SpeakerModel> speakers = new BindingList<SpeakerModel>();
 
             if (sqlDataReader.HasRows)
             {
@@ -62,13 +63,15 @@ namespace ConferencePlanner.Repository.Ado.Repository
 
             SqlDataReader sqlDataReader = sqlCommand.ExecuteReader();
             SpeakerModel speaker = new SpeakerModel();
-            sqlDataReader.Read();
+            if (sqlDataReader.Read())
+            {
+                speaker.FirstName = names[0];
+                speaker.LastName = names[1];
+                speaker.Nationality = sqlDataReader.GetString("Nationality");
+                speaker.Rating = (float)sqlDataReader.GetDouble("Rating");
+                speaker.ImagePath = sqlDataReader.GetString("ImagePath");
+            }
 
-            speaker.FirstName = names[0];
-            speaker.LastName = names[1];
-            speaker.Nationality = sqlDataReader.GetString("Nationality");
-            speaker.Rating= (float)sqlDataReader.GetDouble("Rating");
-            speaker.ImagePath = sqlDataReader.GetString("ImagePath");
 
             sqlDataReader.Close();
 
@@ -76,35 +79,53 @@ namespace ConferencePlanner.Repository.Ado.Repository
         }
         public SpeakerModel GetSpeakerById(int id)
         {
-            string commandText = "with ConferencesForPagination AS( SELECT ROW_NUMBER() OVER( ORDER BY ConferenceId) row_num, ConferenceId, ConferenceName, " +
-                "SpeakerName, ConferenceCategoryName, ConferenceTypeName, LocationName, ConferencePeriod " +
-                "FROM vwConferenceDetails " +
-                "where EmailOrganizer = @Email) select * from ConferencesForPagination " +
-                "where row_num >= @startIndex and row_num < @endIndex";
+            string commandText = "select FisrName, LastName, Nationality, Rating, ImagePath from Speaker where SpeakerId = @Id";
 
             SqlCommand sqlCommand = new SqlCommand(commandText, _sqlConnection);
-            //sqlCommand.Parameters.Add("@Email", SqlDbType.NVarChar);
-            //sqlCommand.Parameters["@Email"].Value = email;
-            //sqlCommand.Parameters.Add("@startIndex", SqlDbType.Int);
-            //sqlCommand.Parameters["@startIndex"].Value = startIndex;
-            //sqlCommand.Parameters.Add("@endIndex", SqlDbType.Int);
-            //sqlCommand.Parameters["@endIndex"].Value = endIndex;
+            sqlCommand.Parameters.Add("@Id", SqlDbType.Int);
+            sqlCommand.Parameters["@Id"].Value = id;
+           
 
             SqlDataReader sqlDataReader = sqlCommand.ExecuteReader();
 
             SpeakerModel speaker = new SpeakerModel();
+
+            if (sqlDataReader.Read())
+            {
+                speaker.FirstName = sqlDataReader.GetString("FirstName");
+                speaker.LastName = sqlDataReader.GetString("LastName");
+                speaker.Nationality = sqlDataReader.GetString("Nationality");
+                speaker.Rating = (float)sqlDataReader.GetDouble("Rating");
+                speaker.ImagePath = sqlDataReader.GetString("ImagePath");
+            }
+
+            
 
             sqlDataReader.Close();
 
             return speaker;
         }
 
+        public void UpdateSpeaker(SpeakerModel speaker)
+        {
+            string commandText = "update Speaker " +
+                "set FirstName = @FName, LastName = @LName, Nationality = @Nationality, Rating = @Rating " +
+                "where SpeakerId = @Id";
 
+            SqlCommand sqlCommand = new SqlCommand(commandText, _sqlConnection);
+            sqlCommand.Parameters.Add("@FName", SqlDbType.NVarChar);
+            sqlCommand.Parameters["@FName"].Value = speaker.FirstName;
+            sqlCommand.Parameters.Add("@LName", SqlDbType.NVarChar);
+            sqlCommand.Parameters["@LName"].Value = speaker.LastName;
+            sqlCommand.Parameters.Add("@Nationality", SqlDbType.NVarChar);
+            sqlCommand.Parameters["@Nationality"].Value = speaker.Nationality;
+            sqlCommand.Parameters.Add("@Id", SqlDbType.Int);
+            sqlCommand.Parameters["@Id"].Value = speaker.SpeakerId;
+            sqlCommand.Parameters.Add("@Rating", SqlDbType.Float);
+            sqlCommand.Parameters["@Rating"].Value = speaker.Rating;
 
-
-
-
-
+            sqlCommand.ExecuteNonQuery();
+        }
     }
     }
 

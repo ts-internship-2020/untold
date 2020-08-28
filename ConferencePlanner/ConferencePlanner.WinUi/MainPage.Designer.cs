@@ -47,6 +47,7 @@ namespace ConferencePlanner.WinUi
             this.StartDateLabel = new System.Windows.Forms.Label();
             this.LeftArrowPagButton = new System.Windows.Forms.Button();
             this.RightArrowPagButton = new System.Windows.Forms.Button();
+            this.button_woc1 = new ePOSOne.btnProduct.Button_WOC();
             this.TabAttendee.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.AttendeeGridvw)).BeginInit();
             this.TabOrganizer.SuspendLayout();
@@ -72,6 +73,9 @@ namespace ConferencePlanner.WinUi
             // 
             // AttendeeGridvw
             // 
+            this.AttendeeGridvw.AllowUserToAddRows = false;
+            this.AttendeeGridvw.AllowUserToDeleteRows = false;
+            this.AttendeeGridvw.AllowUserToResizeRows = false;
             this.AttendeeGridvw.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
@@ -81,6 +85,7 @@ namespace ConferencePlanner.WinUi
             this.AttendeeGridvw.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.AttendeeGridvw.Location = new System.Drawing.Point(3, 3);
             this.AttendeeGridvw.Name = "AttendeeGridvw";
+            this.AttendeeGridvw.ReadOnly = true;
             this.AttendeeGridvw.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
             this.AttendeeGridvw.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
             this.AttendeeGridvw.Size = new System.Drawing.Size(1315, 504);
@@ -129,6 +134,9 @@ namespace ConferencePlanner.WinUi
             // 
             // NoConferenceLabel
             // 
+            this.NoConferenceLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.NoConferenceLabel.AutoSize = true;
             this.NoConferenceLabel.Font = new System.Drawing.Font("Segoe UI", 30F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.NoConferenceLabel.ForeColor = System.Drawing.SystemColors.ControlDark;
@@ -141,15 +149,21 @@ namespace ConferencePlanner.WinUi
             // 
             // OrganizerDataGrid
             // 
-            this.OrganizerDataGrid.AllowUserToOrderColumns = true;
+            this.OrganizerDataGrid.AllowUserToAddRows = false;
+            this.OrganizerDataGrid.AllowUserToDeleteRows = false;
+            this.OrganizerDataGrid.AllowUserToResizeRows = false;
+            this.OrganizerDataGrid.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.OrganizerDataGrid.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.OrganizerDataGrid.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCellsExceptHeaders;
             this.OrganizerDataGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.OrganizerDataGrid.Dock = System.Windows.Forms.DockStyle.Fill;
             this.OrganizerDataGrid.Location = new System.Drawing.Point(3, 3);
             this.OrganizerDataGrid.Name = "OrganizerDataGrid";
+            this.OrganizerDataGrid.ReadOnly = true;
             this.OrganizerDataGrid.Size = new System.Drawing.Size(1315, 504);
             this.OrganizerDataGrid.TabIndex = 0;
             this.OrganizerDataGrid.Text = "organizerDataGrid";
             this.OrganizerDataGrid.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.OrganizerDataGrid_DataBindingComplete);
+            this.OrganizerDataGrid.Layout += new System.Windows.Forms.LayoutEventHandler(this.OrganizerDataGrid_Layout);
             // 
             // TabControl
             // 
@@ -232,12 +246,31 @@ namespace ConferencePlanner.WinUi
             this.RightArrowPagButton.UseVisualStyleBackColor = false;
             this.RightArrowPagButton.MouseClick += new System.Windows.Forms.MouseEventHandler(this.RightArrowPagButton_MouseClick);
             // 
+            // button_woc1
+            // 
+            this.button_woc1.BackColor = System.Drawing.Color.Transparent;
+            this.button_woc1.BorderColor = System.Drawing.Color.Red;
+            this.button_woc1.ButtonColor = System.Drawing.Color.Red;
+            this.button_woc1.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
+            this.button_woc1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button_woc1.Location = new System.Drawing.Point(634, 600);
+            this.button_woc1.Name = "button_woc1";
+            this.button_woc1.OnHoverBorderColor = System.Drawing.Color.Red;
+            this.button_woc1.OnHoverButtonColor = System.Drawing.Color.Transparent;
+            this.button_woc1.OnHoverTextColor = System.Drawing.Color.Snow;
+            this.button_woc1.Size = new System.Drawing.Size(75, 23);
+            this.button_woc1.TabIndex = 9;
+            this.button_woc1.Text = "button_woc1";
+            this.button_woc1.TextColor = System.Drawing.Color.White;
+            this.button_woc1.UseVisualStyleBackColor = false;
+            // 
             // MainPage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.ClientSize = new System.Drawing.Size(1353, 646);
+            this.Controls.Add(this.button_woc1);
             this.Controls.Add(this.RightArrowPagButton);
             this.Controls.Add(this.LeftArrowPagButton);
             this.Controls.Add(this.EndDatePicker);
@@ -287,5 +320,6 @@ namespace ConferencePlanner.WinUi
 
         private Button LeftArrowPagButton;
         private Button RightArrowPagButton;
+        private ePOSOne.btnProduct.Button_WOC button_woc1;
     }
 }

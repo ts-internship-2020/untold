@@ -1,6 +1,7 @@
 ﻿using ConferencePlanner.Abstraction.Model;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -11,8 +12,9 @@ namespace ConferencePlanner.Abstraction.Repository
         SpeakerModel GetSpeakerById(int id);
         SpeakerModel GetSpeakerByName(string[] names);
 
-        List<SpeakerModel> GetAllSpeakers();
+        BindingList<SpeakerModel> GetAllSpeakers();
 
+        void UpdateSpeaker(SpeakerModel speaker);
         
 
     }
