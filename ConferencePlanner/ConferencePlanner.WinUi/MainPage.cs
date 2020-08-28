@@ -585,6 +585,10 @@ namespace ConferencePlanner.WinUi
         }
         private void AttendeeGridvw_CellClick(object sender, DataGridViewCellEventArgs e)
         {
+            if (e.ColumnIndex == 0 || e.ColumnIndex == 1 || e.ColumnIndex == 2)
+            {
+                return;
+            }
             
             if (e.ColumnIndex == AttendeeGridvw.Columns["attend_column"].Index)
             {
@@ -599,7 +603,7 @@ namespace ConferencePlanner.WinUi
                     return;
                 }
 
-            
+
             //if (e.ColumnIndex == AttendeeGridvw.Columns["speaker_name"].Index)
             //{
             //    string[] names = AttendeeGridvw.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString().Split(" ");
@@ -613,14 +617,12 @@ namespace ConferencePlanner.WinUi
             //    //AttendeeGridvw.Rows[e.RowIndex].Cells[e.ColumnIndex].Value;
 
             //}
-
             if (e.ColumnIndex == AttendeeGridvw.Columns["withdraw_column"].Index)
             {
                 int confid = (int)AttendeeGridvw.Rows[e.RowIndex].Cells[5].Value;
                 Withdraw_Click(confid);
                 
             }
-
             if (e.ColumnIndex == AttendeeGridvw.Columns["join_column"].Index)
             {
                 int confid = (int)AttendeeGridvw.Rows[e.RowIndex].Cells[5].Value;
