@@ -588,6 +588,7 @@ namespace ConferencePlanner.WinUi
             {
                 return;
             }
+            //-
             
             if (e.ColumnIndex == AttendeeGridvw.Columns["attend_column"].Index)
             {
