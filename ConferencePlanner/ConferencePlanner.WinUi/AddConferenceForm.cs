@@ -321,7 +321,8 @@ namespace ConferencePlanner.WinUi
 
         private void LoadContryTab()
         {
-            CountryListDataGridView.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.Fill);
+            CountryListDataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            CountryListDataGridView.AllowUserToOrderColumns = true;
             this.Countries = _countryRepository.GetCountriesList();
             CountryListDataGridView.DefaultCellStyle.ForeColor = Color.Black;
             CountryListDataGridView.DataSource = this.Countries;
@@ -353,14 +354,15 @@ namespace ConferencePlanner.WinUi
 
         private void CountiesListGridView_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
-            if (CountiesListGridView.Columns.Contains("DictionaryCountyId") && CountiesListGridView.Columns["DictionaryCountyId"].Visible)
+            if (CountiesListGridView.Columns.Contains("CountyId") && CountiesListGridView.Columns["CountyId"].Visible)
             {
-                CountiesListGridView.Columns["DictionaryCountyId"].Visible = false;
+                CountiesListGridView.Columns["CountyId"].Visible = false;
             }
             if (CountiesListGridView.Columns.Contains("CountryId") && CountiesListGridView.Columns["CountryId"].Visible)
             {
                 CountiesListGridView.Columns["CountryId"].Visible = false;
             }
+
             CountiesListGridView.Columns["CountyName"].HeaderText = "County Name";
             
         }
