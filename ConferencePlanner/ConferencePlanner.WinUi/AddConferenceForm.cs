@@ -12,6 +12,7 @@ using System.ComponentModel.Design;
 using System.Configuration;
 using System.Linq;
 using ConferencePlanner.Repository.Ado.Repository;
+using System.Transactions;
 
 namespace ConferencePlanner.WinUi
 {
@@ -32,6 +33,7 @@ namespace ConferencePlanner.WinUi
         private BindingList<SpeakerModel> Speakers;
         private int SpeakersTotalPages;
         private int SpeakersCurrentPage;
+        private int UpdateSpeakerRow;
         
         //lista de ce facem
 
@@ -262,9 +264,6 @@ namespace ConferencePlanner.WinUi
         }
 
 
-
-
-
         private void LoadSpeakersTab()
         {
             this.Speakers = _speakerRepository.GetAllSpeakers();
@@ -341,6 +340,70 @@ namespace ConferencePlanner.WinUi
 
         }
 
+        private void tableLayoutPanel3_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void AddUpdateMessage(string fName, string lName)
+        {
+            this.SpeakerUserMessagesBox.ForeColor = Color.MediumSeaGreen;
+            string sName = fName +" "+ lName;
+            this.SpeakerUserMessagesBox.Text = "You are now editing speaker " + sName + "'s informations. Press Enter to Save.";
+            this.SpeakerUserMessagesBox.Visible = true;
+            this.SpeakerSaveButton.Visible = true;
+        }
+
+        private void SpeakerListDataGrid_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
+        {
+            if (SpeakerUserMessagesBox.Visible == false)
+            {
+                this.UpdateSpeakerRow = e.RowIndex;
+                string fName = this.SpeakerListDataGrid.Rows[e.RowIndex].Cells["FirstName"].Value.ToString();
+                string lName = this.SpeakerListDataGrid.Rows[e.RowIndex].Cells["LastName"].Value.ToString();
+                this.AddUpdateMessage(fName, lName);
+            }
+            //else ()
+            
+
+
+
+
+        }
+        System.Windows.Forms.Timer timerHideLabel = new System.Windows.Forms.Timer();
+        private void DisplayMessage()
+        {
+
+            timerHideLabel.Interval = 3000; // Five seconds.
+            timerHideLabel.Tick += TimerHideLabel_Tick;
+            timerHideLabel.Start();
+        }
+        private void TimerHideLabel_Tick(object sender, EventArgs e)
+        {
+            this.SpeakerUserMessagesBox.Visible = false;
+            timerHideLabel.Stop();
+        }
+
+        private SpeakerModel GetSpeakerToUpdate()
+        {
+            SpeakerModel speaker = new SpeakerModel();
+            speaker.FirstName = this.SpeakerListDataGrid.Rows[this.UpdateSpeakerRow].Cells["FirstName"].Value.ToString();
+            speaker.LastName = this.SpeakerListDataGrid.Rows[this.UpdateSpeakerRow].Cells["LastName"].Value.ToString();
+            speaker.Nationality = this.SpeakerListDataGrid.Rows[this.UpdateSpeakerRow].Cells["Nationality"].Value.ToString();
+            speaker.Rating = (float) this.SpeakerListDataGrid.Rows[this.UpdateSpeakerRow].Cells["Rating"].Value;
+            speaker.SpeakerId = (int)this.SpeakerListDataGrid.Rows[this.UpdateSpeakerRow].Cells["SpeakerId"].Value;
+
+            return speaker;
+        }
+
+        private void SpeakerSaveButton_Click(object sender, EventArgs e)
+        {
+            _speakerRepository.UpdateSpeaker(GetSpeakerToUpdate());
+            this.SpeakerUserMessagesBox.Text = "Succesfully modified speaker :)";
+
+            DisplayMessage();
+            this.SpeakerSaveButton.Visible = false;
+        }  
         private void LoadCountyTab()
         {
             CountiesListGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;

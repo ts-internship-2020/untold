@@ -32,6 +32,7 @@ namespace ConferencePlanner.Repository.Ado.Repository
             sqlCommand.Parameters["@StatusId"].Value = statusId;
             sqlCommand.Parameters.Add("@EmailCode", SqlDbType.NVarChar, 4000);
             sqlCommand.Parameters["@EmailCode"].Value = barcode;
+            //try catch
             sqlCommand.ExecuteNonQuery();
         }
 
