@@ -1,6 +1,7 @@
 ﻿using ConferencePlanner.Abstraction.Model;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text;
 
 namespace ConferencePlanner.Abstraction.Repository
@@ -10,5 +11,6 @@ namespace ConferencePlanner.Abstraction.Repository
         List<CountryModel> GetListCountry();
 
         int GetCountryIdByConferenceId(int id);
+        BindingList<CountryModel> GetCountriesList();
     }
 }
