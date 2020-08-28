@@ -15,6 +15,7 @@ using ConferencePlanner.Repository.Ado.Repository;
 using System.Transactions;
 using Tulpep.NotificationWindow;
 
+
 namespace ConferencePlanner.WinUi
 {
     public partial class AddConf : Form
@@ -86,7 +87,6 @@ namespace ConferencePlanner.WinUi
 
             string[] places = conference.Location.Split(", ");
 
-            this.ConfEmailAddress.Text = conference.Location;
         }
 
         private int SearchIdInDataGrid(int value, string col_name, DataGridView dgv)
@@ -120,15 +120,7 @@ namespace ConferencePlanner.WinUi
                 ErrorName.SetError(ConfName, "Please enter a value in the conference name fild!");
                 return;
             }
-            else if(ConfEmailAddress.Text == string.Empty)
-            {
-                ErrorAddress.SetError(ConfEmailAddress, "Please enter a value in the conference address fild!");
-                return;
-            }
-            else
-            TabControlLocation.SelectedIndex = 1;
-            ErrorName.Clear();
-            ErrorAddress.Clear();
+           
 
         }
 
@@ -254,7 +246,6 @@ namespace ConferencePlanner.WinUi
         {
 
             ConfName.Text = string.Empty;
-            ConfEmailAddress.Text = string.Empty;
             StardDatePicker.Value = DateTime.Today;
             EndDatePicker.Value = DateTime.Today;
         }
@@ -268,7 +259,7 @@ namespace ConferencePlanner.WinUi
         private void LoadSpeakersTab()
         {
             this.Speakers = _speakerRepository.GetAllSpeakers();
-            SpeakerListDataGrid.DefaultCellStyle.ForeColor = Color.Black;
+            SpeakerListDataGrid.DefaultCellStyle.ForeColor = Color.FromArgb(53, 56, 49);
             SpeakerListDataGrid.DataSource = this.Speakers;
         }
 

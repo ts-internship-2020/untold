@@ -34,9 +34,11 @@ namespace ConferencePlanner.WinUi
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AddConf));
             this.button1 = new System.Windows.Forms.Button();
             this.ErrorName = new System.Windows.Forms.ErrorProvider(this.components);
-            this.ErrorAddress = new System.Windows.Forms.ErrorProvider(this.components);
             this.TabControlLocation = new System.Windows.Forms.TabControl();
             this.Country = new System.Windows.Forms.TabPage();
+            this.SaveCountryLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
+            this.textBox4 = new System.Windows.Forms.TextBox();
+            this.button4 = new System.Windows.Forms.Button();
             this.CountriesLayoutPanelBtns = new System.Windows.Forms.TableLayoutPanel();
             this.CountriesFirstPageBtn = new System.Windows.Forms.Button();
             this.CountriesBackBtn = new System.Windows.Forms.Button();
@@ -45,6 +47,9 @@ namespace ConferencePlanner.WinUi
             this.CountriesPages = new System.Windows.Forms.TextBox();
             this.CountryListDataGridView = new System.Windows.Forms.DataGridView();
             this.County = new System.Windows.Forms.TabPage();
+            this.CountySaveLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
+            this.textBox5 = new System.Windows.Forms.TextBox();
+            this.button5 = new System.Windows.Forms.Button();
             this.CountieLayoutPanelBtns = new System.Windows.Forms.TableLayoutPanel();
             this.CountiesLastPage = new System.Windows.Forms.Button();
             this.CountiesBackBtn = new System.Windows.Forms.Button();
@@ -53,6 +58,9 @@ namespace ConferencePlanner.WinUi
             this.CountiesPages = new System.Windows.Forms.TextBox();
             this.CountiesListGridView = new System.Windows.Forms.DataGridView();
             this.City = new System.Windows.Forms.TabPage();
+            this.CitySaveLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
+            this.textBox6 = new System.Windows.Forms.TextBox();
+            this.button6 = new System.Windows.Forms.Button();
             this.CitiesLayoutPanelBtns = new System.Windows.Forms.TableLayoutPanel();
             this.CitiesFirstPage = new System.Windows.Forms.Button();
             this.CitiesBackBtn = new System.Windows.Forms.Button();
@@ -61,13 +69,16 @@ namespace ConferencePlanner.WinUi
             this.CitiesPages = new System.Windows.Forms.TextBox();
             this.dataGridView6 = new System.Windows.Forms.DataGridView();
             this.TypeTab = new System.Windows.Forms.TabPage();
+            this.TypeSaveLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
+            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.button3 = new System.Windows.Forms.Button();
             this.TypesLayoutPanelBtn = new System.Windows.Forms.TableLayoutPanel();
             this.TypesFirstPage = new System.Windows.Forms.Button();
             this.TypesBackBtn = new System.Windows.Forms.Button();
             this.TypesNextBtn = new System.Windows.Forms.Button();
             this.TypesLastPage = new System.Windows.Forms.Button();
             this.TypesPages = new System.Windows.Forms.TextBox();
-            this.dataGridView3 = new System.Windows.Forms.DataGridView();
+            this.TypeDataGrid = new System.Windows.Forms.DataGridView();
             this.SpeakerTab = new System.Windows.Forms.TabPage();
             this.tableLayoutSpeaker = new System.Windows.Forms.TableLayoutPanel();
             this.SpeakerUserMessagesBox = new System.Windows.Forms.TextBox();
@@ -80,6 +91,9 @@ namespace ConferencePlanner.WinUi
             this.SpeakersLastPage = new System.Windows.Forms.Button();
             this.SpeakersPages = new System.Windows.Forms.TextBox();
             this.CategoryTab = new System.Windows.Forms.TabPage();
+            this.CategorySaveLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
+            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.button2 = new System.Windows.Forms.Button();
             this.CategoriesLayoutPanelBtn = new System.Windows.Forms.TableLayoutPanel();
             this.CategoriesFirstPage = new System.Windows.Forms.Button();
             this.CategorieBackBtn = new System.Windows.Forms.Button();
@@ -91,9 +105,7 @@ namespace ConferencePlanner.WinUi
             this.ConfName = new System.Windows.Forms.TextBox();
             this.EndDatelabel = new System.Windows.Forms.Label();
             this.StartDateLabel = new System.Windows.Forms.Label();
-            this.EmailAddress = new System.Windows.Forms.Label();
             this.ConferenceNameLabel = new System.Windows.Forms.Label();
-            this.ConfEmailAddress = new System.Windows.Forms.TextBox();
             this.StardDatePicker = new System.Windows.Forms.DateTimePicker();
             this.EndDatePicker = new System.Windows.Forms.DateTimePicker();
             this.StartHour = new System.Windows.Forms.DateTimePicker();
@@ -105,25 +117,29 @@ namespace ConferencePlanner.WinUi
             this.BackTabBtn = new System.Windows.Forms.Button();
             this.SaveNew = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.ErrorName)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ErrorAddress)).BeginInit();
             this.TabControlLocation.SuspendLayout();
             this.Country.SuspendLayout();
+            this.SaveCountryLayoutPanel.SuspendLayout();
             this.CountriesLayoutPanelBtns.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.CountryListDataGridView)).BeginInit();
             this.County.SuspendLayout();
+            this.CountySaveLayoutPanel.SuspendLayout();
             this.CountieLayoutPanelBtns.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.CountiesListGridView)).BeginInit();
             this.City.SuspendLayout();
+            this.CitySaveLayoutPanel.SuspendLayout();
             this.CitiesLayoutPanelBtns.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView6)).BeginInit();
             this.TypeTab.SuspendLayout();
+            this.TypeSaveLayoutPanel.SuspendLayout();
             this.TypesLayoutPanelBtn.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.TypeDataGrid)).BeginInit();
             this.SpeakerTab.SuspendLayout();
             this.tableLayoutSpeaker.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.SpeakerListDataGrid)).BeginInit();
             this.SpeakersLayerPanelBtns.SuspendLayout();
             this.CategoryTab.SuspendLayout();
+            this.CategorySaveLayoutPanel.SuspendLayout();
             this.CategoriesLayoutPanelBtn.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView5)).BeginInit();
             this.tableLayoutPanel2.SuspendLayout();
@@ -144,10 +160,6 @@ namespace ConferencePlanner.WinUi
             // 
             this.ErrorName.ContainerControl = this;
             // 
-            // ErrorAddress
-            // 
-            this.ErrorAddress.ContainerControl = this;
-            // 
             // TabControlLocation
             // 
             this.TabControlLocation.Anchor = System.Windows.Forms.AnchorStyles.None;
@@ -157,7 +169,8 @@ namespace ConferencePlanner.WinUi
             this.TabControlLocation.Controls.Add(this.TypeTab);
             this.TabControlLocation.Controls.Add(this.SpeakerTab);
             this.TabControlLocation.Controls.Add(this.CategoryTab);
-            this.TabControlLocation.Location = new System.Drawing.Point(111, 204);
+            this.TabControlLocation.Font = new System.Drawing.Font("Nirmala UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.TabControlLocation.Location = new System.Drawing.Point(102, 147);
             this.TabControlLocation.Margin = new System.Windows.Forms.Padding(3, 3, 3, 4);
             this.TabControlLocation.Name = "TabControlLocation";
             this.TabControlLocation.SelectedIndex = 6;
@@ -167,15 +180,51 @@ namespace ConferencePlanner.WinUi
             // 
             // Country
             // 
+            this.Country.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(176)))), ((int)(((byte)(218)))), ((int)(((byte)(241)))));
+            this.Country.Controls.Add(this.SaveCountryLayoutPanel);
             this.Country.Controls.Add(this.CountriesLayoutPanelBtns);
             this.Country.Controls.Add(this.CountryListDataGridView);
-            this.Country.Location = new System.Drawing.Point(4, 29);
+            this.Country.Location = new System.Drawing.Point(4, 30);
             this.Country.Name = "Country";
             this.Country.Padding = new System.Windows.Forms.Padding(3);
-            this.Country.Size = new System.Drawing.Size(996, 281);
+            this.Country.Size = new System.Drawing.Size(1014, 340);
             this.Country.TabIndex = 0;
             this.Country.Text = "Country";
-            this.Country.UseVisualStyleBackColor = true;
+            // 
+            // SaveCountryLayoutPanel
+            // 
+            this.SaveCountryLayoutPanel.ColumnCount = 2;
+            this.SaveCountryLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 65.67461F));
+            this.SaveCountryLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 34.3254F));
+            this.SaveCountryLayoutPanel.Controls.Add(this.textBox4, 0, 0);
+            this.SaveCountryLayoutPanel.Controls.Add(this.button4, 1, 0);
+            this.SaveCountryLayoutPanel.Dock = System.Windows.Forms.DockStyle.Top;
+            this.SaveCountryLayoutPanel.Location = new System.Drawing.Point(3, 3);
+            this.SaveCountryLayoutPanel.Name = "SaveCountryLayoutPanel";
+            this.SaveCountryLayoutPanel.RowCount = 1;
+            this.SaveCountryLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 207F));
+            this.SaveCountryLayoutPanel.Size = new System.Drawing.Size(1008, 37);
+            this.SaveCountryLayoutPanel.TabIndex = 3;
+            // 
+            // textBox4
+            // 
+            this.textBox4.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.textBox4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.textBox4.Location = new System.Drawing.Point(3, 3);
+            this.textBox4.Name = "textBox4";
+            this.textBox4.Size = new System.Drawing.Size(655, 22);
+            this.textBox4.TabIndex = 0;
+            this.textBox4.Visible = false;
+            // 
+            // button4
+            // 
+            this.button4.Location = new System.Drawing.Point(664, 3);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(79, 31);
+            this.button4.TabIndex = 1;
+            this.button4.Text = "Save";
+            this.button4.UseVisualStyleBackColor = true;
+            this.button4.Visible = false;
             // 
             // CountriesLayoutPanelBtns
             // 
@@ -184,18 +233,18 @@ namespace ConferencePlanner.WinUi
             this.CountriesLayoutPanelBtns.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 15.78947F));
             this.CountriesLayoutPanelBtns.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 97F));
             this.CountriesLayoutPanelBtns.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 76F));
-            this.CountriesLayoutPanelBtns.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 390F));
+            this.CountriesLayoutPanelBtns.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 396F));
             this.CountriesLayoutPanelBtns.Controls.Add(this.CountriesFirstPageBtn, 0, 0);
             this.CountriesLayoutPanelBtns.Controls.Add(this.CountriesBackBtn, 1, 0);
             this.CountriesLayoutPanelBtns.Controls.Add(this.CountriesNextBtn, 3, 0);
             this.CountriesLayoutPanelBtns.Controls.Add(this.CountriesLastPage, 4, 0);
             this.CountriesLayoutPanelBtns.Controls.Add(this.CountriesPages, 2, 0);
             this.CountriesLayoutPanelBtns.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.CountriesLayoutPanelBtns.Location = new System.Drawing.Point(3, 246);
+            this.CountriesLayoutPanelBtns.Location = new System.Drawing.Point(3, 302);
             this.CountriesLayoutPanelBtns.Name = "CountriesLayoutPanelBtns";
             this.CountriesLayoutPanelBtns.RowCount = 1;
             this.CountriesLayoutPanelBtns.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.CountriesLayoutPanelBtns.Size = new System.Drawing.Size(990, 32);
+            this.CountriesLayoutPanelBtns.Size = new System.Drawing.Size(1008, 35);
             this.CountriesLayoutPanelBtns.TabIndex = 2;
             // 
             // CountriesFirstPageBtn
@@ -203,7 +252,7 @@ namespace ConferencePlanner.WinUi
             this.CountriesFirstPageBtn.Dock = System.Windows.Forms.DockStyle.Right;
             this.CountriesFirstPageBtn.Location = new System.Drawing.Point(281, 3);
             this.CountriesFirstPageBtn.Name = "CountriesFirstPageBtn";
-            this.CountriesFirstPageBtn.Size = new System.Drawing.Size(75, 26);
+            this.CountriesFirstPageBtn.Size = new System.Drawing.Size(75, 29);
             this.CountriesFirstPageBtn.TabIndex = 0;
             this.CountriesFirstPageBtn.Text = "<<";
             this.CountriesFirstPageBtn.UseVisualStyleBackColor = true;
@@ -213,7 +262,7 @@ namespace ConferencePlanner.WinUi
             this.CountriesBackBtn.Dock = System.Windows.Forms.DockStyle.Fill;
             this.CountriesBackBtn.Location = new System.Drawing.Point(362, 3);
             this.CountriesBackBtn.Name = "CountriesBackBtn";
-            this.CountriesBackBtn.Size = new System.Drawing.Size(61, 26);
+            this.CountriesBackBtn.Size = new System.Drawing.Size(63, 29);
             this.CountriesBackBtn.TabIndex = 1;
             this.CountriesBackBtn.Text = "<";
             this.CountriesBackBtn.UseVisualStyleBackColor = true;
@@ -223,7 +272,7 @@ namespace ConferencePlanner.WinUi
             this.CountriesNextBtn.Dock = System.Windows.Forms.DockStyle.Fill;
             this.CountriesNextBtn.Location = new System.Drawing.Point(526, 3);
             this.CountriesNextBtn.Name = "CountriesNextBtn";
-            this.CountriesNextBtn.Size = new System.Drawing.Size(70, 26);
+            this.CountriesNextBtn.Size = new System.Drawing.Size(70, 29);
             this.CountriesNextBtn.TabIndex = 2;
             this.CountriesNextBtn.Text = ">";
             this.CountriesNextBtn.UseVisualStyleBackColor = true;
@@ -233,7 +282,7 @@ namespace ConferencePlanner.WinUi
             this.CountriesLastPage.Dock = System.Windows.Forms.DockStyle.Left;
             this.CountriesLastPage.Location = new System.Drawing.Point(602, 3);
             this.CountriesLastPage.Name = "CountriesLastPage";
-            this.CountriesLastPage.Size = new System.Drawing.Size(75, 26);
+            this.CountriesLastPage.Size = new System.Drawing.Size(75, 29);
             this.CountriesLastPage.TabIndex = 3;
             this.CountriesLastPage.Text = ">>";
             this.CountriesLastPage.UseVisualStyleBackColor = true;
@@ -243,33 +292,70 @@ namespace ConferencePlanner.WinUi
             this.CountriesPages.Dock = System.Windows.Forms.DockStyle.Fill;
             this.CountriesPages.Location = new System.Drawing.Point(429, 3);
             this.CountriesPages.Name = "CountriesPages";
-            this.CountriesPages.Size = new System.Drawing.Size(91, 27);
+            this.CountriesPages.Size = new System.Drawing.Size(91, 29);
             this.CountriesPages.TabIndex = 4;
             // 
             // CountryListDataGridView
             // 
-            this.CountryListDataGridView.BackgroundColor = System.Drawing.Color.Cornsilk;
+            this.CountryListDataGridView.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(176)))), ((int)(((byte)(218)))), ((int)(((byte)(241)))));
+            this.CountryListDataGridView.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.CountryListDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.CountryListDataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.CountryListDataGridView.GridColor = System.Drawing.Color.DarkBlue;
-            this.CountryListDataGridView.Location = new System.Drawing.Point(3, 3);
+            this.CountryListDataGridView.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(0)))), ((int)(((byte)(62)))));
+            this.CountryListDataGridView.Location = new System.Drawing.Point(1, 43);
             this.CountryListDataGridView.Name = "CountryListDataGridView";
-            this.CountryListDataGridView.Size = new System.Drawing.Size(990, 275);
+            this.CountryListDataGridView.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.CountryListDataGridView.Size = new System.Drawing.Size(1008, 302);
             this.CountryListDataGridView.TabIndex = 1;
             this.CountryListDataGridView.Text = "dataGridView1";
             this.CountryListDataGridView.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.CountryListDataGridView_DataBindingComplete);
             // 
             // County
             // 
+            this.County.Controls.Add(this.CountySaveLayoutPanel);
             this.County.Controls.Add(this.CountieLayoutPanelBtns);
             this.County.Controls.Add(this.CountiesListGridView);
             this.County.Location = new System.Drawing.Point(4, 29);
             this.County.Name = "County";
             this.County.Padding = new System.Windows.Forms.Padding(3);
-            this.County.Size = new System.Drawing.Size(996, 281);
+            this.County.Size = new System.Drawing.Size(1014, 341);
             this.County.TabIndex = 1;
             this.County.Text = "County";
             this.County.UseVisualStyleBackColor = true;
+            // 
+            // CountySaveLayoutPanel
+            // 
+            this.CountySaveLayoutPanel.ColumnCount = 2;
+            this.CountySaveLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 65.67461F));
+            this.CountySaveLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 34.3254F));
+            this.CountySaveLayoutPanel.Controls.Add(this.textBox5, 0, 0);
+            this.CountySaveLayoutPanel.Controls.Add(this.button5, 1, 0);
+            this.CountySaveLayoutPanel.Dock = System.Windows.Forms.DockStyle.Top;
+            this.CountySaveLayoutPanel.Location = new System.Drawing.Point(3, 3);
+            this.CountySaveLayoutPanel.Name = "CountySaveLayoutPanel";
+            this.CountySaveLayoutPanel.RowCount = 1;
+            this.CountySaveLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 207F));
+            this.CountySaveLayoutPanel.Size = new System.Drawing.Size(1008, 37);
+            this.CountySaveLayoutPanel.TabIndex = 3;
+            // 
+            // textBox5
+            // 
+            this.textBox5.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.textBox5.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.textBox5.Location = new System.Drawing.Point(3, 3);
+            this.textBox5.Name = "textBox5";
+            this.textBox5.Size = new System.Drawing.Size(655, 22);
+            this.textBox5.TabIndex = 0;
+            this.textBox5.Visible = false;
+            // 
+            // button5
+            // 
+            this.button5.Location = new System.Drawing.Point(664, 3);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(79, 31);
+            this.button5.TabIndex = 1;
+            this.button5.Text = "Save";
+            this.button5.UseVisualStyleBackColor = true;
+            this.button5.Visible = false;
             // 
             // CountieLayoutPanelBtns
             // 
@@ -278,19 +364,19 @@ namespace ConferencePlanner.WinUi
             this.CountieLayoutPanelBtns.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.47597F));
             this.CountieLayoutPanelBtns.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 96F));
             this.CountieLayoutPanelBtns.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 79F));
-            this.CountieLayoutPanelBtns.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 378F));
+            this.CountieLayoutPanelBtns.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 384F));
             this.CountieLayoutPanelBtns.Controls.Add(this.CountiesLastPage, 0, 0);
             this.CountieLayoutPanelBtns.Controls.Add(this.CountiesBackBtn, 1, 0);
             this.CountieLayoutPanelBtns.Controls.Add(this.CountiesNextBtn, 3, 0);
             this.CountieLayoutPanelBtns.Controls.Add(this.CountiesLastPageBtn, 4, 0);
             this.CountieLayoutPanelBtns.Controls.Add(this.CountiesPages, 2, 0);
             this.CountieLayoutPanelBtns.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.CountieLayoutPanelBtns.Location = new System.Drawing.Point(3, 243);
+            this.CountieLayoutPanelBtns.Location = new System.Drawing.Point(3, 303);
             this.CountieLayoutPanelBtns.Margin = new System.Windows.Forms.Padding(3, 3, 3, 0);
             this.CountieLayoutPanelBtns.Name = "CountieLayoutPanelBtns";
             this.CountieLayoutPanelBtns.RowCount = 1;
             this.CountieLayoutPanelBtns.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.CountieLayoutPanelBtns.Size = new System.Drawing.Size(990, 35);
+            this.CountieLayoutPanelBtns.Size = new System.Drawing.Size(1008, 35);
             this.CountieLayoutPanelBtns.TabIndex = 2;
             // 
             // CountiesLastPage
@@ -338,31 +424,66 @@ namespace ConferencePlanner.WinUi
             this.CountiesPages.Dock = System.Windows.Forms.DockStyle.Fill;
             this.CountiesPages.Location = new System.Drawing.Point(440, 3);
             this.CountiesPages.Name = "CountiesPages";
-            this.CountiesPages.Size = new System.Drawing.Size(90, 27);
+            this.CountiesPages.Size = new System.Drawing.Size(90, 29);
             this.CountiesPages.TabIndex = 4;
             // 
             // CountiesListGridView
             // 
             this.CountiesListGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.CountiesListGridView.Dock = System.Windows.Forms.DockStyle.Top;
-            this.CountiesListGridView.Location = new System.Drawing.Point(3, 3);
+            this.CountiesListGridView.Location = new System.Drawing.Point(3, 44);
             this.CountiesListGridView.Name = "CountiesListGridView";
-            this.CountiesListGridView.Size = new System.Drawing.Size(990, 212);
+            this.CountiesListGridView.Size = new System.Drawing.Size(1008, 256);
             this.CountiesListGridView.TabIndex = 2;
             this.CountiesListGridView.Text = "dataGridView2";
             this.CountiesListGridView.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.CountiesListGridView_DataBindingComplete);
             // 
             // City
             // 
+            this.City.Controls.Add(this.CitySaveLayoutPanel);
             this.City.Controls.Add(this.CitiesLayoutPanelBtns);
             this.City.Controls.Add(this.dataGridView6);
             this.City.Location = new System.Drawing.Point(4, 29);
             this.City.Name = "City";
             this.City.Padding = new System.Windows.Forms.Padding(3);
-            this.City.Size = new System.Drawing.Size(996, 281);
+            this.City.Size = new System.Drawing.Size(1014, 341);
             this.City.TabIndex = 2;
             this.City.Text = "City";
             this.City.UseVisualStyleBackColor = true;
+            // 
+            // CitySaveLayoutPanel
+            // 
+            this.CitySaveLayoutPanel.ColumnCount = 2;
+            this.CitySaveLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 65.67461F));
+            this.CitySaveLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 34.3254F));
+            this.CitySaveLayoutPanel.Controls.Add(this.textBox6, 0, 0);
+            this.CitySaveLayoutPanel.Controls.Add(this.button6, 1, 0);
+            this.CitySaveLayoutPanel.Dock = System.Windows.Forms.DockStyle.Top;
+            this.CitySaveLayoutPanel.Location = new System.Drawing.Point(3, 3);
+            this.CitySaveLayoutPanel.Name = "CitySaveLayoutPanel";
+            this.CitySaveLayoutPanel.RowCount = 1;
+            this.CitySaveLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 207F));
+            this.CitySaveLayoutPanel.Size = new System.Drawing.Size(1008, 37);
+            this.CitySaveLayoutPanel.TabIndex = 3;
+            // 
+            // textBox6
+            // 
+            this.textBox6.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.textBox6.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.textBox6.Location = new System.Drawing.Point(3, 3);
+            this.textBox6.Name = "textBox6";
+            this.textBox6.Size = new System.Drawing.Size(655, 22);
+            this.textBox6.TabIndex = 0;
+            this.textBox6.Visible = false;
+            // 
+            // button6
+            // 
+            this.button6.Location = new System.Drawing.Point(664, 3);
+            this.button6.Name = "button6";
+            this.button6.Size = new System.Drawing.Size(79, 31);
+            this.button6.TabIndex = 1;
+            this.button6.Text = "Save";
+            this.button6.UseVisualStyleBackColor = true;
+            this.button6.Visible = false;
             // 
             // CitiesLayoutPanelBtns
             // 
@@ -371,18 +492,18 @@ namespace ConferencePlanner.WinUi
             this.CitiesLayoutPanelBtns.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 17.0068F));
             this.CitiesLayoutPanelBtns.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 93F));
             this.CitiesLayoutPanelBtns.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 75F));
-            this.CitiesLayoutPanelBtns.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 381F));
+            this.CitiesLayoutPanelBtns.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 387F));
             this.CitiesLayoutPanelBtns.Controls.Add(this.CitiesFirstPage, 0, 0);
             this.CitiesLayoutPanelBtns.Controls.Add(this.CitiesBackBtn, 1, 0);
             this.CitiesLayoutPanelBtns.Controls.Add(this.CitiesNextBtn, 3, 0);
             this.CitiesLayoutPanelBtns.Controls.Add(this.CitiesLastPage, 4, 0);
             this.CitiesLayoutPanelBtns.Controls.Add(this.CitiesPages, 2, 0);
-            this.CitiesLayoutPanelBtns.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.CitiesLayoutPanelBtns.Location = new System.Drawing.Point(3, 220);
+            this.CitiesLayoutPanelBtns.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.CitiesLayoutPanelBtns.Location = new System.Drawing.Point(3, 306);
             this.CitiesLayoutPanelBtns.Name = "CitiesLayoutPanelBtns";
             this.CitiesLayoutPanelBtns.RowCount = 1;
             this.CitiesLayoutPanelBtns.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.CitiesLayoutPanelBtns.Size = new System.Drawing.Size(990, 58);
+            this.CitiesLayoutPanelBtns.Size = new System.Drawing.Size(1008, 32);
             this.CitiesLayoutPanelBtns.TabIndex = 2;
             // 
             // CitiesFirstPage
@@ -390,7 +511,7 @@ namespace ConferencePlanner.WinUi
             this.CitiesFirstPage.Dock = System.Windows.Forms.DockStyle.Right;
             this.CitiesFirstPage.Location = new System.Drawing.Point(288, 3);
             this.CitiesFirstPage.Name = "CitiesFirstPage";
-            this.CitiesFirstPage.Size = new System.Drawing.Size(75, 52);
+            this.CitiesFirstPage.Size = new System.Drawing.Size(75, 26);
             this.CitiesFirstPage.TabIndex = 0;
             this.CitiesFirstPage.Text = "<<";
             this.CitiesFirstPage.UseVisualStyleBackColor = true;
@@ -400,7 +521,7 @@ namespace ConferencePlanner.WinUi
             this.CitiesBackBtn.Dock = System.Windows.Forms.DockStyle.Fill;
             this.CitiesBackBtn.Location = new System.Drawing.Point(369, 3);
             this.CitiesBackBtn.Name = "CitiesBackBtn";
-            this.CitiesBackBtn.Size = new System.Drawing.Size(69, 52);
+            this.CitiesBackBtn.Size = new System.Drawing.Size(71, 26);
             this.CitiesBackBtn.TabIndex = 1;
             this.CitiesBackBtn.Text = "<";
             this.CitiesBackBtn.UseVisualStyleBackColor = true;
@@ -410,7 +531,7 @@ namespace ConferencePlanner.WinUi
             this.CitiesNextBtn.Dock = System.Windows.Forms.DockStyle.Fill;
             this.CitiesNextBtn.Location = new System.Drawing.Point(537, 3);
             this.CitiesNextBtn.Name = "CitiesNextBtn";
-            this.CitiesNextBtn.Size = new System.Drawing.Size(69, 52);
+            this.CitiesNextBtn.Size = new System.Drawing.Size(69, 26);
             this.CitiesNextBtn.TabIndex = 2;
             this.CitiesNextBtn.Text = ">";
             this.CitiesNextBtn.UseVisualStyleBackColor = true;
@@ -420,7 +541,7 @@ namespace ConferencePlanner.WinUi
             this.CitiesLastPage.Dock = System.Windows.Forms.DockStyle.Left;
             this.CitiesLastPage.Location = new System.Drawing.Point(612, 3);
             this.CitiesLastPage.Name = "CitiesLastPage";
-            this.CitiesLastPage.Size = new System.Drawing.Size(75, 52);
+            this.CitiesLastPage.Size = new System.Drawing.Size(75, 26);
             this.CitiesLastPage.TabIndex = 3;
             this.CitiesLastPage.Text = ">>";
             this.CitiesLastPage.UseVisualStyleBackColor = true;
@@ -430,30 +551,65 @@ namespace ConferencePlanner.WinUi
             this.CitiesPages.Dock = System.Windows.Forms.DockStyle.Fill;
             this.CitiesPages.Location = new System.Drawing.Point(444, 3);
             this.CitiesPages.Name = "CitiesPages";
-            this.CitiesPages.Size = new System.Drawing.Size(87, 27);
+            this.CitiesPages.Size = new System.Drawing.Size(87, 29);
             this.CitiesPages.TabIndex = 4;
             // 
             // dataGridView6
             // 
             this.dataGridView6.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView6.Dock = System.Windows.Forms.DockStyle.Top;
-            this.dataGridView6.Location = new System.Drawing.Point(3, 3);
+            this.dataGridView6.Location = new System.Drawing.Point(3, 45);
             this.dataGridView6.Name = "dataGridView6";
-            this.dataGridView6.Size = new System.Drawing.Size(990, 217);
+            this.dataGridView6.Size = new System.Drawing.Size(1008, 261);
             this.dataGridView6.TabIndex = 0;
             this.dataGridView6.Text = "dataGridView6";
             // 
             // TypeTab
             // 
+            this.TypeTab.Controls.Add(this.TypeSaveLayoutPanel);
             this.TypeTab.Controls.Add(this.TypesLayoutPanelBtn);
-            this.TypeTab.Controls.Add(this.dataGridView3);
+            this.TypeTab.Controls.Add(this.TypeDataGrid);
             this.TypeTab.Location = new System.Drawing.Point(4, 29);
             this.TypeTab.Name = "TypeTab";
             this.TypeTab.Padding = new System.Windows.Forms.Padding(3);
-            this.TypeTab.Size = new System.Drawing.Size(996, 281);
+            this.TypeTab.Size = new System.Drawing.Size(1014, 341);
             this.TypeTab.TabIndex = 4;
             this.TypeTab.Text = "Type";
             this.TypeTab.UseVisualStyleBackColor = true;
+            // 
+            // TypeSaveLayoutPanel
+            // 
+            this.TypeSaveLayoutPanel.ColumnCount = 2;
+            this.TypeSaveLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 65.67461F));
+            this.TypeSaveLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 34.3254F));
+            this.TypeSaveLayoutPanel.Controls.Add(this.textBox3, 0, 0);
+            this.TypeSaveLayoutPanel.Controls.Add(this.button3, 1, 0);
+            this.TypeSaveLayoutPanel.Dock = System.Windows.Forms.DockStyle.Top;
+            this.TypeSaveLayoutPanel.Location = new System.Drawing.Point(3, 3);
+            this.TypeSaveLayoutPanel.Name = "TypeSaveLayoutPanel";
+            this.TypeSaveLayoutPanel.RowCount = 1;
+            this.TypeSaveLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 207F));
+            this.TypeSaveLayoutPanel.Size = new System.Drawing.Size(1008, 37);
+            this.TypeSaveLayoutPanel.TabIndex = 3;
+            // 
+            // textBox3
+            // 
+            this.textBox3.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.textBox3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.textBox3.Location = new System.Drawing.Point(3, 3);
+            this.textBox3.Name = "textBox3";
+            this.textBox3.Size = new System.Drawing.Size(655, 22);
+            this.textBox3.TabIndex = 0;
+            this.textBox3.Visible = false;
+            // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(664, 3);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(79, 31);
+            this.button3.TabIndex = 1;
+            this.button3.Text = "Save";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Visible = false;
             // 
             // TypesLayoutPanelBtn
             // 
@@ -462,18 +618,18 @@ namespace ConferencePlanner.WinUi
             this.TypesLayoutPanelBtn.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.21004F));
             this.TypesLayoutPanelBtn.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 94F));
             this.TypesLayoutPanelBtn.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 81F));
-            this.TypesLayoutPanelBtn.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 387F));
+            this.TypesLayoutPanelBtn.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 393F));
             this.TypesLayoutPanelBtn.Controls.Add(this.TypesFirstPage, 0, 0);
             this.TypesLayoutPanelBtn.Controls.Add(this.TypesBackBtn, 1, 0);
             this.TypesLayoutPanelBtn.Controls.Add(this.TypesNextBtn, 3, 0);
             this.TypesLayoutPanelBtn.Controls.Add(this.TypesLastPage, 4, 0);
             this.TypesLayoutPanelBtn.Controls.Add(this.TypesPages, 2, 0);
             this.TypesLayoutPanelBtn.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.TypesLayoutPanelBtn.Location = new System.Drawing.Point(3, 245);
+            this.TypesLayoutPanelBtn.Location = new System.Drawing.Point(3, 305);
             this.TypesLayoutPanelBtn.Name = "TypesLayoutPanelBtn";
             this.TypesLayoutPanelBtn.RowCount = 1;
             this.TypesLayoutPanelBtn.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.TypesLayoutPanelBtn.Size = new System.Drawing.Size(990, 33);
+            this.TypesLayoutPanelBtn.Size = new System.Drawing.Size(1008, 33);
             this.TypesLayoutPanelBtn.TabIndex = 2;
             // 
             // TypesFirstPage
@@ -491,7 +647,7 @@ namespace ConferencePlanner.WinUi
             this.TypesBackBtn.Dock = System.Windows.Forms.DockStyle.Fill;
             this.TypesBackBtn.Location = new System.Drawing.Point(361, 3);
             this.TypesBackBtn.Name = "TypesBackBtn";
-            this.TypesBackBtn.Size = new System.Drawing.Size(63, 27);
+            this.TypesBackBtn.Size = new System.Drawing.Size(65, 27);
             this.TypesBackBtn.TabIndex = 1;
             this.TypesBackBtn.Text = "<";
             this.TypesBackBtn.UseVisualStyleBackColor = true;
@@ -521,18 +677,17 @@ namespace ConferencePlanner.WinUi
             this.TypesPages.Dock = System.Windows.Forms.DockStyle.Fill;
             this.TypesPages.Location = new System.Drawing.Point(430, 3);
             this.TypesPages.Name = "TypesPages";
-            this.TypesPages.Size = new System.Drawing.Size(88, 27);
+            this.TypesPages.Size = new System.Drawing.Size(88, 29);
             this.TypesPages.TabIndex = 4;
             // 
-            // dataGridView3
+            // TypeDataGrid
             // 
-            this.dataGridView3.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView3.Dock = System.Windows.Forms.DockStyle.Top;
-            this.dataGridView3.Location = new System.Drawing.Point(3, 3);
-            this.dataGridView3.Name = "dataGridView3";
-            this.dataGridView3.Size = new System.Drawing.Size(990, 220);
-            this.dataGridView3.TabIndex = 0;
-            this.dataGridView3.Text = "dataGridView3";
+            this.TypeDataGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.TypeDataGrid.Location = new System.Drawing.Point(3, 43);
+            this.TypeDataGrid.Name = "TypeDataGrid";
+            this.TypeDataGrid.Size = new System.Drawing.Size(1008, 259);
+            this.TypeDataGrid.TabIndex = 0;
+            this.TypeDataGrid.Text = "dataGridView3";
             // 
             // SpeakerTab
             // 
@@ -550,16 +705,16 @@ namespace ConferencePlanner.WinUi
             // tableLayoutSpeaker
             // 
             this.tableLayoutSpeaker.ColumnCount = 2;
-            this.tableLayoutSpeaker.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 63.21458F));
-            this.tableLayoutSpeaker.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 36.78542F));
+            this.tableLayoutSpeaker.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 65.67461F));
+            this.tableLayoutSpeaker.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 34.3254F));
             this.tableLayoutSpeaker.Controls.Add(this.SpeakerUserMessagesBox, 0, 0);
             this.tableLayoutSpeaker.Controls.Add(this.SpeakerSaveButton, 1, 0);
-            this.tableLayoutSpeaker.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutSpeaker.Dock = System.Windows.Forms.DockStyle.Top;
             this.tableLayoutSpeaker.Location = new System.Drawing.Point(3, 3);
             this.tableLayoutSpeaker.Name = "tableLayoutSpeaker";
             this.tableLayoutSpeaker.RowCount = 1;
-            this.tableLayoutSpeaker.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutSpeaker.Size = new System.Drawing.Size(990, 28);
+            this.tableLayoutSpeaker.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 207F));
+            this.tableLayoutSpeaker.Size = new System.Drawing.Size(1008, 37);
             this.tableLayoutSpeaker.TabIndex = 3;
             // 
             // SpeakerUserMessagesBox
@@ -568,15 +723,15 @@ namespace ConferencePlanner.WinUi
             this.SpeakerUserMessagesBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.SpeakerUserMessagesBox.Location = new System.Drawing.Point(3, 3);
             this.SpeakerUserMessagesBox.Name = "SpeakerUserMessagesBox";
-            this.SpeakerUserMessagesBox.Size = new System.Drawing.Size(619, 20);
+            this.SpeakerUserMessagesBox.Size = new System.Drawing.Size(655, 22);
             this.SpeakerUserMessagesBox.TabIndex = 0;
             this.SpeakerUserMessagesBox.Visible = false;
             // 
             // SpeakerSaveButton
             // 
-            this.SpeakerSaveButton.Location = new System.Drawing.Point(628, 3);
+            this.SpeakerSaveButton.Location = new System.Drawing.Point(664, 3);
             this.SpeakerSaveButton.Name = "SpeakerSaveButton";
-            this.SpeakerSaveButton.Size = new System.Drawing.Size(75, 22);
+            this.SpeakerSaveButton.Size = new System.Drawing.Size(79, 31);
             this.SpeakerSaveButton.TabIndex = 1;
             this.SpeakerSaveButton.Text = "Save";
             this.SpeakerSaveButton.UseVisualStyleBackColor = true;
@@ -591,12 +746,11 @@ namespace ConferencePlanner.WinUi
             this.SpeakerListDataGrid.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.DisplayedCells;
             this.SpeakerListDataGrid.CausesValidation = false;
             this.SpeakerListDataGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.SpeakerListDataGrid.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.SpeakerListDataGrid.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
-            this.SpeakerListDataGrid.Location = new System.Drawing.Point(3, 31);
+            this.SpeakerListDataGrid.Location = new System.Drawing.Point(3, 43);
             this.SpeakerListDataGrid.Name = "SpeakerListDataGrid";
             this.SpeakerListDataGrid.ScrollBars = System.Windows.Forms.ScrollBars.None;
-            this.SpeakerListDataGrid.Size = new System.Drawing.Size(990, 214);
+            this.SpeakerListDataGrid.Size = new System.Drawing.Size(1008, 262);
             this.SpeakerListDataGrid.TabIndex = 0;
             this.SpeakerListDataGrid.Text = "dataGridView4";
             this.SpeakerListDataGrid.CellBeginEdit += new System.Windows.Forms.DataGridViewCellCancelEventHandler(this.SpeakerListDataGrid_CellBeginEdit);
@@ -612,7 +766,7 @@ namespace ConferencePlanner.WinUi
             this.SpeakersLayerPanelBtns.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 17.1875F));
             this.SpeakersLayerPanelBtns.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 85F));
             this.SpeakersLayerPanelBtns.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 79F));
-            this.SpeakersLayerPanelBtns.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 378F));
+            this.SpeakersLayerPanelBtns.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 384F));
             this.SpeakersLayerPanelBtns.Controls.Add(this.SpeakersFirstPage, 0, 0);
             this.SpeakersLayerPanelBtns.Controls.Add(this.SpeakersBackBtn, 1, 0);
             this.SpeakersLayerPanelBtns.Controls.Add(this.SpeakersNextBtn, 3, 0);
@@ -629,7 +783,7 @@ namespace ConferencePlanner.WinUi
             // SpeakersFirstPage
             // 
             this.SpeakersFirstPage.Dock = System.Windows.Forms.DockStyle.Right;
-            this.SpeakersFirstPage.Location = new System.Drawing.Point(293, 3);
+            this.SpeakersFirstPage.Location = new System.Drawing.Point(302, 3);
             this.SpeakersFirstPage.Name = "SpeakersFirstPage";
             this.SpeakersFirstPage.Size = new System.Drawing.Size(75, 27);
             this.SpeakersFirstPage.TabIndex = 0;
@@ -639,9 +793,9 @@ namespace ConferencePlanner.WinUi
             // SpeakersBackBtn
             // 
             this.SpeakersBackBtn.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.SpeakersBackBtn.Location = new System.Drawing.Point(374, 3);
+            this.SpeakersBackBtn.Location = new System.Drawing.Point(383, 3);
             this.SpeakersBackBtn.Name = "SpeakersBackBtn";
-            this.SpeakersBackBtn.Size = new System.Drawing.Size(71, 27);
+            this.SpeakersBackBtn.Size = new System.Drawing.Size(73, 27);
             this.SpeakersBackBtn.TabIndex = 1;
             this.SpeakersBackBtn.Text = "<";
             this.SpeakersBackBtn.UseVisualStyleBackColor = true;
@@ -649,7 +803,7 @@ namespace ConferencePlanner.WinUi
             // SpeakersNextBtn
             // 
             this.SpeakersNextBtn.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.SpeakersNextBtn.Location = new System.Drawing.Point(536, 3);
+            this.SpeakersNextBtn.Location = new System.Drawing.Point(565, 3);
             this.SpeakersNextBtn.Name = "SpeakersNextBtn";
             this.SpeakersNextBtn.Size = new System.Drawing.Size(73, 27);
             this.SpeakersNextBtn.TabIndex = 2;
@@ -659,7 +813,7 @@ namespace ConferencePlanner.WinUi
             // SpeakersLastPage
             // 
             this.SpeakersLastPage.Dock = System.Windows.Forms.DockStyle.Left;
-            this.SpeakersLastPage.Location = new System.Drawing.Point(615, 3);
+            this.SpeakersLastPage.Location = new System.Drawing.Point(626, 3);
             this.SpeakersLastPage.Name = "SpeakersLastPage";
             this.SpeakersLastPage.Size = new System.Drawing.Size(75, 27);
             this.SpeakersLastPage.TabIndex = 3;
@@ -669,22 +823,58 @@ namespace ConferencePlanner.WinUi
             // SpeakersPages
             // 
             this.SpeakersPages.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.SpeakersPages.Location = new System.Drawing.Point(451, 3);
+            this.SpeakersPages.Location = new System.Drawing.Point(462, 3);
             this.SpeakersPages.Name = "SpeakersPages";
-            this.SpeakersPages.Size = new System.Drawing.Size(79, 27);
+            this.SpeakersPages.Size = new System.Drawing.Size(79, 29);
             this.SpeakersPages.TabIndex = 4;
             // 
             // CategoryTab
             // 
+            this.CategoryTab.Controls.Add(this.CategorySaveLayoutPanel);
             this.CategoryTab.Controls.Add(this.CategoriesLayoutPanelBtn);
             this.CategoryTab.Controls.Add(this.dataGridView5);
             this.CategoryTab.Location = new System.Drawing.Point(4, 29);
             this.CategoryTab.Name = "CategoryTab";
             this.CategoryTab.Padding = new System.Windows.Forms.Padding(3);
-            this.CategoryTab.Size = new System.Drawing.Size(996, 281);
+            this.CategoryTab.Size = new System.Drawing.Size(1014, 341);
             this.CategoryTab.TabIndex = 6;
             this.CategoryTab.Text = "Category";
             this.CategoryTab.UseVisualStyleBackColor = true;
+            // 
+            // CategorySaveLayoutPanel
+            // 
+            this.CategorySaveLayoutPanel.ColumnCount = 2;
+            this.CategorySaveLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 65.67461F));
+            this.CategorySaveLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 34.3254F));
+            this.CategorySaveLayoutPanel.Controls.Add(this.textBox2, 0, 0);
+            this.CategorySaveLayoutPanel.Controls.Add(this.button2, 1, 0);
+            this.CategorySaveLayoutPanel.Dock = System.Windows.Forms.DockStyle.Top;
+            this.CategorySaveLayoutPanel.Location = new System.Drawing.Point(3, 3);
+            this.CategorySaveLayoutPanel.Name = "CategorySaveLayoutPanel";
+            this.CategorySaveLayoutPanel.RowCount = 1;
+            this.CategorySaveLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 207F));
+            this.CategorySaveLayoutPanel.Size = new System.Drawing.Size(1008, 37);
+            this.CategorySaveLayoutPanel.TabIndex = 3;
+            // 
+            // textBox2
+            // 
+            this.textBox2.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.textBox2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.textBox2.Location = new System.Drawing.Point(3, 3);
+            this.textBox2.Name = "textBox2";
+            this.textBox2.Size = new System.Drawing.Size(655, 22);
+            this.textBox2.TabIndex = 0;
+            this.textBox2.Visible = false;
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(664, 3);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(79, 31);
+            this.button2.TabIndex = 1;
+            this.button2.Text = "Save";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Visible = false;
             // 
             // CategoriesLayoutPanelBtn
             // 
@@ -693,18 +883,18 @@ namespace ConferencePlanner.WinUi
             this.CategoriesLayoutPanelBtn.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 17.08428F));
             this.CategoriesLayoutPanelBtn.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 92F));
             this.CategoriesLayoutPanelBtn.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 82F));
-            this.CategoriesLayoutPanelBtn.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 386F));
+            this.CategoriesLayoutPanelBtn.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 392F));
             this.CategoriesLayoutPanelBtn.Controls.Add(this.CategoriesFirstPage, 0, 0);
             this.CategoriesLayoutPanelBtn.Controls.Add(this.CategorieBackBtn, 1, 0);
             this.CategoriesLayoutPanelBtn.Controls.Add(this.CategoriesNextBtn, 3, 0);
             this.CategoriesLayoutPanelBtn.Controls.Add(this.CategoriesLastPage, 4, 0);
             this.CategoriesLayoutPanelBtn.Controls.Add(this.CategoriesPages, 2, 0);
             this.CategoriesLayoutPanelBtn.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.CategoriesLayoutPanelBtn.Location = new System.Drawing.Point(3, 245);
+            this.CategoriesLayoutPanelBtn.Location = new System.Drawing.Point(3, 305);
             this.CategoriesLayoutPanelBtn.Name = "CategoriesLayoutPanelBtn";
             this.CategoriesLayoutPanelBtn.RowCount = 1;
             this.CategoriesLayoutPanelBtn.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.CategoriesLayoutPanelBtn.Size = new System.Drawing.Size(990, 33);
+            this.CategoriesLayoutPanelBtn.Size = new System.Drawing.Size(1008, 33);
             this.CategoriesLayoutPanelBtn.TabIndex = 2;
             // 
             // CategoriesFirstPage
@@ -752,59 +942,55 @@ namespace ConferencePlanner.WinUi
             this.CategoriesPages.Dock = System.Windows.Forms.DockStyle.Fill;
             this.CategoriesPages.Location = new System.Drawing.Point(432, 3);
             this.CategoriesPages.Name = "CategoriesPages";
-            this.CategoriesPages.Size = new System.Drawing.Size(86, 27);
+            this.CategoriesPages.Size = new System.Drawing.Size(86, 29);
             this.CategoriesPages.TabIndex = 4;
             // 
             // dataGridView5
             // 
             this.dataGridView5.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView5.Dock = System.Windows.Forms.DockStyle.Top;
-            this.dataGridView5.Location = new System.Drawing.Point(3, 3);
+            this.dataGridView5.Location = new System.Drawing.Point(3, 43);
             this.dataGridView5.Name = "dataGridView5";
-            this.dataGridView5.Size = new System.Drawing.Size(990, 323);
+            this.dataGridView5.Size = new System.Drawing.Size(1008, 259);
             this.dataGridView5.TabIndex = 0;
             this.dataGridView5.Text = "dataGridView5";
             // 
             // tableLayoutPanel2
             // 
-            this.tableLayoutPanel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(1)))), ((int)(((byte)(8)))), ((int)(((byte)(54)))));
-            this.tableLayoutPanel2.ColumnCount = 3;
+            this.tableLayoutPanel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(0)))), ((int)(((byte)(62)))));
+            this.tableLayoutPanel2.ColumnCount = 4;
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 45.43947F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 54.56053F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 618F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 135F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 522F));
             this.tableLayoutPanel2.Controls.Add(this.ConfName, 1, 0);
-            this.tableLayoutPanel2.Controls.Add(this.EndDatelabel, 0, 3);
-            this.tableLayoutPanel2.Controls.Add(this.StartDateLabel, 0, 2);
-            this.tableLayoutPanel2.Controls.Add(this.EmailAddress, 0, 1);
+            this.tableLayoutPanel2.Controls.Add(this.EndDatelabel, 0, 2);
+            this.tableLayoutPanel2.Controls.Add(this.StartDateLabel, 0, 1);
             this.tableLayoutPanel2.Controls.Add(this.ConferenceNameLabel, 0, 0);
-            this.tableLayoutPanel2.Controls.Add(this.ConfEmailAddress, 1, 1);
-            this.tableLayoutPanel2.Controls.Add(this.StardDatePicker, 1, 2);
-            this.tableLayoutPanel2.Controls.Add(this.EndDatePicker, 1, 3);
-            this.tableLayoutPanel2.Controls.Add(this.StartHour, 2, 2);
-            this.tableLayoutPanel2.Controls.Add(this.EndHour, 2, 3);
-            this.tableLayoutPanel2.Controls.Add(this.textBox1, 2, 4);
+            this.tableLayoutPanel2.Controls.Add(this.StardDatePicker, 1, 1);
+            this.tableLayoutPanel2.Controls.Add(this.EndDatePicker, 1, 2);
+            this.tableLayoutPanel2.Controls.Add(this.StartHour, 2, 1);
+            this.tableLayoutPanel2.Controls.Add(this.EndHour, 2, 2);
+            this.tableLayoutPanel2.Controls.Add(this.textBox1, 3, 2);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 3);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
-            this.tableLayoutPanel2.RowCount = 5;
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 45.56962F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 54.43038F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 36F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 37F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(1221, 185);
+            this.tableLayoutPanel2.RowCount = 3;
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 43F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 42F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(1221, 131);
             this.tableLayoutPanel2.TabIndex = 0;
             // 
             // ConfName
             // 
-            this.ConfName.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(7)))), ((int)(((byte)(99)))));
+            this.ConfName.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(176)))), ((int)(((byte)(218)))), ((int)(((byte)(241)))));
             this.ConfName.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.ConfName.Dock = System.Windows.Forms.DockStyle.Top;
-            this.ConfName.ForeColor = System.Drawing.Color.Gold;
-            this.ConfName.Location = new System.Drawing.Point(277, 3);
+            this.ConfName.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(53)))), ((int)(((byte)(56)))), ((int)(((byte)(49)))));
+            this.ConfName.Location = new System.Drawing.Point(259, 3);
             this.ConfName.Name = "ConfName";
-            this.ConfName.Size = new System.Drawing.Size(323, 27);
+            this.ConfName.Size = new System.Drawing.Size(301, 27);
             this.ConfName.TabIndex = 1;
             // 
             // EndDatelabel
@@ -812,9 +998,9 @@ namespace ConferencePlanner.WinUi
             this.EndDatelabel.AutoSize = true;
             this.EndDatelabel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.EndDatelabel.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.EndDatelabel.Location = new System.Drawing.Point(3, 115);
+            this.EndDatelabel.Location = new System.Drawing.Point(3, 89);
             this.EndDatelabel.Name = "EndDatelabel";
-            this.EndDatelabel.Size = new System.Drawing.Size(268, 37);
+            this.EndDatelabel.Size = new System.Drawing.Size(250, 42);
             this.EndDatelabel.TabIndex = 6;
             this.EndDatelabel.Text = "End Date";
             // 
@@ -823,22 +1009,11 @@ namespace ConferencePlanner.WinUi
             this.StartDateLabel.AutoSize = true;
             this.StartDateLabel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.StartDateLabel.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.StartDateLabel.Location = new System.Drawing.Point(3, 79);
+            this.StartDateLabel.Location = new System.Drawing.Point(3, 46);
             this.StartDateLabel.Name = "StartDateLabel";
-            this.StartDateLabel.Size = new System.Drawing.Size(268, 36);
+            this.StartDateLabel.Size = new System.Drawing.Size(250, 43);
             this.StartDateLabel.TabIndex = 2;
             this.StartDateLabel.Text = "Start date";
-            // 
-            // EmailAddress
-            // 
-            this.EmailAddress.AutoSize = true;
-            this.EmailAddress.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.EmailAddress.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.EmailAddress.Location = new System.Drawing.Point(3, 36);
-            this.EmailAddress.Name = "EmailAddress";
-            this.EmailAddress.Size = new System.Drawing.Size(268, 43);
-            this.EmailAddress.TabIndex = 4;
-            this.EmailAddress.Text = "Organizer email address:";
             // 
             // ConferenceNameLabel
             // 
@@ -847,21 +1022,10 @@ namespace ConferencePlanner.WinUi
             this.ConferenceNameLabel.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.ConferenceNameLabel.Location = new System.Drawing.Point(3, 0);
             this.ConferenceNameLabel.Name = "ConferenceNameLabel";
-            this.ConferenceNameLabel.Size = new System.Drawing.Size(268, 36);
+            this.ConferenceNameLabel.Size = new System.Drawing.Size(250, 46);
             this.ConferenceNameLabel.TabIndex = 0;
             this.ConferenceNameLabel.Text = "Conference name:";
             this.ConferenceNameLabel.Click += new System.EventHandler(this.ConferenceNameLabel_Click);
-            // 
-            // ConfEmailAddress
-            // 
-            this.ConfEmailAddress.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(7)))), ((int)(((byte)(99)))));
-            this.ConfEmailAddress.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.ConfEmailAddress.Dock = System.Windows.Forms.DockStyle.Top;
-            this.ConfEmailAddress.ForeColor = System.Drawing.Color.Gold;
-            this.ConfEmailAddress.Location = new System.Drawing.Point(277, 39);
-            this.ConfEmailAddress.Name = "ConfEmailAddress";
-            this.ConfEmailAddress.Size = new System.Drawing.Size(323, 27);
-            this.ConfEmailAddress.TabIndex = 5;
             // 
             // StardDatePicker
             // 
@@ -870,7 +1034,7 @@ namespace ConferencePlanner.WinUi
             this.StardDatePicker.CalendarTitleBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(7)))), ((int)(((byte)(99)))));
             this.StardDatePicker.CalendarTitleForeColor = System.Drawing.Color.Gold;
             this.StardDatePicker.Dock = System.Windows.Forms.DockStyle.Left;
-            this.StardDatePicker.Location = new System.Drawing.Point(277, 82);
+            this.StardDatePicker.Location = new System.Drawing.Point(259, 49);
             this.StardDatePicker.Name = "StardDatePicker";
             this.StardDatePicker.Size = new System.Drawing.Size(254, 27);
             this.StardDatePicker.TabIndex = 7;
@@ -878,7 +1042,7 @@ namespace ConferencePlanner.WinUi
             // EndDatePicker
             // 
             this.EndDatePicker.Dock = System.Windows.Forms.DockStyle.Left;
-            this.EndDatePicker.Location = new System.Drawing.Point(277, 118);
+            this.EndDatePicker.Location = new System.Drawing.Point(259, 92);
             this.EndDatePicker.Name = "EndDatePicker";
             this.EndDatePicker.Size = new System.Drawing.Size(255, 27);
             this.EndDatePicker.TabIndex = 8;
@@ -887,7 +1051,7 @@ namespace ConferencePlanner.WinUi
             // 
             this.StartHour.Dock = System.Windows.Forms.DockStyle.Left;
             this.StartHour.Format = System.Windows.Forms.DateTimePickerFormat.Time;
-            this.StartHour.Location = new System.Drawing.Point(606, 82);
+            this.StartHour.Location = new System.Drawing.Point(566, 49);
             this.StartHour.Name = "StartHour";
             this.StartHour.Size = new System.Drawing.Size(111, 27);
             this.StartHour.TabIndex = 9;
@@ -896,23 +1060,24 @@ namespace ConferencePlanner.WinUi
             // 
             this.EndHour.Dock = System.Windows.Forms.DockStyle.Left;
             this.EndHour.Format = System.Windows.Forms.DateTimePickerFormat.Time;
-            this.EndHour.Location = new System.Drawing.Point(606, 118);
+            this.EndHour.Location = new System.Drawing.Point(566, 92);
             this.EndHour.Name = "EndHour";
             this.EndHour.Size = new System.Drawing.Size(111, 27);
             this.EndHour.TabIndex = 10;
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(753, 155);
+            this.textBox1.ForeColor = System.Drawing.SystemColors.ScrollBar;
+            this.textBox1.Location = new System.Drawing.Point(848, 92);
             this.textBox1.Margin = new System.Windows.Forms.Padding(150, 3, 3, 3);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(281, 27);
+            this.textBox1.Size = new System.Drawing.Size(258, 27);
             this.textBox1.TabIndex = 11;
             // 
             // tableLayoutPanel1
             // 
             this.tableLayoutPanel1.AutoSize = true;
-            this.tableLayoutPanel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(1)))), ((int)(((byte)(8)))), ((int)(((byte)(54)))));
+            this.tableLayoutPanel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(0)))), ((int)(((byte)(62)))));
             this.tableLayoutPanel1.ColumnCount = 1;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel2, 0, 0);
@@ -932,7 +1097,7 @@ namespace ConferencePlanner.WinUi
             // 
             // tableLayoutPanel3
             // 
-            this.tableLayoutPanel3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(1)))), ((int)(((byte)(8)))), ((int)(((byte)(54)))));
+            this.tableLayoutPanel3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(0)))), ((int)(((byte)(56)))));
             this.tableLayoutPanel3.ColumnCount = 3;
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 47.21933F));
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 7.612515F));
@@ -1000,24 +1165,31 @@ namespace ConferencePlanner.WinUi
             this.Text = "AddConf";
             this.Load += new System.EventHandler(this.AddConf_Load);
             ((System.ComponentModel.ISupportInitialize)(this.ErrorName)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ErrorAddress)).EndInit();
             this.TabControlLocation.ResumeLayout(false);
             this.Country.ResumeLayout(false);
+            this.SaveCountryLayoutPanel.ResumeLayout(false);
+            this.SaveCountryLayoutPanel.PerformLayout();
             this.CountriesLayoutPanelBtns.ResumeLayout(false);
             this.CountriesLayoutPanelBtns.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.CountryListDataGridView)).EndInit();
             this.County.ResumeLayout(false);
+            this.CountySaveLayoutPanel.ResumeLayout(false);
+            this.CountySaveLayoutPanel.PerformLayout();
             this.CountieLayoutPanelBtns.ResumeLayout(false);
             this.CountieLayoutPanelBtns.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.CountiesListGridView)).EndInit();
             this.City.ResumeLayout(false);
+            this.CitySaveLayoutPanel.ResumeLayout(false);
+            this.CitySaveLayoutPanel.PerformLayout();
             this.CitiesLayoutPanelBtns.ResumeLayout(false);
             this.CitiesLayoutPanelBtns.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView6)).EndInit();
             this.TypeTab.ResumeLayout(false);
+            this.TypeSaveLayoutPanel.ResumeLayout(false);
+            this.TypeSaveLayoutPanel.PerformLayout();
             this.TypesLayoutPanelBtn.ResumeLayout(false);
             this.TypesLayoutPanelBtn.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.TypeDataGrid)).EndInit();
             this.SpeakerTab.ResumeLayout(false);
             this.tableLayoutSpeaker.ResumeLayout(false);
             this.tableLayoutSpeaker.PerformLayout();
@@ -1025,6 +1197,8 @@ namespace ConferencePlanner.WinUi
             this.SpeakersLayerPanelBtns.ResumeLayout(false);
             this.SpeakersLayerPanelBtns.PerformLayout();
             this.CategoryTab.ResumeLayout(false);
+            this.CategorySaveLayoutPanel.ResumeLayout(false);
+            this.CategorySaveLayoutPanel.PerformLayout();
             this.CategoriesLayoutPanelBtn.ResumeLayout(false);
             this.CategoriesLayoutPanelBtn.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView5)).EndInit();
@@ -1039,17 +1213,13 @@ namespace ConferencePlanner.WinUi
 
         #endregion
         private System.Windows.Forms.ErrorProvider ErrorName;
-        private System.Windows.Forms.ErrorProvider ErrorAddress;
 
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private System.Windows.Forms.TextBox ConfName;
-        private System.Windows.Forms.Label EndDatelabel;
         private System.Windows.Forms.Label StartDateLabel;
-        private System.Windows.Forms.Label EmailAddress;
         private System.Windows.Forms.Label ConferenceNameLabel;
-        private System.Windows.Forms.TextBox ConfEmailAddress;
         //private System.Windows.Forms.Label EndDatelabel;
         private System.Windows.Forms.TabControl TabControlLocation;
         private System.Windows.Forms.TabPage Country;
@@ -1062,9 +1232,7 @@ namespace ConferencePlanner.WinUi
        // private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         //private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private System.Windows.Forms.DateTimePicker StardDatePicker;
-        private System.Windows.Forms.DateTimePicker EndDatePicker;
         private System.Windows.Forms.DateTimePicker StartHour;
-        private System.Windows.Forms.DateTimePicker EndHour;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
        // private System.Windows.Forms.Button NextTabBtn;
        // private System.Windows.Forms.Button BackTabBtn;
@@ -1101,7 +1269,7 @@ namespace ConferencePlanner.WinUi
         private System.Windows.Forms.Button TypesNextBtn;
         private System.Windows.Forms.Button TypesLastPage;
         private System.Windows.Forms.TextBox TypesPages;
-        private System.Windows.Forms.DataGridView dataGridView3;
+        private System.Windows.Forms.DataGridView TypeDataGrid;
         private System.Windows.Forms.TabPage SpeakerTab;
         private System.Windows.Forms.ListBox listBox1;
         private System.Windows.Forms.DataGridView SpeakerListDataGrid;
@@ -1120,10 +1288,28 @@ namespace ConferencePlanner.WinUi
         private System.Windows.Forms.Button CategoriesLastPage;
         private System.Windows.Forms.TextBox CategoriesPages;
         private System.Windows.Forms.DataGridView dataGridView5;
-        private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.TableLayoutPanel tableLayoutSpeaker;
         //private System.Windows.Forms.TextBox SpeakerUserMessagesBox;
         
         private System.Windows.Forms.Button SpeakerSaveButton;
+        private System.Windows.Forms.Label EndDatelabel;
+        private System.Windows.Forms.DateTimePicker EndDatePicker;
+        private System.Windows.Forms.DateTimePicker EndHour;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TableLayoutPanel CategorySaveLayoutPanel;
+        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.TableLayoutPanel TypeSaveLayoutPanel;
+        private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.TableLayoutPanel SaveCountryLayoutPanel;
+        private System.Windows.Forms.TextBox textBox4;
+        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.TableLayoutPanel CountySaveLayoutPanel;
+        private System.Windows.Forms.TextBox textBox5;
+        private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.TableLayoutPanel CitySaveLayoutPanel;
+        private System.Windows.Forms.TextBox textBox6;
+        private System.Windows.Forms.Button button6;
     }
 }
