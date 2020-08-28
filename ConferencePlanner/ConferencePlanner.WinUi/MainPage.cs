@@ -20,7 +20,7 @@ namespace ConferencePlanner.WinUi
         private readonly IConferenceRepository _conferenceRepository;
 
         private readonly ICountryRepository _countryRepository;
-
+        private readonly ICountyRepository _countyRepository;
 
         private readonly IAttendeeButtonsRepository _attendeeButtons;
         private readonly ISpeakerRepository _speakerRepository;
@@ -36,7 +36,8 @@ namespace ConferencePlanner.WinUi
         private int AttendeeTotalPage = 0;
 
         public MainPage(IConferenceRepository conferenceRepository, ICountryRepository countryRepository,
-            IAttendeeButtonsRepository attendeeButtonsRepository, ISpeakerRepository speakerRepository)
+            IAttendeeButtonsRepository attendeeButtonsRepository, ISpeakerRepository speakerRepository, ICountyRepository 
+            countyRepository)
         {
             _conferenceRepository = conferenceRepository;
 
@@ -45,6 +46,7 @@ namespace ConferencePlanner.WinUi
             _attendeeButtons = attendeeButtonsRepository;
 
             _speakerRepository = speakerRepository;
+            _countyRepository = countyRepository;
 
             InitializeComponent();
 
@@ -73,7 +75,7 @@ namespace ConferencePlanner.WinUi
 
         private void AddConferenceButton_Click(object sender, EventArgs e)
         {
-            var varAddConf = new AddConf(_conferenceRepository, _countryRepository, _speakerRepository);
+            var varAddConf = new AddConf(_conferenceRepository, _countryRepository, _countyRepository, _speakerRepository );
 
             TabControl.SelectedIndex = 1;
             varAddConf.ShowDialog();

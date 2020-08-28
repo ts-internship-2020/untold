@@ -239,7 +239,7 @@ namespace ConferencePlanner.WinUi
             this.button_woc1.BorderColor = System.Drawing.Color.Red;
             this.button_woc1.ButtonColor = System.Drawing.Color.Red;
             this.button_woc1.FlatAppearance.MouseOverBackColor = button_woc1.BackColor;
-            this.button_woc1.BackColorChanged += (s, e) =>
+            //this.button_woc1.BackColorChanged += (s, e) =>
             {
                 this.button_woc1.FlatAppearance.MouseOverBackColor = button_woc1.BackColor;
             };
