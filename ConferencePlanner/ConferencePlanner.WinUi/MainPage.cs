@@ -311,7 +311,7 @@ namespace ConferencePlanner.WinUi
             AttendeeGridvw.Columns[5].HeaderText = "Type";
             //AttendeeGridvw.Columns[6].HeaderText = "Category";
             //AttendeeGridvw.Columns[7].HeaderText = "Location";
-           //AttendeeGridvw.Columns[8].HeaderText = "Speaker";
+            //AttendeeGridvw.Columns[8].HeaderText = "Speaker";
 
 
             //AttendeeGridvw.Columns["ConferenceName"].DisplayIndex = 3;
@@ -325,6 +325,7 @@ namespace ConferencePlanner.WinUi
             //AttendeeGridvw.Columns[10].HeaderText = "Period";
             //AttendeeGridvw.Columns[11].HeaderText = "Period";
             //AttendeeGridvw.Columns["CategoryTypeName"].HeaderText = "Type";
+            
 
 
             if (a == 0)
@@ -338,6 +339,9 @@ namespace ConferencePlanner.WinUi
                 attendButtonColumn.Name = "attend_column";
                 attendButtonColumn.Text = "Attend";
                 attendButtonColumn.HeaderText = "Attend";
+                attendButtonColumn.FlatStyle = FlatStyle.Flat;
+                attendButtonColumn.DefaultCellStyle.BackColor = System.Drawing.Color.Black;
+                attendButtonColumn.DefaultCellStyle.ForeColor = System.Drawing.Color.Black;
 
                 int columnIndex = AttendeeGridvw.ColumnCount;
 
@@ -357,6 +361,11 @@ namespace ConferencePlanner.WinUi
                 joinButtonColumn.Text = "Join";
                 joinButtonColumn.HeaderText = "Join";
 
+                DataGridViewColumn dataGridViewColumn = new DataGridViewColumn();
+                //dataGridViewColumn.Name = ""
+               
+
+
 
                 AttendeeGridvw.Columns.Insert(columnIndex, joinButtonColumn);
                 
@@ -364,8 +373,7 @@ namespace ConferencePlanner.WinUi
                 //AttendeeGridvw.Columns[12].HeaderText = "Attend";
                 // AttendeeGridvw.Columns[13].HeaderText = "Withdraw";
                 // AttendeeGridvw.Columns[14].HeaderText = "Join";
-                //AttendeeGridvw.Columns.Add("Column", "Test");
-                //AttendeeGridvw.Columns["Column"].Visible = false;
+        //        AttendeeGridvw.Columns["Column"].Visible = false;
                 //AttendeeGridvw.Columns[7].Tag = "test";
                
             }
@@ -460,6 +468,15 @@ namespace ConferencePlanner.WinUi
                 }
             }
             return conferences;
+        }
+
+        public void popUpMethod(String titleText, String contentText)
+        {
+            PopupNotifier popup = new PopupNotifier();
+            popup.Image = Properties.Resources.info;
+            popup.TitleText = titleText;
+            popup.ContentText = contentText;
+            popup.Popup();
         }
 
         private void Attend_Click(int confId)
@@ -590,19 +607,25 @@ namespace ConferencePlanner.WinUi
             {
                 return;
             }
-            //-
             
             if (e.ColumnIndex == AttendeeGridvw.Columns["attend_column"].Index)
             {
+                if (AttendeeGridvw.Rows[e.RowIndex].Cells[e.ColumnIndex].Style.ForeColor.Equals(Color.Red))
+                {
+                    AttendeeGridvw.Rows[e.RowIndex].Cells[e.ColumnIndex].Selected = false;
+                }
+                AttendeeGridvw.Rows[e.RowIndex].Cells[e.ColumnIndex].Style.BackColor = System.Drawing.Color.Red;
+                AttendeeGridvw.Rows[e.RowIndex].Cells[e.ColumnIndex].Style.ForeColor = System.Drawing.Color.Red;
+
                 //AttendeeGridvw.Rows[e.RowIndex].Cells[7].ReadOnly = true;
                 //AttendeeGridvw.Rows[e.RowIndex].Cells[7].Visible = false;
                 int confid = (int)AttendeeGridvw.Rows[e.RowIndex].Cells[5].Value;
                 Attend_Click(confid);
-               // AttendeeGridvw.Rows[e.RowIndex].Cells[10].Value = "test";
-              //  if (AttendeeGridvw.Rows[e.RowIndex].Cells[10].Value == "test")
+                // AttendeeGridvw.Rows[e.RowIndex].Cells[10].Value = "test";
+                //  if (AttendeeGridvw.Rows[e.RowIndex].Cells[10].Value == "test")
                 //{
-                    
-                    return;
+
+                return;
                 }
 
 
@@ -621,7 +644,8 @@ namespace ConferencePlanner.WinUi
             {
                 int confid = (int)AttendeeGridvw.Rows[e.RowIndex].Cells[5].Value;
                 Withdraw_Click(confid);
-                
+               // AttendeeGridvw.Rows[e.RowIndex].Cells[e.ColumnIndex];
+
             }
             if (e.ColumnIndex == AttendeeGridvw.Columns["join_column"].Index)
             {
