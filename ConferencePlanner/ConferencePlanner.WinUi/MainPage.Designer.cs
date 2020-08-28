@@ -47,6 +47,7 @@ namespace ConferencePlanner.WinUi
             this.StartDateLabel = new System.Windows.Forms.Label();
             this.LeftArrowPagButton = new System.Windows.Forms.Button();
             this.RightArrowPagButton = new System.Windows.Forms.Button();
+            this.button_woc1 = new ePOSOne.btnProduct.Button_WOC();
             this.TabAttendee.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.AttendeeGridvw)).BeginInit();
             this.TabOrganizer.SuspendLayout();
@@ -195,7 +196,6 @@ namespace ConferencePlanner.WinUi
             this.EndDatePicker.Size = new System.Drawing.Size(200, 23);
             this.EndDatePicker.TabIndex = 6;
             this.EndDatePicker.ValueChanged += new System.EventHandler(this.EndDatePicker_ValueChanged);
-
             // 
             // StartDateLabel
             // 
@@ -233,12 +233,35 @@ namespace ConferencePlanner.WinUi
             this.RightArrowPagButton.UseVisualStyleBackColor = false;
             this.RightArrowPagButton.MouseClick += new System.Windows.Forms.MouseEventHandler(this.RightArrowPagButton_MouseClick);
             // 
+            // button_woc1
+            // 
+            this.button_woc1.BackColor = System.Drawing.Color.Transparent;
+            this.button_woc1.BorderColor = System.Drawing.Color.Red;
+            this.button_woc1.ButtonColor = System.Drawing.Color.Red;
+            this.button_woc1.FlatAppearance.MouseOverBackColor = button_woc1.BackColor;
+            this.button_woc1.BackColorChanged += (s, e) =>
+            {
+                this.button_woc1.FlatAppearance.MouseOverBackColor = button_woc1.BackColor;
+            };
+            this.button_woc1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button_woc1.Location = new System.Drawing.Point(634, 600);
+            this.button_woc1.Name = "button_woc1";
+            this.button_woc1.OnHoverBorderColor = System.Drawing.Color.Red;
+            this.button_woc1.OnHoverButtonColor = System.Drawing.Color.Transparent;
+            this.button_woc1.OnHoverTextColor = System.Drawing.Color.Snow;
+            this.button_woc1.Size = new System.Drawing.Size(75, 23);
+            this.button_woc1.TabIndex = 9;
+            this.button_woc1.Text = "button_woc1";
+            this.button_woc1.TextColor = System.Drawing.Color.White;
+            this.button_woc1.UseVisualStyleBackColor = false;
+            // 
             // MainPage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.ClientSize = new System.Drawing.Size(1353, 646);
+            this.Controls.Add(this.button_woc1);
             this.Controls.Add(this.RightArrowPagButton);
             this.Controls.Add(this.LeftArrowPagButton);
             this.Controls.Add(this.EndDatePicker);
@@ -288,5 +311,6 @@ namespace ConferencePlanner.WinUi
 
         private Button LeftArrowPagButton;
         private Button RightArrowPagButton;
+        private ePOSOne.btnProduct.Button_WOC button_woc1;
     }
 }

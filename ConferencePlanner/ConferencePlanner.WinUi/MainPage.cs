@@ -88,6 +88,8 @@ namespace ConferencePlanner.WinUi
             }
             else
             {
+                NoConferenceLabel.Visible = false;
+                OrganizerDataGrid.Visible = true;
                 OrganizerDataGrid.DataSource = conferences.ToList();
                 OrganizerDataGrid.AutoGenerateColumns = false;
 
@@ -571,7 +573,7 @@ namespace ConferencePlanner.WinUi
             //listBox1.Items.Add(e.ToString());
             if (e.ColumnIndex == OrganizerDataGrid.Columns["edit_column"].Index)
             {
-                var id = (int)OrganizerDataGrid.Rows[e.RowIndex].Cells[0].Value;
+                var id = (int)OrganizerDataGrid.Rows[e.RowIndex].Cells["ConferenceId"].Value;
 
                 ConferenceModel conference = _conferenceRepository.GetConferenceById(id);
 

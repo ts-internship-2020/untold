@@ -7,7 +7,7 @@ namespace ConferencePlanner.Abstraction.Model
     public class ConferenceModel
     {
         public long RowNum { get; set; }
-        public String StatusId { get; set; }
+        public int StatusId { get; set; }
         public int ConferenceId { get; set; }
         public string ConferenceName { get; set; }
         public string ConferenceCategoryName { get; set; }
