@@ -573,20 +573,24 @@ namespace ConferencePlanner.WinUi
         private void OrganizerDataGrid_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             //listBox1.Items.Add(e.ToString());
-            if (e.ColumnIndex == OrganizerDataGrid.Columns["edit_column"].Index)
+            if (e.ColumnIndex == OrganizerDataGrid.Columns["edit_column"].Index && e.RowIndex >= 0)
             {
-                var id = (int)OrganizerDataGrid.Rows[e.RowIndex].Cells["ConferenceId"].Value;
-
+                int id = (int)OrganizerDataGrid.Rows[e.RowIndex].Cells["ConferenceId"].Value;
                 ConferenceModel conference = _conferenceRepository.GetConferenceById(id);
 
                 var varAddConf = new AddConf(conference, _conferenceRepository, _countryRepository);
 
-                varAddConf.ShowDialog();
+                varAddConf.ShowDialog();        
 
             }
         }
         private void AttendeeGridvw_CellClick(object sender, DataGridViewCellEventArgs e)
         {
+            if (e.RowIndex < 0)
+            {
+                return;
+            }
+            //-
             
             if (e.ColumnIndex == AttendeeGridvw.Columns["attend_column"].Index)
             {
@@ -601,20 +605,17 @@ namespace ConferencePlanner.WinUi
                     return;
                 }
 
-            
-            //if (e.ColumnIndex == AttendeeGridvw.Columns["speaker_name"].Index)
-            //{
-            //    string[] names = AttendeeGridvw.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString().Split(" ");
-            //    SpeakerModel speaker = this._speakerRepository.GetSpeakerByName(names);
 
-            //    var varSpeakerDetails = new SpeakerDetails(speaker);
-            //    varSpeakerDetails.ShowDialog();
+            if (e.ColumnIndex == AttendeeGridvw.Columns["Speaker"].Index)
+            {
+                string[] names = AttendeeGridvw.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString().Split(" ");
+                SpeakerModel speaker = this._speakerRepository.GetSpeakerByName(names);
 
-            //    //listBox1.Items.Add(speaker.Rating);
-            //    //listBox1.Items.Add(speaker.ImagePath);
-            //    //AttendeeGridvw.Rows[e.RowIndex].Cells[e.ColumnIndex].Value;
+                var varSpeakerDetails = new SpeakerDetails(speaker);
+                varSpeakerDetails.ShowDialog();
+ 
 
-            //}
+            }
 
             if (e.ColumnIndex == AttendeeGridvw.Columns["withdraw_column"].Index)
             {
@@ -622,7 +623,6 @@ namespace ConferencePlanner.WinUi
                 Withdraw_Click(confid);
                 
             }
-
             if (e.ColumnIndex == AttendeeGridvw.Columns["join_column"].Index)
             {
                 int confid = (int)AttendeeGridvw.Rows[e.RowIndex].Cells[5].Value;
@@ -642,6 +642,10 @@ namespace ConferencePlanner.WinUi
 
         }
 
+        private void OrganizerDataGrid_Layout(object sender, LayoutEventArgs e)
+        {
+            this.OrganizerDataGrid.ReadOnly = true;
+        }
     }
 }
 

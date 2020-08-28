@@ -18,12 +18,14 @@ namespace ConferencePlanner.WinUi
 
         public SpeakerDetails(SpeakerModel speaker)
         {
+            this.SetStyle(ControlStyles.SupportsTransparentBackColor, true);
             this.Speaker = speaker;
             InitializeComponent();
         }
 
         public SpeakerDetails()
         {
+            this.SetStyle(ControlStyles.SupportsTransparentBackColor, true);
             InitializeComponent();
         }
 

@@ -166,17 +166,23 @@ namespace ConferencePlanner.Repository.Ado.Repository
         {
             
         
-            SqlCommand sqlCommand = _sqlConnection.CreateCommand();
-            sqlCommand.CommandText = "select * from vwConferenceDetails where EmailOrganizer = '"+email + "'";
+            
+            string commandText = "select ConferenceId, ConferenceName, ConferenceCategoryName, ConferenceTypeName, " +
+                "LocationName, SpeakerName, ConferencePeriod from vwConferenceDetails where EmailOrganizer = @Email";
+            
+            SqlCommand sqlCommand = new SqlCommand(commandText, _sqlConnection);
+            sqlCommand.Parameters.Add("@Email", SqlDbType.NVarChar);
+            sqlCommand.Parameters["@Email"].Value = email;
+
             SqlDataReader sqlDataReader = sqlCommand.ExecuteReader();
 
-            List<ConferenceModel> demos = new List<ConferenceModel>();
+            List<ConferenceModel> conferences = new List<ConferenceModel>();
 
             if (sqlDataReader.HasRows)
             {
                 while (sqlDataReader.Read())
                 {
-                    demos.Add(new ConferenceModel()
+                    conferences.Add(new ConferenceModel()
                     {
                         ConferenceId = sqlDataReader.GetInt32("ConferenceId"),
                         ConferenceName = sqlDataReader.GetString("ConferenceName"),
@@ -192,7 +198,7 @@ namespace ConferencePlanner.Repository.Ado.Repository
 
             sqlDataReader.Close();
 
-            return demos;
+            return conferences;
             }
 
 

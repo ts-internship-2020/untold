@@ -73,6 +73,9 @@ namespace ConferencePlanner.WinUi
             // 
             // AttendeeGridvw
             // 
+            this.AttendeeGridvw.AllowUserToAddRows = false;
+            this.AttendeeGridvw.AllowUserToDeleteRows = false;
+            this.AttendeeGridvw.AllowUserToResizeRows = false;
             this.AttendeeGridvw.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
@@ -82,6 +85,7 @@ namespace ConferencePlanner.WinUi
             this.AttendeeGridvw.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.AttendeeGridvw.Location = new System.Drawing.Point(3, 3);
             this.AttendeeGridvw.Name = "AttendeeGridvw";
+            this.AttendeeGridvw.ReadOnly = true;
             this.AttendeeGridvw.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
             this.AttendeeGridvw.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
             this.AttendeeGridvw.Size = new System.Drawing.Size(1315, 504);
@@ -130,6 +134,9 @@ namespace ConferencePlanner.WinUi
             // 
             // NoConferenceLabel
             // 
+            this.NoConferenceLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.NoConferenceLabel.AutoSize = true;
             this.NoConferenceLabel.Font = new System.Drawing.Font("Segoe UI", 30F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.NoConferenceLabel.ForeColor = System.Drawing.SystemColors.ControlDark;
@@ -142,15 +149,21 @@ namespace ConferencePlanner.WinUi
             // 
             // OrganizerDataGrid
             // 
-            this.OrganizerDataGrid.AllowUserToOrderColumns = true;
+            this.OrganizerDataGrid.AllowUserToAddRows = false;
+            this.OrganizerDataGrid.AllowUserToDeleteRows = false;
+            this.OrganizerDataGrid.AllowUserToResizeRows = false;
+            this.OrganizerDataGrid.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.OrganizerDataGrid.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.OrganizerDataGrid.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCellsExceptHeaders;
             this.OrganizerDataGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.OrganizerDataGrid.Dock = System.Windows.Forms.DockStyle.Fill;
             this.OrganizerDataGrid.Location = new System.Drawing.Point(3, 3);
             this.OrganizerDataGrid.Name = "OrganizerDataGrid";
+            this.OrganizerDataGrid.ReadOnly = true;
             this.OrganizerDataGrid.Size = new System.Drawing.Size(1315, 504);
             this.OrganizerDataGrid.TabIndex = 0;
             this.OrganizerDataGrid.Text = "organizerDataGrid";
             this.OrganizerDataGrid.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.OrganizerDataGrid_DataBindingComplete);
+            this.OrganizerDataGrid.Layout += new System.Windows.Forms.LayoutEventHandler(this.OrganizerDataGrid_Layout);
             // 
             // TabControl
             // 
@@ -238,11 +251,7 @@ namespace ConferencePlanner.WinUi
             this.button_woc1.BackColor = System.Drawing.Color.Transparent;
             this.button_woc1.BorderColor = System.Drawing.Color.Red;
             this.button_woc1.ButtonColor = System.Drawing.Color.Red;
-            this.button_woc1.FlatAppearance.MouseOverBackColor = button_woc1.BackColor;
-            //this.button_woc1.BackColorChanged += (s, e) =>
-            {
-                this.button_woc1.FlatAppearance.MouseOverBackColor = button_woc1.BackColor;
-            };
+            this.button_woc1.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
             this.button_woc1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button_woc1.Location = new System.Drawing.Point(634, 600);
             this.button_woc1.Name = "button_woc1";

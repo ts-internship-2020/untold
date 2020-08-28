@@ -69,7 +69,6 @@ namespace ConferencePlanner.WinUi
             this.TypesPages = new System.Windows.Forms.TextBox();
             this.dataGridView3 = new System.Windows.Forms.DataGridView();
             this.SpeakerTab = new System.Windows.Forms.TabPage();
-            this.listBox1 = new System.Windows.Forms.ListBox();
             this.SpeakerListDataGrid = new System.Windows.Forms.DataGridView();
             this.SpeakersLayerPanelBtns = new System.Windows.Forms.TableLayoutPanel();
             this.SpeakersFirstPage = new System.Windows.Forms.Button();
@@ -532,7 +531,6 @@ namespace ConferencePlanner.WinUi
             // 
             // SpeakerTab
             // 
-            this.SpeakerTab.Controls.Add(this.listBox1);
             this.SpeakerTab.Controls.Add(this.SpeakerListDataGrid);
             this.SpeakerTab.Controls.Add(this.SpeakersLayerPanelBtns);
             this.SpeakerTab.Location = new System.Drawing.Point(4, 29);
@@ -542,15 +540,6 @@ namespace ConferencePlanner.WinUi
             this.SpeakerTab.TabIndex = 5;
             this.SpeakerTab.Text = "Speaker";
             this.SpeakerTab.UseVisualStyleBackColor = true;
-            // 
-            // listBox1
-            // 
-            this.listBox1.FormattingEnabled = true;
-            this.listBox1.ItemHeight = 20;
-            this.listBox1.Location = new System.Drawing.Point(586, 88);
-            this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(135, 84);
-            this.listBox1.TabIndex = 3;
             // 
             // SpeakerListDataGrid
             // 
@@ -726,6 +715,69 @@ namespace ConferencePlanner.WinUi
             this.dataGridView5.Size = new System.Drawing.Size(946, 323);
             this.dataGridView5.TabIndex = 0;
             this.dataGridView5.Text = "dataGridView5";
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(732, 3);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(8, 8);
+            this.button1.TabIndex = 4;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            // 
+            // BackTabBtn
+            // 
+            this.BackTabBtn.Dock = System.Windows.Forms.DockStyle.Right;
+            this.BackTabBtn.Enabled = false;
+            this.BackTabBtn.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.BackTabBtn.Location = new System.Drawing.Point(493, 3);
+            this.BackTabBtn.Name = "BackTabBtn";
+            this.BackTabBtn.Size = new System.Drawing.Size(80, 34);
+            this.BackTabBtn.TabIndex = 1;
+            this.BackTabBtn.Text = "<<Back";
+            this.BackTabBtn.UseVisualStyleBackColor = true;
+            this.BackTabBtn.Click += new System.EventHandler(this.BackBtnTab_Click);
+            // 
+            // NextTabBtn
+            // 
+            this.NextTabBtn.Dock = System.Windows.Forms.DockStyle.Left;
+            this.NextTabBtn.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.NextTabBtn.Location = new System.Drawing.Point(579, 3);
+            this.NextTabBtn.Name = "NextTabBtn";
+            this.NextTabBtn.Size = new System.Drawing.Size(80, 34);
+            this.NextTabBtn.TabIndex = 0;
+            this.NextTabBtn.Text = "Next>>";
+            this.NextTabBtn.UseVisualStyleBackColor = true;
+            this.NextTabBtn.Click += new System.EventHandler(this.NextBtn_Click);
+            // 
+            // ErrorName
+            // 
+            this.ErrorName.ContainerControl = this;
+            // 
+            // ErrorAddress
+            // 
+            this.ErrorAddress.ContainerControl = this;
+            // 
+            // tableLayoutPanel1
+            // 
+            this.tableLayoutPanel1.AutoSize = true;
+            this.tableLayoutPanel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(1)))), ((int)(((byte)(8)))), ((int)(((byte)(54)))));
+            this.tableLayoutPanel1.ColumnCount = 1;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel2, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.TabControlLocation, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel3, 0, 2);
+            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel1.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.tableLayoutPanel1.ForeColor = System.Drawing.SystemColors.HighlightText;
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 3;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 22.60274F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 69.52055F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 7.876712F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1227, 584);
+            this.tableLayoutPanel1.TabIndex = 8;
             // 
             // tableLayoutPanel2
             // 
