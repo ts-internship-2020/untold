@@ -1062,6 +1062,17 @@ namespace ConferencePlanner.WinUi
         private System.Windows.Forms.Label EmailAddress;
         private System.Windows.Forms.Label ConferenceNameLabel;
         private System.Windows.Forms.TextBox ConfEmailAddress;
+        private System.Windows.Forms.Label EndDatelabel;
+        private System.Windows.Forms.TabControl TabControlLocation;
+        private System.Windows.Forms.TabPage Country;
+        private System.Windows.Forms.TabPage County;
+        private System.Windows.Forms.TabPage City;
+        private System.Windows.Forms.Button NextTabBtn;
+        private System.Windows.Forms.Button BackTabBtn;
+        private System.Windows.Forms.ErrorProvider ErrorName;
+        private System.Windows.Forms.ErrorProvider ErrorAddress;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private System.Windows.Forms.DateTimePicker StardDatePicker;
         private System.Windows.Forms.DateTimePicker EndDatePicker;
         private System.Windows.Forms.DateTimePicker StartHour;
