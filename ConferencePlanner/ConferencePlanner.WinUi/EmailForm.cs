@@ -41,7 +41,7 @@ namespace ConferencePlanner.WinUi
         private void EmailTextBox_TextChanged(object sender, EventArgs e)
         {
 
-            EmailTextBox.ForeColor = Color.Black;
+            EmailTextBox.ForeColor = Color.White;
             ErrorLabel.Visible = false;
             ErrorLabel2.Visible = false;
         }
