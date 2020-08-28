@@ -113,7 +113,7 @@ namespace ConferencePlanner.Repository.Ado.Repository
 
         public List<ConferenceModel> GetAttendeesByPage(string email, int startIndex, int endIndex)
         {
-            string commandText = "with AttendeesForPagination AS(select ROW_NUMBER() OVER(ORDER BY a.StatusId DESC) row_num,StatusId,vw.ConferenceId,vw.ConferenceName,vw.ConferencePeriod,vw.ConferenceTypeName,vw.ConferenceCategoryName,vw.LocationName,vw.SpeakerName from  vwConferenceDetails vw "+
+            string commandText = "with AttendeesForPagination AS(select ROW_NUMBER() OVER(ORDER BY a.StatusId DESC) row_num,isnull(StatusId, 0) StatusId,vw.ConferenceId,vw.ConferenceName,vw.ConferencePeriod,vw.ConferenceTypeName,vw.ConferenceCategoryName,vw.LocationName,vw.SpeakerName from  vwConferenceDetails vw " +
             "left join Attendee a on a.ConferenceId = vw.ConferenceId and a.AttendeeEmail = @Email "+
             "where isnull(a.StatusId, 0)!= 3 "+
             "order by StatusId desc OFFSET 0 ROWS)SELECT* FROM AttendeesForPagination WHERE row_num >= @startIndex and row_num < @endIndex";
@@ -135,17 +135,12 @@ namespace ConferencePlanner.Repository.Ado.Repository
             {
                 while (sqlDataReader.Read())
                 {
-                    string StatusIdTemp=" ";
-                    if (!sqlDataReader.IsDBNull("StatusId"))
-                    {
-                        StatusIdTemp = sqlDataReader.GetString("StatusId");
-                    }
+                    
                     attendees.Add(new ConferenceModel()
                     {
                         
                         RowNum = sqlDataReader.GetInt64("row_num"),
-         
-                        StatusId = StatusIdTemp,    
+                        StatusId = sqlDataReader.GetInt32("StatusId"),
                         ConferenceId = sqlDataReader.GetInt32("ConferenceId"),
                         ConferenceName = sqlDataReader.GetString("ConferenceName"),
                         Period = sqlDataReader.GetString("ConferencePeriod"),
@@ -204,7 +199,7 @@ namespace ConferencePlanner.Repository.Ado.Repository
         public List<ConferenceModel> AttendeeConferences(string email)
         {
             //SqlCommand sqlCommand = _sqlConnection.CreateCommand();
-            string commandText = "select StatusId,vw.ConferenceId,vw.ConferenceName,vw.ConferencePeriod,vw.ConferenceTypeName,vw.ConferenceCategoryName,vw.LocationName,vw.SpeakerName from  vwConferenceDetails vw "+
+            string commandText = "select isnull(StatusId,0),vw.ConferenceId,vw.ConferenceName,vw.ConferencePeriod,vw.ConferenceTypeName,vw.ConferenceCategoryName,vw.LocationName,vw.SpeakerName from  vwConferenceDetails vw "+
                         "left join Attendee a on a.ConferenceId = vw.ConferenceId and a.AttendeeEmail = @AttendeeEmail "+
                         "where isnull(a.StatusId, 0)!= 3 "+
                         "order by StatusId desc";
@@ -229,16 +224,17 @@ namespace ConferencePlanner.Repository.Ado.Repository
                                 
                                 attendees.Add(new ConferenceModel()
                                 {
-                                    
+                                  
                                     ConferenceId = sqlDataReader.GetInt32("ConferenceId"),
                                     ConferenceName = sqlDataReader.GetString("ConferenceName"),
+                                    Period = sqlDataReader.GetString("ConferencePeriod"),
                                     ConferenceTypeName = sqlDataReader.GetString("ConferenceTypeName"),
                                     ConferenceCategoryName = sqlDataReader.GetString("ConferenceCategoryName"),
                                     Location = sqlDataReader.GetString("LocationName"),
 
                                     Speaker = sqlDataReader.GetString("SpeakerName"),
 
-                                    Period = sqlDataReader.GetString("ConferencePeriod")
+                                    
                                 });
 
                             }

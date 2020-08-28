@@ -19,7 +19,7 @@ namespace ConferencePlanner.Repository.Ado.Repository
         public List<CountryModel> GetListCountry()
         {
             SqlCommand sqlCommandCountry = _sqlConnection.CreateCommand();
-            sqlCommandCountry.CommandText = "select DictionaryCountryId, CountryCode, CountryName from DictionaryCountry ";
+            sqlCommandCountry.CommandText = "select DictionaryCountryId, CountryCode, CountryName from DictionaryCountry order by CountryName";
             SqlDataReader sqlDataReader = sqlCommandCountry.ExecuteReader();
 
             List<CountryModel> countrylist = new List<CountryModel>();
@@ -40,6 +40,30 @@ namespace ConferencePlanner.Repository.Ado.Repository
 
             sqlDataReader.Close();
             return countrylist;
+        }
+
+        public int GetCountryIdByConferenceId(int id)
+        {
+            
+            string commandText = "select DictionaryCountryId from Conference C " +
+                "join vwLocationIds vwL on C.LocationId = vwL.LocationId " +
+                "where ConferenceId = @ConferenceId";
+            SqlCommand sqlCommand = new SqlCommand(commandText, _sqlConnection);
+            
+            sqlCommand.Parameters.Add("@ConferenceId", SqlDbType.Int);
+            sqlCommand.Parameters["@ConferenceId"].Value = id;
+
+            SqlDataReader sqlDataReader = sqlCommand.ExecuteReader();
+            int ID = 0;
+            if (sqlDataReader.Read())
+            {
+                ID =(int)sqlDataReader.GetInt32("DictionaryCountryId");
+            }
+           
+            sqlDataReader.Close();
+
+            return ID;
+
         }
     }
 }
