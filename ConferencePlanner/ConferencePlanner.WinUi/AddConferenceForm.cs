@@ -25,7 +25,7 @@ namespace ConferencePlanner.WinUi
 
         private int PageSize;
 
-        private List<SpeakerModel> Speakers;
+        private BindingList<SpeakerModel> Speakers;
         private int SpeakersTotalPages;
         private int SpeakersCurrentPage;
         
@@ -54,21 +54,47 @@ namespace ConferencePlanner.WinUi
 
             InitializeComponent();
 
+            this.PopulateForm(conference);
+
+        }
+        private void PopulateForm(ConferenceModel conference)
+        {
             this.ConfName.Text = conference.ConferenceName;
-            
+
             string[] dates = conference.Period.Split(" - ");
-            //this.MonthCalendar.SetSelectionRange(DateTime.Parse(dates[0]), DateTime.Parse(dates[1]));
+            this.StardDatePicker.Value = DateTime.Parse(dates[0]);
+            this.EndDatePicker.Value = DateTime.Parse(dates[1]);
+
+            this.ConfName.Text = conference.ConferenceId.ToString();
+
+
+            int selectedCountryId = this._countryRepository.GetCountryIdByConferenceId(conference.ConferenceId);
+            int selectedRowId = this.SearchIdInDataGrid(selectedCountryId, "DictionaryCountryId", this.CountryListDataGridView);
+            this.ConfName.Text = selectedRowId.ToString();
+
+            if (selectedRowId > 0)
+            {
+                this.CountryListDataGridView.Rows[selectedRowId].Selected = true;
+            }
+
 
             string[] places = conference.Location.Split(", ");
 
             this.ConfEmailAddress.Text = conference.Location;
+        }
 
-            //this.CountryComboBox.Text = places[0];
-            //this.CountryListDataGridView.SelectR
-            //this.CountyComboBox.Text = places[1];
-            //this.CityComboBox.Text = places[2];
-
-
+        private int SearchIdInDataGrid(int value, string col_name, DataGridView dgv)
+        {
+            int rowIndex = -1;
+            foreach (DataGridViewRow row in dgv.Rows)
+            {
+                if ((int)row.Cells[col_name].Value == value)
+                {
+                    rowIndex = row.Index;
+                    break;
+                }
+            }
+            return rowIndex;
         }
 
         private void AddConf_Load(object sender, EventArgs e)
@@ -278,9 +304,28 @@ namespace ConferencePlanner.WinUi
                 SpeakerListDataGrid.Columns.Add(MainSpeaker);
             }
 
+            this.SpeakerListDataGrid.Columns["FirstName"].HeaderText = "First Name";
+            this.SpeakerListDataGrid.Columns["LastName"].HeaderText = "Last Name";
 
 
-            
+
+
+
+        }
+
+        private void SpeakerListDataGrid_UserAddedRow(object sender, DataGridViewRowEventArgs e)
+        {
+
+        }
+
+        private void SpeakerListDataGrid_MouseClick(object sender, MouseEventArgs e)
+        {
+           // this.SpeakerListDataGrid.ContextMenuStrip.
+
+        }
+
+        private void tableLayoutPanel3_Paint(object sender, PaintEventArgs e)
+        {
 
         }
     }

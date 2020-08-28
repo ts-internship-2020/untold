@@ -2,6 +2,7 @@
 using ConferencePlanner.Abstraction.Repository;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
 using System.Security.Cryptography.X509Certificates;
@@ -18,14 +19,14 @@ namespace ConferencePlanner.Repository.Ado.Repository
             _sqlConnection = sqlConnection;
         }
 
-        public List<SpeakerModel> GetAllSpeakers()
+        public BindingList<SpeakerModel> GetAllSpeakers()
         {
             string commandText = "select SpeakerId, FirstName, LastName, Nationality, Rating from Speaker";
 
             SqlCommand sqlCommand = new SqlCommand(commandText, _sqlConnection);
 
             SqlDataReader sqlDataReader = sqlCommand.ExecuteReader();
-            List<SpeakerModel> speakers = new List<SpeakerModel>();
+            BindingList<SpeakerModel> speakers = new BindingList<SpeakerModel>();
 
             if (sqlDataReader.HasRows)
             {

@@ -572,7 +572,7 @@ namespace ConferencePlanner.WinUi
             //listBox1.Items.Add(e.ToString());
             if (e.ColumnIndex == OrganizerDataGrid.Columns["edit_column"].Index)
             {
-                var id = (int)OrganizerDataGrid.Rows[e.RowIndex].Cells[2].Value;
+                var id = (int)OrganizerDataGrid.Rows[e.RowIndex].Cells["ConferenceId"].Value;
 
                 ConferenceModel conference = _conferenceRepository.GetConferenceById(id);
 

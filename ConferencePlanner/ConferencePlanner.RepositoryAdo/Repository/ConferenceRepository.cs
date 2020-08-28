@@ -284,6 +284,7 @@ namespace ConferencePlanner.Repository.Ado.Repository
             ConferenceModel conference = new ConferenceModel();
             //Console.WriteLine(sqlDataReader);
             sqlDataReader.Read();
+            conference.ConferenceId = id;
             conference.ConferenceName = sqlDataReader.GetString("ConferenceName");
 
             conference.Location = sqlDataReader.GetString("LocationName");
