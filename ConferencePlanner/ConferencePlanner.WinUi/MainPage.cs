@@ -584,7 +584,7 @@ namespace ConferencePlanner.WinUi
         }
         private void AttendeeGridvw_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.ColumnIndex == 0 || e.ColumnIndex == 1 || e.ColumnIndex == 2)
+            if (e.RowIndex < 0)
             {
                 return;
             }
