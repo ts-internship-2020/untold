@@ -599,32 +599,32 @@ namespace ConferencePlanner.WinUi
                 }
 
             
-            if (e.ColumnIndex == AttendeeGridvw.Columns["speaker_name"].Index)
-            {
-                string[] names = AttendeeGridvw.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString().Split(" ");
-                SpeakerModel speaker = this._speakerRepository.GetSpeakerByName(names);
+            //if (e.ColumnIndex == AttendeeGridvw.Columns["speaker_name"].Index)
+            //{
+            //    string[] names = AttendeeGridvw.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString().Split(" ");
+            //    SpeakerModel speaker = this._speakerRepository.GetSpeakerByName(names);
 
-                var varSpeakerDetails = new SpeakerDetails(speaker);
-                varSpeakerDetails.ShowDialog();
+            //    var varSpeakerDetails = new SpeakerDetails(speaker);
+            //    varSpeakerDetails.ShowDialog();
 
-                //listBox1.Items.Add(speaker.Rating);
-                //listBox1.Items.Add(speaker.ImagePath);
-                //AttendeeGridvw.Rows[e.RowIndex].Cells[e.ColumnIndex].Value;
+            //    //listBox1.Items.Add(speaker.Rating);
+            //    //listBox1.Items.Add(speaker.ImagePath);
+            //    //AttendeeGridvw.Rows[e.RowIndex].Cells[e.ColumnIndex].Value;
 
-            }
+            //}
 
             if (e.ColumnIndex == AttendeeGridvw.Columns["withdraw_column"].Index)
             {
-                int statusid = 1;
-                Withdraw_Click(statusid);
+                int confid = (int)AttendeeGridvw.Rows[e.RowIndex].Cells[5].Value;
+                Withdraw_Click(confid);
                 
             }
 
             if (e.ColumnIndex == AttendeeGridvw.Columns["join_column"].Index)
             {
-                int statusId = 1;
+                int confid = (int)AttendeeGridvw.Rows[e.RowIndex].Cells[5].Value;
                 //int confid = (int)AttendeeGridvw.Rows[e.RowIndex].Cells[0].Value;
-               Join_Click(statusId);
+                Join_Click(confid);
             }
 
         }

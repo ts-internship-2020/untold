@@ -220,12 +220,17 @@ namespace ConferencePlanner.WinUi
             // RightArrowPagButton
             // 
             this.RightArrowPagButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.RightArrowPagButton.BackColor = System.Drawing.Color.Transparent;
+            this.RightArrowPagButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.RightArrowPagButton.FlatAppearance.BorderSize = 0;
+            this.RightArrowPagButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.RightArrowPagButton.Image = ((System.Drawing.Image)(resources.GetObject("RightArrowPagButton.Image")));
             this.RightArrowPagButton.Location = new System.Drawing.Point(1100, 585);
             this.RightArrowPagButton.Name = "RightArrowPagButton";
             this.RightArrowPagButton.Size = new System.Drawing.Size(34, 34);
             this.RightArrowPagButton.TabIndex = 8;
-            this.RightArrowPagButton.Text = ">";
-            this.RightArrowPagButton.UseVisualStyleBackColor = true;
+            this.RightArrowPagButton.UseCompatibleTextRendering = true;
+            this.RightArrowPagButton.UseVisualStyleBackColor = false;
             this.RightArrowPagButton.MouseClick += new System.Windows.Forms.MouseEventHandler(this.RightArrowPagButton_MouseClick);
             // 
             // MainPage
@@ -244,6 +249,7 @@ namespace ConferencePlanner.WinUi
             this.MinimumSize = new System.Drawing.Size(915, 500);
             this.Name = "MainPage";
             this.Text = "MainForm";
+            this.TransparencyKey = System.Drawing.Color.WhiteSmoke;
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.TabAttendee.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.AttendeeGridvw)).EndInit();
@@ -279,7 +285,7 @@ namespace ConferencePlanner.WinUi
         private Button button5;
         private Button button4;
         private Button button3;
-        private ListBox listBox1;
+
         private Button LeftArrowPagButton;
         private Button RightArrowPagButton;
     }
