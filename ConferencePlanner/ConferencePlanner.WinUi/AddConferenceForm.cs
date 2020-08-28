@@ -42,9 +42,7 @@ namespace ConferencePlanner.WinUi
 
         public AddConf()
         {
-            // functionalitati la tab control
-            // 
-
+          
             InitializeComponent();
         }
         public AddConf(ConferenceModel conference, IConferenceRepository conferenceRepository, ICountryRepository countryRepository)
@@ -54,7 +52,7 @@ namespace ConferencePlanner.WinUi
 
             InitializeComponent();
 
-            this.PopulateForm(conference);
+            //this.PopulateForm(conference);
 
         }
         private void PopulateForm(ConferenceModel conference)

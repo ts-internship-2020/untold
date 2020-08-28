@@ -598,20 +598,17 @@ namespace ConferencePlanner.WinUi
                     return;
                 }
 
-            
-            //if (e.ColumnIndex == AttendeeGridvw.Columns["speaker_name"].Index)
-            //{
-            //    string[] names = AttendeeGridvw.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString().Split(" ");
-            //    SpeakerModel speaker = this._speakerRepository.GetSpeakerByName(names);
 
-            //    var varSpeakerDetails = new SpeakerDetails(speaker);
-            //    varSpeakerDetails.ShowDialog();
+            if (e.ColumnIndex == AttendeeGridvw.Columns["Speaker"].Index)
+            {
+                string[] names = AttendeeGridvw.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString().Split(" ");
+                SpeakerModel speaker = this._speakerRepository.GetSpeakerByName(names);
 
-            //    //listBox1.Items.Add(speaker.Rating);
-            //    //listBox1.Items.Add(speaker.ImagePath);
-            //    //AttendeeGridvw.Rows[e.RowIndex].Cells[e.ColumnIndex].Value;
+                var varSpeakerDetails = new SpeakerDetails(speaker);
+                varSpeakerDetails.ShowDialog();
+ 
 
-            //}
+            }
 
             if (e.ColumnIndex == AttendeeGridvw.Columns["withdraw_column"].Index)
             {
@@ -639,6 +636,10 @@ namespace ConferencePlanner.WinUi
 
         }
 
+        private void OrganizerDataGrid_Layout(object sender, LayoutEventArgs e)
+        {
+            this.OrganizerDataGrid.ReadOnly = true;
+        }
     }
 }
 
