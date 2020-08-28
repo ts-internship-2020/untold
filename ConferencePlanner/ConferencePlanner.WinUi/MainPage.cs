@@ -571,15 +571,14 @@ namespace ConferencePlanner.WinUi
         private void OrganizerDataGrid_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             //listBox1.Items.Add(e.ToString());
-            if (e.ColumnIndex == OrganizerDataGrid.Columns["edit_column"].Index)
+            if (e.ColumnIndex == OrganizerDataGrid.Columns["edit_column"].Index && e.RowIndex >= 0)
             {
-                var id = (int)OrganizerDataGrid.Rows[e.RowIndex].Cells["ConferenceId"].Value;
-
+                int id = (int)OrganizerDataGrid.Rows[e.RowIndex].Cells["ConferenceId"].Value;
                 ConferenceModel conference = _conferenceRepository.GetConferenceById(id);
 
                 var varAddConf = new AddConf(conference, _conferenceRepository, _countryRepository);
 
-                varAddConf.ShowDialog();
+                varAddConf.ShowDialog();        
 
             }
         }
