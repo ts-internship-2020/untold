@@ -584,6 +584,11 @@ namespace ConferencePlanner.WinUi
         }
         private void AttendeeGridvw_CellClick(object sender, DataGridViewCellEventArgs e)
         {
+            if (e.RowIndex < 0)
+            {
+                return;
+            }
+            //-
             
             if (e.ColumnIndex == AttendeeGridvw.Columns["attend_column"].Index)
             {
@@ -616,7 +621,6 @@ namespace ConferencePlanner.WinUi
                 Withdraw_Click(confid);
                 
             }
-
             if (e.ColumnIndex == AttendeeGridvw.Columns["join_column"].Index)
             {
                 int confid = (int)AttendeeGridvw.Rows[e.RowIndex].Cells[5].Value;
