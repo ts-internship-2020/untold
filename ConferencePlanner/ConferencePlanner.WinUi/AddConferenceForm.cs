@@ -399,10 +399,10 @@ namespace ConferencePlanner.WinUi
         {
             _speakerRepository.UpdateSpeaker(GetSpeakerToUpdate());
             this.SpeakerUserMessagesBox.Text = "Succesfully modified speaker :)";
-            
+
             DisplayMessage();
             this.SpeakerSaveButton.Visible = false;
-           
+        }  
         private void LoadCountyTab()
         {
             CountiesListGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
@@ -416,9 +416,9 @@ namespace ConferencePlanner.WinUi
 
         private void CountiesListGridView_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
-            if (CountiesListGridView.Columns.Contains("DictionaryCountyId") && CountiesListGridView.Columns["DictionaryCountyId"].Visible)
+            if (CountiesListGridView.Columns.Contains("CountyId") && CountiesListGridView.Columns["CountyId"].Visible)
             {
-                CountiesListGridView.Columns["DictionaryCountyId"].Visible = false;
+                CountiesListGridView.Columns["CountyId"].Visible = false;
             }
             if (CountiesListGridView.Columns.Contains("CountryId") && CountiesListGridView.Columns["CountryId"].Visible)
             {

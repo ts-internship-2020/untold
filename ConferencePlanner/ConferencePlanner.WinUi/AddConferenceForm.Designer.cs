@@ -1111,6 +1111,7 @@ namespace ConferencePlanner.WinUi
         private System.Windows.Forms.Button SpeakersNextBtn;
         private System.Windows.Forms.Button SpeakersLastPage;
         private System.Windows.Forms.TextBox SpeakersPages;
+        private System.Windows.Forms.TextBox SpeakerUserMessagesBox;
         private System.Windows.Forms.TabPage CategoryTab;
         private System.Windows.Forms.TableLayoutPanel CategoriesLayoutPanelBtn;
         private System.Windows.Forms.Button CategoriesFirstPage;
@@ -1120,5 +1121,9 @@ namespace ConferencePlanner.WinUi
         private System.Windows.Forms.TextBox CategoriesPages;
         private System.Windows.Forms.DataGridView dataGridView5;
         private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutSpeaker;
+        //private System.Windows.Forms.TextBox SpeakerUserMessagesBox;
+        
+        private System.Windows.Forms.Button SpeakerSaveButton;
     }
 }
