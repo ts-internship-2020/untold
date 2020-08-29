@@ -25,7 +25,7 @@ namespace ConferencePlanner.WinUi
         private readonly IAttendeeButtonsRepository _attendeeButtons;
         private readonly ISpeakerRepository _speakerRepository;
 
-        private int PageSize = 3;
+        private int PageSize = 5;
         //public int CurrentPageIndex { get; set; } //1
         //public int TotalPage {get; set;} //0
         private int OrganizerCurrentPageIndex = 1;
