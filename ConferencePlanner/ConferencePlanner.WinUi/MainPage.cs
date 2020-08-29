@@ -30,8 +30,7 @@ namespace ConferencePlanner.WinUi
         //public int TotalPage {get; set;} //0
         private int OrganizerCurrentPageIndex = 1;
         private int OrganizerTotalPage = 0;
-
-
+        private int remainingTime = 6;
         private int AttendeeCurrentPageIndex = 1;
         private int AttendeeTotalPage = 0;
 
@@ -257,12 +256,14 @@ namespace ConferencePlanner.WinUi
 
                 this.OrganizerCurrentPageIndex++;
                 this.CreatePage();
+
             }
             else if(this.TabControl.SelectedTab.Name == "TabAttendee")
             {
                 //listBox1.Items.Add(this.TabControl.SelectedTab.Name);
                 this.AttendeeCurrentPageIndex++;
                 this.CreateAttendeePage();
+                coditionsForButtons();
             }
 
            
@@ -281,6 +282,7 @@ namespace ConferencePlanner.WinUi
             {
                 this.AttendeeCurrentPageIndex--;
                 this.CreateAttendeePage();
+                coditionsForButtons();
             }
 
         }
@@ -353,9 +355,6 @@ namespace ConferencePlanner.WinUi
             //AttendeeGridvw.Columns[10].HeaderText = "Period";
             //AttendeeGridvw.Columns[11].HeaderText = "Period";
             //AttendeeGridvw.Columns["CategoryTypeName"].HeaderText = "Type";
-
-
-
             if (a == 0)
             {  
 
@@ -366,10 +365,10 @@ namespace ConferencePlanner.WinUi
                 attendButtonColumn.Name = "attend_column";
                 attendButtonColumn.Text = "Attend";
                 attendButtonColumn.HeaderText = "Attend";
-                attendButtonColumn.Width = 200;
+                attendButtonColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
                 attendButtonColumn.FlatStyle = FlatStyle.Flat;
-                attendButtonColumn.DefaultCellStyle.BackColor = System.Drawing.Color.Green;
-                attendButtonColumn.DefaultCellStyle.ForeColor = System.Drawing.Color.Green;
+                //attendButtonColumn.DefaultCellStyle.BackColor = System.Drawing.Color.Green;
+                //attendButtonColumn.DefaultCellStyle.ForeColor = System.Drawing.Color.Green;
 
                 int columnIndex = AttendeeGridvw.ColumnCount;
 
@@ -382,7 +381,7 @@ namespace ConferencePlanner.WinUi
                 withdrawButtonColumn.Text = "Withdraw";
                 withdrawButtonColumn.HeaderText = "Withdraw";
                 withdrawButtonColumn.FlatStyle = FlatStyle.Flat;
-                withdrawButtonColumn.DefaultCellStyle.BackColor = System.Drawing.Color.Red;
+                //withdrawButtonColumn.DefaultCellStyle.BackColor = System.Drawing.Color.Red;
                 //fwithdrawButtonColumn.DefaultCellStyle.ForeColor = System.Drawing.Color.Red;
                 withdrawButtonColumn.Width = 200;
                 AttendeeGridvw.Columns.Insert(columnIndex, withdrawButtonColumn);
@@ -395,8 +394,8 @@ namespace ConferencePlanner.WinUi
 
                 joinButtonColumn.HeaderText = "Join";
                 joinButtonColumn.FlatStyle = FlatStyle.Flat;
-                joinButtonColumn.DefaultCellStyle.BackColor = System.Drawing.Color.Red;
-                joinButtonColumn.DefaultCellStyle.ForeColor = System.Drawing.Color.Red;
+               // joinButtonColumn.DefaultCellStyle.BackColor = System.Drawing.Color.Red;
+               // joinButtonColumn.DefaultCellStyle.ForeColor = System.Drawing.Color.Red;
 
                 DataGridViewColumn dataGridViewColumn = new DataGridViewColumn();
                 
@@ -413,20 +412,12 @@ namespace ConferencePlanner.WinUi
                 //AttendeeGridvw.Columns[12].HeaderText = "Attend";
                 // AttendeeGridvw.Columns[13].HeaderText = "Withdraw";
                 // AttendeeGridvw.Columns[14].HeaderText = "Join";
-        //        AttendeeGridvw.Columns["Column"].Visible = false;
+                //        AttendeeGridvw.Columns["Column"].Visible = false;
                 //AttendeeGridvw.Columns[7].Tag = "test";
-               
             }
-
+            coditionsForButtons();
 
         }
-
-
-
-
-
-
-
         //    //AttendeeGridvw.Columns.Insert(columnIndex: columnIndex + 2, joinButtonColumn);
 
         //    //AttendeeGridvw.CellClick += AttendeeGridvw_CellClick;
@@ -539,6 +530,7 @@ namespace ConferencePlanner.WinUi
             popup.ContentText = "You succesfully attended to this conference!";
             popup.Popup();
             CreateAttendeePage();
+            coditionsForButtons();
             var newForm = new QRCodeForm();
             newForm.ShowDialog();
         }
@@ -552,6 +544,7 @@ namespace ConferencePlanner.WinUi
             popup.ContentText = "You can choose from the available ones";
             popup.Popup();
             CreateAttendeePage();
+            coditionsForButtons();
         }
 
         private void Join_Click(int statusId)
@@ -697,15 +690,52 @@ namespace ConferencePlanner.WinUi
 
         public void coditionsForButtons()
         {
-
-            for (int i = 0; i < AttendeeGridvw.Rows.Count * AttendeeTotalPage; i++)
+            for (int i = 0; i < AttendeeGridvw.Rows.Count  ; i++)
             {
-                //var status = 0;
-                var status = AttendeeGridvw.Rows[i].Cells[4].Value;
-                // if ()
-                //{
+                var e = AttendeeGridvw.Rows[i].Cells[4].Value;
+                var time = AttendeeGridvw.Rows[i].Cells["Period"].Value;
+                time = time.ToString().Split(" - ")[0];
+                time = DateTime.Parse((string)time);
+                time = time.ToString();
+                string[] timeToCompare = time.ToString().Split(" ");
+                string[] currentTime = DateTime.Now.ToString("M/dd/yyyy h:mm:ss tt").Split(" ");
 
-                //}
+                if (e.Equals(0))
+                {
+                    AttendeeGridvw.Rows[i].Cells[0].Style.BackColor = System.Drawing.Color.Green;
+                    AttendeeGridvw.Rows[i].Cells[0].Style.ForeColor = System.Drawing.Color.Green;
+                    AttendeeGridvw.Rows[i].Cells[1].Style.BackColor = System.Drawing.Color.Red;
+                    AttendeeGridvw.Rows[i].Cells[1].Style.ForeColor = System.Drawing.Color.Red;
+                    AttendeeGridvw.Rows[i].Cells[2].Style.BackColor = System.Drawing.Color.Red;
+                    AttendeeGridvw.Rows[i].Cells[2].Style.ForeColor = System.Drawing.Color.Red;
+                } else if (e.Equals(1))
+                {
+                    AttendeeGridvw.Rows[i].Cells[0].Style.BackColor = System.Drawing.Color.Red;
+                    AttendeeGridvw.Rows[i].Cells[0].Style.ForeColor = System.Drawing.Color.Red;
+                    AttendeeGridvw.Rows[i].Cells[1].Style.BackColor = System.Drawing.Color.Green;
+                    AttendeeGridvw.Rows[i].Cells[1].Style.ForeColor = System.Drawing.Color.Green;
+                    AttendeeGridvw.Rows[i].Cells[2].Style.BackColor = System.Drawing.Color.Red;
+                    AttendeeGridvw.Rows[i].Cells[2].Style.ForeColor = System.Drawing.Color.Red;
+                    if (timeToCompare[0].Equals(currentTime[0]) && timeToCompare[2].Equals(currentTime[2]))
+                    {
+                        string[] times1 = currentTime[1].Split(":");
+                        int hour1 = Int32.Parse(times1[0]);
+                        int minutes1 = Int32.Parse(times1[1]);
+                        string[] times2 = timeToCompare[1].Split(":");
+                        int hour2 = Int32.Parse(times2[0]);
+                        int minutes2 = Int32.Parse(times2[1]);
+                        if (hour2 == hour1 && (minutes2 - minutes1 <= 5) || (hour2 - hour1 == 1) && (minutes2 - minutes1 <= 5))
+                        {
+                            AttendeeGridvw.Rows[i].Cells[2].Style.BackColor = System.Drawing.Color.Green;
+                            AttendeeGridvw.Rows[i].Cells[2].Style.ForeColor = System.Drawing.Color.Green;
+                            AttendeeGridvw.Rows[i].Cells[1].Style.BackColor = System.Drawing.Color.Red;
+                            AttendeeGridvw.Rows[i].Cells[1].Style.ForeColor = System.Drawing.Color.Red;
+                            remainingTime = minutes2 - minutes1;
+                        }
+
+                    }
+
+                }
             }
         }
 
@@ -720,16 +750,6 @@ namespace ConferencePlanner.WinUi
             
             if (e.ColumnIndex == AttendeeGridvw.Columns["attend_column"].Index)
             {
-                if (AttendeeGridvw.Rows[e.RowIndex].Cells[e.ColumnIndex].Style.ForeColor.Equals(Color.Red))
-                {
-                    AttendeeGridvw.Rows[e.RowIndex].Cells[e.ColumnIndex].Selected = false;
-                }
-                AttendeeGridvw.Rows[e.RowIndex].Cells[e.ColumnIndex].Style.BackColor = System.Drawing.Color.Red;
-                AttendeeGridvw.Rows[e.RowIndex].Cells[e.ColumnIndex].Style.ForeColor = System.Drawing.Color.Red;
-               // int statusid = (int)AttendeeGridvw.Rows[e.RowIndex].Cells["].Value;
-                
-                //AttendeeGridvw.Rows[e.RowIndex].Cells[7].ReadOnly = true;
-                //AttendeeGridvw.Rows[e.RowIndex].Cells[7].Visible = false;
                 int confid = (int)AttendeeGridvw.Rows[e.RowIndex].Cells[5].Value;
 
                 try
@@ -773,13 +793,13 @@ namespace ConferencePlanner.WinUi
             {
                 int statusid = (int)AttendeeGridvw.Rows[e.RowIndex].Cells[4].Value;
                 int confid = (int)AttendeeGridvw.Rows[e.RowIndex].Cells[5].Value;
-                if (statusid == 1)
+                if (statusid == 1 && remainingTime > 5)
                 {
                     Withdraw_Click(confid);
                 }
                 else
                 {
-
+                    popUpMethod("You can't withdrwan. The conference will start in less than 5 minutes", "");
                 }
                 
                // AttendeeGridvw.Rows[e.RowIndex].Cells[e.ColumnIndex];
