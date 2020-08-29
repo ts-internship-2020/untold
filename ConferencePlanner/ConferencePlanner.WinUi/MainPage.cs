@@ -30,7 +30,7 @@ namespace ConferencePlanner.WinUi
         //public int TotalPage {get; set;} //0
         private int OrganizerCurrentPageIndex = 1;
         private int OrganizerTotalPage = 0;
-
+        private int remainingTime = 6;
         private int AttendeeCurrentPageIndex = 1;
         private int AttendeeTotalPage = 0;
 
@@ -686,7 +686,6 @@ namespace ConferencePlanner.WinUi
 
         public void coditionsForButtons()
         {
-
             for (int i = 0; i < AttendeeGridvw.Rows.Count  ; i++)
             {
                 var e = AttendeeGridvw.Rows[i].Cells[4].Value;
@@ -727,6 +726,7 @@ namespace ConferencePlanner.WinUi
                             AttendeeGridvw.Rows[i].Cells[2].Style.ForeColor = System.Drawing.Color.Green;
                             AttendeeGridvw.Rows[i].Cells[1].Style.BackColor = System.Drawing.Color.Red;
                             AttendeeGridvw.Rows[i].Cells[1].Style.ForeColor = System.Drawing.Color.Red;
+                            remainingTime = minutes2 - minutes1;
                         }
 
                     }
@@ -789,13 +789,13 @@ namespace ConferencePlanner.WinUi
             {
                 int statusid = (int)AttendeeGridvw.Rows[e.RowIndex].Cells[4].Value;
                 int confid = (int)AttendeeGridvw.Rows[e.RowIndex].Cells[5].Value;
-                if (statusid == 1)
+                if (statusid == 1 && remainingTime > 5)
                 {
                     Withdraw_Click(confid);
                 }
                 else
                 {
-
+                    popUpMethod("You can't withdrwan. The conference will start in less than 5 minutes", "");
                 }
                 
                // AttendeeGridvw.Rows[e.RowIndex].Cells[e.ColumnIndex];
