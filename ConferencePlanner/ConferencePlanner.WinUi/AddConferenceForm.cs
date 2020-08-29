@@ -12,6 +12,9 @@ using System.ComponentModel.Design;
 using System.Configuration;
 using System.Linq;
 using ConferencePlanner.Repository.Ado.Repository;
+using System.Transactions;
+using Tulpep.NotificationWindow;
+
 
 namespace ConferencePlanner.WinUi
 {
@@ -32,6 +35,7 @@ namespace ConferencePlanner.WinUi
         private BindingList<SpeakerModel> Speakers;
         private int SpeakersTotalPages;
         private int SpeakersCurrentPage;
+        private int UpdateSpeakerRow;
         
         //lista de ce facem
 
@@ -83,7 +87,6 @@ namespace ConferencePlanner.WinUi
 
             string[] places = conference.Location.Split(", ");
 
-            this.ConfEmailAddress.Text = conference.Location;
         }
 
         private int SearchIdInDataGrid(int value, string col_name, DataGridView dgv)
@@ -117,15 +120,7 @@ namespace ConferencePlanner.WinUi
                 ErrorName.SetError(ConfName, "Please enter a value in the conference name fild!");
                 return;
             }
-            else if(ConfEmailAddress.Text == string.Empty)
-            {
-                ErrorAddress.SetError(ConfEmailAddress, "Please enter a value in the conference address fild!");
-                return;
-            }
-            else
-            TabControlLocation.SelectedIndex = 1;
-            ErrorName.Clear();
-            ErrorAddress.Clear();
+           
 
         }
 
@@ -251,7 +246,6 @@ namespace ConferencePlanner.WinUi
         {
 
             ConfName.Text = string.Empty;
-            ConfEmailAddress.Text = string.Empty;
             StardDatePicker.Value = DateTime.Today;
             EndDatePicker.Value = DateTime.Today;
         }
@@ -262,13 +256,10 @@ namespace ConferencePlanner.WinUi
         }
 
 
-
-
-
         private void LoadSpeakersTab()
         {
             this.Speakers = _speakerRepository.GetAllSpeakers();
-            SpeakerListDataGrid.DefaultCellStyle.ForeColor = Color.Black;
+            SpeakerListDataGrid.DefaultCellStyle.ForeColor = Color.FromArgb(53, 56, 49);
             SpeakerListDataGrid.DataSource = this.Speakers;
         }
 
@@ -304,12 +295,6 @@ namespace ConferencePlanner.WinUi
         {
 
         }
-
-        private void SpeakerListDataGrid_MouseClick(object sender, MouseEventArgs e)
-        {
-           // this.SpeakerListDataGrid.ContextMenuStrip.
-
-        }
         private void AddConf_Load(object sender, EventArgs e)
         {
             TabControlLocation.SelectedIndex = 0;
@@ -340,6 +325,10 @@ namespace ConferencePlanner.WinUi
 
         }
 
+        private void tableLayoutPanel3_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
         private void LoadCountyTab()
         {
             CountiesListGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
@@ -347,15 +336,101 @@ namespace ConferencePlanner.WinUi
             this.Counties = _countyRepository.GetCountyListBind(this.SelectedCountryId);
             CountiesListGridView.DefaultCellStyle.ForeColor = Color.Black;
             CountiesListGridView.DataSource = this.Counties;
-            
+
 
         }
 
+        private void AddUpdateMessage(string fName, string lName)
+        {
+            this.SpeakerUserMessagesBox.ForeColor = Color.MediumSeaGreen;
+            string sName = fName +" "+ lName;
+            this.SpeakerUserMessagesBox.Text = "You are now editing speaker " + sName + "'s informations. Press the button to Save.";
+            this.SpeakerUserMessagesBox.Visible = true;
+            this.SpeakerSaveButton.Visible = true;
+        }
+
+        private void SpeakerBeginEditLayout()
+        {
+            this.SpeakerListDataGrid.Columns["main_speaker"].ReadOnly = true;
+            this.SpeakerListDataGrid.Columns["main_speaker"].DefaultCellStyle.BackColor = Color.LightGray;
+            //this.SpeakerListDataGrid.Columns["main_speaker"].Cell
+            foreach (DataGridViewRow row in SpeakerListDataGrid.Rows)
+            {
+                if (row.Index != this.UpdateSpeakerRow)
+                {
+                    row.ReadOnly = true;
+                }
+            }
+            string fName = this.SpeakerListDataGrid.Rows[this.UpdateSpeakerRow].Cells["FirstName"].Value.ToString();
+            string lName = this.SpeakerListDataGrid.Rows[this.UpdateSpeakerRow].Cells["LastName"].Value.ToString();
+            this.AddUpdateMessage(fName, lName);
+        }
+
+        private void SpeakerEndEditLayout()
+        {
+            this.SpeakerUserMessagesBox.Visible = false;
+            this.SpeakerSaveButton.Visible = false;
+            this.popUpMethod("Done", "Speaker modified succesfully :)");
+            this.SpeakerListDataGrid.Columns["main_speaker"].ReadOnly = false;
+            this.SpeakerListDataGrid.Columns["main_speaker"].DefaultCellStyle.BackColor = Color.White;
+            foreach (DataGridViewRow row in SpeakerListDataGrid.Rows)
+            {
+                if (row.Index != this.UpdateSpeakerRow)
+                {
+                    row.ReadOnly = false;
+                }
+            }
+        }
+
+        private void popUpMethod(String titleText, String contentText)
+        {
+            PopupNotifier popup = new PopupNotifier();
+            popup.Image = Properties.Resources.info;
+            popup.TitleText = titleText;
+            popup.ContentText = contentText;
+            popup.Popup();
+        }
+
+        private void SpeakerListDataGrid_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
+        {
+            if (SpeakerUserMessagesBox.Visible == false)
+            {
+                this.UpdateSpeakerRow = e.RowIndex;
+                this.SpeakerBeginEditLayout();
+               
+            }
+            else if (this.UpdateSpeakerRow != e.RowIndex) 
+            {
+                this.popUpMethod("Warning!", "Changes made would not be saved unless you click on the Save button");
+            }
+
+
+        }
+
+        private SpeakerModel GetSpeakerToUpdate()
+        {
+            SpeakerModel speaker = new SpeakerModel();
+            speaker.FirstName = this.SpeakerListDataGrid.Rows[this.UpdateSpeakerRow].Cells["FirstName"].Value.ToString();
+            speaker.LastName = this.SpeakerListDataGrid.Rows[this.UpdateSpeakerRow].Cells["LastName"].Value.ToString();
+            speaker.Nationality = this.SpeakerListDataGrid.Rows[this.UpdateSpeakerRow].Cells["Nationality"].Value.ToString();
+            speaker.Rating = (float) this.SpeakerListDataGrid.Rows[this.UpdateSpeakerRow].Cells["Rating"].Value;
+            speaker.SpeakerId = (int)this.SpeakerListDataGrid.Rows[this.UpdateSpeakerRow].Cells["SpeakerId"].Value;
+
+            return speaker;
+        }
+
+        private void SpeakerSaveButton_Click(object sender, EventArgs e)
+        {
+            _speakerRepository.UpdateSpeaker(GetSpeakerToUpdate());
+            SpeakerEndEditLayout();
+            
+        }  
+
         private void CountiesListGridView_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
-            if (CountiesListGridView.Columns.Contains("DictionaryCountyId") && CountiesListGridView.Columns["DictionaryCountyId"].Visible)
+            if (CountiesListGridView.Columns.Contains("CountyId") && CountiesListGridView.Columns["CountyId"].Visible)
             {
-                CountiesListGridView.Columns["DictionaryCountyId"].Visible = false;
+                CountiesListGridView.Columns["CountyId"].Visible = false;
             }
             if (CountiesListGridView.Columns.Contains("CountryId") && CountiesListGridView.Columns["CountryId"].Visible)
             {
@@ -365,6 +440,26 @@ namespace ConferencePlanner.WinUi
             
         }
 
-        
+        private void SpeakerListDataGrid_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.ColumnIndex == this.SpeakerListDataGrid.Columns["main_speaker"].Index && this.SpeakerUserMessagesBox.Visible == true)
+            {
+                this.popUpMethod("Notice", "You can't select the conference main speaker when in edit mode.");
+            }
+        }
+
+        private void SpeakerListDataGrid_Layout(object sender, LayoutEventArgs e)
+        {
+            this.SpeakerListDataGrid.ContextMenuStrip = new ContextMenuStrip();
+            this.SpeakerListDataGrid.ContextMenuStrip.Items.Add("Delete");
+            this.SpeakerListDataGrid.ContextMenuStrip.Click += ContextMenuStrip_Click;
+                //+= ContextMenuStrip_Click;
+        }
+
+        private void ContextMenuStrip_Click(object sender, EventArgs e)
+        {
+            int id=0;
+            var varDeleteSpeaker = new AreYouSure(_speakerRepository, id);
+        }
     }
 }

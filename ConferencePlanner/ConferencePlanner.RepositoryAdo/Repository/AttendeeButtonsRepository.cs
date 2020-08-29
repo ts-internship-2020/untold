@@ -23,6 +23,7 @@ namespace ConferencePlanner.Repository.Ado.Repository
                 "@StatusId ,@EmailCode)";
             //statusId va fi hardcodat pentru ca 1 este pentru attend in tabela DictionaryStatus
             int statusId = 1;
+            
             SqlCommand sqlCommand = new SqlCommand(commandText, _sqlConnection);
             sqlCommand.Parameters.Add("@ConferenceId", SqlDbType.Int);
             sqlCommand.Parameters["@ConferenceId"].Value = confId;
@@ -32,6 +33,7 @@ namespace ConferencePlanner.Repository.Ado.Repository
             sqlCommand.Parameters["@StatusId"].Value = statusId;
             sqlCommand.Parameters.Add("@EmailCode", SqlDbType.NVarChar, 4000);
             sqlCommand.Parameters["@EmailCode"].Value = barcode;
+            //try catch
             sqlCommand.ExecuteNonQuery();
         }
 

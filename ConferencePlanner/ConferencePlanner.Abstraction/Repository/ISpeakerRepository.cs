@@ -13,6 +13,8 @@ namespace ConferencePlanner.Abstraction.Repository
         SpeakerModel GetSpeakerByName(string[] names);
 
         BindingList<SpeakerModel> GetAllSpeakers();
+
+        void UpdateSpeaker(SpeakerModel speaker);
         
 
     }

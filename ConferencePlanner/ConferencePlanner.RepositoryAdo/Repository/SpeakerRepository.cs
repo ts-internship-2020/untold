@@ -106,12 +106,26 @@ namespace ConferencePlanner.Repository.Ado.Repository
             return speaker;
         }
 
+        public void UpdateSpeaker(SpeakerModel speaker)
+        {
+            string commandText = "update Speaker " +
+                "set FirstName = @FName, LastName = @LName, Nationality = @Nationality, Rating = @Rating " +
+                "where SpeakerId = @Id";
 
+            SqlCommand sqlCommand = new SqlCommand(commandText, _sqlConnection);
+            sqlCommand.Parameters.Add("@FName", SqlDbType.NVarChar);
+            sqlCommand.Parameters["@FName"].Value = speaker.FirstName;
+            sqlCommand.Parameters.Add("@LName", SqlDbType.NVarChar);
+            sqlCommand.Parameters["@LName"].Value = speaker.LastName;
+            sqlCommand.Parameters.Add("@Nationality", SqlDbType.NVarChar);
+            sqlCommand.Parameters["@Nationality"].Value = speaker.Nationality;
+            sqlCommand.Parameters.Add("@Id", SqlDbType.Int);
+            sqlCommand.Parameters["@Id"].Value = speaker.SpeakerId;
+            sqlCommand.Parameters.Add("@Rating", SqlDbType.Float);
+            sqlCommand.Parameters["@Rating"].Value = speaker.Rating;
 
-
-
-
-
+            sqlCommand.ExecuteNonQuery();
+        }
     }
     }
 
