@@ -14,7 +14,7 @@ using System.Linq;
 using ConferencePlanner.Repository.Ado.Repository;
 using System.Transactions;
 using Tulpep.NotificationWindow;
-
+using System.Windows.Controls;
 
 namespace ConferencePlanner.WinUi
 {
@@ -34,7 +34,8 @@ namespace ConferencePlanner.WinUi
         private BindingList<CountyModel> Counties;
         private BindingList<SpeakerModel> Speakers;
         private int SpeakersTotalPages;
-        private int SpeakersCurrentPage;
+        private int SpeakersCurrentPage = 1;
+        private int SpeakersLastPageLastRow = 0;
         private int UpdateSpeakerRow;
         
         //lista de ce facem
@@ -62,7 +63,7 @@ namespace ConferencePlanner.WinUi
 
             InitializeComponent();
 
-            //this.PopulateForm(conference);
+            this.PopulateForm(conference);
 
         }
         private void PopulateForm(ConferenceModel conference)
@@ -72,8 +73,6 @@ namespace ConferencePlanner.WinUi
             string[] dates = conference.Period.Split(" - ");
             this.StardDatePicker.Value = DateTime.Parse(dates[0]);
             this.EndDatePicker.Value = DateTime.Parse(dates[1]);
-
-            this.ConfName.Text = conference.ConferenceId.ToString();
 
 
             int selectedCountryId = this._countryRepository.GetCountryIdByConferenceId(conference.ConferenceId);
@@ -176,6 +175,7 @@ namespace ConferencePlanner.WinUi
                 if(selectedRowCount == 1)
                 {
 
+
                     //  selectedRow = CountryListDataGridView.ColumnCount;
                     //  CountryListDataGridView.Columns.Insert(DictionaryCountryId);
 
@@ -251,55 +251,70 @@ namespace ConferencePlanner.WinUi
             EndDatePicker.Value = DateTime.Today;
         }
 
-        private int CalculateTotalPages(int NumOfObjects)
+        private int[] CalculateTotalPages(int NumOfObjects)
         {  
             int TotalPages = NumOfObjects / this.PageSize;
+            int LastPageLastRow = NumOfObjects % this.PageSize;
 
-            if (NumOfObjects % this.PageSize > 0)
+            if (LastPageLastRow > 0)
             {
                 TotalPages += 1;
+             
             }
-            return TotalPages;
-        
+            return new int[] { TotalPages, LastPageLastRow };
+
         }
-        private void CheckPaginationButtonsVisibility(int currentPage, int totalPages)
+        private void CheckPaginationButtonsVisibility(int currentPage, int totalPages, System.Windows.Forms.Button next, 
+            System.Windows.Forms.Button prev, System.Windows.Forms.Button last, System.Windows.Forms.Button first)
         {
             if (currentPage == totalPages)
             {
-                //this.RightArrowPagButton.Visible = false;
+                next.Visible = false;
+                last.Visible = false;
             }
             if (currentPage == 1)
             {
-                //this.LeftArrowPagButton.Visible = false;
+                prev.Visible = false;
+                first.Visible = false;
             }
             if (currentPage < totalPages)
             {
-                //this.RightArrowPagButton.Visible = true;
+                next.Visible = true;
+                last.Visible = true;
             }
             if (currentPage > 1)
             {
-                //this.LeftArrowPagButton.Visible = true;
+                prev.Visible = true;
+                first.Visible = true;
             }
         }
 
-        private BindingList<SpeakerModel> SpeakerCreatePage(BindingList<SpeakerModel> lst)
+        private void SpeakerCreatePage(BindingList<SpeakerModel> lst)
         {
+            this.CheckPaginationButtonsVisibility(this.SpeakersCurrentPage, this.SpeakersTotalPages,
+                this.SpeakersNextBtn, this.SpeakersBackBtn, this.SpeakersLastPage, this.SpeakersFirstPage);
             BindingList<SpeakerModel> result = new BindingList<SpeakerModel>();
             int PreviousPageOffSet = (this.SpeakersCurrentPage - 1) * this.PageSize;
+            
+            int aux = Math.Min(PreviousPageOffSet+this.PageSize, this.Speakers.Count);
+           
+            for (int i= PreviousPageOffSet; i < aux; i++)
+            {
+                result.Add(lst[i]);
+            }
 
-            //lst[0]->lst[this.PageSize];
-
-            return lst;
+            this.SpeakerListDataGrid.DataSource = result;
         }
 
 
         private void LoadSpeakersTab()
         {
             this.Speakers = _speakerRepository.GetAllSpeakers();
-            this.SpeakersTotalPages = this.CalculateTotalPages(this.Speakers.Count);
-            this.CheckPaginationButtonsVisibility(this.SpeakersCurrentPage, this.SpeakersTotalPages);
-            
-            SpeakerListDataGrid.DataSource = this.SpeakerCreatePage(this.Speakers);
+            int[] aux = this.CalculateTotalPages(this.Speakers.Count);
+            this.SpeakersTotalPages = aux[0];
+            this.SpeakersLastPageLastRow = aux[1]; 
+                
+            this.SpeakerCreatePage(this.Speakers);
         }
 
         private void SpeakerListDataGrid_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
@@ -325,11 +340,7 @@ namespace ConferencePlanner.WinUi
             this.SpeakerListDataGrid.Columns["LastName"].HeaderText = "Last Name";
 
 
-
-
-
         }
-
         private void SpeakerListDataGrid_UserAddedRow(object sender, DataGridViewRowEventArgs e)
         {
 
@@ -381,7 +392,6 @@ namespace ConferencePlanner.WinUi
         private void AddInsertMessage()
         {
             this.SpeakerUserMessagesBox.ForeColor = Color.MediumSeaGreen;
-            //string sName = fName + " " + lName;
             this.SpeakerUserMessagesBox.Text = "You are now adding a new speaker. Press the button to Save.";
             this.SpeakerUserMessagesBox.Visible = true;
             this.SpeakerSaveButton.Visible = true;
@@ -396,10 +406,6 @@ namespace ConferencePlanner.WinUi
             this.SpeakerSaveButton.Visible = true;
         }
 
-        private void SpeakerBeginInsertLayout()
-        {
-
-        }
 
         private void SpeakerBeginEditLayout()
         {
@@ -413,15 +419,22 @@ namespace ConferencePlanner.WinUi
                     row.ReadOnly = true;
                 }
             }
-            
+            this.SpeakersNextBtn.Enabled = false;
+            this.SpeakersBackBtn.Enabled = false;
+            this.SpeakersFirstPage.Enabled = false;
+            this.SpeakersLastPage.Enabled = false;
+            this.SuspendLayout();
+            //this.SpeakerListDataGrid.AllowUserToAddRows = false;
+
         }
 
-        private void SpeakerEndEditLayout()
+        private void SpeakerEndEditLayout(string str1popup, string str2popup)
         {
             this.SpeakerUserMessagesBox.Visible = false;
             this.SpeakerSaveButton.Visible = false;
-            this.popUpMethod("Done", "Speaker modified succesfully :)");
+            this.popUpMethod(str1popup, str2popup);
             this.SpeakerListDataGrid.Columns["main_speaker"].ReadOnly = false;
+            this.SpeakerListDataGrid.Columns["main_speaker"].DefaultCellStyle.BackColor = Color.White;
             this.SpeakerListDataGrid.Columns["main_speaker"].DefaultCellStyle.BackColor = Color.White;
             foreach (DataGridViewRow row in SpeakerListDataGrid.Rows)
             {
@@ -430,6 +443,12 @@ namespace ConferencePlanner.WinUi
                     row.ReadOnly = false;
                 }
             }
+            this.SpeakersNextBtn.Enabled = true;    
+            this.SpeakersBackBtn.Enabled = true;
+            this.SpeakersFirstPage.Enabled = true;
+            this.SpeakersLastPage.Enabled = true;
+            this.ResumeLayout();
+            //this.SpeakerListDataGrid.AllowUserToAddRows = true;
         }
 
         private void popUpMethod(String titleText, String contentText)
@@ -446,8 +465,10 @@ namespace ConferencePlanner.WinUi
             if (SpeakerUserMessagesBox.Visible == false)
             {
                 this.UpdateSpeakerRow = e.RowIndex;
-                if (this.Speakers.Count >= this.UpdateSpeakerRow)
+                if (this.UpdateSpeakerRow >= this.PageSize || 
+                    (this.SpeakersLastPageLastRow > 0 && this.SpeakersCurrentPage == this.SpeakersTotalPages && this.UpdateSpeakerRow ==this.SpeakersLastPageLastRow))
                 {
+                    this.AddInsertMessage();
                     this.SpeakerBeginEditLayout();
                 }
                 else
@@ -468,7 +489,7 @@ namespace ConferencePlanner.WinUi
 
         }
 
-        private SpeakerModel GetSpeakerToUpdate()
+        private SpeakerModel GetSpeaker()
         {
             SpeakerModel speaker = new SpeakerModel();
             speaker.FirstName = this.SpeakerListDataGrid.Rows[this.UpdateSpeakerRow].Cells["FirstName"].Value.ToString();
@@ -482,8 +503,26 @@ namespace ConferencePlanner.WinUi
 
         private void SpeakerSaveButton_Click(object sender, EventArgs e)
         {
-            _speakerRepository.UpdateSpeaker(GetSpeakerToUpdate());
-            SpeakerEndEditLayout();
+            if ((this.SpeakersLastPageLastRow > 0 && this.SpeakersCurrentPage == this.SpeakersTotalPages && this.UpdateSpeakerRow == this.SpeakersLastPageLastRow) || (this.UpdateSpeakerRow == this.PageSize))
+            {
+                SpeakerModel newSpeaker = GetSpeaker();
+                _speakerRepository.InsertSpeaker(newSpeaker);
+                this.Speakers.Add(newSpeaker);
+                int[] aux = this.CalculateTotalPages(this.Speakers.Count);
+                this.SpeakersTotalPages = aux[0];
+                this.SpeakersLastPageLastRow = aux[1];
+                this.SpeakersCurrentPage = 1;
+                this.SpeakerCreatePage(this.Speakers);
+                SpeakerEndEditLayout("Done", "You can see the speaker you just added on the last page.");
+            }
+            else
+            {
+                
+                _speakerRepository.UpdateSpeaker(this.GetSpeaker());
+                SpeakerEndEditLayout("Done", "Speaker modified succesfully");
+
+            }
+                
             
         }  
 
@@ -511,16 +550,55 @@ namespace ConferencePlanner.WinUi
 
         private void SpeakerListDataGrid_Layout(object sender, LayoutEventArgs e)
         {
-            this.SpeakerListDataGrid.ContextMenuStrip = new ContextMenuStrip();
-            this.SpeakerListDataGrid.ContextMenuStrip.Items.Add("Delete");
-            this.SpeakerListDataGrid.ContextMenuStrip.Click += ContextMenuStrip_Click;
+            //ToolStripButton test = new ToolStripButton();
+            //ToolStripCollection context = new ToolStripCollection();
+            //test.Text = "test";
+            //context.Click += ContextMenuStrip_Click;
+            //context.ItemAdded//
+            ContextMenuStrip test = new ContextMenuStrip();
+            test.Items.Add("Delete");
+            test.Click += new System.EventHandler(this.ContextMenuStrip_Click);
+            this.SpeakerListDataGrid.ContextMenuStrip = test;
+            
+            //this.SpeakerListDataGrid.ContextMenuStrip = new ContextMenuStrip();
+            //this.SpeakerListDataGrid.ContextMenuStrip.Items.Add("Delete");
+            //this.SpeakerListDataGrid.ContextMenuStrip.Click += ContextMenuStrip_Click;
             this.SpeakerListDataGrid.DefaultCellStyle.ForeColor = Color.FromArgb(53, 56, 49);
         }
 
+
         private void ContextMenuStrip_Click(object sender, EventArgs e)
         {
-            int id=0;
+            var test = SpeakerListDataGrid.HitTest(Location.X, Location.Y).RowIndex;
+            var id = (int) this.SpeakerListDataGrid.Rows[test].Cells["SpeakerId"].Value;
+
             var varDeleteSpeaker = new AreYouSure(_speakerRepository, id);
+
+            varDeleteSpeaker.ShowDialog();
+        }
+
+        private void SpeakersNextBtn_Click(object sender, EventArgs e)
+        {
+            this.SpeakersCurrentPage++;
+            this.SpeakerCreatePage(this.Speakers);
+        }
+
+        private void SpeakersLastPage_Click(object sender, EventArgs e)
+        {
+            this.SpeakersCurrentPage = this.SpeakersTotalPages;
+            this.SpeakerCreatePage(this.Speakers);
+        }
+
+        private void SpeakersBackBtn_Click(object sender, EventArgs e)
+        {
+            this.SpeakersCurrentPage--;
+            this.SpeakerCreatePage(this.Speakers);
+        }
+
+        private void SpeakersFirstPage_Click(object sender, EventArgs e)
+        {
+            this.SpeakersCurrentPage = 1;
+            this.SpeakerCreatePage(this.Speakers);
         }
     }
 }
