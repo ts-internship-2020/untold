@@ -253,7 +253,7 @@ namespace ConferencePlanner.WinUi
             this.CountryListDataGridView.Size = new System.Drawing.Size(990, 275);
             this.CountryListDataGridView.TabIndex = 1;
             this.CountryListDataGridView.Text = "dataGridView1";
-            this.CountryListDataGridView.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.CountryListDataGridView_DataBindingComplete);
+//            this.CountryListDataGridView.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.CountryListDataGridView_DataBindingComplete);
             // 
             // County
             // 

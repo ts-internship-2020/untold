@@ -300,7 +300,7 @@ namespace ConferencePlanner.WinUi
             //AttendeeGridvw.Columns[1].HeaderText = "StatusId";
             //AttendeeGridvw.Columns[2].HeaderText = "ConferenceId";
             AttendeeGridvw.Columns["RowNum"].Visible = false;
-            AttendeeGridvw.Columns["StatusId"].Visible = false;
+            AttendeeGridvw.Columns["StatusId"].Visible = true;
             AttendeeGridvw.Columns["ConferenceId"].Visible = false;
 
             //AttendeeGridvw.Columns[0].HeaderText = "RowNum";
@@ -329,8 +329,7 @@ namespace ConferencePlanner.WinUi
 
 
             if (a == 0)
-            {
-                
+            {  
 
                 //AttendeeGridvw.AutoGenerateColumns = false;
 
@@ -340,8 +339,8 @@ namespace ConferencePlanner.WinUi
                 attendButtonColumn.Text = "Attend";
                 attendButtonColumn.HeaderText = "Attend";
                 attendButtonColumn.FlatStyle = FlatStyle.Flat;
-                attendButtonColumn.DefaultCellStyle.BackColor = System.Drawing.Color.Black;
-                attendButtonColumn.DefaultCellStyle.ForeColor = System.Drawing.Color.Black;
+                attendButtonColumn.DefaultCellStyle.BackColor = System.Drawing.Color.Green;
+                attendButtonColumn.DefaultCellStyle.ForeColor = System.Drawing.Color.Green;
 
                 int columnIndex = AttendeeGridvw.ColumnCount;
 
@@ -353,22 +352,22 @@ namespace ConferencePlanner.WinUi
                 withdrawButtonColumn.Name = "withdraw_column";
                 withdrawButtonColumn.Text = "Withdraw";
                 withdrawButtonColumn.HeaderText = "Withdraw";
+                withdrawButtonColumn.FlatStyle = FlatStyle.Flat;
+                withdrawButtonColumn.DefaultCellStyle.BackColor = System.Drawing.Color.Red;
+                //fwithdrawButtonColumn.DefaultCellStyle.ForeColor = System.Drawing.Color.Red;
                 AttendeeGridvw.Columns.Insert(columnIndex, withdrawButtonColumn);
                 columnIndex = AttendeeGridvw.ColumnCount;
 
                 DataGridViewButtonColumn joinButtonColumn = new DataGridViewButtonColumn();
                 joinButtonColumn.Name = "join_column";
-                joinButtonColumn.Text = "Join";
+                //joinButtonColumn.Text = "Join";
                 joinButtonColumn.HeaderText = "Join";
-
-                DataGridViewColumn dataGridViewColumn = new DataGridViewColumn();
-                //dataGridViewColumn.Name = ""
-               
-
-
+                joinButtonColumn.FlatStyle = FlatStyle.Flat;
+                joinButtonColumn.DefaultCellStyle.BackColor = System.Drawing.Color.Red;
+                joinButtonColumn.DefaultCellStyle.ForeColor = System.Drawing.Color.Red;
 
                 AttendeeGridvw.Columns.Insert(columnIndex, joinButtonColumn);
-                
+
                 AttendeeGridvw.CellClick += AttendeeGridvw_CellClick;
                 //AttendeeGridvw.Columns[12].HeaderText = "Attend";
                 // AttendeeGridvw.Columns[13].HeaderText = "Withdraw";
@@ -377,10 +376,7 @@ namespace ConferencePlanner.WinUi
                 //AttendeeGridvw.Columns[7].Tag = "test";
                
             }
-
-
-
-            }
+        }
 
 
 
@@ -394,10 +390,6 @@ namespace ConferencePlanner.WinUi
 
 
         //}
-
-        
-
-
         private void TabAttendee_Click(object sender, EventArgs e)
         {
 
@@ -477,6 +469,7 @@ namespace ConferencePlanner.WinUi
             popup.TitleText = titleText;
             popup.ContentText = contentText;
             popup.Popup();
+            
         }
 
         private void Attend_Click(int confId)
@@ -491,7 +484,7 @@ namespace ConferencePlanner.WinUi
             popup.TitleText = "Congratulation!";
             popup.ContentText = "You succesfully attended to this conference!";
             popup.Popup();
-            //fillAttendeeGrid();
+            CreateAttendeePage();
             var newForm = new QRCodeForm();
             newForm.ShowDialog();
         }
@@ -504,7 +497,7 @@ namespace ConferencePlanner.WinUi
             popup.TitleText = "You withdraw this conference!";
             popup.ContentText = "You can choose from the available ones";
             popup.Popup();
-            //fillAttendeeGrid();
+            CreateAttendeePage();
         }
 
         private void Join_Click(int statusId)
@@ -601,26 +594,38 @@ namespace ConferencePlanner.WinUi
 
             }
         }
+
+        public void coditionsForButtons()
+        {
+
+            for (int i = 0; i < AttendeeGridvw.Rows.Count * AttendeeTotalPage; i++)
+            {
+                //var status = 0;
+                var status = AttendeeGridvw.Rows[i].Cells[4].Value;
+               // if ()
+                //{
+
+                //}
+            }
+        }
+
         private void AttendeeGridvw_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex < 0)
             {
+                coditionsForButtons();
                 return;
             }
+
             
             if (e.ColumnIndex == AttendeeGridvw.Columns["attend_column"].Index)
             {
-                if (AttendeeGridvw.Rows[e.RowIndex].Cells[e.ColumnIndex].Style.ForeColor.Equals(Color.Red))
-                {
-                    AttendeeGridvw.Rows[e.RowIndex].Cells[e.ColumnIndex].Selected = false;
-                }
-                AttendeeGridvw.Rows[e.RowIndex].Cells[e.ColumnIndex].Style.BackColor = System.Drawing.Color.Red;
-                AttendeeGridvw.Rows[e.RowIndex].Cells[e.ColumnIndex].Style.ForeColor = System.Drawing.Color.Red;
-
                 //AttendeeGridvw.Rows[e.RowIndex].Cells[7].ReadOnly = true;
                 //AttendeeGridvw.Rows[e.RowIndex].Cells[7].Visible = false;
                 int confid = (int)AttendeeGridvw.Rows[e.RowIndex].Cells[5].Value;
                 Attend_Click(confid);
+                AttendeeGridvw.Rows[e.RowIndex].Cells[e.ColumnIndex].Style.BackColor = System.Drawing.Color.Red;
+                AttendeeGridvw.Rows[e.RowIndex].Cells[e.ColumnIndex].Style.ForeColor = System.Drawing.Color.Red;
                 // AttendeeGridvw.Rows[e.RowIndex].Cells[10].Value = "test";
                 //  if (AttendeeGridvw.Rows[e.RowIndex].Cells[10].Value == "test")
                 //{
