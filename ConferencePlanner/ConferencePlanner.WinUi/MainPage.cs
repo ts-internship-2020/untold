@@ -25,7 +25,7 @@ namespace ConferencePlanner.WinUi
         private readonly IAttendeeButtonsRepository _attendeeButtons;
         private readonly ISpeakerRepository _speakerRepository;
 
-        private int PageSize = 5;
+        private int PageSize = 2;
         //public int CurrentPageIndex { get; set; } //1
         //public int TotalPage {get; set;} //0
         private int OrganizerCurrentPageIndex = 1;
@@ -79,6 +79,7 @@ namespace ConferencePlanner.WinUi
             var varAddConf = new AddConf(_conferenceRepository, _countryRepository, _countyRepository, _speakerRepository );
 
             TabControl.SelectedIndex = 1;
+            this.popUpMethod("Context Changed", "You are now an organizer!");
             varAddConf.ShowDialog();
         }
 
@@ -118,27 +119,30 @@ namespace ConferencePlanner.WinUi
 
         private void TabOrganizer_SelectedIndexChanged(object sender, EventArgs e)
         {
-            string[] dates = new string[2];
-            if (check==0)
+            if (this.TabControl.SelectedTab.Name == "TabOrganizer")
             {
-                dates = new string[] { DateTime.Parse("1900-01-01 00:00:00").ToString("yyyy'-'MM'-'dd' 'HH':'mm':'ss"), DateTime.Parse("2050-01-01 00:00:00").ToString("yyyy'-'MM'-'dd' 'HH':'mm':'ss") };
+                string[] dates = new string[2];
+                if (check == 0)
+                {
+                    dates = new string[] { DateTime.Parse("1900-01-01 00:00:00").ToString("yyyy'-'MM'-'dd' 'HH':'mm':'ss"), DateTime.Parse("2050-01-01 00:00:00").ToString("yyyy'-'MM'-'dd' 'HH':'mm':'ss") };
+                }
+                else
+                {
+                    dates = GetCurrentDateFilterSelection();
+                }
+
+                int PreviousPageOffSet = (this.OrganizerCurrentPageIndex - 1) * this.PageSize;
+
+                var allConferences = _conferenceRepository.GetConferencesByOrganizer(Program.EnteredEmailAddress);
+
+                var conferences = _conferenceRepository.GetConferencesByPage(Program.EnteredEmailAddress, PreviousPageOffSet + 1, PreviousPageOffSet + this.PageSize + 1, dates[0], dates[1]);
+
+                CalculateTotalPages(allConferences, this.TabControl.SelectedTab);
+                this.CheckPaginationButtonsVisibility();
+
+                CheckNumberOfRows(conferences);
+
             }
-            else
-            {
-                dates = GetCurrentDateFilterSelection();
-            }
-            
-            int PreviousPageOffSet = (this.OrganizerCurrentPageIndex - 1) * this.PageSize;
-
-            var allConferences = _conferenceRepository.GetConferencesByOrganizer(Program.EnteredEmailAddress);
-            
-            var conferences = _conferenceRepository.GetConferencesByPage(Program.EnteredEmailAddress, PreviousPageOffSet + 1, PreviousPageOffSet + this.PageSize + 1, dates[0], dates[1]);
-
-            this.CheckPaginationButtonsVisibility();
-
-            CalculateTotalPages(allConferences, this.TabControl.SelectedTab);
-
-            CheckNumberOfRows(conferences);
 
         }
 

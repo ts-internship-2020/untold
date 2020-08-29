@@ -77,7 +77,7 @@ namespace ConferencePlanner.WinUi
 
             int selectedCountryId = this._countryRepository.GetCountryIdByConferenceId(conference.ConferenceId);
             int selectedRowId = this.SearchIdInDataGrid(selectedCountryId, "DictionaryCountryId", this.CountryListDataGridView);
-            this.ConfName.Text = selectedRowId.ToString();
+           // this.ConfName.Text = selectedRowId.ToString();
 
             if (selectedRowId > 0)
             {
@@ -294,6 +294,7 @@ namespace ConferencePlanner.WinUi
             this.CheckPaginationButtonsVisibility(this.SpeakersCurrentPage, this.SpeakersTotalPages,
                 this.SpeakersNextBtn, this.SpeakersBackBtn, this.SpeakersLastPage, this.SpeakersFirstPage);
             BindingList<SpeakerModel> result = new BindingList<SpeakerModel>();
+            
             int PreviousPageOffSet = (this.SpeakersCurrentPage - 1) * this.PageSize;
             
             int aux = Math.Min(PreviousPageOffSet+this.PageSize, this.Speakers.Count);
@@ -338,6 +339,9 @@ namespace ConferencePlanner.WinUi
 
             this.SpeakerListDataGrid.Columns["FirstName"].HeaderText = "First Name";
             this.SpeakerListDataGrid.Columns["LastName"].HeaderText = "Last Name";
+
+            this.SpeakerListDataGrid.CurrentCell = null;
+            this.SpeakerListDataGrid.Rows[0].Selected = false;
 
 
         }
@@ -407,7 +411,7 @@ namespace ConferencePlanner.WinUi
         }
 
 
-        private void SpeakerBeginEditLayout()
+        private void SpeakerBeginEditLayout(string opType)
         {
             this.SpeakerListDataGrid.Columns["main_speaker"].ReadOnly = true;
             this.SpeakerListDataGrid.Columns["main_speaker"].DefaultCellStyle.BackColor = Color.LightGray;
@@ -423,8 +427,19 @@ namespace ConferencePlanner.WinUi
             this.SpeakersBackBtn.Enabled = false;
             this.SpeakersFirstPage.Enabled = false;
             this.SpeakersLastPage.Enabled = false;
-            this.SuspendLayout();
-            //this.SpeakerListDataGrid.AllowUserToAddRows = false;
+            
+            if (opType == "u")
+            {
+                this.SpeakerListDataGrid.AllowUserToAddRows = false;
+            }
+            foreach (TabPage tab in TabControlLocation.TabPages)
+            {
+                if (tab.Name != this.TabControlLocation.SelectedTab.Name)
+                {
+                    tab.SuspendLayout();
+                }
+            }
+
 
         }
 
@@ -447,8 +462,11 @@ namespace ConferencePlanner.WinUi
             this.SpeakersBackBtn.Enabled = true;
             this.SpeakersFirstPage.Enabled = true;
             this.SpeakersLastPage.Enabled = true;
-            this.ResumeLayout();
-            //this.SpeakerListDataGrid.AllowUserToAddRows = true;
+            if (this.SpeakerListDataGrid.AllowUserToAddRows == false)
+            {
+                this.SpeakerListDataGrid.AllowUserToAddRows = true;
+            }
+           
         }
 
         private void popUpMethod(String titleText, String contentText)
@@ -462,24 +480,25 @@ namespace ConferencePlanner.WinUi
 
         private void SpeakerListDataGrid_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
         {
+            this.UpdateSpeakerRow = e.RowIndex;
+
+
             if (SpeakerUserMessagesBox.Visible == false)
             {
-                this.UpdateSpeakerRow = e.RowIndex;
+                
                 if (this.UpdateSpeakerRow >= this.PageSize || 
                     (this.SpeakersLastPageLastRow > 0 && this.SpeakersCurrentPage == this.SpeakersTotalPages && this.UpdateSpeakerRow ==this.SpeakersLastPageLastRow))
                 {
                     this.AddInsertMessage();
-                    this.SpeakerBeginEditLayout();
+                    this.SpeakerBeginEditLayout("i");
                 }
                 else
                 {
                     string fName = this.SpeakerListDataGrid.Rows[this.UpdateSpeakerRow].Cells["FirstName"].Value.ToString();
                     string lName = this.SpeakerListDataGrid.Rows[this.UpdateSpeakerRow].Cells["LastName"].Value.ToString();
                     this.AddUpdateMessage(fName, lName);
-                    this.SpeakerBeginEditLayout();
+                    this.SpeakerBeginEditLayout("u");
                 }
-                
-               
             }
             else if (this.UpdateSpeakerRow != e.RowIndex) 
             {
@@ -492,6 +511,7 @@ namespace ConferencePlanner.WinUi
         private SpeakerModel GetSpeaker()
         {
             SpeakerModel speaker = new SpeakerModel();
+            //validari
             speaker.FirstName = this.SpeakerListDataGrid.Rows[this.UpdateSpeakerRow].Cells["FirstName"].Value.ToString();
             speaker.LastName = this.SpeakerListDataGrid.Rows[this.UpdateSpeakerRow].Cells["LastName"].Value.ToString();
             speaker.Nationality = this.SpeakerListDataGrid.Rows[this.UpdateSpeakerRow].Cells["Nationality"].Value.ToString();
@@ -514,16 +534,19 @@ namespace ConferencePlanner.WinUi
                 this.SpeakersCurrentPage = 1;
                 this.SpeakerCreatePage(this.Speakers);
                 SpeakerEndEditLayout("Done", "You can see the speaker you just added on the last page.");
+                this.SpeakerListDataGrid.CurrentCell = null;
+                this.SpeakerListDataGrid.Rows[0].Selected = false;
             }
             else
             {
                 
                 _speakerRepository.UpdateSpeaker(this.GetSpeaker());
                 SpeakerEndEditLayout("Done", "Speaker modified succesfully");
+                this.SpeakerListDataGrid.CurrentCell = null;
+                this.SpeakerListDataGrid.Rows[0].Selected = false;
 
             }
-                
-            
+            this.SpeakerListDataGrid.CurrentCell = null;
         }  
 
         private void CountiesListGridView_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
@@ -542,9 +565,14 @@ namespace ConferencePlanner.WinUi
 
         private void SpeakerListDataGrid_CellClick(object sender, DataGridViewCellEventArgs e)
         {
+          
             if (e.ColumnIndex == this.SpeakerListDataGrid.Columns["main_speaker"].Index && this.SpeakerUserMessagesBox.Visible == true)
             {
                 this.popUpMethod("Notice", "You can't select the conference main speaker when in edit mode.");
+            }
+            if (e.RowIndex < 0)
+            {
+                return;
             }
         }
 
@@ -555,6 +583,7 @@ namespace ConferencePlanner.WinUi
             //test.Text = "test";
             //context.Click += ContextMenuStrip_Click;
             //context.ItemAdded//
+            this.SpeakerListDataGrid.CurrentCell = null;
             ContextMenuStrip test = new ContextMenuStrip();
             test.Items.Add("Delete");
             test.Click += new System.EventHandler(this.ContextMenuStrip_Click);
@@ -581,6 +610,7 @@ namespace ConferencePlanner.WinUi
         {
             this.SpeakersCurrentPage++;
             this.SpeakerCreatePage(this.Speakers);
+            this.SpeakerListDataGrid.Rows[0].Selected = false;
         }
 
         private void SpeakersLastPage_Click(object sender, EventArgs e)
@@ -600,5 +630,7 @@ namespace ConferencePlanner.WinUi
             this.SpeakersCurrentPage = 1;
             this.SpeakerCreatePage(this.Speakers);
         }
+
+        
     }
 }
