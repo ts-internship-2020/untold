@@ -26,7 +26,7 @@ namespace ConferencePlanner.WinUi
         private readonly ICountyRepository _countyRepository;
         private readonly ISpeakerRepository _speakerRepository;
 
-        private int PageSize;
+        private int PageSize = 4;
 
         private int SelectedCountryId = 70;
 

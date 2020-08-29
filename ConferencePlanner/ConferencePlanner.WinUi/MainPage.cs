@@ -678,20 +678,9 @@ namespace ConferencePlanner.WinUi
                 varAddConf.ShowDialog();        
 
             }
-        }
+       
 
-        public void coditionsForButtons()
-        {
-
-            for (int i = 0; i < AttendeeGridvw.Rows.Count * AttendeeTotalPage; i++)
-            {
-                //var status = 0;
-                var status = AttendeeGridvw.Rows[i].Cells[4].Value;
-               // if ()
-                //{
-
-                //}
-            }
+       
             if (e.ColumnIndex == OrganizerDataGrid.Columns["delete_column"].Index)
             {
                 int id = (int)OrganizerDataGrid.Rows[e.RowIndex].Cells["ConferenceId"].Value;
@@ -702,7 +691,21 @@ namespace ConferencePlanner.WinUi
             }
         }
 
-        private void AttendeeGridvw_CellClick(object sender, DataGridViewCellEventArgs e)
+        public void coditionsForButtons()
+        {
+
+            for (int i = 0; i < AttendeeGridvw.Rows.Count * AttendeeTotalPage; i++)
+            {
+                //var status = 0;
+                var status = AttendeeGridvw.Rows[i].Cells[4].Value;
+                // if ()
+                //{
+
+                //}
+            }
+        }
+
+            private void AttendeeGridvw_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex < 0)
             {
