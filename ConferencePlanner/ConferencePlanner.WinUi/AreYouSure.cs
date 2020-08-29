@@ -58,7 +58,7 @@ namespace ConferencePlanner.WinUi
         }
         private void ConferenceNoButton_Click(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            this.Close();
         }
     }
 }

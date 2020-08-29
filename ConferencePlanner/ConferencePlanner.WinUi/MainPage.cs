@@ -615,19 +615,21 @@ namespace ConferencePlanner.WinUi
                 editButtonColumn.Width = 25;
                 editButtonColumn.HeaderText = "";
                 editButtonColumn.Name = "edit_column";
-                DataGridViewButtonColumn deleteButtonColumn = new DataGridViewButtonColumn();
-                editButtonColumn.UseColumnTextForButtonValue = true;
-                editButtonColumn.Text = "Delete";
-                editButtonColumn.Width = 25;
-                editButtonColumn.HeaderText = "";
-                editButtonColumn.Name = "delete_column";
-                //editButtonColumn.Text.
                 int columnIndex = OrganizerDataGrid.ColumnCount;
 
-                OrganizerDataGrid.Columns.Insert(columnIndex, editButtonColumn);
-                OrganizerDataGrid.CellClick += OrganizerDataGrid_CellClick;
+                DataGridViewButtonColumn deleteButtonColumn = new DataGridViewButtonColumn();
+                deleteButtonColumn.UseColumnTextForButtonValue = true;
+                deleteButtonColumn.Text = "Delete";
+                deleteButtonColumn.Width = 25;
+                deleteButtonColumn.HeaderText = "";
+                deleteButtonColumn.Name = "delete_column";
+                //editButtonColumn.Text.
+               
 
-                columnIndex += 1;
+                OrganizerDataGrid.Columns.Insert(columnIndex, editButtonColumn);
+            
+
+                columnIndex ++;
 
                 OrganizerDataGrid.Columns.Insert(columnIndex, deleteButtonColumn);
                 OrganizerDataGrid.CellClick += OrganizerDataGrid_CellClick;
@@ -649,6 +651,7 @@ namespace ConferencePlanner.WinUi
             OrganizerDataGrid.Columns["ConferenceTypeName"].DisplayIndex = 6;
             OrganizerDataGrid.Columns["Location"].DisplayIndex = 7;
             OrganizerDataGrid.Columns["Speaker"].DisplayIndex = 8;
+            
 
             OrganizerDataGrid.AutoResizeColumns();
             //OrganizerDataGrid.DefaultCellStyle.WrapMode = DataGridViewTriState.True;
@@ -657,18 +660,22 @@ namespace ConferencePlanner.WinUi
 
         private void OrganizerDataGrid_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            //listBox1.Items.Add(e.ToString());
-            if (e.ColumnIndex == OrganizerDataGrid.Columns["edit_column"].Index && e.RowIndex >= 0)
+            if (e.RowIndex < 0)
+            {
+                return;
+            }
+            
+            if (e.ColumnIndex == OrganizerDataGrid.Columns["edit_column"].Index)
             {
                 int id = (int)OrganizerDataGrid.Rows[e.RowIndex].Cells["ConferenceId"].Value;
                 ConferenceModel conference = _conferenceRepository.GetConferenceById(id);
 
-                var varAddConf = new AddConf(conference, _conferenceRepository, _countryRepository);
+                var varAddConf = new AddConf(conference, _conferenceRepository, _countryRepository, _speakerRepository);
 
                 varAddConf.ShowDialog();        
 
             }
-            if (e.ColumnIndex == OrganizerDataGrid.Columns["delete_column"].Index && e.RowIndex >= 0)
+            if (e.ColumnIndex == OrganizerDataGrid.Columns["delete_column"].Index)
             {
                 int id = (int)OrganizerDataGrid.Rows[e.RowIndex].Cells["ConferenceId"].Value;
 
@@ -774,6 +781,11 @@ namespace ConferencePlanner.WinUi
         private void OrganizerDataGrid_Layout(object sender, LayoutEventArgs e)
         {
             this.OrganizerDataGrid.ReadOnly = true;
+        }
+
+        private void OrganizerDataGrid_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
         }
     }
 }

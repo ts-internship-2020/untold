@@ -341,14 +341,30 @@ namespace ConferencePlanner.Repository.Ado.Repository
 
         }
 
-        void IConferenceRepository.DeleteConferenceById(int id)
+        public void DeleteConferenceById(int id)
         {
             string commandText = "delete from Conference where ConferenceId = @Id";
+            string[] attendeesEmail;
+
             SqlCommand sqlCommand = new SqlCommand(commandText, _sqlConnection);
             sqlCommand.Parameters.Add("@Id", SqlDbType.Int);
             sqlCommand.Parameters["@Id"].Value = id;
 
-            //sqlCommand.ExecuteNonQuery();
+            try
+            {
+                sqlCommand.ExecuteNonQuery();
+            }
+            catch (Exception exception)
+            {
+                string commandText2 = "delete from Attendee where ConferenceId = @Id " +
+                    "delete from Conference where ConferenceId = @Id";
+
+                SqlCommand sqlCommand2 = new SqlCommand(commandText2, _sqlConnection);
+                sqlCommand2.Parameters.Add("@Id", SqlDbType.Int);
+                sqlCommand2.Parameters["@Id"].Value = id;
+
+                sqlCommand2.ExecuteNonQuery();
+            }
 
         }
     }
