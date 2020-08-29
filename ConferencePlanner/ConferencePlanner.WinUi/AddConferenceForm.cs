@@ -415,7 +415,7 @@ namespace ConferencePlanner.WinUi
         {
             this.SpeakerListDataGrid.Columns["main_speaker"].ReadOnly = true;
             this.SpeakerListDataGrid.Columns["main_speaker"].DefaultCellStyle.BackColor = Color.LightGray;
-            //this.SpeakerListDataGrid.Columns["main_speaker"].Cell
+            
             foreach (DataGridViewRow row in SpeakerListDataGrid.Rows)
             {
                 if (row.Index != this.UpdateSpeakerRow)
@@ -439,7 +439,6 @@ namespace ConferencePlanner.WinUi
                     tab.SuspendLayout();
                 }
             }
-
 
         }
 
@@ -485,7 +484,6 @@ namespace ConferencePlanner.WinUi
 
             if (SpeakerUserMessagesBox.Visible == false)
             {
-                
                 if (this.UpdateSpeakerRow >= this.PageSize || 
                     (this.SpeakersLastPageLastRow > 0 && this.SpeakersCurrentPage == this.SpeakersTotalPages && this.UpdateSpeakerRow ==this.SpeakersLastPageLastRow))
                 {
@@ -631,6 +629,10 @@ namespace ConferencePlanner.WinUi
             this.SpeakerCreatePage(this.Speakers);
         }
 
-        
+        private void SpeakerListDataGrid_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+            //return;
+            //this.SpeakerListDataGrid.Rows[e.RowIndex].Cells[e.ColumnIndex].Style.BackColor = Color.LightGreen;
+        }
     }
 }
