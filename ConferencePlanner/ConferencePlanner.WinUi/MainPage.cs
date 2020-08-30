@@ -327,7 +327,7 @@ namespace ConferencePlanner.WinUi
             //AttendeeGridvw.Columns[1].HeaderText = "StatusId";
             //AttendeeGridvw.Columns[2].HeaderText = "ConferenceId";
             AttendeeGridvw.Columns["RowNum"].Visible = false;
-            AttendeeGridvw.Columns["StatusId"].Visible = true;
+            AttendeeGridvw.Columns["StatusId"].Visible = false;
             AttendeeGridvw.Columns["ConferenceId"].Visible = false;
             AttendeeGridvw.AutoResizeColumns();
             //AttendeeGridvw.Columns[0].HeaderText = "RowNum";
@@ -807,9 +807,23 @@ namespace ConferencePlanner.WinUi
             }
             if (e.ColumnIndex == AttendeeGridvw.Columns["join_column"].Index)
             {
+                int statusId = (int)AttendeeGridvw.Rows[e.RowIndex].Cells[4].Value;
                 int confid = (int)AttendeeGridvw.Rows[e.RowIndex].Cells[5].Value;
+                if (statusId != 1)
+                {
+                    popUpMethod("You're not attending to this conference", "");
+                }
+                else if ((statusId == 1 && remainingTime > 5))
+                {
+                    popUpMethod("You can join to this conference only with 5 minutes before start", "");
+                }
+                else
+                {
+                    Join_Click(confid);
+                }
+
                 //int confid = (int)AttendeeGridvw.Rows[e.RowIndex].Cells[0].Value;
-                Join_Click(confid);
+
             }
 
         }

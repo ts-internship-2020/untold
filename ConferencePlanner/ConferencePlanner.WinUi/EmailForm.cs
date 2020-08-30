@@ -109,5 +109,20 @@ namespace ConferencePlanner.WinUi
                 NextPage();
             }
         }
+
+        private void pictureBox2_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void pictureBox2_MouseEnter(object sender, EventArgs e)
+        {
+            pictureBox2.BackgroundImageLayout = ImageLayout.Stretch;
+        }
+
+        private void pictureBox2_MouseLeave(object sender, EventArgs e)
+        {
+            pictureBox2.BackgroundImageLayout = ImageLayout.Center;
+        }
     }
 }
