@@ -36,7 +36,7 @@ namespace ConferencePlanner.WinUi
         private BindingList<CountyModel> Counties;
         
         private BindingList<SpeakerModel> Speakers;
-        private BindingList<SpeakerModel> SpeakersForSearchBar;
+        private BindingList<SpeakerModel> SpeakersForSearchBar = new BindingList<SpeakerModel>();
         private int SpeakersTotalPages;
         private int SpeakersCurrentPage = 1;
         private int SpeakersLastPageLastRow = 0;
