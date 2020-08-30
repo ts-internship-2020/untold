@@ -15,6 +15,7 @@ using ConferencePlanner.Repository.Ado.Repository;
 using System.Transactions;
 using Tulpep.NotificationWindow;
 using System.Windows.Controls;
+using System.Threading.Tasks;
 
 namespace ConferencePlanner.WinUi
 {
@@ -339,6 +340,7 @@ namespace ConferencePlanner.WinUi
         private void LoadSpeakersTab()
         {
             this.Speakers = _speakerRepository.GetAllSpeakers();
+            this.SpeakersForSearchBar = this.Speakers;
             int[] aux = this.CalculateTotalPages(this.Speakers.Count);
             this.SpeakersTotalPages = aux[0];
             this.SpeakersLastPageLastRow = aux[1]; 
@@ -559,6 +561,7 @@ namespace ConferencePlanner.WinUi
                 SpeakerModel newSpeaker = GetSpeaker();
                 _speakerRepository.InsertSpeaker(newSpeaker);
                 this.Speakers.Add(newSpeaker);
+                this.SpeakersForSearchBar = this.Speakers;
                 int[] aux = this.CalculateTotalPages(this.Speakers.Count);
                 this.SpeakersTotalPages = aux[0];
                 this.SpeakersLastPageLastRow = aux[1];
@@ -634,9 +637,10 @@ namespace ConferencePlanner.WinUi
                 int id = (int) this.SpeakerListDataGrid.Rows[e.RowIndex].Cells["SpeakerId"].Value;
                 var newDeleteForm = new AreYouSure(_speakerRepository, id);
 
-                newDeleteForm.ShowDialog();
-
+                Task t = Task.Run(() => { newDeleteForm.ShowDialog();  } );
+                t.Wait();
                 this.LoadSpeakersTab();
+                
             }
 
         }
@@ -738,6 +742,11 @@ namespace ConferencePlanner.WinUi
 
             }
             
+        }
+
+        private void SearchBar_Enter(object sender, EventArgs e)
+        {
+            this.SearchBar.Text = "";
         }
     }
 }
