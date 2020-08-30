@@ -152,11 +152,6 @@ namespace ConferencePlanner.WinUi
             //CityComboBox.SelectedItem = string.Empty;
         }
 
-        private void ComboBoxCountyTab_SelectedIndexChanged(object sender, EventArgs e)
-        {
-           // NextBtnCountyTab.Enabled = true;
-        }
-
         private void ConferenceNameLabel_Click(object sender, EventArgs e)
         {
 
@@ -239,7 +234,7 @@ namespace ConferencePlanner.WinUi
                 
             }
             
-            if(TabControlLocation.SelectedTab.Name == "SpeakerTab")
+            if(TabControlLocation.SelectedTab == this.SpeakerTab)
             {
                 this.LoadSpeakersTab();
             }
@@ -390,17 +385,12 @@ namespace ConferencePlanner.WinUi
 
 
         }
-        private void SpeakerListDataGrid_UserAddedRow(object sender, DataGridViewRowEventArgs e)
-        {
 
-        }
         private void AddConf_Load(object sender, EventArgs e)
         {
             TabControlLocation.SelectedIndex = 0;
 
             LoadContryTab();
-
-
         }
 
         private void LoadContryTab()
@@ -424,10 +414,6 @@ namespace ConferencePlanner.WinUi
 
         }
 
-        private void tableLayoutPanel3_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
         private void LoadCountyTab()
         {
             CountiesListGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
@@ -478,13 +464,6 @@ namespace ConferencePlanner.WinUi
             if (opType == "u")
             {
                 this.SpeakerListDataGrid.AllowUserToAddRows = false;
-            }
-            foreach (TabPage tab in TabControlLocation.TabPages)
-            {
-                if (tab.Name != this.TabControlLocation.SelectedTab.Name)
-                {
-                    tab.SuspendLayout();
-                }
             }
 
         }
@@ -586,7 +565,7 @@ namespace ConferencePlanner.WinUi
                 this.SpeakersCurrentPage = 1;
                 this.SpeakerCreatePage(this.Speakers);
                 SpeakerEndEditLayout("Done", "You can see the speaker you just added on the last page.");
-                this.SpeakerListDataGrid.CurrentCell = null;
+                //this.SpeakerListDataGrid.CurrentCell = null;
                 this.SpeakerListDataGrid.Rows[0].Selected = false;
             }
             else
