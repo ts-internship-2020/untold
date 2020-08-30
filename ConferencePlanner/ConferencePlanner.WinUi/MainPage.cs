@@ -327,7 +327,7 @@ namespace ConferencePlanner.WinUi
             //AttendeeGridvw.Columns[1].HeaderText = "StatusId";
             //AttendeeGridvw.Columns[2].HeaderText = "ConferenceId";
             AttendeeGridvw.Columns["RowNum"].Visible = false;
-            AttendeeGridvw.Columns["StatusId"].Visible = true;
+            AttendeeGridvw.Columns["StatusId"].Visible = false;
             AttendeeGridvw.Columns["ConferenceId"].Visible = false;
             AttendeeGridvw.AutoResizeColumns();
             //AttendeeGridvw.Columns[0].HeaderText = "RowNum";
