@@ -264,8 +264,8 @@ namespace ConferencePlanner.WinUi
             this.RightArrowPagButton.UseCompatibleTextRendering = true;
             this.RightArrowPagButton.UseVisualStyleBackColor = false;
             this.RightArrowPagButton.MouseClick += new System.Windows.Forms.MouseEventHandler(this.RightArrowPagButton_MouseClick);
-            this.RightArrowPagButton.MouseEnter += new System.EventHandler(this.RightArrowPagButton_MouseEnter);
-            this.RightArrowPagButton.MouseLeave += new System.EventHandler(this.RightArrowPagButton_MouseLeave);
+            //this.RightArrowPagButton.MouseEnter += new System.EventHandler(this.RightArrowPagButton_MouseEnter);
+            //this.RightArrowPagButton.MouseLeave += new System.EventHandler(this.RightArrowPagButton_MouseLeave);
             // 
             // button_woc1
             // 
