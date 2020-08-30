@@ -683,7 +683,7 @@ namespace ConferencePlanner.WinUi
                 int id = (int)OrganizerDataGrid.Rows[e.RowIndex].Cells["ConferenceId"].Value;
 
 
-                var varDeleteConference = new AreYouSure();
+                var varDeleteConference = new AreYouSure(_conferenceRepository, id);
                 varDeleteConference.ShowDialog();
             }
         }

@@ -14,5 +14,7 @@ namespace ConferencePlanner.Abstraction.Repository
         BindingList<SpeakerModel> GetAllSpeakers();
         void UpdateSpeaker(SpeakerModel speaker);
         void InsertSpeaker(SpeakerModel speaker);
+
+        void DeleteSpeaker(int id);
     }
 }

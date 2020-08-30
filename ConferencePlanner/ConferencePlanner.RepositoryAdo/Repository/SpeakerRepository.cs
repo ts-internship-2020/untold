@@ -21,7 +21,8 @@ namespace ConferencePlanner.Repository.Ado.Repository
 
         public BindingList<SpeakerModel> GetAllSpeakers()
         {
-            string commandText = "select SpeakerId, FirstName, LastName, Nationality, Rating from Speaker";
+            string commandText = "select SpeakerId, FirstName, LastName, Nationality, Rating from Speaker " +
+                "where SpeakerId <> 21";
 
             SqlCommand sqlCommand = new SqlCommand(commandText, _sqlConnection);
 
@@ -146,6 +147,33 @@ namespace ConferencePlanner.Repository.Ado.Repository
 
             sqlCommand.ExecuteNonQuery();
 
+        }
+        public void DeleteSpeaker(int id)
+        {
+            string commandText = "delete from Speaker where SpeakerId = @Id";
+
+            SqlCommand sqlCommand = new SqlCommand(commandText, _sqlConnection);
+            sqlCommand.Parameters.Add("@Id", SqlDbType.Int);
+            sqlCommand.Parameters["@Id"].Value = id;
+            try
+            {
+                sqlCommand.ExecuteNonQuery();
+            }
+            catch (Exception e)
+            {
+                string commandText2 = "update Conference " +
+                "set MainSpeakerId = 21 " +
+                "where MainSpeakerId = @Id " +
+                "update ConferenceXSpeaker " +
+                "set SpeakerId = 21 " +
+                "where SpeakerId = @Id " +
+                "delete from Speaker where SpeakerId = @Id";
+                SqlCommand sqlCommand2 = new SqlCommand(commandText2, _sqlConnection);
+                sqlCommand2.Parameters.Add("@Id", SqlDbType.Int);
+                sqlCommand2.Parameters["@Id"].Value = id;
+                sqlCommand2.ExecuteNonQuery();
+            }
+            
         }
     }
     }
