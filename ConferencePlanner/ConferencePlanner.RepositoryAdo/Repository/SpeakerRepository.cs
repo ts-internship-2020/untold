@@ -126,6 +126,27 @@ namespace ConferencePlanner.Repository.Ado.Repository
 
             sqlCommand.ExecuteNonQuery();
         }
+
+        public void InsertSpeaker(SpeakerModel speaker)
+        {
+            string commandText = "insert into Speaker values(@FirstName, @LastName, @Nationality, @Rating, @Imagepath)";
+
+            SqlCommand sqlCommand = new SqlCommand(commandText, _sqlConnection);
+            sqlCommand.Parameters.Add("@FirstName", SqlDbType.NVarChar);
+            sqlCommand.Parameters["@FirstName"].Value = speaker.FirstName;
+            sqlCommand.Parameters.Add("@LastName", SqlDbType.NVarChar);
+            sqlCommand.Parameters["@LastName"].Value = speaker.LastName;
+            sqlCommand.Parameters.Add("@Nationality", SqlDbType.NVarChar);
+            sqlCommand.Parameters["@Nationality"].Value = speaker.Nationality;
+            
+            sqlCommand.Parameters.Add("@Rating", SqlDbType.Float);
+            sqlCommand.Parameters["@Rating"].Value = speaker.Rating;
+            sqlCommand.Parameters.Add("@Imagepath", SqlDbType.NVarChar);
+            sqlCommand.Parameters["@Imagepath"].Value = "../../../Resources/speakersPhotos/unknown_user.jpg";
+
+            sqlCommand.ExecuteNonQuery();
+
+        }
     }
     }
 
