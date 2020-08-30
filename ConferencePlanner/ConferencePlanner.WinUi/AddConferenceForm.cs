@@ -28,7 +28,9 @@ namespace ConferencePlanner.WinUi
 
         private int PageSize = 4;
 
-        private int SelectedCountryId = 70;
+        private int SelectedCountryId;
+        private int SelectedCountyId;
+        private int SelectedCityId;
 
         private BindingList<CountryModel> Countries;
         private BindingList<CountyModel> Counties;
@@ -166,22 +168,49 @@ namespace ConferencePlanner.WinUi
 
         public int selectedRow;
 
+        private bool IndexChange(string TabName, DataGridView CurrentDataGrid)
+        {
+            string PopUpTitle = "Warning", PopUpMessage;
+            if (CurrentDataGrid.Rows.GetRowCount(DataGridViewElementStates.Selected) < 1)
+            {
+                PopUpMessage = "Select a " + TabName;
+                popUpMethod(PopUpTitle, PopUpMessage);
+                return false;
+            } else if (CurrentDataGrid.Rows.GetRowCount(DataGridViewElementStates.Selected) > 1)
+            {
+                PopUpMessage = "Select just a " + TabName;
+                popUpMethod(PopUpTitle, PopUpMessage);
+                return false;
+            }
+            return true;
+        }
 
         private void NextBtn_Click(object sender, EventArgs e)
         {
-            int selectedRowCount = CountryListDataGridView.Rows.GetRowCount(DataGridViewElementStates.Selected);
+            //int selectedRowCount = CountryListDataGridView.Rows.GetRowCount(DataGridViewElementStates.Selected);
+            Point StartPtn = new Point(3, 43);
+        
+            DataGridView CurrentGridView = (DataGridView)TabControlLocation.SelectedTab.GetChildAtPoint(StartPtn);
+            string Text = TabControlLocation.SelectedTab.Text;
 
             if (NextTabBtn.Text=="Next>>")
             {
-                if(selectedRowCount == 1)
+                if(IndexChange(Text, CurrentGridView))
                 {
+                    var SelectedRowIndex = CurrentGridView.SelectedRows[0].Index;
 
-                    //  selectedRow = CountryListDataGridView.ColumnCount;
-                    //  CountryListDataGridView.Columns.Insert(DictionaryCountryId);
-
-                    //selectedRow = CountryListDataGridView.SelectedRows.Index.ToString();
-
-                    //sb.Append(dataGridView1.SelectedRows[i].Index.ToString());
+                    if (TabControlLocation.SelectedIndex == 0)
+                    {
+                        SelectedCountryId = (int)CurrentGridView.Rows[SelectedRowIndex].Cells["DictionaryCountryId"].Value;
+                    }
+                    if (TabControlLocation.SelectedIndex == 1)
+                    {
+                        SelectedCountyId = (int)CurrentGridView.Rows[SelectedRowIndex].Cells["CountyId"].Value;
+                    }
+                    if (TabControlLocation.SelectedIndex == 2)
+                    {
+                        // SelectedCityId = (int)CurrentGridView.Rows[SelectedRowIndex].Cells["DictionaryCytiId"].Value;
+                    }
 
                     TabControlLocation.SelectedIndex++;
 
@@ -202,6 +231,7 @@ namespace ConferencePlanner.WinUi
 
         private void TabControlLocation_SelectedIndexChanged(object sender, EventArgs e)
         {
+            
             if (TabControlLocation.SelectedIndex == 1)
             {
                 this.LoadCountyTab();

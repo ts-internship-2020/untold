@@ -12,6 +12,7 @@ using System.Data.SqlClient;
 using System.Net.Mail;
 using System.Net;
 using ConferencePlanner.Repository.Ado.Repository;
+using System.Windows.Media;
 
 namespace ConferencePlanner.WinUi
 {
@@ -716,7 +717,7 @@ namespace ConferencePlanner.WinUi
             
             if (e.ColumnIndex == AttendeeGridvw.Columns["attend_column"].Index)
             {
-                if (AttendeeGridvw.Rows[e.RowIndex].Cells[e.ColumnIndex].Style.ForeColor.Equals(Color.Red))
+                if (AttendeeGridvw.Rows[e.RowIndex].Cells[e.ColumnIndex].Style.ForeColor.Equals(System.Drawing.Color.Red))
                 {
                     AttendeeGridvw.Rows[e.RowIndex].Cells[e.ColumnIndex].Selected = false;
                 }
@@ -809,6 +810,18 @@ namespace ConferencePlanner.WinUi
         {
 
         }
+
+        private void RightArrowPagButton_MouseEnter(object sender, EventArgs e)
+        {
+            RightArrowPagButton.BackgroundImageLayout = ImageLayout.Stretch;
+        }
+
+        private void RightArrowPagButton_MouseLeave(object sender, EventArgs e)
+        {
+            RightArrowPagButton.BackgroundImageLayout = ImageLayout.Center;
+        }
+
+        
     }
 }
 
