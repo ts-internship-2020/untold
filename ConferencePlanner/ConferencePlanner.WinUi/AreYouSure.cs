@@ -27,32 +27,36 @@ namespace ConferencePlanner.WinUi
             InitializeComponent();
 
             this.YesButton.Click += ConferenceYesButton_Click;
-            this.NoButton.Click += NoButton_Click;
+            this.NoButton.Click += NoDeleteButton_Click;
             this.ObjectId = conferenceId;
         }
 
         public AreYouSure(ISpeakerRepository speakerRepository, int speakerId)
         {
             _speakerRepository = speakerRepository;
-            InitializeComponent();
 
+            
+            InitializeComponent();
             this.YesButton.Click += SpeakerYesButton_Click;
-            this.NoButton.Click += NoButton_Click;
+            this.NoButton.Click += NoDeleteButton_Click;
             this.ObjectId = speakerId;
+
 
         }
 
 
         private void SpeakerYesButton_Click(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            _speakerRepository.DeleteSpeaker(this.ObjectId);
+            this.Close();
         }
 
         private void ConferenceYesButton_Click(object sender, EventArgs e)
         {
             _conferenceRepository.DeleteConferenceById(this.ObjectId);
+            this.Close();
         }
-        private void NoButton_Click(object sender, EventArgs e)
+        private void NoDeleteButton_Click(object sender, EventArgs e)
         {
             this.Close();
         }

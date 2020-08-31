@@ -59,7 +59,7 @@
             this.NoButton.TabIndex = 1;
             this.NoButton.Text = "No";
             this.NoButton.UseVisualStyleBackColor = true;
-            this.NoButton.Click += new System.EventHandler(this.NoButton_Click);
+            this.NoButton.Click += new System.EventHandler(this.NoDeleteButton_Click);
             // 
             // AreyousureLabel
             // 
