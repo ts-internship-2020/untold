@@ -21,6 +21,7 @@ namespace ConferencePlanner.WinUi
 
         private readonly ICountryRepository _countryRepository;
         private readonly ICountyRepository _countyRepository;
+        private readonly ITypeRepository _typeRepository;
 
         private readonly IAttendeeButtonsRepository _attendeeButtons;
         private readonly ISpeakerRepository _speakerRepository;
@@ -36,7 +37,7 @@ namespace ConferencePlanner.WinUi
 
         public MainPage(IConferenceRepository conferenceRepository, ICountryRepository countryRepository,
             IAttendeeButtonsRepository attendeeButtonsRepository, ISpeakerRepository speakerRepository, ICountyRepository 
-            countyRepository)
+            countyRepository,ITypeRepository typeRepository)
         {
             _conferenceRepository = conferenceRepository;
 
@@ -46,6 +47,7 @@ namespace ConferencePlanner.WinUi
 
             _speakerRepository = speakerRepository;
             _countyRepository = countyRepository;
+            _typeRepository = typeRepository;
 
             InitializeComponent();
 
@@ -75,7 +77,7 @@ namespace ConferencePlanner.WinUi
 
         private void AddConferenceButton_Click(object sender, EventArgs e)
         {
-            var varAddConf = new AddConf(_conferenceRepository, _countryRepository, _countyRepository, _speakerRepository );
+            var varAddConf = new AddConf(_conferenceRepository, _countryRepository, _countyRepository, _speakerRepository,_typeRepository );
 
             TabControl.SelectedIndex = 1;
             this.popUpMethod("Context Changed", "You are now an organizer!");
@@ -670,7 +672,7 @@ namespace ConferencePlanner.WinUi
                 int id = (int)OrganizerDataGrid.Rows[e.RowIndex].Cells["ConferenceId"].Value;
                 ConferenceModel conference = _conferenceRepository.GetConferenceById(id);
 
-                var varAddConf = new AddConf(conference, _conferenceRepository, _countryRepository, _speakerRepository);
+                var varAddConf = new AddConf(conference, _conferenceRepository, _countryRepository, _speakerRepository,_typeRepository);
 
                 varAddConf.ShowDialog();        
 
