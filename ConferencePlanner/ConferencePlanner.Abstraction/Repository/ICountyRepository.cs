@@ -8,7 +8,6 @@ namespace ConferencePlanner.Abstraction.Repository
 {
     public interface ICountyRepository
     {
-        List<CountyModel> GetCountyList(int countryId);
-        BindingList<CountyModel> GetCountyListBind(int countryId);
+        BindingList<CountyModel> GetCountyList(int countryId);
     }
 }
