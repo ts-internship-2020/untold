@@ -252,7 +252,7 @@ namespace ConferencePlanner.WinUi
                     }
                     if (TabControlLocation.SelectedIndex == 2)
                     {
-                         SelectedCityId = (int)CurrentGridView.Rows[SelectedRowIndex].Cells["DictionaryCytiId"].Value;
+                         SelectedCityId = (int)CurrentGridView.Rows[SelectedRowIndex].Cells["DictionaryCityId"].Value;
                     }
                     if (TabControlLocation.SelectedTab == this.SpeakerTab)
                     {
