@@ -49,5 +49,36 @@ namespace ConferencePlanner.Repository.Ado.Repository
         {
             throw new NotImplementedException();
         }
+
+        public void InsertCounty(CountyModel County)
+        {
+            string SqlText = "insert into DictionaryCounty values(@DictionaryCountyId, @CountyName, @CountryId)";
+
+            SqlCommand sqlCommand = new SqlCommand(SqlText, _sqlConnection);
+            sqlCommand.Parameters.Add("@DictionaryCountyId", SqlDbType.Int);
+            sqlCommand.Parameters["@DictionaryCountyId"].Value = County.CountyId;
+            sqlCommand.Parameters.Add("@CountyName", SqlDbType.NVarChar);
+            sqlCommand.Parameters["@CountyName"].Value = County.CountyName;
+            sqlCommand.Parameters.Add("@CountryId", SqlDbType.Int);
+            sqlCommand.Parameters["@CountryId"].Value = County.CountryId;
+
+            sqlCommand.ExecuteNonQuery();
+        }
+
+
+        public void UpdateCounty(CountyModel County)
+        {
+            string SqlText = "update DictionaryCounty" +
+                " set CountyName = @CountyName" +
+                " where DictionaryCountyId = @DictionaryCountyId";
+            SqlCommand sqlCommand = new SqlCommand(SqlText, _sqlConnection);
+            sqlCommand.Parameters.Add("@CountyName", SqlDbType.NVarChar);
+            sqlCommand.Parameters["@CountyName"].Value = County.CountyName;
+            sqlCommand.Parameters.Add("@DictionaryCountyId", SqlDbType.Int);
+            sqlCommand.Parameters["@DictionaryCountyId"].Value = County.CountyId;
+
+
+            sqlCommand.ExecuteNonQuery();
+        }
     }
 }
