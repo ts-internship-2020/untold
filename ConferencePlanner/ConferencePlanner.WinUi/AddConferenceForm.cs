@@ -120,10 +120,6 @@ namespace ConferencePlanner.WinUi
         }
 
 
-       
-
-
-
         private void button2_Click(object sender, EventArgs e)
         {
             TabControlLocation.SelectedIndex = 2;
@@ -399,8 +395,10 @@ namespace ConferencePlanner.WinUi
             {
                 result.Add(lst[i]);
             }
-
+            
             this.SpeakerListDataGrid.DataSource = result;
+            
+
         }
 
 
@@ -464,7 +462,11 @@ namespace ConferencePlanner.WinUi
 
             //this.SpeakerListDataGrid.CurrentCell = null;
             this.SpeakerListDataGrid.Rows[0].Selected = false;
+            
+            this.SpeakerListDataGrid.Controls[1].Enabled = true;
 
+            
+            //this.SpeakerListDataGrid.PerformLayout();
 
         }
 
@@ -571,7 +573,7 @@ namespace ConferencePlanner.WinUi
             this.popUpMethod(str1popup, str2popup);
             this.SpeakerListDataGrid.Columns["main_speaker"].ReadOnly = false;
             this.SpeakerListDataGrid.Columns["main_speaker"].DefaultCellStyle.BackColor = Color.White;
-            this.SpeakerListDataGrid.Columns["main_speaker"].DefaultCellStyle.BackColor = Color.White;
+           
             this.SpeakerListDataGrid.Columns["delete_column"].Visible = true;
             this.SearchBar.Enabled = true;
 
@@ -589,10 +591,6 @@ namespace ConferencePlanner.WinUi
             if (this.SpeakerListDataGrid.AllowUserToAddRows == false)
             {
                 this.SpeakerListDataGrid.AllowUserToAddRows = true;
-            }
-            foreach(DataGridViewCell cell in SpeakerListDataGrid.Rows[this.UpdateSpeakerRow].Cells)
-            {
-                cell.Style.BackColor = Color.White;
             }
 
         }
@@ -851,6 +849,7 @@ namespace ConferencePlanner.WinUi
         {
             if(this.TabControlLocation.SelectedTab.Name == "SpeakerTab")
             {
+                //this.ActiveControl = null;
                 this.SpeakersCurrentPage = 1;
                 BindingList<SpeakerModel> result = new BindingList<SpeakerModel>();
                 foreach (SpeakerModel speaker in this.Speakers)
@@ -875,6 +874,20 @@ namespace ConferencePlanner.WinUi
             this.SearchBar.Text = "";
         }
 
-      
+       
+
+        private void SpeakerPaginationSelector_DropDownClosed(object sender, EventArgs e)
+        {
+            int idx = this.SpeakerPaginationSelector.SelectedIndex;
+            
+            this.PageSize = int.Parse(this.SpeakerPaginationSelector.Items[idx].ToString());
+            //if ()
+            int[] aux = this.CalculateTotalPages(this.SpeakersForSearchBar.Count);
+            this.SpeakersCurrentPage = 1;
+            this.SpeakersTotalPages = aux[0];
+            this.SpeakersLastPageLastRow = aux[1];
+
+            this.SpeakerCreatePage(this.SpeakersForSearchBar);
+        }
     }
 }
