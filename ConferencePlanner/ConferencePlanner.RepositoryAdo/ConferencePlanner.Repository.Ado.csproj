@@ -11,6 +11,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ConferencePlanner.Abstraction\ConferencePlanner.Abstraction.csproj" />
+    <ProjectReference Include="..\ConferencePlanner.RepositoryApi\ConferencePlanner.Repository.Api.csproj" />
   </ItemGroup>
 
 </Project>

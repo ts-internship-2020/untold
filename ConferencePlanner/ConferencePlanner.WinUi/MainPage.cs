@@ -37,7 +37,7 @@ namespace ConferencePlanner.WinUi
 
         public MainPage(IConferenceRepository conferenceRepository, ICountryRepository countryRepository,
             IAttendeeButtonsRepository attendeeButtonsRepository, ISpeakerRepository speakerRepository, ICountyRepository 
-            countyRepository,ITypeRepository typeRepository)
+            countyRepository, ICityRepository cityRepository, ITypeRepository typeRepository)
         {
             _conferenceRepository = conferenceRepository;
 
@@ -47,6 +47,7 @@ namespace ConferencePlanner.WinUi
 
             _speakerRepository = speakerRepository;
             _countyRepository = countyRepository;
+            _cityRepository = cityRepository;
             _typeRepository = typeRepository;
 
             InitializeComponent();
@@ -77,7 +78,7 @@ namespace ConferencePlanner.WinUi
 
         private void AddConferenceButton_Click(object sender, EventArgs e)
         {
-            var varAddConf = new AddConf(_conferenceRepository, _countryRepository, _countyRepository, _speakerRepository,_typeRepository );
+            var varAddConf = new AddConf(_conferenceRepository, _countryRepository, _countyRepository, _cityRepository, _speakerRepository );
 
             TabControl.SelectedIndex = 1;
             this.popUpMethod("Context Changed", "You are now an organizer!");
@@ -115,9 +116,6 @@ namespace ConferencePlanner.WinUi
 
            }
         }
-
-
-
         private void TabOrganizer_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (this.TabControl.SelectedTab.Name == "TabOrganizer")
@@ -672,7 +670,7 @@ namespace ConferencePlanner.WinUi
                 int id = (int)OrganizerDataGrid.Rows[e.RowIndex].Cells["ConferenceId"].Value;
                 ConferenceModel conference = _conferenceRepository.GetConferenceById(id);
 
-                var varAddConf = new AddConf(conference, _conferenceRepository, _countryRepository, _speakerRepository,_typeRepository);
+                var varAddConf = new AddConf(conference, _conferenceRepository, _countryRepository, _cityRepository, _speakerRepository, typeRepository); 
 
                 varAddConf.ShowDialog();        
 
@@ -848,6 +846,23 @@ namespace ConferencePlanner.WinUi
         private void OrganizerDataGrid_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
+        }
+
+        private void OrganizersPaginationSelector_DropDownClosed(object sender, EventArgs e)
+        {
+            int idx = this.OrganizersPaginationSelector.SelectedIndex;
+            if (idx >= 0)
+            {
+                this.PageSize = int.Parse(this.OrganizersPaginationSelector.Items[idx].ToString());
+
+                var allConferences = _conferenceRepository.GetConferencesByOrganizer(Program.EnteredEmailAddress);
+                this.CalculateTotalPages(allConferences, this.TabOrganizer);
+                this.OrganizerCurrentPageIndex = 1;
+
+
+                this.CreatePage();
+            }
+            
         }
     }
 }

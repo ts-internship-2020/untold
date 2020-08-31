@@ -38,6 +38,7 @@ namespace ConferencePlanner.WinUi
             this.button4 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.TabOrganizer = new System.Windows.Forms.TabPage();
+            this.OrganizersPaginationSelector = new System.Windows.Forms.ComboBox();
             this.NoConferenceLabel = new System.Windows.Forms.Label();
             this.OrganizerDataGrid = new System.Windows.Forms.DataGridView();
             this.TabControl = new System.Windows.Forms.TabControl();
@@ -69,8 +70,8 @@ namespace ConferencePlanner.WinUi
             this.TabAttendee.Controls.Add(this.button3);
             this.TabAttendee.Location = new System.Drawing.Point(4, 26);
             this.TabAttendee.Name = "TabAttendee";
-            this.TabAttendee.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
-            this.TabAttendee.Size = new System.Drawing.Size(1131, 483);
+            this.TabAttendee.Padding = new System.Windows.Forms.Padding(3);
+            this.TabAttendee.Size = new System.Drawing.Size(1052, 396);
             this.TabAttendee.TabIndex = 0;
             this.TabAttendee.Text = "Attendee";
             this.TabAttendee.UseVisualStyleBackColor = true;
@@ -92,7 +93,7 @@ namespace ConferencePlanner.WinUi
             this.AttendeeGridvw.ReadOnly = true;
             this.AttendeeGridvw.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
             this.AttendeeGridvw.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
-            this.AttendeeGridvw.Size = new System.Drawing.Size(1125, 477);
+            this.AttendeeGridvw.Size = new System.Drawing.Size(1046, 390);
             this.AttendeeGridvw.TabIndex = 3;
             this.AttendeeGridvw.Text = "dataGridView1";
             this.AttendeeGridvw.Layout += new System.Windows.Forms.LayoutEventHandler(this.tabPage1_Layout);
@@ -126,15 +127,29 @@ namespace ConferencePlanner.WinUi
             // 
             // TabOrganizer
             // 
+            this.TabOrganizer.Controls.Add(this.OrganizersPaginationSelector);
             this.TabOrganizer.Controls.Add(this.NoConferenceLabel);
             this.TabOrganizer.Controls.Add(this.OrganizerDataGrid);
-            this.TabOrganizer.Location = new System.Drawing.Point(4, 30);
+            this.TabOrganizer.Location = new System.Drawing.Point(4, 26);
             this.TabOrganizer.Name = "TabOrganizer";
-            this.TabOrganizer.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
-            this.TabOrganizer.Size = new System.Drawing.Size(928, 366);
+            this.TabOrganizer.Padding = new System.Windows.Forms.Padding(3);
+            this.TabOrganizer.Size = new System.Drawing.Size(1052, 396);
             this.TabOrganizer.TabIndex = 1;
             this.TabOrganizer.Text = "Organizer";
             this.TabOrganizer.UseVisualStyleBackColor = true;
+            // 
+            // OrganizersPaginationSelector
+            // 
+            this.OrganizersPaginationSelector.FormattingEnabled = true;
+            this.OrganizersPaginationSelector.Items.AddRange(new object[] {
+            "5",
+            "10",
+            "25"});
+            this.OrganizersPaginationSelector.Location = new System.Drawing.Point(495, 369);
+            this.OrganizersPaginationSelector.Name = "OrganizersPaginationSelector";
+            this.OrganizersPaginationSelector.Size = new System.Drawing.Size(121, 25);
+            this.OrganizersPaginationSelector.TabIndex = 2;
+            this.OrganizersPaginationSelector.DropDownClosed += new System.EventHandler(this.OrganizersPaginationSelector_DropDownClosed);
             // 
             // NoConferenceLabel
             // 
@@ -159,11 +174,11 @@ namespace ConferencePlanner.WinUi
             this.OrganizerDataGrid.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.OrganizerDataGrid.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCellsExceptHeaders;
             this.OrganizerDataGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.OrganizerDataGrid.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.OrganizerDataGrid.Dock = System.Windows.Forms.DockStyle.Top;
             this.OrganizerDataGrid.Location = new System.Drawing.Point(3, 3);
             this.OrganizerDataGrid.Name = "OrganizerDataGrid";
             this.OrganizerDataGrid.ReadOnly = true;
-            this.OrganizerDataGrid.Size = new System.Drawing.Size(922, 360);
+            this.OrganizerDataGrid.Size = new System.Drawing.Size(1046, 360);
             this.OrganizerDataGrid.TabIndex = 0;
             this.OrganizerDataGrid.Text = "organizerDataGrid";
             this.OrganizerDataGrid.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.OrganizerDataGrid_CellContentClick);
@@ -175,17 +190,17 @@ namespace ConferencePlanner.WinUi
             this.TabControl.Controls.Add(this.TabAttendee);
             this.TabControl.Controls.Add(this.TabOrganizer);
             this.TabControl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.TabControl.Location = new System.Drawing.Point(3, 135);
+            this.TabControl.Location = new System.Drawing.Point(3, 113);
             this.TabControl.Name = "TabControl";
             this.TabControl.SelectedIndex = 0;
-            this.TabControl.Size = new System.Drawing.Size(1139, 513);
+            this.TabControl.Size = new System.Drawing.Size(1060, 426);
             this.TabControl.TabIndex = 3;
             this.TabControl.SelectedIndexChanged += new System.EventHandler(this.TabOrganizer_SelectedIndexChanged);
             // 
             // AddConferenceButton
             // 
             this.AddConferenceButton.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.AddConferenceButton.Location = new System.Drawing.Point(912, 37);
+            this.AddConferenceButton.Location = new System.Drawing.Point(832, 26);
             this.AddConferenceButton.Name = "AddConferenceButton";
             this.AddConferenceButton.Size = new System.Drawing.Size(85, 53);
             this.AddConferenceButton.TabIndex = 4;
@@ -198,7 +213,7 @@ namespace ConferencePlanner.WinUi
             this.StartDatePicker.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.StartDatePicker.CustomFormat = "yyyy-MM-dd hh:mm:ss";
             this.StartDatePicker.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.StartDatePicker.Location = new System.Drawing.Point(243, 100);
+            this.StartDatePicker.Location = new System.Drawing.Point(203, 78);
             this.StartDatePicker.Name = "StartDatePicker";
             this.StartDatePicker.Size = new System.Drawing.Size(138, 25);
             this.StartDatePicker.TabIndex = 5;
@@ -209,7 +224,7 @@ namespace ConferencePlanner.WinUi
             this.EndDatePicker.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.EndDatePicker.CustomFormat = "yyyy-MM-dd hh:mm:ss";
             this.EndDatePicker.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.EndDatePicker.Location = new System.Drawing.Point(387, 100);
+            this.EndDatePicker.Location = new System.Drawing.Point(347, 78);
             this.EndDatePicker.Name = "EndDatePicker";
             this.EndDatePicker.Size = new System.Drawing.Size(162, 25);
             this.EndDatePicker.TabIndex = 6;
@@ -227,7 +242,7 @@ namespace ConferencePlanner.WinUi
             // LeftArrowPagButton
             // 
             this.LeftArrowPagButton.Dock = System.Windows.Forms.DockStyle.Right;
-            this.LeftArrowPagButton.Location = new System.Drawing.Point(532, 3);
+            this.LeftArrowPagButton.Location = new System.Drawing.Point(537, 3);
             this.LeftArrowPagButton.Name = "LeftArrowPagButton";
             this.LeftArrowPagButton.Size = new System.Drawing.Size(35, 31);
             this.LeftArrowPagButton.TabIndex = 7;
@@ -243,7 +258,7 @@ namespace ConferencePlanner.WinUi
             this.RightArrowPagButton.Dock = System.Windows.Forms.DockStyle.Left;
             this.RightArrowPagButton.FlatAppearance.BorderSize = 0;
             this.RightArrowPagButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.RightArrowPagButton.Location = new System.Drawing.Point(571, 1);
+            this.RightArrowPagButton.Location = new System.Drawing.Point(576, 1);
             this.RightArrowPagButton.Margin = new System.Windows.Forms.Padding(1);
             this.RightArrowPagButton.Name = "RightArrowPagButton";
             this.RightArrowPagButton.Size = new System.Drawing.Size(30, 35);
@@ -280,13 +295,13 @@ namespace ConferencePlanner.WinUi
             this.tableLayoutPanel1.Controls.Add(this.TabControl, 0, 1);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(2);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 3;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20.31746F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 79.68254F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1145, 692);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1066, 583);
             this.tableLayoutPanel1.TabIndex = 10;
             // 
             // tableLayoutPanel2
@@ -294,33 +309,34 @@ namespace ConferencePlanner.WinUi
             this.tableLayoutPanel2.ColumnCount = 3;
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 373F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 374F));
             this.tableLayoutPanel2.Controls.Add(this.AddConferenceButton, 2, 0);
             this.tableLayoutPanel2.Controls.Add(this.EndDatePicker, 1, 0);
             this.tableLayoutPanel2.Controls.Add(this.StartDatePicker, 0, 0);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel2.Location = new System.Drawing.Point(2, 2);
-            this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(2);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 1;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(1141, 128);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(1062, 106);
             this.tableLayoutPanel2.TabIndex = 0;
             // 
             // tableLayoutPanel3
             // 
-            this.tableLayoutPanel3.ColumnCount = 2;
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel3.ColumnCount = 3;
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 89.00928F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10.99071F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 415F));
             this.tableLayoutPanel3.Controls.Add(this.LeftArrowPagButton, 0, 0);
             this.tableLayoutPanel3.Controls.Add(this.RightArrowPagButton, 1, 0);
             this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel3.Location = new System.Drawing.Point(2, 653);
-            this.tableLayoutPanel3.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tableLayoutPanel3.Location = new System.Drawing.Point(2, 544);
+            this.tableLayoutPanel3.Margin = new System.Windows.Forms.Padding(2);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
             this.tableLayoutPanel3.RowCount = 1;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(1141, 37);
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(1062, 37);
             this.tableLayoutPanel3.TabIndex = 1;
             // 
             // MainPage
@@ -329,7 +345,7 @@ namespace ConferencePlanner.WinUi
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.ClientSize = new System.Drawing.Size(1145, 692);
+            this.ClientSize = new System.Drawing.Size(1066, 583);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.button_woc1);
             this.Font = new System.Drawing.Font("Nirmala UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
@@ -383,5 +399,6 @@ namespace ConferencePlanner.WinUi
         private TableLayoutPanel tableLayoutPanel1;
         private TableLayoutPanel tableLayoutPanel2;
         private TableLayoutPanel tableLayoutPanel3;
+        private ComboBox OrganizersPaginationSelector;
     }
 }
