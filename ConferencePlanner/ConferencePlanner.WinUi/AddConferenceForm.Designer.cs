@@ -67,7 +67,7 @@ namespace ConferencePlanner.WinUi
             this.CitiesNextBtn = new System.Windows.Forms.Button();
             this.CitiesLastPage = new System.Windows.Forms.Button();
             this.CitiesPages = new System.Windows.Forms.TextBox();
-            this.dataGridView6 = new System.Windows.Forms.DataGridView();
+            this.CityListDataGridView = new System.Windows.Forms.DataGridView();
             this.TypeTab = new System.Windows.Forms.TabPage();
             this.TypeSaveLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.textBox3 = new System.Windows.Forms.TextBox();
@@ -129,7 +129,7 @@ namespace ConferencePlanner.WinUi
             this.City.SuspendLayout();
             this.CitySaveLayoutPanel.SuspendLayout();
             this.CitiesLayoutPanelBtns.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView6)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CityListDataGridView)).BeginInit();
             this.TypeTab.SuspendLayout();
             this.TypeSaveLayoutPanel.SuspendLayout();
             this.TypesLayoutPanelBtn.SuspendLayout();
@@ -445,7 +445,7 @@ namespace ConferencePlanner.WinUi
             // 
             this.City.Controls.Add(this.CitySaveLayoutPanel);
             this.City.Controls.Add(this.CitiesLayoutPanelBtns);
-            this.City.Controls.Add(this.dataGridView6);
+            this.City.Controls.Add(this.CityListDataGridView);
             this.City.Location = new System.Drawing.Point(4, 30);
             this.City.Name = "City";
             this.City.Padding = new System.Windows.Forms.Padding(3);
@@ -526,7 +526,7 @@ namespace ConferencePlanner.WinUi
             this.CitiesBackBtn.Dock = System.Windows.Forms.DockStyle.Fill;
             this.CitiesBackBtn.Location = new System.Drawing.Point(276, 3);
             this.CitiesBackBtn.Name = "CitiesBackBtn";
-            this.CitiesBackBtn.Size = new System.Drawing.Size(50, 33);
+            this.CitiesBackBtn.Size = new System.Drawing.Size(49, 33);
             this.CitiesBackBtn.TabIndex = 1;
             this.CitiesBackBtn.Text = "<";
             this.CitiesBackBtn.UseVisualStyleBackColor = true;
@@ -559,15 +559,15 @@ namespace ConferencePlanner.WinUi
             this.CitiesPages.Size = new System.Drawing.Size(87, 29);
             this.CitiesPages.TabIndex = 4;
             // 
-            // dataGridView6
+            // CityListDataGridView
             // 
-            this.dataGridView6.BackgroundColor = System.Drawing.Color.White;
-            this.dataGridView6.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView6.Location = new System.Drawing.Point(3, 43);
-            this.dataGridView6.Name = "dataGridView6";
-            this.dataGridView6.Size = new System.Drawing.Size(932, 197);
-            this.dataGridView6.TabIndex = 0;
-            this.dataGridView6.Text = "dataGridView6";
+            this.CityListDataGridView.BackgroundColor = System.Drawing.Color.White;
+            this.CityListDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.CityListDataGridView.Location = new System.Drawing.Point(3, 43);
+            this.CityListDataGridView.Name = "CityListDataGridView";
+            this.CityListDataGridView.Size = new System.Drawing.Size(932, 197);
+            this.CityListDataGridView.TabIndex = 0;
+            this.CityListDataGridView.Text = "dataGridView6";
             // 
             // TypeTab
             // 
@@ -1206,7 +1206,7 @@ namespace ConferencePlanner.WinUi
             this.CitySaveLayoutPanel.PerformLayout();
             this.CitiesLayoutPanelBtns.ResumeLayout(false);
             this.CitiesLayoutPanelBtns.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView6)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CityListDataGridView)).EndInit();
             this.TypeTab.ResumeLayout(false);
             this.TypeSaveLayoutPanel.ResumeLayout(false);
             this.TypeSaveLayoutPanel.PerformLayout();
@@ -1284,7 +1284,7 @@ namespace ConferencePlanner.WinUi
         private System.Windows.Forms.Button CitiesNextBtn;
         private System.Windows.Forms.Button CitiesLastPage;
         private System.Windows.Forms.TextBox CitiesPages;
-        private System.Windows.Forms.DataGridView dataGridView6;
+        private System.Windows.Forms.DataGridView CityListDataGridView;
         private System.Windows.Forms.TabPage TypeTab;
         private System.Windows.Forms.TableLayoutPanel TypesLayoutPanelBtn;
         private System.Windows.Forms.Button TypesFirstPage;
