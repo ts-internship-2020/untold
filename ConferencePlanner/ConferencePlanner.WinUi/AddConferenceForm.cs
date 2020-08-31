@@ -16,6 +16,7 @@ using System.Transactions;
 using Tulpep.NotificationWindow;
 using System.Windows.Controls;
 using System.Threading.Tasks;
+using System.Printing;
 
 namespace ConferencePlanner.WinUi
 {
@@ -379,7 +380,7 @@ namespace ConferencePlanner.WinUi
             {
                 CountiesList.Add(list[i]);
             }
-            this.SpeakerListDataGrid.DataSource = CountiesList;
+            this.CountiesListGridView.DataSource = CountiesList;
         }
 
         private void SpeakerCreatePage(BindingList<SpeakerModel> lst)
@@ -496,17 +497,6 @@ namespace ConferencePlanner.WinUi
 
         }
 
-        //private void LoadSpeakersTab()
-        //{
-        //    this.Speakers = _speakerRepository.GetAllSpeakers();
-        //    this.SpeakersForSearchBar = this.Speakers;
-        //    int[] aux = this.CalculateTotalPages(this.Speakers.Count);
-        //    this.SpeakersTotalPages = aux[0];
-        //    this.SpeakersLastPageLastRow = aux[1];
-
-        //    this.SpeakerCreatePage(this.Speakers);
-        //}
-
         private void LoadCountyTab()
         {
             this.Counties = _countyRepository.GetCountyList(this.SelectedCountryId);
@@ -514,13 +504,102 @@ namespace ConferencePlanner.WinUi
             int[] pages = CalculateTotalPages(Counties.Count);
             CountiesListGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             CountiesListGridView.AllowUserToOrderColumns = true;
-            
             CountiesListGridView.DefaultCellStyle.ForeColor = Color.Black;
-            CountiesListGridView.DataSource = this.Counties;
+            CountiesTotalPages = pages[0];
+            CountiesLastPageLastRow = pages[1];
 
+            ContiesCreatePage(Counties);
 
         }
-        private void AddInsertMessage()
+
+        private void CountiesListGridView_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+            if (CountiesListGridView.Columns.Contains("CountyId") && CountiesListGridView.Columns["CountyId"].Visible)
+            {
+                CountiesListGridView.Columns["CountyId"].Visible = false;
+            }
+            if (CountiesListGridView.Columns.Contains("CountryId") && CountiesListGridView.Columns["CountryId"].Visible)
+            {
+                CountiesListGridView.Columns["CountryId"].Visible = false;
+            }
+            if (CountiesListGridView.Columns.Contains("delete_column") == false)
+            {
+                DataGridViewButtonColumn deleteButtonColumn = new DataGridViewButtonColumn();
+                deleteButtonColumn.UseColumnTextForButtonValue = true;
+                deleteButtonColumn.Text = "Delete";
+                deleteButtonColumn.Width = 25;
+                deleteButtonColumn.HeaderText = "";
+                deleteButtonColumn.Name = "delete_column";
+
+                CountiesListGridView.Columns.Add(deleteButtonColumn);
+
+            }
+            CountiesListGridView.Columns["CountyName"].HeaderText = "County Name";
+            CountiesListGridView.Rows[0].Selected = false;
+        }
+
+        private void CountyAddInsertMessage()
+        {
+            CountyEditTextBox.Text = "You are now adding a new county. Press the button to Save. ";
+            CountyEditTextBox.Visible = true;
+            CountySaveEditBtn.Visible = true;
+        }
+
+        private void CountyAddUpdateMessage(string CountyName)
+        {
+            CountyEditTextBox.Text = "You are now editing the " + CountyName + " county. Press the button to Save.";
+            CountyEditTextBox.Visible = true;
+            CountySaveEditBtn.Visible = true;
+        }
+
+        private void CountiBeginEditLayout(string Action)
+        {
+            CountiesListGridView.Columns["delete_column"].Visible = false;
+            this.SearchBar.Enabled = false;
+            foreach (DataGridViewRow row in CountiesListGridView.Rows)
+            {
+                if (row.Index != UpdateCountiRow)
+                {
+                    row.ReadOnly = true;
+                }
+            }
+            CountiesNextBtn.Enabled = false;
+            CountiesLastPage.Enabled = false;
+            CountiesFirstPage.Enabled = false;
+            CountiesBackBtn.Enabled = false;
+
+            if (Action == "Update")
+            {
+                CountiesListGridView.AllowUserToAddRows = false;
+            }
+        }
+
+        private void CountiesEndEditLayout(string PopUpTitle, string PopUpMessage)
+        {
+            CountyEditTextBox.Visible = false;
+            CountySaveEditBtn.Visible = false;
+            popUpMethod(PopUpTitle, PopUpMessage);
+            CountiesListGridView.Columns["delete_column"].Visible = true;
+            SearchBar.Enabled = true;
+            foreach (DataGridViewRow row in CountiesListGridView.Rows)
+            {
+                if (row.Index != UpdateCountiRow)
+                {
+                    row.ReadOnly = false;
+                }
+            }
+
+            CountiesNextBtn.Enabled = true;
+            CountiesLastPage.Enabled = true;
+            CountiesFirstPage.Enabled = true;
+            CountiesBackBtn.Enabled = true;
+
+            if (!CountiesListGridView.AllowUserToAddRows)
+            {
+                CountiesListGridView.AllowUserToAddRows = true;
+            }
+        }
+        private void SpeakerAddInsertMessage()
         {
             this.SpeakerUserMessagesBox.ForeColor = Color.MediumSeaGreen;
             this.SpeakerUserMessagesBox.Text = "You are now adding a new speaker. Press the button to Save.";
@@ -528,7 +607,7 @@ namespace ConferencePlanner.WinUi
             this.SpeakerSaveButton.Visible = true;
         }
 
-        private void AddUpdateMessage(string fName, string lName)
+        private void SpeakerAddUpdateMessage(string fName, string lName)
         {
             this.SpeakerUserMessagesBox.ForeColor = Color.MediumSeaGreen;
             string sName = fName +" "+ lName;
@@ -605,7 +684,27 @@ namespace ConferencePlanner.WinUi
             popup.ContentText = contentText;
             popup.Popup();
         }
+        private void CountiesListGridView_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
+        {
+            UpdateCountiRow = e.RowIndex;
+            if (CountyEditTextBox.Visible == false) {
+                if (UpdateCountiRow >= PageSize || CountiesLastPageLastRow > 0 && CountiesCurrentPage == CountiesTotalPages && UpdateCountiRow == CountiesLastPageLastRow)
+                {
+                    CountyAddInsertMessage();
+                    CountiBeginEditLayout("Insert");
+                }
+                else
+                {
+                    string CountyName = CountiesListGridView.Rows[UpdateCountiRow].Cells["CountyName"].Value.ToString();
+                    CountyAddUpdateMessage(CountyName);
+                    CountiBeginEditLayout("Update");
+                } 
+            } else if(UpdateCountiRow != e.RowIndex)
+            {
+                this.popUpMethod("Warning!", "Changes made would not be saved unless you click on the Save button");
+            }
 
+        }
         private void SpeakerListDataGrid_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
         {
             this.UpdateSpeakerRow = e.RowIndex;
@@ -619,14 +718,14 @@ namespace ConferencePlanner.WinUi
                 if (this.UpdateSpeakerRow >= this.PageSize || 
                     (this.SpeakersLastPageLastRow > 0 && this.SpeakersCurrentPage == this.SpeakersTotalPages && this.UpdateSpeakerRow ==this.SpeakersLastPageLastRow))
                 {
-                    this.AddInsertMessage();
+                    this.SpeakerAddInsertMessage();
                     this.SpeakerBeginEditLayout("i");
                 }
                 else
                 {
                     string fName = this.SpeakerListDataGrid.Rows[this.UpdateSpeakerRow].Cells["FirstName"].Value.ToString();
                     string lName = this.SpeakerListDataGrid.Rows[this.UpdateSpeakerRow].Cells["LastName"].Value.ToString();
-                    this.AddUpdateMessage(fName, lName);
+                    this.SpeakerAddUpdateMessage(fName, lName);
                     this.SpeakerBeginEditLayout("u");
                 }
             }
@@ -636,6 +735,19 @@ namespace ConferencePlanner.WinUi
             }
 
 
+        }
+
+
+
+        private CountyModel GetCounty()
+        {
+            CountyModel County = new CountyModel();
+            County.CountyId = Counties.Count() + 1;
+            County.CountyName = CountiesListGridView.Rows[UpdateCountiRow].Cells["CountyName"].Value.ToString();
+            County.CountryId = SelectedCountryId;
+
+
+            return County;
         }
 
         private SpeakerModel GetSpeaker()
@@ -694,7 +806,42 @@ namespace ConferencePlanner.WinUi
 
             }
             this.SpeakerListDataGrid.CurrentCell = null;
-        }  
+        }
+
+        private void CountySaveEditBtn_Click(object sender, EventArgs e)
+        {
+            CountiesListGridView.EndEdit();
+            if((CountiesLastPageLastRow > 0 && CountiesCurrentPage == CountiesTotalPages && UpdateCountiRow == CountiesLastPageLastRow) || UpdateCountiRow == PageSize)
+            {
+                CountyModel NewCounty = GetCounty();
+                _countyRepository.InsertCounty(NewCounty);
+                Counties.Add(NewCounty);
+                int[] Temp = CalculateTotalPages(Counties.Count);
+                CountiesTotalPages = Temp[0];
+                CountiesLastPageLastRow = Temp[1];
+                CountiesEndEditLayout("Done", "You can see the couty you just added on the last page.");
+            }
+            else
+            {
+                CountyModel County = GetCounty();
+                _countyRepository.UpdateCounty(County);
+                CountiesEndEditLayout("Done", "County modified succesfully");
+                CountiesListGridView.CurrentCell = null;
+                CountiesListGridView.Rows[0].Selected = false;
+                UpdateCountiArray(County);
+            }
+        }
+
+        private void UpdateCountiArray(CountyModel County)
+        {
+           foreach(CountyModel C in Counties)
+            {
+                if(C.CountyId == County.CountyId)
+                {
+                    Counties[Counties.IndexOf(C)].CountyName = County.CountyName;
+                }
+            }
+        }
 
         private void UpdateSpeakerArray(SpeakerModel speaker)
         {
@@ -710,19 +857,7 @@ namespace ConferencePlanner.WinUi
             }
         }
 
-        private void CountiesListGridView_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
-        {
-            if (CountiesListGridView.Columns.Contains("CountyId") && CountiesListGridView.Columns["CountyId"].Visible)
-            {
-                CountiesListGridView.Columns["CountyId"].Visible = false;
-            }
-            if (CountiesListGridView.Columns.Contains("CountryId") && CountiesListGridView.Columns["CountryId"].Visible)
-            {
-                CountiesListGridView.Columns["CountryId"].Visible = false;
-            }
-            CountiesListGridView.Columns["CountyName"].HeaderText = "County Name";
-            
-        }
+       
 
         private void SpeakerListDataGrid_CellClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -875,6 +1010,6 @@ namespace ConferencePlanner.WinUi
             this.SearchBar.Text = "";
         }
 
-      
+       
     }
 }
