@@ -44,7 +44,8 @@ namespace ConferencePlanner.WinUi
         private int SpeakersCurrentPage = 1;
         private int SpeakersLastPageLastRow = 0;
         private int UpdateSpeakerRow;
-        
+        private int UpdateCityRow;
+
         //lista de ce facem
 
         public AddConf(IConferenceRepository conferenceRepository, ICountryRepository  countryRepository, ICountyRepository countyRepository, ICityRepository cityRepository ,ISpeakerRepository speakerRepository)
@@ -394,10 +395,68 @@ namespace ConferencePlanner.WinUi
 
         private void LoadCityTab()
         {
-            CityListDataGridView.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.Fill);
+            CityListDataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             this.Cities = _cityRepository.GetCitiesByCountyId(SelectedCountyId);
             CityListDataGridView.DefaultCellStyle.ForeColor = Color.Black;
             CityListDataGridView.DataSource = this.Cities;
+        }
+
+        private void CityListDataGridView_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+            if (CityListDataGridView.Columns.Contains("DictionaryCityId") && CityListDataGridView.Columns["DictionaryCityId"].Visible)
+            {
+                CityListDataGridView.Columns["DictionaryCityId"].Visible = false;
+            }
+            
+            CityListDataGridView.Columns["CityName"].HeaderText = "City Name";
+
+            if (CityListDataGridView.Columns.Contains("delete_column") == false)
+            {
+                DataGridViewButtonColumn deleteButtonColumn = new DataGridViewButtonColumn();
+                deleteButtonColumn.UseColumnTextForButtonValue = true;
+                deleteButtonColumn.Text = "Delete";
+                deleteButtonColumn.Width = 5;
+                deleteButtonColumn.DividerWidth = 10;
+                deleteButtonColumn.HeaderText = "";
+                deleteButtonColumn.Name = "delete_column";
+                CityListDataGridView.Columns.Add(deleteButtonColumn);
+            }
+        }
+
+        private void CityListDataGridView_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex < 0)
+            {
+                return;
+            }
+            if (e.ColumnIndex < 0)
+            {
+                return;
+            }
+            if (this.CityListDataGridView.Columns[e.ColumnIndex].Name == "delete_column")
+            {
+                int id = (int)this.CityListDataGridView.Rows[e.RowIndex].Cells["DictionaryCityId"].Value;
+                if (_cityRepository.DeleteCity(id).Equals("error"))
+                {
+                    popUpMethod("A conference will be in this city", "You can't delete it");
+                }
+                else
+                {
+                    var newDeleteForm = new AreYouSure(_cityRepository, id);
+                    Task t = Task.Run(() => { newDeleteForm.ShowDialog(); });
+                    t.Wait();
+                    this.LoadCityTab();
+                }
+            }
+
+        }
+
+        private CityModel GetCity()
+        {
+            CityModel cityModel = new CityModel();
+            cityModel.DictionaryCityId = (int)this.CityListDataGridView.Rows[this.UpdateCityRow].Cells["DictionaryCityId"].Value;
+            cityModel.CityName = this.CityListDataGridView.Rows[this.UpdateCityRow].Cells["CityName"].Value.ToString();
+            return cityModel;
         }
 
         private void SpeakerListDataGrid_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
@@ -475,8 +534,6 @@ namespace ConferencePlanner.WinUi
             this.Counties = _countyRepository.GetCountyListBind(this.SelectedCountryId);
             CountiesListGridView.DefaultCellStyle.ForeColor = Color.Black;
             CountiesListGridView.DataSource = this.Counties;
-
-
         }
         private void AddInsertMessage()
         {
@@ -635,8 +692,8 @@ namespace ConferencePlanner.WinUi
                 int[] aux = this.CalculateTotalPages(this.Speakers.Count);
                 this.SpeakersTotalPages = aux[0];
                 this.SpeakersLastPageLastRow = aux[1];
-                this.SpeakersCurrentPage = 1;
-                this.SpeakerCreatePage(this.SpeakersForSearchBar);
+                //this.SpeakersCurrentPage = 1;
+                //this.SpeakerCreatePage(this.SpeakersForSearchBar);
                 SpeakerEndEditLayout("Done", "You can see the speaker you just added on the last page.");
                 //this.SpeakerListDataGrid.CurrentCell = null;
                 this.SpeakerListDataGrid.Rows[0].Selected = false;
@@ -831,6 +888,11 @@ namespace ConferencePlanner.WinUi
         private void SearchBar_Enter(object sender, EventArgs e)
         {
             this.SearchBar.Text = "";
+        }
+
+        private void SaveCityButton_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
