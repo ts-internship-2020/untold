@@ -26,6 +26,7 @@ namespace ConferencePlanner.WinUi
         private readonly ICountryRepository _countryRepository;
         private readonly ICountyRepository _countyRepository;
         private readonly ISpeakerRepository _speakerRepository;
+        private readonly ICityRepository _cityRepository;
 
         private int PageSize = 4;
 
@@ -35,6 +36,7 @@ namespace ConferencePlanner.WinUi
 
         private BindingList<CountryModel> Countries;
         private BindingList<CountyModel> Counties;
+        private BindingList<CityModel> Cities;
         
         private BindingList<SpeakerModel> Speakers;
         private BindingList<SpeakerModel> SpeakersForSearchBar = new BindingList<SpeakerModel>();
@@ -45,11 +47,12 @@ namespace ConferencePlanner.WinUi
         
         //lista de ce facem
 
-        public AddConf(IConferenceRepository conferenceRepository, ICountryRepository  countryRepository, ICountyRepository countyRepository, ISpeakerRepository speakerRepository)
+        public AddConf(IConferenceRepository conferenceRepository, ICountryRepository  countryRepository, ICountyRepository countyRepository, ICityRepository cityRepository ,ISpeakerRepository speakerRepository)
         {
             _conferenceRepository = conferenceRepository;
             _countryRepository = countryRepository;
             _countyRepository = countyRepository;
+            _cityRepository = cityRepository;
             _speakerRepository = speakerRepository;
             InitializeComponent();
 
@@ -60,10 +63,11 @@ namespace ConferencePlanner.WinUi
           
             InitializeComponent();
         }
-        public AddConf(ConferenceModel conference, IConferenceRepository conferenceRepository, ICountryRepository countryRepository, ISpeakerRepository speakerRepository)
+        public AddConf(ConferenceModel conference, IConferenceRepository conferenceRepository, ICountryRepository countryRepository, ICityRepository cityRepository, ISpeakerRepository speakerRepository)
         {
             _conferenceRepository = conferenceRepository;
             _countryRepository = countryRepository;
+            _cityRepository = cityRepository;
             _speakerRepository = speakerRepository;
 
             InitializeComponent();
@@ -206,7 +210,7 @@ namespace ConferencePlanner.WinUi
                     }
                     if (TabControlLocation.SelectedIndex == 2)
                     {
-                        // SelectedCityId = (int)CurrentGridView.Rows[SelectedRowIndex].Cells["DictionaryCytiId"].Value;
+                         SelectedCityId = (int)CurrentGridView.Rows[SelectedRowIndex].Cells["DictionaryCytiId"].Value;
                     }
 
                     TabControlLocation.SelectedIndex++;
@@ -234,8 +238,12 @@ namespace ConferencePlanner.WinUi
                 this.LoadCountyTab();
                 
             }
-            
-            if(TabControlLocation.SelectedTab == this.SpeakerTab)
+            if (TabControlLocation.SelectedTab == this.City)
+            {
+                this.LoadCityTab();
+            }
+
+            if (TabControlLocation.SelectedTab == this.SpeakerTab)
             {
                 this.LoadSpeakersTab();
             }
@@ -346,6 +354,14 @@ namespace ConferencePlanner.WinUi
             this.SpeakersLastPageLastRow = aux[1]; 
                 
             this.SpeakerCreatePage(this.Speakers);
+        }
+
+        private void LoadCityTab()
+        {
+            CityListDataGridView.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.Fill);
+            this.Cities = _cityRepository.GetCitiesByCountyId(SelectedCountyId);
+            CityListDataGridView.DefaultCellStyle.ForeColor = Color.Black;
+            CityListDataGridView.DataSource = this.Cities;
         }
 
         private void SpeakerListDataGrid_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
