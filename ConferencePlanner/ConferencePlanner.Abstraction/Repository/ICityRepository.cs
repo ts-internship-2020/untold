@@ -11,5 +11,9 @@ namespace ConferencePlanner.Abstraction.Repository
         public BindingList<CityModel> GetCitiesByCountyId(int countyId);
 
         public string DeleteCity(int CityId);
+
+        public void InsertCity(CityModel cityModel);
+
+        public void UpdateCity(CityModel cityModel);
     }
 }
