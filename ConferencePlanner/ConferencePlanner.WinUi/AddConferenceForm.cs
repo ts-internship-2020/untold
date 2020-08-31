@@ -38,6 +38,11 @@ namespace ConferencePlanner.WinUi
 
         private BindingList<CountryModel> Countries;
         private BindingList<CountyModel> Counties;
+        private BindingList<CountyModel> CountiesFromSearchBar = new BindingList<CountyModel>();
+        private int CountiesTotalPages;
+        private int CountiesCurrentPage = 1;
+        private int CountiesLastPageLastRow = 0;
+        private int UpdateCountiRow;
         private BindingList<CityModel> Cities;
         
         private BindingList<SpeakerModel> Speakers;
@@ -364,6 +369,19 @@ namespace ConferencePlanner.WinUi
             }
         }
 
+        private void ContiesCreatePage(BindingList<CountyModel> list)
+        {
+            CheckPaginationButtonsVisibility(CountiesCurrentPage, CountiesTotalPages, CountiesNextBtn, CountiesBackBtn, CountiesFirstPage, CountiesFirstPage);
+            BindingList<CountyModel> CountiesList = new BindingList<CountyModel>();
+            int PreviousPageOffSet = (CountiesCurrentPage - 1) * PageSize;
+            int min = Math.Min(PreviousPageOffSet + PageSize, list.Count);
+            for (int i= PreviousPageOffSet; i<min; i++)
+            {
+                CountiesList.Add(list[i]);
+            }
+            this.SpeakerListDataGrid.DataSource = CountiesList;
+        }
+
         private void SpeakerCreatePage(BindingList<SpeakerModel> lst)
         {
             this.CheckPaginationButtonsVisibility(this.SpeakersCurrentPage, this.SpeakersTotalPages,
@@ -478,11 +496,25 @@ namespace ConferencePlanner.WinUi
 
         }
 
+        //private void LoadSpeakersTab()
+        //{
+        //    this.Speakers = _speakerRepository.GetAllSpeakers();
+        //    this.SpeakersForSearchBar = this.Speakers;
+        //    int[] aux = this.CalculateTotalPages(this.Speakers.Count);
+        //    this.SpeakersTotalPages = aux[0];
+        //    this.SpeakersLastPageLastRow = aux[1];
+
+        //    this.SpeakerCreatePage(this.Speakers);
+        //}
+
         private void LoadCountyTab()
         {
+            this.Counties = _countyRepository.GetCountyList(this.SelectedCountryId);
+            CountiesFromSearchBar = Counties;
+            int[] pages = CalculateTotalPages(Counties.Count);
             CountiesListGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             CountiesListGridView.AllowUserToOrderColumns = true;
-            this.Counties = _countyRepository.GetCountyListBind(this.SelectedCountryId);
+            
             CountiesListGridView.DefaultCellStyle.ForeColor = Color.Black;
             CountiesListGridView.DataSource = this.Counties;
 
@@ -843,14 +875,6 @@ namespace ConferencePlanner.WinUi
             this.SearchBar.Text = "";
         }
 
-        private void TypesLayoutPanelBtn_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void SpeakersLayerPanelBtns_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
+      
     }
 }
