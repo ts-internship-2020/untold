@@ -566,7 +566,7 @@ namespace ConferencePlanner.WinUi
                 this.SpeakersTotalPages = aux[0];
                 this.SpeakersLastPageLastRow = aux[1];
                 this.SpeakersCurrentPage = 1;
-                this.SpeakerCreatePage(this.Speakers);
+                this.SpeakerCreatePage(this.SpeakersForSearchBar);
                 SpeakerEndEditLayout("Done", "You can see the speaker you just added on the last page.");
                 //this.SpeakerListDataGrid.CurrentCell = null;
                 this.SpeakerListDataGrid.Rows[0].Selected = false;
