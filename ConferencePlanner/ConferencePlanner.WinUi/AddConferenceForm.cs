@@ -34,7 +34,7 @@ namespace ConferencePlanner.WinUi
         private int SelectedCountyId;
         private int SelectedCityId;
         private int SelectedSpeakerId = -1;
-
+        private int DictionaryCityId = 45;
 
         private BindingList<CountryModel> Countries;
         private BindingList<CountyModel> Counties;
@@ -44,9 +44,12 @@ namespace ConferencePlanner.WinUi
         private int CountiesLastPageLastRow = 0;
         private int UpdateCountiRow;
         private BindingList<CityModel> Cities;
-        
+        private BindingList<CityModel> CitiesFromSearchBar = new BindingList<CityModel>();
         private BindingList<SpeakerModel> Speakers;
         private BindingList<SpeakerModel> SpeakersForSearchBar = new BindingList<SpeakerModel>();
+        private int CityTotalPages;
+        private int CityCurrentPage = 1;
+        private int CityLastPageLastRow = 0;
         private int SpeakersTotalPages;
         private int SpeakersCurrentPage = 1;
         private int SpeakersLastPageLastRow = 0;
@@ -246,7 +249,7 @@ namespace ConferencePlanner.WinUi
                     {
                         SelectedCountyId = (int)CurrentGridView.Rows[SelectedRowIndex].Cells["CountyId"].Value;
                     }
-                    if (TabControlLocation.SelectedIndex == 2)
+                    if (TabControlLocation.SelectedTab == this.City)
                     {
                          SelectedCityId = (int)CurrentGridView.Rows[SelectedRowIndex].Cells["DictionaryCytiId"].Value;
                     }
@@ -419,6 +422,71 @@ namespace ConferencePlanner.WinUi
             this.SpeakerCreatePage(this.Speakers);
         }
 
+        private void CitiesBeginEditLayout(string opType)
+        {
+            this.CityListDataGridView.Columns["delete_column"].Visible = false;
+            this.SearchBar.Enabled = false;
+
+            foreach (DataGridViewRow row in CityListDataGridView.Rows)
+            {
+                if (row.Index != this.UpdateCityRow)
+                {
+                    row.ReadOnly = true;
+                }
+            }
+            this.CitiesNextBtn.Enabled = false;
+            this.CitiesBackBtn.Enabled = false;
+            this.CitiesFirstPage.Enabled = false;
+            this.CitiesLastPage.Enabled = false;
+
+            if (opType == "u")
+            {
+                this.CityListDataGridView.AllowUserToAddRows = false;
+            }
+
+        }
+
+        private void CitiesListDataGrid_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
+        {
+            this.UpdateCityRow = e.RowIndex;
+
+            if (CitySaveMessageBox.Visible == false)
+            {
+                if (this.UpdateCityRow >= this.PageSize ||
+                    (this.CityLastPageLastRow > 0 && this.CityCurrentPage == this.CityTotalPages && this.UpdateCityRow == this.CityLastPageLastRow))
+                {
+                    this.AddInsertMessageCity();
+                    this.CitiesBeginEditLayout("i");
+                }
+                else
+                {
+                    string city = this.CityListDataGridView.Rows[this.UpdateCityRow].Cells["CityName"].Value.ToString();
+                    this.AddUpdateMessageCity(city);
+                    this.CitiesBeginEditLayout("u");
+                }
+            }
+            else if (this.UpdateCityRow != e.RowIndex)
+            {
+                this.popUpMethod("Warning!", "Changes made would not be saved unless you click on the Save button");
+            }
+        }
+
+        private void AddInsertMessageCity()
+        {
+            this.CitySaveMessageBox.ForeColor = Color.MediumSeaGreen;
+            this.CitySaveMessageBox.Text = "You are now adding a new city. Press the button to Save.";
+            this.CitySaveMessageBox.Visible = true;
+            this.CitySaveMessageBox.Visible = true;
+        }
+
+        private void AddUpdateMessageCity(string cityName)
+        {
+            this.CitySaveMessageBox.ForeColor = Color.MediumSeaGreen;
+            this.SpeakerUserMessagesBox.Text = "You are now editing city " + cityName + "'s informations. Press the button to Save.";
+            this.SpeakerUserMessagesBox.Visible = true;
+            this.SpeakerSaveButton.Visible = true;
+        }
+
         private void LoadCityTab()
         {
             CityListDataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
@@ -462,17 +530,10 @@ namespace ConferencePlanner.WinUi
             if (this.CityListDataGridView.Columns[e.ColumnIndex].Name == "delete_column")
             {
                 int id = (int)this.CityListDataGridView.Rows[e.RowIndex].Cells["DictionaryCityId"].Value;
-                if (_cityRepository.DeleteCity(id).Equals("error"))
-                {
-                    popUpMethod("A conference will be in this city", "You can't delete it");
-                }
-                else
-                {
-                    var newDeleteForm = new AreYouSure(_cityRepository, id);
-                    Task t = Task.Run(() => { newDeleteForm.ShowDialog(); });
-                    t.Wait();
-                    this.LoadCityTab();
-                }
+                var newDeleteForm = new AreYouSure(_cityRepository, id);
+                Task t = Task.Run(() => { newDeleteForm.ShowDialog(); });
+                t.Wait();
+                this.LoadCityTab();
             }
 
         }
@@ -480,9 +541,144 @@ namespace ConferencePlanner.WinUi
         private CityModel GetCity()
         {
             CityModel cityModel = new CityModel();
-            cityModel.DictionaryCityId = (int)this.CityListDataGridView.Rows[this.UpdateCityRow].Cells["DictionaryCityId"].Value;
+            cityModel.DictionaryCityId = DictionaryCityId;
             cityModel.CityName = this.CityListDataGridView.Rows[this.UpdateCityRow].Cells["CityName"].Value.ToString();
+            cityModel.CountyId = SelectedCountryId;
+            DictionaryCityId++;
             return cityModel;
+        }
+
+        private void SaveCityButton_Click(object sender, EventArgs e)
+        {
+            this.SpeakerListDataGrid.EndEdit();
+            if ((this.SpeakersLastPageLastRow > 0 && this.SpeakersCurrentPage == this.SpeakersTotalPages && this.UpdateSpeakerRow == this.SpeakersLastPageLastRow) || (this.UpdateSpeakerRow == this.PageSize))
+            {
+                CityModel newCity = GetCity();
+                _cityRepository.InsertCity(newCity);
+                this.Cities.Add(newCity);
+                //this.SpeakersForSearchBar = this.Speakers;
+                int[] aux = this.CalculateTotalPages(this.Cities.Count);
+                this.SpeakersTotalPages = aux[0];
+                this.SpeakersLastPageLastRow = aux[1];
+                //this.SpeakersCurrentPage = 1;
+                //this.SpeakerCreatePage(this.SpeakersForSearchBar);
+                SpeakerEndEditLayout("Done", "You can see the speaker you just added on the last page.");
+                //this.SpeakerListDataGrid.CurrentCell = null;
+                this.SpeakerListDataGrid.Rows[0].Selected = false;
+            }
+            else
+            {
+                CityModel city = GetCity();
+                _cityRepository.UpdateCity(city);
+              //  SpeakerEndEditLayout("Done", "Speaker modified succesfully");
+                this.CityListDataGridView.CurrentCell = null;
+                this.CityListDataGridView.Rows[0].Selected = false;
+                this.UpdateInCityList(city);
+
+            }
+            this.CityListDataGridView.CurrentCell = null;
+        }
+
+        private void UpdateInCityList(CityModel cityModel)
+        {
+            foreach (CityModel c in this.Cities)
+            {
+                if (c.DictionaryCityId == cityModel.DictionaryCityId)
+                {
+                    this.Cities[this.Cities.IndexOf(c)].CityName = cityModel.CityName;
+                }
+            }
+        }
+
+        private void CitiesCreatePage(BindingList<CityModel> cityModels)
+        {
+            this.CheckPaginationButtonsVisibility(this.CityCurrentPage, this.CityTotalPages,
+                this.CitiesNextBtn, this.CitiesBackBtn, this.CitiesLastPage, this.CitiesFirstPage);
+
+            BindingList<CityModel> cities = new BindingList<CityModel>();
+            //BindingList<SpeakerModel> result2 = new BindingList<SpeakerModel>();
+
+            int PreviousPageOffSet = (this.CityCurrentPage - 1) * this.PageSize;
+
+            int aux = Math.Min(PreviousPageOffSet + this.PageSize, cityModels.Count);
+
+
+            for (int i = PreviousPageOffSet; i < aux; i++)
+            {
+                if (i < 0)
+                {
+                    return;
+                }else
+                {
+                    cities.Add(cityModels[i]);
+
+                }
+            }
+
+            this.CityListDataGridView.DataSource = cities;
+
+
+        }
+
+        private void CitiesNextBtn_Click(object sender, EventArgs e)
+        {
+            this.CityCurrentPage++;
+            if (this.CitiesFromSearchBar.Count > 0)
+            {
+                this.CitiesCreatePage(this.CitiesFromSearchBar);
+
+            }
+            else
+            {
+                this.CitiesCreatePage(this.Cities);
+            }
+            this.CityListDataGridView.Rows[0].Selected = false;
+        }
+
+        private void CitiesLastPage_Click(object sender, EventArgs e)
+        {
+            this.CityCurrentPage = this.CityTotalPages;
+            if (this.CitiesFromSearchBar.Count > 0)
+            {
+                this.CitiesCreatePage(this.CitiesFromSearchBar);
+
+            }
+            else
+            {
+                this.CitiesCreatePage(this.Cities);
+            }
+            this.CityListDataGridView.Rows[0].Selected = false;
+
+        }
+
+        private void CitiesBackBtn_Click(object sender, EventArgs e)
+        {
+            this.CityCurrentPage--;
+            if (this.CitiesFromSearchBar.Count > 0)
+            {
+                this.CitiesCreatePage(this.CitiesFromSearchBar);
+
+            }
+            else
+            {
+                this.CitiesCreatePage(this.Cities);
+            }
+            this.CityListDataGridView.Rows[0].Selected = false;
+        }
+
+        private void CitiesFirstPage_Click(object sender, EventArgs e)
+        {
+            this.CityCurrentPage = 1;
+            if (this.CitiesFromSearchBar.Count > 0)
+            {
+                this.CitiesCreatePage(this.CitiesFromSearchBar);
+
+            }
+            else
+            {
+                this.CitiesCreatePage(this.Cities);
+            }
+            this.CityListDataGridView.Rows[0].Selected = false;
         }
 
         private void SpeakerListDataGrid_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
@@ -740,12 +936,12 @@ namespace ConferencePlanner.WinUi
             }
             else
             {
-                SpeakerModel speaker = this.GetSpeaker();
-                _speakerRepository.UpdateSpeaker(speaker);
+                SpeakerModel newSpeaker = GetSpeaker();
+                _speakerRepository.UpdateSpeaker(newSpeaker);
                 SpeakerEndEditLayout("Done", "Speaker modified succesfully");
                 this.SpeakerListDataGrid.CurrentCell = null;
                 this.SpeakerListDataGrid.Rows[0].Selected = false;
-                this.UpdateSpeakerArray(speaker);
+                this.UpdateSpeakerArray(newSpeaker);
 
             }
             this.SpeakerListDataGrid.CurrentCell = null;
@@ -947,9 +1143,5 @@ namespace ConferencePlanner.WinUi
             this.SpeakerCreatePage(this.SpeakersForSearchBar);
         }
 
-        private void SaveCityButton_Click(object sender, EventArgs e)
-        {
-
-        }
     }
 }

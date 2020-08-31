@@ -68,7 +68,11 @@ namespace ConferencePlanner.WinUi
 
         private void DeleteCityYesButton_Click(Object sender, EventArgs e)
         {
-            _cityRepository.DeleteCity(this.ObjectId);
+            if (_cityRepository.DeleteCity(ObjectId).Equals("error"))
+            {
+                return;
+               // popUpMethod("A conference will be in this city", "You can't delete it");
+            }
             this.Close();
         }
         private void NoDeleteButton_Click(object sender, EventArgs e)

@@ -533,6 +533,7 @@ namespace ConferencePlanner.WinUi
             this.CitiesFirstPage.TabIndex = 0;
             this.CitiesFirstPage.Text = "<<";
             this.CitiesFirstPage.UseVisualStyleBackColor = true;
+            this.CitiesFirstPage.Click += new System.EventHandler(this.CitiesFirstPage_Click);
             // 
             // CitiesBackBtn
             // 
@@ -543,6 +544,8 @@ namespace ConferencePlanner.WinUi
             this.CitiesBackBtn.TabIndex = 1;
             this.CitiesBackBtn.Text = "<";
             this.CitiesBackBtn.UseVisualStyleBackColor = true;
+            this.CitiesBackBtn.Click += new System.EventHandler(this.CitiesBackBtn_Click);
+
             // 
             // CitiesNextBtn
             // 
@@ -553,6 +556,7 @@ namespace ConferencePlanner.WinUi
             this.CitiesNextBtn.TabIndex = 2;
             this.CitiesNextBtn.Text = ">";
             this.CitiesNextBtn.UseVisualStyleBackColor = true;
+            this.CitiesNextBtn.Click += new System.EventHandler(this.CitiesNextBtn_Click);
             // 
             // CitiesLastPage
             // 
@@ -563,6 +567,7 @@ namespace ConferencePlanner.WinUi
             this.CitiesLastPage.TabIndex = 3;
             this.CitiesLastPage.Text = ">>";
             this.CitiesLastPage.UseVisualStyleBackColor = true;
+            this.CitiesLastPage.Click += new System.EventHandler(this.CitiesLastPage_Click);
             // 
             // CitiesPages
             // 
@@ -582,6 +587,7 @@ namespace ConferencePlanner.WinUi
             this.CityListDataGridView.TabIndex = 0;
             this.CityListDataGridView.Text = "dataGridView6";
             this.CityListDataGridView.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.CityListDataGridView_DataBindingComplete);
+            this.CityListDataGridView.CellBeginEdit += new System.Windows.Forms.DataGridViewCellCancelEventHandler(this.CitiesListDataGrid_CellBeginEdit);
             this.CityListDataGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.CityListDataGridView_CellClick);
             // 
             // TypeTab
