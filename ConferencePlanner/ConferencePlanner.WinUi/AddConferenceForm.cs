@@ -85,6 +85,9 @@ namespace ConferencePlanner.WinUi
         }
         private void PopulateForm(ConferenceModel conference)
         {
+            this.CountryListDataGridView.Rows[0].Selected = false;
+            this.CountiesListGridView.Rows[0].Selected = false;
+
             this.ConfName.Text = conference.ConferenceName;
 
             string[] dates = conference.Period.Split(" - ");
@@ -248,7 +251,7 @@ namespace ConferencePlanner.WinUi
                     }
                     if (TabControlLocation.SelectedIndex == 2)
                     {
-                         SelectedCityId = (int)CurrentGridView.Rows[SelectedRowIndex].Cells["DictionaryCytiId"].Value;
+                         SelectedCityId = (int)CurrentGridView.Rows[SelectedRowIndex].Cells["DictionaryCityId"].Value;
                     }
                     if (TabControlLocation.SelectedTab == this.SpeakerTab)
                     {
