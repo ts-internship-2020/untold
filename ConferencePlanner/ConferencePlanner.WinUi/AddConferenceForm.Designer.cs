@@ -60,8 +60,8 @@ namespace ConferencePlanner.WinUi
             this.CountiesListGridView = new System.Windows.Forms.DataGridView();
             this.City = new System.Windows.Forms.TabPage();
             this.CitySaveLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
-            this.textBox6 = new System.Windows.Forms.TextBox();
-            this.button6 = new System.Windows.Forms.Button();
+            this.CitySaveMessageBox = new System.Windows.Forms.TextBox();
+            this.SaveCityButton = new System.Windows.Forms.Button();
             this.CitiesLayoutPanelBtns = new System.Windows.Forms.TableLayoutPanel();
             this.CitiesFirstPage = new System.Windows.Forms.Button();
             this.CitiesBackBtn = new System.Windows.Forms.Button();
@@ -317,6 +317,7 @@ namespace ConferencePlanner.WinUi
             this.CountryListDataGridView.Location = new System.Drawing.Point(3, 43);
             this.CountryListDataGridView.Name = "CountryListDataGridView";
             this.CountryListDataGridView.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.CountryListDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.CountryListDataGridView.Size = new System.Drawing.Size(935, 196);
             this.CountryListDataGridView.TabIndex = 1;
             this.CountryListDataGridView.Text = "dataGridView1";
@@ -449,6 +450,7 @@ namespace ConferencePlanner.WinUi
             this.CountiesListGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.CountiesListGridView.Location = new System.Drawing.Point(3, 43);
             this.CountiesListGridView.Name = "CountiesListGridView";
+            this.CountiesListGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.CountiesListGridView.Size = new System.Drawing.Size(932, 195);
             this.CountiesListGridView.TabIndex = 2;
             this.CountiesListGridView.Text = "dataGridView2";
@@ -473,8 +475,8 @@ namespace ConferencePlanner.WinUi
             this.CitySaveLayoutPanel.ColumnCount = 2;
             this.CitySaveLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 65.67461F));
             this.CitySaveLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 34.3254F));
-            this.CitySaveLayoutPanel.Controls.Add(this.textBox6, 0, 0);
-            this.CitySaveLayoutPanel.Controls.Add(this.button6, 1, 0);
+            this.CitySaveLayoutPanel.Controls.Add(this.CitySaveMessageBox, 0, 0);
+            this.CitySaveLayoutPanel.Controls.Add(this.SaveCityButton, 1, 0);
             this.CitySaveLayoutPanel.Dock = System.Windows.Forms.DockStyle.Top;
             this.CitySaveLayoutPanel.Location = new System.Drawing.Point(3, 3);
             this.CitySaveLayoutPanel.Name = "CitySaveLayoutPanel";
@@ -483,26 +485,27 @@ namespace ConferencePlanner.WinUi
             this.CitySaveLayoutPanel.Size = new System.Drawing.Size(939, 37);
             this.CitySaveLayoutPanel.TabIndex = 3;
             // 
-            // textBox6
+            // CitySaveMessageBox
             // 
-            this.textBox6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(176)))), ((int)(((byte)(218)))), ((int)(((byte)(241)))));
-            this.textBox6.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.textBox6.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBox6.Location = new System.Drawing.Point(3, 3);
-            this.textBox6.Name = "textBox6";
-            this.textBox6.Size = new System.Drawing.Size(610, 22);
-            this.textBox6.TabIndex = 0;
-            this.textBox6.Visible = false;
+            this.CitySaveMessageBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(176)))), ((int)(((byte)(218)))), ((int)(((byte)(241)))));
+            this.CitySaveMessageBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.CitySaveMessageBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.CitySaveMessageBox.Location = new System.Drawing.Point(3, 3);
+            this.CitySaveMessageBox.Name = "CitySaveMessageBox";
+            this.CitySaveMessageBox.Size = new System.Drawing.Size(610, 22);
+            this.CitySaveMessageBox.TabIndex = 0;
+            this.CitySaveMessageBox.Visible = false;
             // 
-            // button6
+            // SaveCityButton
             // 
-            this.button6.Location = new System.Drawing.Point(619, 3);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(79, 31);
-            this.button6.TabIndex = 1;
-            this.button6.Text = "Save";
-            this.button6.UseVisualStyleBackColor = true;
-            this.button6.Visible = false;
+            this.SaveCityButton.Location = new System.Drawing.Point(619, 3);
+            this.SaveCityButton.Name = "SaveCityButton";
+            this.SaveCityButton.Size = new System.Drawing.Size(79, 31);
+            this.SaveCityButton.TabIndex = 1;
+            this.SaveCityButton.Text = "Save";
+            this.SaveCityButton.UseVisualStyleBackColor = true;
+            this.SaveCityButton.Visible = false;
+            this.SaveCityButton.Click += new System.EventHandler(this.SaveCityButton_Click);
             // 
             // CitiesLayoutPanelBtns
             // 
@@ -579,9 +582,12 @@ namespace ConferencePlanner.WinUi
             this.CityListDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.CityListDataGridView.Location = new System.Drawing.Point(3, 43);
             this.CityListDataGridView.Name = "CityListDataGridView";
+            this.CityListDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.CityListDataGridView.Size = new System.Drawing.Size(932, 197);
             this.CityListDataGridView.TabIndex = 0;
             this.CityListDataGridView.Text = "dataGridView6";
+            this.CityListDataGridView.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.CityListDataGridView_DataBindingComplete);
+            this.CityListDataGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.CityListDataGridView_CellClick);
             // 
             // TypeTab
             // 
@@ -594,7 +600,8 @@ namespace ConferencePlanner.WinUi
             this.TypeTab.Size = new System.Drawing.Size(945, 288);
             this.TypeTab.TabIndex = 4;
             this.TypeTab.Text = "Type";
-            this.TypeTab.UseVisualStyleBackColor = true;
+            this.TypeTab.UseVisualStyleBackColor = true;///////////////////////////////////////////////
+            
             // 
             // TypeSaveLayoutPanel
             // 
@@ -630,7 +637,8 @@ namespace ConferencePlanner.WinUi
             this.button3.TabIndex = 1;
             this.button3.Text = "Save";
             this.button3.UseVisualStyleBackColor = true;
-            this.button3.Visible = false;
+            this.button3.Visible = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // TypesLayoutPanelBtn
             // 
@@ -662,6 +670,7 @@ namespace ConferencePlanner.WinUi
             this.TypesFirstPage.TabIndex = 0;
             this.TypesFirstPage.Text = "<<";
             this.TypesFirstPage.UseVisualStyleBackColor = true;
+            this.TypesFirstPage.Click += new System.EventHandler(this.TypesFirstPage_Click);
             // 
             // TypesBackBtn
             // 
@@ -672,6 +681,7 @@ namespace ConferencePlanner.WinUi
             this.TypesBackBtn.TabIndex = 1;
             this.TypesBackBtn.Text = "<";
             this.TypesBackBtn.UseVisualStyleBackColor = true;
+            this.TypesBackBtn.Click += new System.EventHandler(this.TypesBackBtn_Click);
             // 
             // TypesNextBtn
             // 
@@ -682,6 +692,7 @@ namespace ConferencePlanner.WinUi
             this.TypesNextBtn.TabIndex = 2;
             this.TypesNextBtn.Text = ">";
             this.TypesNextBtn.UseVisualStyleBackColor = true;
+            this.TypesNextBtn.Click += new System.EventHandler(this.TypesNextBtn_Click);
             // 
             // TypesLastPage
             // 
@@ -707,9 +718,16 @@ namespace ConferencePlanner.WinUi
             this.TypeDataGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.TypeDataGrid.Location = new System.Drawing.Point(3, 43);
             this.TypeDataGrid.Name = "TypeDataGrid";
+            this.TypeDataGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.TypeDataGrid.Size = new System.Drawing.Size(939, 206);
             this.TypeDataGrid.TabIndex = 0;
             this.TypeDataGrid.Text = "dataGridView3";
+            this.TypeDataGrid.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.TypeDataGrid_CellEndEdit);
+            this.TypeDataGrid.CellBeginEdit += new System.Windows.Forms.DataGridViewCellCancelEventHandler(this.TypeDataGrid_CellBeginEdit);
+            this.TypeDataGrid.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.TypeDataGrid_DataBindingComplete);
+            this.TypeDataGrid.Layout += new System.Windows.Forms.LayoutEventHandler(this.TypeDataGrid_Layout);
+            this.TypeDataGrid.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.TypeDataGrid_CellClick);
+
             // 
             // SpeakerTab
             // 
@@ -772,8 +790,8 @@ namespace ConferencePlanner.WinUi
             this.SpeakerListDataGrid.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnKeystroke;
             this.SpeakerListDataGrid.Location = new System.Drawing.Point(3, 43);
             this.SpeakerListDataGrid.Name = "SpeakerListDataGrid";
-            this.SpeakerListDataGrid.ScrollBars = System.Windows.Forms.ScrollBars.None;
-            this.SpeakerListDataGrid.Size = new System.Drawing.Size(997, 198);
+            this.SpeakerListDataGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.SpeakerListDataGrid.Size = new System.Drawing.Size(936, 204);
             this.SpeakerListDataGrid.TabIndex = 0;
             this.SpeakerListDataGrid.CellBeginEdit += new System.Windows.Forms.DataGridViewCellCancelEventHandler(this.SpeakerListDataGrid_CellBeginEdit);
             this.SpeakerListDataGrid.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.SpeakerListDataGrid_CellClick);
@@ -859,10 +877,15 @@ namespace ConferencePlanner.WinUi
             // SpeakerPaginationSelector
             // 
             this.SpeakerPaginationSelector.FormattingEnabled = true;
+            this.SpeakerPaginationSelector.Items.AddRange(new object[] {
+            "5",
+            "10",
+            "25"});
             this.SpeakerPaginationSelector.Location = new System.Drawing.Point(3, 3);
             this.SpeakerPaginationSelector.Name = "SpeakerPaginationSelector";
             this.SpeakerPaginationSelector.Size = new System.Drawing.Size(84, 29);
             this.SpeakerPaginationSelector.TabIndex = 5;
+            this.SpeakerPaginationSelector.DropDownClosed += new System.EventHandler(this.SpeakerPaginationSelector_DropDownClosed);
             // 
             // CategoryTab
             // 
@@ -988,6 +1011,7 @@ namespace ConferencePlanner.WinUi
             this.dataGridView5.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView5.Location = new System.Drawing.Point(3, 43);
             this.dataGridView5.Name = "dataGridView5";
+            this.dataGridView5.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridView5.Size = new System.Drawing.Size(932, 200);
             this.dataGridView5.TabIndex = 0;
             this.dataGridView5.Text = "dataGridView5";
@@ -1345,8 +1369,8 @@ namespace ConferencePlanner.WinUi
         private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.TableLayoutPanel TypeSaveLayoutPanel;
-        private System.Windows.Forms.TextBox textBox3;
-        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.TextBox textBox3; //textbox edit type
+        private System.Windows.Forms.Button button3; //buton save type
         private System.Windows.Forms.TableLayoutPanel SaveCountryLayoutPanel;
         private System.Windows.Forms.TextBox textBox4;
         private System.Windows.Forms.Button button4;
@@ -1358,5 +1382,7 @@ namespace ConferencePlanner.WinUi
         private System.Windows.Forms.Button button6;
         private System.Windows.Forms.ComboBox CountriesPaginationSelector;
         private System.Windows.Forms.ComboBox SpeakerPaginationSelector;
+        private System.Windows.Forms.TextBox CitySaveMessageBox;
+        private System.Windows.Forms.Button SaveCityButton;
     }
 }

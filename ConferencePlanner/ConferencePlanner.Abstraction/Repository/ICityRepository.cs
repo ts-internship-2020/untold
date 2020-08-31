@@ -9,5 +9,7 @@ namespace ConferencePlanner.Abstraction.Repository
     public interface ICityRepository
     {
         public BindingList<CityModel> GetCitiesByCountyId(int countyId);
+
+        public string DeleteCity(int CityId);
     }
 }

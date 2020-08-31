@@ -39,5 +39,24 @@ namespace ConferencePlanner.Repository.Ado.Repository
             sqlDataReader.Close();
             return CityList;
         }
+
+        public string DeleteCity(int cityId)
+        {
+            string errorMessage = "";
+            string commandText = "delete from DictionaryCity where DictionaryCityId = @Id";
+
+            SqlCommand sqlCommand = new SqlCommand(commandText, _sqlConnection);
+            sqlCommand.Parameters.Add("@Id", SqlDbType.Int);
+            sqlCommand.Parameters["@Id"].Value = cityId;
+            try
+            {
+                sqlCommand.ExecuteNonQuery();
+            }
+            catch (Exception e)
+            {
+                errorMessage += "error";
+            }
+            return errorMessage;
+        }
     }
 }
