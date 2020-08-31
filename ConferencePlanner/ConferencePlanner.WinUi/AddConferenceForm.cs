@@ -750,7 +750,7 @@ namespace ConferencePlanner.WinUi
                 Task t = Task.Run(() => { newDeleteForm.ShowDialog();  } );
                 t.Wait();
                 this.LoadSpeakersTab();
-                
+               
             }
 
         }
@@ -879,15 +879,18 @@ namespace ConferencePlanner.WinUi
         private void SpeakerPaginationSelector_DropDownClosed(object sender, EventArgs e)
         {
             int idx = this.SpeakerPaginationSelector.SelectedIndex;
-            
-            this.PageSize = int.Parse(this.SpeakerPaginationSelector.Items[idx].ToString());
-            //if ()
-            int[] aux = this.CalculateTotalPages(this.SpeakersForSearchBar.Count);
-            this.SpeakersCurrentPage = 1;
-            this.SpeakersTotalPages = aux[0];
-            this.SpeakersLastPageLastRow = aux[1];
+            if (idx >= 0)
+            {
+                this.PageSize = int.Parse(this.SpeakerPaginationSelector.Items[idx].ToString());
+                //if ()
+                int[] aux = this.CalculateTotalPages(this.SpeakersForSearchBar.Count);
+                this.SpeakersCurrentPage = 1;
+                this.SpeakersTotalPages = aux[0];
+                this.SpeakersLastPageLastRow = aux[1];
 
-            this.SpeakerCreatePage(this.SpeakersForSearchBar);
+                this.SpeakerCreatePage(this.SpeakersForSearchBar);
+            }
+            
         }
     }
 }

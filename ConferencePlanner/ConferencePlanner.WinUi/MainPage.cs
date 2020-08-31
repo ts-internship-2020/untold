@@ -114,9 +114,6 @@ namespace ConferencePlanner.WinUi
 
            }
         }
-
-
-
         private void TabOrganizer_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (this.TabControl.SelectedTab.Name == "TabOrganizer")
@@ -847,6 +844,23 @@ namespace ConferencePlanner.WinUi
         private void OrganizerDataGrid_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
+        }
+
+        private void OrganizersPaginationSelector_DropDownClosed(object sender, EventArgs e)
+        {
+            int idx = this.OrganizersPaginationSelector.SelectedIndex;
+            if (idx >= 0)
+            {
+                this.PageSize = int.Parse(this.OrganizersPaginationSelector.Items[idx].ToString());
+
+                var allConferences = _conferenceRepository.GetConferencesByOrganizer(Program.EnteredEmailAddress);
+                this.CalculateTotalPages(allConferences, this.TabOrganizer);
+                this.OrganizerCurrentPageIndex = 1;
+
+
+                this.CreatePage();
+            }
+            
         }
     }
 }
