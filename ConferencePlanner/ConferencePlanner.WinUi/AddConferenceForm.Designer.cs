@@ -598,7 +598,8 @@ namespace ConferencePlanner.WinUi
             this.TypeTab.Size = new System.Drawing.Size(945, 288);
             this.TypeTab.TabIndex = 4;
             this.TypeTab.Text = "Type";
-            this.TypeTab.UseVisualStyleBackColor = true;
+            this.TypeTab.UseVisualStyleBackColor = true;///////////////////////////////////////////////
+            
             // 
             // TypeSaveLayoutPanel
             // 
@@ -634,7 +635,8 @@ namespace ConferencePlanner.WinUi
             this.button3.TabIndex = 1;
             this.button3.Text = "Save";
             this.button3.UseVisualStyleBackColor = true;
-            this.button3.Visible = false;
+            this.button3.Visible = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // TypesLayoutPanelBtn
             // 
@@ -666,6 +668,7 @@ namespace ConferencePlanner.WinUi
             this.TypesFirstPage.TabIndex = 0;
             this.TypesFirstPage.Text = "<<";
             this.TypesFirstPage.UseVisualStyleBackColor = true;
+            this.TypesFirstPage.Click += new System.EventHandler(this.TypesFirstPage_Click);
             // 
             // TypesBackBtn
             // 
@@ -676,6 +679,7 @@ namespace ConferencePlanner.WinUi
             this.TypesBackBtn.TabIndex = 1;
             this.TypesBackBtn.Text = "<";
             this.TypesBackBtn.UseVisualStyleBackColor = true;
+            this.TypesBackBtn.Click += new System.EventHandler(this.TypesBackBtn_Click);
             // 
             // TypesNextBtn
             // 
@@ -686,6 +690,7 @@ namespace ConferencePlanner.WinUi
             this.TypesNextBtn.TabIndex = 2;
             this.TypesNextBtn.Text = ">";
             this.TypesNextBtn.UseVisualStyleBackColor = true;
+            this.TypesNextBtn.Click += new System.EventHandler(this.TypesNextBtn_Click);
             // 
             // TypesLastPage
             // 
@@ -715,6 +720,12 @@ namespace ConferencePlanner.WinUi
             this.TypeDataGrid.Size = new System.Drawing.Size(939, 206);
             this.TypeDataGrid.TabIndex = 0;
             this.TypeDataGrid.Text = "dataGridView3";
+            this.TypeDataGrid.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.TypeDataGrid_CellEndEdit);
+            this.TypeDataGrid.CellBeginEdit += new System.Windows.Forms.DataGridViewCellCancelEventHandler(this.TypeDataGrid_CellBeginEdit);
+            this.TypeDataGrid.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.TypeDataGrid_DataBindingComplete);
+            this.TypeDataGrid.Layout += new System.Windows.Forms.LayoutEventHandler(this.TypeDataGrid_Layout);
+            this.TypeDataGrid.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.TypeDataGrid_CellClick);
+
             // 
             // SpeakerTab
             // 
@@ -1356,8 +1367,8 @@ namespace ConferencePlanner.WinUi
         private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.TableLayoutPanel TypeSaveLayoutPanel;
-        private System.Windows.Forms.TextBox textBox3;
-        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.TextBox textBox3; //textbox edit type
+        private System.Windows.Forms.Button button3; //buton save type
         private System.Windows.Forms.TableLayoutPanel SaveCountryLayoutPanel;
         private System.Windows.Forms.TextBox textBox4;
         private System.Windows.Forms.Button button4;

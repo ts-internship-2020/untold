@@ -21,9 +21,11 @@ namespace ConferencePlanner.WinUi
 
         private readonly ICountryRepository _countryRepository;
         private readonly ICountyRepository _countyRepository;
-        private readonly ICityRepository _cityRepository;
+        private readonly ITypeRepository _typeRepository;
+
         private readonly IAttendeeButtonsRepository _attendeeButtons;
         private readonly ISpeakerRepository _speakerRepository;
+        private readonly ICityRepository _cityRepository;
 
         private int PageSize = 2;
         //public int CurrentPageIndex { get; set; } //1
@@ -36,7 +38,7 @@ namespace ConferencePlanner.WinUi
 
         public MainPage(IConferenceRepository conferenceRepository, ICountryRepository countryRepository,
             IAttendeeButtonsRepository attendeeButtonsRepository, ISpeakerRepository speakerRepository, ICountyRepository 
-            countyRepository, ICityRepository cityRepository)
+            countyRepository, ICityRepository cityRepository, ITypeRepository typeRepository)
         {
             _conferenceRepository = conferenceRepository;
 
@@ -47,6 +49,7 @@ namespace ConferencePlanner.WinUi
             _speakerRepository = speakerRepository;
             _countyRepository = countyRepository;
             _cityRepository = cityRepository;
+            _typeRepository = typeRepository;
 
             InitializeComponent();
 
@@ -76,7 +79,7 @@ namespace ConferencePlanner.WinUi
 
         private void AddConferenceButton_Click(object sender, EventArgs e)
         {
-            var varAddConf = new AddConf(_conferenceRepository, _countryRepository, _countyRepository, _cityRepository, _speakerRepository );
+            var varAddConf = new AddConf(_conferenceRepository, _countryRepository, _countyRepository,  _speakerRepository, _typeRepository, _cityRepository);
 
             TabControl.SelectedIndex = 1;
             this.popUpMethod("Context Changed", "You are now an organizer!");
@@ -668,7 +671,7 @@ namespace ConferencePlanner.WinUi
                 int id = (int)OrganizerDataGrid.Rows[e.RowIndex].Cells["ConferenceId"].Value;
                 ConferenceModel conference = _conferenceRepository.GetConferenceById(id);
 
-                var varAddConf = new AddConf(conference, _conferenceRepository, _countryRepository, _cityRepository, _speakerRepository); 
+                var varAddConf = new AddConf(conference, _conferenceRepository, _countryRepository,  _speakerRepository, _typeRepository, _cityRepository); 
 
                 varAddConf.ShowDialog();        
 
