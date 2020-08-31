@@ -60,8 +60,8 @@ namespace ConferencePlanner.WinUi
             this.CountiesListGridView = new System.Windows.Forms.DataGridView();
             this.City = new System.Windows.Forms.TabPage();
             this.CitySaveLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
-            this.textBox6 = new System.Windows.Forms.TextBox();
-            this.button6 = new System.Windows.Forms.Button();
+            this.CitySaveMessageBox = new System.Windows.Forms.TextBox();
+            this.SaveCityButton = new System.Windows.Forms.Button();
             this.CitiesLayoutPanelBtns = new System.Windows.Forms.TableLayoutPanel();
             this.CitiesFirstPage = new System.Windows.Forms.Button();
             this.CitiesBackBtn = new System.Windows.Forms.Button();
@@ -473,8 +473,8 @@ namespace ConferencePlanner.WinUi
             this.CitySaveLayoutPanel.ColumnCount = 2;
             this.CitySaveLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 65.67461F));
             this.CitySaveLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 34.3254F));
-            this.CitySaveLayoutPanel.Controls.Add(this.textBox6, 0, 0);
-            this.CitySaveLayoutPanel.Controls.Add(this.button6, 1, 0);
+            this.CitySaveLayoutPanel.Controls.Add(this.CitySaveMessageBox, 0, 0);
+            this.CitySaveLayoutPanel.Controls.Add(this.SaveCityButton, 1, 0);
             this.CitySaveLayoutPanel.Dock = System.Windows.Forms.DockStyle.Top;
             this.CitySaveLayoutPanel.Location = new System.Drawing.Point(3, 3);
             this.CitySaveLayoutPanel.Name = "CitySaveLayoutPanel";
@@ -483,26 +483,27 @@ namespace ConferencePlanner.WinUi
             this.CitySaveLayoutPanel.Size = new System.Drawing.Size(939, 37);
             this.CitySaveLayoutPanel.TabIndex = 3;
             // 
-            // textBox6
+            // CitySaveMessageBox
             // 
-            this.textBox6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(176)))), ((int)(((byte)(218)))), ((int)(((byte)(241)))));
-            this.textBox6.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.textBox6.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBox6.Location = new System.Drawing.Point(3, 3);
-            this.textBox6.Name = "textBox6";
-            this.textBox6.Size = new System.Drawing.Size(610, 22);
-            this.textBox6.TabIndex = 0;
-            this.textBox6.Visible = false;
+            this.CitySaveMessageBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(176)))), ((int)(((byte)(218)))), ((int)(((byte)(241)))));
+            this.CitySaveMessageBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.CitySaveMessageBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.CitySaveMessageBox.Location = new System.Drawing.Point(3, 3);
+            this.CitySaveMessageBox.Name = "CitySaveMessageBox";
+            this.CitySaveMessageBox.Size = new System.Drawing.Size(610, 22);
+            this.CitySaveMessageBox.TabIndex = 0;
+            this.CitySaveMessageBox.Visible = false;
             // 
-            // button6
+            // SaveCityButton
             // 
-            this.button6.Location = new System.Drawing.Point(619, 3);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(79, 31);
-            this.button6.TabIndex = 1;
-            this.button6.Text = "Save";
-            this.button6.UseVisualStyleBackColor = true;
-            this.button6.Visible = false;
+            this.SaveCityButton.Location = new System.Drawing.Point(619, 3);
+            this.SaveCityButton.Name = "SaveCityButton";
+            this.SaveCityButton.Size = new System.Drawing.Size(79, 31);
+            this.SaveCityButton.TabIndex = 1;
+            this.SaveCityButton.Text = "Save";
+            this.SaveCityButton.UseVisualStyleBackColor = true;
+            this.SaveCityButton.Visible = false;
+            this.SaveCityButton.Click += new System.EventHandler(this.SaveCityButton_Click);
             // 
             // CitiesLayoutPanelBtns
             // 
@@ -583,6 +584,8 @@ namespace ConferencePlanner.WinUi
             this.CityListDataGridView.Size = new System.Drawing.Size(932, 197);
             this.CityListDataGridView.TabIndex = 0;
             this.CityListDataGridView.Text = "dataGridView6";
+            this.CityListDataGridView.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.CityListDataGridView_DataBindingComplete);
+            this.CityListDataGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.CityListDataGridView_CellClick);
             // 
             // TypeTab
             // 
@@ -1366,5 +1369,7 @@ namespace ConferencePlanner.WinUi
         private System.Windows.Forms.Button button6;
         private System.Windows.Forms.ComboBox CountriesPaginationSelector;
         private System.Windows.Forms.ComboBox SpeakerPaginationSelector;
+        private System.Windows.Forms.TextBox CitySaveMessageBox;
+        private System.Windows.Forms.Button SaveCityButton;
     }
 }
