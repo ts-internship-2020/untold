@@ -26,6 +26,7 @@ namespace ConferencePlanner.WinUi
         private readonly ICountryRepository _countryRepository;
         private readonly ICountyRepository _countyRepository;
         private readonly ISpeakerRepository _speakerRepository;
+        private readonly ICityRepository _cityRepository;
 
         private int PageSize = 4;
 
@@ -40,6 +41,7 @@ namespace ConferencePlanner.WinUi
         private int CountiesCurrentPage = 1;
         private int CountiesLastPageLastRow = 0;
         private int UpdateCountiRow;
+        private BindingList<CityModel> Cities;
         
         private BindingList<SpeakerModel> Speakers;
         private BindingList<SpeakerModel> SpeakersForSearchBar = new BindingList<SpeakerModel>();
@@ -50,11 +52,12 @@ namespace ConferencePlanner.WinUi
         
         //lista de ce facem
 
-        public AddConf(IConferenceRepository conferenceRepository, ICountryRepository  countryRepository, ICountyRepository countyRepository, ISpeakerRepository speakerRepository)
+        public AddConf(IConferenceRepository conferenceRepository, ICountryRepository  countryRepository, ICountyRepository countyRepository, ICityRepository cityRepository ,ISpeakerRepository speakerRepository)
         {
             _conferenceRepository = conferenceRepository;
             _countryRepository = countryRepository;
             _countyRepository = countyRepository;
+            _cityRepository = cityRepository;
             _speakerRepository = speakerRepository;
             InitializeComponent();
 
@@ -65,10 +68,11 @@ namespace ConferencePlanner.WinUi
           
             InitializeComponent();
         }
-        public AddConf(ConferenceModel conference, IConferenceRepository conferenceRepository, ICountryRepository countryRepository, ISpeakerRepository speakerRepository)
+        public AddConf(ConferenceModel conference, IConferenceRepository conferenceRepository, ICountryRepository countryRepository, ICityRepository cityRepository, ISpeakerRepository speakerRepository)
         {
             _conferenceRepository = conferenceRepository;
             _countryRepository = countryRepository;
+            _cityRepository = cityRepository;
             _speakerRepository = speakerRepository;
 
             InitializeComponent();
@@ -173,12 +177,29 @@ namespace ConferencePlanner.WinUi
         private bool IndexChange(string TabName, DataGridView CurrentDataGrid)
         {
             string PopUpTitle = "Warning", PopUpMessage;
-            if (CurrentDataGrid.Rows.GetRowCount(DataGridViewElementStates.Selected) < 1)
+
+            int selectedSpeakersCount = 0;
+            if (CurrentDataGrid == this.SpeakerListDataGrid)
+            {
+                CurrentDataGrid.EndEdit();
+                int col_idx = CurrentDataGrid.Columns["main_speaker"].Index;
+                foreach (DataGridViewRow row in CurrentDataGrid.Rows)
+                {
+                    
+                    if (Convert.ToBoolean(row.Cells[col_idx].Value) == true)
+                    {
+                        selectedSpeakersCount++;
+                    }
+                }
+            }
+            if ((CurrentDataGrid != this.SpeakerListDataGrid && CurrentDataGrid.Rows.GetRowCount(DataGridViewElementStates.Selected) < 1) || 
+                (CurrentDataGrid == this.SpeakerListDataGrid && selectedSpeakersCount <1))
             {
                 PopUpMessage = "Select a " + TabName;
                 popUpMethod(PopUpTitle, PopUpMessage);
                 return false;
-            } else if (CurrentDataGrid.Rows.GetRowCount(DataGridViewElementStates.Selected) > 1)
+            } else if ((CurrentDataGrid != this.SpeakerListDataGrid && CurrentDataGrid.Rows.GetRowCount(DataGridViewElementStates.Selected) > 1) || 
+                (CurrentDataGrid == this.SpeakerListDataGrid && selectedSpeakersCount > 1))
             {
                 PopUpMessage = "Select just a " + TabName;
                 popUpMethod(PopUpTitle, PopUpMessage);
@@ -199,7 +220,24 @@ namespace ConferencePlanner.WinUi
             {
                 if(IndexChange(Text, CurrentGridView))
                 {
-                    var SelectedRowIndex = CurrentGridView.SelectedRows[0].Index;
+                    var SelectedRowIndex = 0;
+                    if(CurrentGridView == this.SpeakerListDataGrid)
+                    {
+                        int col_idx = CurrentGridView.Columns["main_speaker"].Index;
+                        foreach (DataGridViewRow row in CurrentGridView.Rows)
+                        {
+
+                            if (Convert.ToBoolean(row.Cells[col_idx].Value) == true)
+                            {
+                                SelectedRowIndex = row.Index;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        SelectedRowIndex = CurrentGridView.SelectedRows[0].Index;
+                    }
+                    
 
                     if (TabControlLocation.SelectedIndex == 0)
                     {
@@ -211,7 +249,7 @@ namespace ConferencePlanner.WinUi
                     }
                     if (TabControlLocation.SelectedIndex == 2)
                     {
-                        // SelectedCityId = (int)CurrentGridView.Rows[SelectedRowIndex].Cells["DictionaryCytiId"].Value;
+                         SelectedCityId = (int)CurrentGridView.Rows[SelectedRowIndex].Cells["DictionaryCytiId"].Value;
                     }
 
                     TabControlLocation.SelectedIndex++;
@@ -239,8 +277,12 @@ namespace ConferencePlanner.WinUi
                 this.LoadCountyTab();
                 
             }
-            
-            if(TabControlLocation.SelectedTab == this.SpeakerTab)
+            if (TabControlLocation.SelectedTab == this.City)
+            {
+                this.LoadCityTab();
+            }
+
+            if (TabControlLocation.SelectedTab == this.SpeakerTab)
             {
                 this.LoadSpeakersTab();
             }
@@ -338,6 +380,7 @@ namespace ConferencePlanner.WinUi
         {
             this.CheckPaginationButtonsVisibility(this.SpeakersCurrentPage, this.SpeakersTotalPages,
                 this.SpeakersNextBtn, this.SpeakersBackBtn, this.SpeakersLastPage, this.SpeakersFirstPage);
+
             BindingList<SpeakerModel> result = new BindingList<SpeakerModel>();
             //BindingList<SpeakerModel> result2 = new BindingList<SpeakerModel>();
 
@@ -359,11 +402,20 @@ namespace ConferencePlanner.WinUi
         {
             this.Speakers = _speakerRepository.GetAllSpeakers();
             this.SpeakersForSearchBar = this.Speakers;
+            
             int[] aux = this.CalculateTotalPages(this.Speakers.Count);
             this.SpeakersTotalPages = aux[0];
             this.SpeakersLastPageLastRow = aux[1]; 
                 
             this.SpeakerCreatePage(this.Speakers);
+        }
+
+        private void LoadCityTab()
+        {
+            CityListDataGridView.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.Fill);
+            this.Cities = _cityRepository.GetCitiesByCountyId(SelectedCountyId);
+            CityListDataGridView.DefaultCellStyle.ForeColor = Color.Black;
+            CityListDataGridView.DataSource = this.Cities;
         }
 
         private void SpeakerListDataGrid_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
@@ -548,7 +600,10 @@ namespace ConferencePlanner.WinUi
         {
             this.UpdateSpeakerRow = e.RowIndex;
 
-
+            if (e.ColumnIndex == this.SpeakerListDataGrid.Columns["main_speaker"].Index)
+            {
+                return;
+            }
             if (SpeakerUserMessagesBox.Visible == false)
             {
                 if (this.UpdateSpeakerRow >= this.PageSize || 
@@ -577,10 +632,24 @@ namespace ConferencePlanner.WinUi
         {
             SpeakerModel speaker = new SpeakerModel();
             //validari
+            //if(this.SpeakerListDataGrid.Rows[this.UpdateSpeakerRow].Cells["Rating"].Value.GetType() != "float")
+            //{
+            //    speaker.Rating = 
+            //}
+            //float rating;
+            //if (float.TryParse((string)this.SpeakerListDataGrid.Rows[this.UpdateSpeakerRow].Cells["Rating"].Value, out rating))
+            //{
+            //    speaker.Rating = (float)this.SpeakerListDataGrid.Rows[this.UpdateSpeakerRow].Cells["Rating"].Value;
+            //}
+            //else
+            //{
+            //    this.popUpMethod("Warning", "Rating must be a number! The value you inserted won't be saved");
+            //    speaker.Rating = 0;
+            //}
             speaker.FirstName = this.SpeakerListDataGrid.Rows[this.UpdateSpeakerRow].Cells["FirstName"].Value.ToString();
             speaker.LastName = this.SpeakerListDataGrid.Rows[this.UpdateSpeakerRow].Cells["LastName"].Value.ToString();
             speaker.Nationality = this.SpeakerListDataGrid.Rows[this.UpdateSpeakerRow].Cells["Nationality"].Value.ToString();
-            speaker.Rating = (float) this.SpeakerListDataGrid.Rows[this.UpdateSpeakerRow].Cells["Rating"].Value;
+          
             speaker.SpeakerId = (int)this.SpeakerListDataGrid.Rows[this.UpdateSpeakerRow].Cells["SpeakerId"].Value;
 
             return speaker;
@@ -588,6 +657,7 @@ namespace ConferencePlanner.WinUi
 
         private void SpeakerSaveButton_Click(object sender, EventArgs e)
         {
+            this.SpeakerListDataGrid.EndEdit();
             if ((this.SpeakersLastPageLastRow > 0 && this.SpeakersCurrentPage == this.SpeakersTotalPages && this.UpdateSpeakerRow == this.SpeakersLastPageLastRow) || (this.UpdateSpeakerRow == this.PageSize))
             {
                 SpeakerModel newSpeaker = GetSpeaker();
@@ -749,8 +819,22 @@ namespace ConferencePlanner.WinUi
 
         private void SpeakerListDataGrid_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
-            //return;
-            this.SpeakerListDataGrid.Rows[e.RowIndex].Cells[e.ColumnIndex].Style.BackColor = Color.LightGreen;
+            
+            if(e.ColumnIndex == this.SpeakerListDataGrid.Columns["Rating"].Index)
+            {
+                float rating;
+                if (float.TryParse((string)this.SpeakerListDataGrid.Rows[e.RowIndex].Cells["Rating"].Value, out rating))
+                {
+                    return;
+                }
+                else
+                {
+                    this.SpeakerListDataGrid.Rows[e.RowIndex].Cells["Rating"].Value = 0;
+                    this.popUpMethod("Warning", "Rating must be a number! The value you inserted won't be saved");
+      
+                }
+            }
+            
         }
 
         private void SearchBar_TextChanged(object sender, EventArgs e)
