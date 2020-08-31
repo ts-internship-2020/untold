@@ -33,6 +33,8 @@ namespace ConferencePlanner.WinUi
         private int SelectedCountryId;
         private int SelectedCountyId;
         private int SelectedCityId;
+        private int SelectedSpeakerId = -1;
+
 
         private BindingList<CountryModel> Countries;
         private BindingList<CountyModel> Counties;
@@ -251,6 +253,10 @@ namespace ConferencePlanner.WinUi
                     {
                          SelectedCityId = (int)CurrentGridView.Rows[SelectedRowIndex].Cells["DictionaryCytiId"].Value;
                     }
+                    if (TabControlLocation.SelectedTab == this.SpeakerTab)
+                    {
+                        SelectedSpeakerId = (int)CurrentGridView.Rows[SelectedRowIndex].Cells["SpeakerId"].Value;
+                    }
 
                     TabControlLocation.SelectedIndex++;
 
@@ -401,6 +407,10 @@ namespace ConferencePlanner.WinUi
         private void LoadSpeakersTab()
         {
             this.Speakers = _speakerRepository.GetAllSpeakers();
+            //if (this.SelectedSpeakerId >= 0)
+            //{
+            //    this.SpeakerListDataGrid.Rows[]
+            //}
             this.SpeakersForSearchBar = this.Speakers;
             
             int[] aux = this.CalculateTotalPages(this.Speakers.Count);
