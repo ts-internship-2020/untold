@@ -15,6 +15,7 @@ namespace ConferencePlanner.WinUi
         private readonly IConferenceRepository _conferenceRepository;
         private readonly ISpeakerRepository _speakerRepository;
         private readonly ICityRepository _cityRepository;
+        private readonly ITypeRepository _typeRepository;
 
         private int ObjectId;
         public AreYouSure()
@@ -40,6 +41,16 @@ namespace ConferencePlanner.WinUi
             this.YesButton.Click += SpeakerYesButton_Click;
             this.NoButton.Click += NoDeleteButton_Click;
             this.ObjectId = speakerId;
+        }
+
+        public AreYouSure(ITypeRepository typeRepository, int confid)
+        {
+            _typeRepository = typeRepository;
+
+            InitializeComponent();
+            this.YesButton.Click += TypeYesButton_Click;
+            this.NoButton.Click += NoDeleteButton_Click;
+            this.ObjectId = confid;
         }
 
         public AreYouSure(ICityRepository cityRepository, int cityId)
@@ -69,6 +80,12 @@ namespace ConferencePlanner.WinUi
         private void DeleteCityYesButton_Click(Object sender, EventArgs e)
         {
             _cityRepository.DeleteCity(this.ObjectId);
+            this.Close();
+        }
+
+        private void TypeYesButton_Click(Object sender, EventArgs e)
+        {
+            _typeRepository.DeleteType(this.ObjectId);
             this.Close();
         }
         private void NoDeleteButton_Click(object sender, EventArgs e)

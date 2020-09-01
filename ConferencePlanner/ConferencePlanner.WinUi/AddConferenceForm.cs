@@ -772,6 +772,7 @@ namespace ConferencePlanner.WinUi
         {
             
             this.button3.Visible = false;
+            this.textBox3.Visible = false;
             this.popUpMethod(str1popup, str2popup);
             this.TypeDataGrid.Columns["TypeId"].Visible = false;
             this.TypeDataGrid.Columns["delete_column"].Visible = true;
@@ -862,6 +863,7 @@ namespace ConferencePlanner.WinUi
                 }
                 else
                 {
+                    int TypeId = int.Parse(this.TypeDataGrid.Rows[this.UpdateTypeRow].Cells["TypeId"].Value.ToString());
                     //string Id = this.TypeDataGrid.Rows[this.UpdateTypeRow].Cells["DictionaryConferenceTypeId"].Value.ToString();
                     string Name = this.TypeDataGrid.Rows[this.UpdateTypeRow].Cells["TypeName"].Value.ToString();
                     this.AddUpdateMessageType(Name);
@@ -906,8 +908,8 @@ namespace ConferencePlanner.WinUi
         private TypeModel GetType()
         {
             TypeModel type = new TypeModel();
-           
-            type.TypeId = (int)this.TypeDataGrid.Rows[this.TypesLastPageLastRow-1].Cells["TypeId"].Value + 2;
+
+            type.TypeId = int.Parse(this.TypeDataGrid.Rows[this.UpdateTypeRow].Cells["TypeId"].Value.ToString());
             type.TypeName = this.TypeDataGrid.Rows[this.UpdateTypeRow].Cells["TypeName"].Value.ToString();
            
 
@@ -921,6 +923,7 @@ namespace ConferencePlanner.WinUi
             if ((this.SpeakersLastPageLastRow > 0 && this.SpeakersCurrentPage == this.SpeakersTotalPages && this.UpdateSpeakerRow == this.SpeakersLastPageLastRow) || (this.UpdateSpeakerRow == this.PageSize))
             {
                 SpeakerModel newSpeaker = GetSpeaker();
+                
                 _speakerRepository.InsertSpeaker(newSpeaker);
                 this.Speakers.Add(newSpeaker);
                 this.SpeakersForSearchBar = this.Speakers;
@@ -949,9 +952,11 @@ namespace ConferencePlanner.WinUi
 
         private void button3_Click(object sender, EventArgs e)
         {
+            this.TypeDataGrid.EndEdit();
             if ((this.TypesLastPageLastRow > 0 && this.TypesCurrentPage == this.TypesTotalPages && this.UpdateTypeRow == this.TypesLastPageLastRow) || (this.UpdateTypeRow == this.PageSize))
             {
                 TypeModel newType = GetType();
+                newType.TypeId = this.Types.Count +1;
                 _typeRepository.InsertType(newType);
                 this.Types.Add(newType);
                 this.TypesForSearchBar = this.Types;
@@ -963,19 +968,25 @@ namespace ConferencePlanner.WinUi
                
                 this.TypeDataGrid.CurrentCell = null;
                 this.TypeDataGrid.Rows[0].Selected = false;
+                this.button3.Visible = false;
+                this.TypesNextBtn.Enabled = true;
+                this.TypesBackBtn.Enabled = true;
+                this.TypesFirstPage.Enabled = true;
+                this.TypesLastPage.Enabled = true;
+                this.textBox3.Visible = false;
             }
             else
             {
                 TypeModel Type = this.GetType();
-                
+            
                 _typeRepository.UpdateType(Type);
                 TypeEndEditLayout("Done", "Type modified succesfully");
-                this.TypeDataGrid.CurrentCell = null;
+                //this.TypeDataGrid.CurrentCell = null;
                 this.TypeDataGrid.Rows[0].Selected = false;
                 this.UpdateTypeArray(Type);
 
             }
-            this.TypeDataGrid.CurrentCell = null;
+            //this.TypeDataGrid.CurrentCell = null;
         }
 
         private void UpdateTypeArray(TypeModel type)
@@ -1076,11 +1087,11 @@ namespace ConferencePlanner.WinUi
                 {
                     return;
                 }
-
                 int id = (int)this.TypeDataGrid.Rows[e.RowIndex].Cells["TypeId"].Value;
-                //var newDeleteForm = new AreYouSure(_speakerRepository, id);
+                var newDeleteForm = new AreYouSure(_typeRepository, id);
 
-                _typeRepository.DeleteType(id);
+                Task t = Task.Run(() => { newDeleteForm.ShowDialog(); });
+                t.Wait();
                 this.LoadTypesTab();
 
             }
@@ -1238,6 +1249,7 @@ namespace ConferencePlanner.WinUi
         {
             //return;
             this.TypeDataGrid.Rows[e.RowIndex].Cells[e.ColumnIndex].Style.BackColor = Color.LightGreen;
+            
         }
 
         private void SearchBar_TextChanged(object sender, EventArgs e)
