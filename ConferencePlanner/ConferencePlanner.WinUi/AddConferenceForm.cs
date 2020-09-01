@@ -17,6 +17,7 @@ using Tulpep.NotificationWindow;
 using System.Windows.Controls;
 using System.Threading.Tasks;
 using System.Printing;
+using System.CodeDom.Compiler;
 
 namespace ConferencePlanner.WinUi
 {
@@ -1106,7 +1107,7 @@ namespace ConferencePlanner.WinUi
         {
             UpdateCountiRow = e.RowIndex;
             if (CountyEditTextBox.Visible == false) {
-                if (UpdateCountiRow >= PageSize || CountiesLastPageLastRow > 0 && CountiesCurrentPage == CountiesTotalPages && UpdateCountiRow == CountiesLastPageLastRow)
+                if (UpdateCountiRow >= PageSize || CountiesLastPageLastRow > 0 && CountiesCurrentPage == CountiesTotalPages && UpdateCountiRow == CountiesLastPageLastRow || CountiesTotalPages==0 && CountiesLastPageLastRow==0)
                 {
                     CountyAddInsertMessage();
                     CountiBeginEditLayout("Insert");
@@ -1762,14 +1763,22 @@ namespace ConferencePlanner.WinUi
             
         }
 
-        private void SaveCityButton_Click(object sender, EventArgs e)
-        {
-
-        }
+       
 
         private void CountyPaginationSelector_DropDownClosed(object sender, EventArgs e)
         {
+            int index = CountyPaginationSelector.SelectedIndex;
+            if(index >= 0)
+            {
+                PageSize = int.Parse(CountyPaginationSelector.Items[index].ToString());
 
+                int[] temp = CalculateTotalPages(CountiesFromSearchBar.Count);
+                CountiesCurrentPage = 1;
+                CountiesTotalPages = temp[0];
+                CountiesLastPageLastRow = temp[1];
+
+                CountiesCreatePage(CountiesFromSearchBar);
+            }
         }
     }
 }
