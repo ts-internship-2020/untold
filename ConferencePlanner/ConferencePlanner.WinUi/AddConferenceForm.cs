@@ -659,7 +659,6 @@ namespace ConferencePlanner.WinUi
             {
                 CityModel newCity = GetCity();
                 newCity.DictionaryCityId = _cityRepository.LastDictionaryCityId() + 1;
-                newCity.DictionaryCityId = DictionaryCityId;
                 _cityRepository.InsertCity(newCity);
                 this.Cities.Add(newCity);
                 this.CitiesFromSearchBar = this.Cities;
