@@ -15,5 +15,7 @@ namespace ConferencePlanner.Abstraction.Repository
         public void InsertCity(CityModel cityModel);
 
         public void UpdateCity(CityModel cityModel);
+
+        public int LastDictionaryCityId();
     }
 }

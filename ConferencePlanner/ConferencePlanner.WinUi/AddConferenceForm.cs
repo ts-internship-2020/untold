@@ -37,7 +37,7 @@ namespace ConferencePlanner.WinUi
         private int SelectedCityId;
         private int SelectedSpeakerId = -1;
         private int SelectedTypeId;
-        private int DictionaryCityId = 210;
+        private int DictionaryCityId;
 
         private BindingList<CountryModel> Countries;
         private BindingList<CountyModel> Counties;
@@ -558,22 +558,7 @@ namespace ConferencePlanner.WinUi
             CityTotalPages = pages[0];
             CityLastPageLastRow = pages[1];
             CitiesCreatePage(Cities);
-
         }
-        //private void LoadCountyTab()
-        //{
-        //    this.Counties = _countyRepository.GetCountyList(this.SelectedCountryId);
-        //    CountiesFromSearchBar = Counties;
-        //    int[] pages = CalculateTotalPages(Counties.Count);
-        //    CountiesListGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-        //    CountiesListGridView.AllowUserToOrderColumns = true;
-        //    CountiesListGridView.DefaultCellStyle.ForeColor = Color.Black;
-        //    CountiesTotalPages = pages[0];
-        //    CountiesLastPageLastRow = pages[1];
-
-        //    ContiesCreatePage(Counties);
-
-        
 
         private void CityListDataGridView_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
@@ -581,7 +566,7 @@ namespace ConferencePlanner.WinUi
             {
                 CityListDataGridView.Columns["DictionaryCityId"].Visible = false;
             }
-            
+
             CityListDataGridView.Columns["CityName"].HeaderText = "City Name";
 
             if (CityListDataGridView.Columns.Contains("delete_column") == false)
@@ -618,10 +603,14 @@ namespace ConferencePlanner.WinUi
 
         }
 
+        public void getLastDictionaryCityId()
+        {
+
+        }
+
         private CityModel GetCity()
         {
             CityModel cityModel = new CityModel();
-            //cityModel.DictionaryCityId = DictionaryCityId;
             cityModel.DictionaryCityId = (int)this.CityListDataGridView.Rows[this.UpdateCityRow].Cells["DictionaryCityId"].Value;
             cityModel.CityName = this.CityListDataGridView.Rows[this.UpdateCityRow].Cells["CityName"].Value.ToString();
             cityModel.CountyId = SelectedCountyId;
@@ -634,7 +623,7 @@ namespace ConferencePlanner.WinUi
             if ((CityLastPageLastRow > 0 && CityCurrentPage == CityTotalPages && UpdateCityRow == CityLastPageLastRow) || UpdateCityRow == PageSize)
             {
                 CityModel newCity = GetCity();
-                DictionaryCityId++;
+                newCity.DictionaryCityId = _cityRepository.LastDictionaryCityId() + 1;
                 newCity.DictionaryCityId = DictionaryCityId;
                 _cityRepository.InsertCity(newCity);
                 this.Cities.Add(newCity);
@@ -1138,11 +1127,6 @@ namespace ConferencePlanner.WinUi
 
         }
 
-
-
-
-
-
         private void popUpMethod(String titleText, String contentText)
         {
             PopupNotifier popup = new PopupNotifier();
@@ -1235,8 +1219,6 @@ namespace ConferencePlanner.WinUi
 
 
         }
-
-
 
         private CountyModel GetCounty()
         {

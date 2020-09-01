@@ -87,5 +87,17 @@ namespace ConferencePlanner.Repository.Ado.Repository
 
             sqlCommand.ExecuteNonQuery();
         }
+
+        public int LastDictionaryCityId ()
+        {
+            int dictionaryCityId = 0;
+            string commandText = "SELECT TOP 1 DictionaryCityId FROM DictionaryCity ORDER BY DictionaryCityId DESC ";
+            SqlCommand sqlCommand = new SqlCommand(commandText, _sqlConnection);
+            SqlDataReader sqlDataReader = sqlCommand.ExecuteReader();
+            sqlDataReader.Read();
+            dictionaryCityId = sqlDataReader.GetInt32("DictionaryCityId");
+            sqlDataReader.Close();
+            return dictionaryCityId;
+        }
     }
 }
