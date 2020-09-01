@@ -17,6 +17,7 @@ namespace ConferencePlanner.WinUi
         private readonly ISpeakerRepository _speakerRepository;
         private readonly ICityRepository _cityRepository;
         private readonly ICountyRepository _countyRepository;
+        private readonly ICountryRepository _countryRepository;
         private readonly ITypeRepository _typeRepository;
 
         private int ObjectId;
@@ -53,6 +54,16 @@ namespace ConferencePlanner.WinUi
             YesButton.Click += DeleteCounntyYesButton_Click;
             NoButton.Click += NoDeleteButton_Click;
             ObjectId = CountyId;
+        }
+
+        public AreYouSure(ICountryRepository countryRepository, int DictionaryCountryId)
+        {
+            _countryRepository = countryRepository;
+
+            InitializeComponent();
+            YesButton.Click += DeleteCounntyYesButton_Click;
+            NoButton.Click += NoDeleteButton_Click;
+            ObjectId = DictionaryCountryId;
         }
 
         private void DeleteCounntyYesButton_Click(object sender, EventArgs e)
