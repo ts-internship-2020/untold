@@ -32,7 +32,7 @@ namespace ConferencePlanner.Api
         {
             services.AddControllersWithViews();
             services.AddEntityFrameworkSqlServer()
-                .AddDbContext<neverseaContext>((serviceProvider, options) =>
+                .AddDbContext<untoldContext>((serviceProvider, options) =>
                 {
                     var configuration = serviceProvider.GetService<IConfiguration>();
                     var connectionString = configuration.GetConnectionString("DbConnection");
@@ -41,6 +41,7 @@ namespace ConferencePlanner.Api
                     .UseInternalServiceProvider(serviceProvider);
                     int a = 5;
                 });
+
 
             services.AddScoped<IGetDemoRepository, GetDemoRepository>();
 
