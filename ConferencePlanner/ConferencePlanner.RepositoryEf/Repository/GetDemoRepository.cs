@@ -10,20 +10,21 @@ namespace ConferencePlanner.Repository.Ef.Repository
 {
     public class GetDemoRepository : IGetDemoRepository
     {
-        private readonly neverseaContext _dbContext;
-        
+        //private readonly neverseaContext _dbContext;
+        private readonly untoldContext _untoldContext;
 
-        public GetDemoRepository(neverseaContext dbContext)
+        public GetDemoRepository(untoldContext untoldContext)
         {
-            _dbContext = dbContext;
-            
+            //_dbContext = dbContext;
+            _untoldContext = untoldContext;
         }
 
         public List<DemoModel> GetDemo(string name)
         {
-            List<Demo> demos = _dbContext.Demo.ToList();
+            //List<Demo> demos = _dbContext.Demo.ToList();
+            List<Conference> conferences = _untoldContext.Conference.ToList();
 
-            List<DemoModel> demoModels = demos.Select(a => new DemoModel() { Id = a.Id, Name = a.Name }).ToList();
+            List<DemoModel> demoModels = conferences.Select(a => new DemoModel() { Id = a.ConferenceId, Name = a.ConferenceName }).ToList();
 
             return demoModels;
         }
