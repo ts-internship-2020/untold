@@ -159,7 +159,7 @@ namespace ConferencePlanner.WinUi
             this.NoConferenceLabel.AutoSize = true;
             this.NoConferenceLabel.Font = new System.Drawing.Font("Segoe UI", 30F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.NoConferenceLabel.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.NoConferenceLabel.Location = new System.Drawing.Point(201, 107);
+            this.NoConferenceLabel.Location = new System.Drawing.Point(367, 114);
             this.NoConferenceLabel.Name = "NoConferenceLabel";
             this.NoConferenceLabel.Size = new System.Drawing.Size(310, 54);
             this.NoConferenceLabel.TabIndex = 1;

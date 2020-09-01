@@ -369,6 +369,7 @@ namespace ConferencePlanner.WinUi
                 attendButtonColumn.Text = "Attend";
                 attendButtonColumn.HeaderText = "Attend";
                 attendButtonColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+                attendButtonColumn.DefaultCellStyle.Padding = new Padding(22);
                 attendButtonColumn.FlatStyle = FlatStyle.Flat;
                 //attendButtonColumn.DefaultCellStyle.BackColor = System.Drawing.Color.Green;
                 //attendButtonColumn.DefaultCellStyle.ForeColor = System.Drawing.Color.Green;
@@ -384,17 +385,20 @@ namespace ConferencePlanner.WinUi
                 withdrawButtonColumn.Text = "Withdraw";
                 withdrawButtonColumn.HeaderText = "Withdraw";
                 withdrawButtonColumn.FlatStyle = FlatStyle.Flat;
+                withdrawButtonColumn.DefaultCellStyle.Padding = new Padding(20);
                 //withdrawButtonColumn.DefaultCellStyle.BackColor = System.Drawing.Color.Red;
                 //fwithdrawButtonColumn.DefaultCellStyle.ForeColor = System.Drawing.Color.Red;
-                withdrawButtonColumn.Width = 200;
+                withdrawButtonColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+                
                 AttendeeGridvw.Columns.Insert(columnIndex, withdrawButtonColumn);
                 columnIndex = AttendeeGridvw.ColumnCount;
 
                 DataGridViewButtonColumn joinButtonColumn = new DataGridViewButtonColumn();
                 joinButtonColumn.Name = "join_column";
                 joinButtonColumn.Text = "Join";
-                joinButtonColumn.Width = 200;
-
+                joinButtonColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+                
+                joinButtonColumn.DefaultCellStyle.Padding = new Padding(20);
                 joinButtonColumn.HeaderText = "Join";
                 joinButtonColumn.FlatStyle = FlatStyle.Flat;
                // joinButtonColumn.DefaultCellStyle.BackColor = System.Drawing.Color.Red;
