@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Security.RightsManagement;
 using System.Text;
 using System.Windows.Forms;
 
@@ -15,6 +16,7 @@ namespace ConferencePlanner.WinUi
         private readonly IConferenceRepository _conferenceRepository;
         private readonly ISpeakerRepository _speakerRepository;
         private readonly ICityRepository _cityRepository;
+        private readonly ICountyRepository _countyRepository;
 
         private int ObjectId;
         public AreYouSure()
@@ -40,6 +42,22 @@ namespace ConferencePlanner.WinUi
             this.YesButton.Click += SpeakerYesButton_Click;
             this.NoButton.Click += NoDeleteButton_Click;
             this.ObjectId = speakerId;
+        }
+
+        public AreYouSure(ICountyRepository countyRepository, int CountyId)
+        {
+            _countyRepository = countyRepository;
+
+            InitializeComponent();
+            YesButton.Click += DeleteCounntyYesButton_Click;
+            NoButton.Click += NoDeleteButton_Click;
+            ObjectId = CountyId;
+        }
+
+        private void DeleteCounntyYesButton_Click(object sender, EventArgs e)
+        {
+            _countyRepository.DeleteCounty(ObjectId);
+            Close();
         }
 
         public AreYouSure(ICityRepository cityRepository, int cityId)

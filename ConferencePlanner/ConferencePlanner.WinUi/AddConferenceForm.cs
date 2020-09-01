@@ -382,7 +382,7 @@ namespace ConferencePlanner.WinUi
             }
         }
 
-        private void ContiesCreatePage(BindingList<CountyModel> list)
+        private void CountiesCreatePage(BindingList<CountyModel> list)
         {
             CheckPaginationButtonsVisibility(CountiesCurrentPage, CountiesTotalPages, CountiesNextBtn, CountiesBackBtn, CountiesFirstPage, CountiesFirstPage);
             BindingList<CountyModel> CountiesList = new BindingList<CountyModel>();
@@ -820,10 +820,10 @@ namespace ConferencePlanner.WinUi
         {
             TabControlLocation.SelectedIndex = 0;
 
-            LoadContryTab();
+            LoadCountryTab();
         }
 
-        private void LoadContryTab()
+        private void LoadCountryTab()
         {
             CountryListDataGridView.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.Fill);
             this.Countries = _countryRepository.GetCountriesList();
@@ -894,7 +894,7 @@ namespace ConferencePlanner.WinUi
             CountiesTotalPages = pages[0];
             CountiesLastPageLastRow = pages[1];
 
-            ContiesCreatePage(Counties);
+            CountiesCreatePage(Counties);
 
         }
 
@@ -1379,11 +1379,11 @@ namespace ConferencePlanner.WinUi
                 CountiesEndEditLayout("Done", "County modified succesfully");
                 CountiesListGridView.CurrentCell = null;
                 CountiesListGridView.Rows[0].Selected = false;
-                UpdateCountiArray(County);
+                UpdateCountiesArray(County);
             }
         }
 
-        private void UpdateCountiArray(CountyModel County)
+        private void UpdateCountiesArray(CountyModel County)
         {
            foreach(CountyModel C in Counties)
             {
@@ -1408,7 +1408,39 @@ namespace ConferencePlanner.WinUi
             }
         }
 
-       
+
+
+        private void CountiesListGridView_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex < 0)
+            {
+                return;
+            }
+            if (e.ColumnIndex < 0)
+            {
+                return;
+            }
+            if (CountiesListGridView.Columns[e.ColumnIndex].Name == "delete_column")
+            {
+                if((e.RowIndex == PageSize) || (CountiesLastPageLastRow >0 && CountiesCurrentPage == CountiesTotalPages && e.RowIndex == CountiesLastPageLastRow))
+                {
+                    return;
+                }
+                int CountyId = (int)CountiesListGridView.Rows[e.RowIndex].Cells["CountyId"].Value;
+                if (_countyRepository.DeleteCounty(CountyId).Equals("error"))
+                {
+                    popUpMethod("Unsuccessfully", "You can't delete a county that has cities assign to it");
+                }
+                var DeleteForm = new AreYouSure(_countyRepository, CountyId);
+                Task t = Task.Run(() => { DeleteForm.ShowDialog(); });
+                t.Wait();
+                LoadCountyTab();
+            }
+        }
+
+
+
+
 
         private void SpeakerListDataGrid_CellClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -1475,7 +1507,69 @@ namespace ConferencePlanner.WinUi
         }
 
 
+        private void CountiesListGridView_Layout(object sender, LayoutEventArgs e)
+        {
+            CountiesListGridView.CurrentCell = null;
+            CountiesListGridView.DefaultCellStyle.ForeColor = Color.FromArgb(53, 56, 49);
+        }
 
+        private void CountiesNextBtn_Click(object sender, EventArgs e)
+        {
+            CountiesCurrentPage++;
+            if(CountiesFromSearchBar.Count > 0)
+            {
+                CountiesCreatePage(CountiesFromSearchBar);
+            }else
+            {
+                CountiesCreatePage(Counties);
+            }
+            CountiesListGridView.Rows[0].Selected = false;
+        }
+
+
+        private void CountiesLastPage_Click(object sender, EventArgs e)
+        {
+            CountiesCurrentPage = CountiesTotalPages;
+            if (CountiesFromSearchBar.Count > 0)
+            {
+                CountiesCreatePage(CountiesFromSearchBar);
+            }
+            else
+            {
+                CountiesCreatePage(Counties);
+            }
+            CountiesListGridView.Rows[0].Selected = false;
+        }
+
+
+        private void CountiesBackBtn_Click(object sender, EventArgs e)
+        {
+            CountiesCurrentPage--;
+            if (CountiesFromSearchBar.Count > 0)
+            {
+                CountiesCreatePage(CountiesFromSearchBar);
+            }
+            else
+            {
+                CountiesCreatePage(Counties);
+            }
+            CountiesListGridView.Rows[0].Selected = false;
+        }
+
+
+        private void CountiesFirstPage_Click(object sender, EventArgs e)
+        {
+            CountiesCurrentPage = 1;
+            if (CountiesFromSearchBar.Count > 0)
+            {
+                CountiesCreatePage(CountiesFromSearchBar);
+            }
+            else
+            {
+                CountiesCreatePage(Counties);
+            }
+            CountiesListGridView.Rows[0].Selected = false;
+        }
 
         private void SpeakerListDataGrid_Layout(object sender, LayoutEventArgs e)
         {
@@ -1601,6 +1695,9 @@ namespace ConferencePlanner.WinUi
             this.TypeDataGrid.Rows[0].Selected = false;
         }
 
+
+     
+
         private void SpeakerListDataGrid_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
             
@@ -1629,7 +1726,24 @@ namespace ConferencePlanner.WinUi
 
         private void SearchBar_TextChanged(object sender, EventArgs e)
         {
-            if(this.TabControlLocation.SelectedTab.Name == "SpeakerTab")
+            if (TabControlLocation.SelectedTab.Name == "County")
+            {
+                CountiesCurrentPage = 1;
+                BindingList<CountyModel> counties = new BindingList<CountyModel>();
+                foreach (CountyModel county in Counties)
+                {
+                    if (county.CountyName.ToLower().Contains(SearchBar.Text.ToLower()))
+                    {
+                        counties.Add(county);
+                    }
+                }
+                int[] temp = CalculateTotalPages(counties.Count);
+                CountiesTotalPages = temp[0];
+                CountiesLastPageLastRow = temp[1];
+                CountiesFromSearchBar = counties;
+                CountiesCreatePage(CountiesFromSearchBar);
+            }
+            else if(this.TabControlLocation.SelectedTab.Name == "SpeakerTab")
             {
                 //this.ActiveControl = null;
                 this.SpeakersCurrentPage = 1;
@@ -1693,9 +1807,14 @@ namespace ConferencePlanner.WinUi
             
         }
 
-       // private void SaveCityButton_Click(object sender, EventArgs e)
-  
+        private void SaveCityButton_Click(object sender, EventArgs e)
+        {
 
-        
+        }
+
+        private void CountyPaginationSelector_DropDownClosed(object sender, EventArgs e)
+        {
+
+        }
     }
 }
