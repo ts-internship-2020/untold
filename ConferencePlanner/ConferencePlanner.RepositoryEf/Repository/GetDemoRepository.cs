@@ -11,10 +11,12 @@ namespace ConferencePlanner.Repository.Ef.Repository
     public class GetDemoRepository : IGetDemoRepository
     {
         private readonly neverseaContext _dbContext;
+        
 
         public GetDemoRepository(neverseaContext dbContext)
         {
             _dbContext = dbContext;
+            
         }
 
         public List<DemoModel> GetDemo(string name)
