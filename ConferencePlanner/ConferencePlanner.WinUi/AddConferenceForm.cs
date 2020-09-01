@@ -1819,10 +1819,7 @@ namespace ConferencePlanner.WinUi
             
         }
 
-        private void SaveCityButton_Click(object sender, EventArgs e)
-        {
-
-        }
+       
 
         private void CountyPaginationSelector_DropDownClosed(object sender, EventArgs e)
         {
