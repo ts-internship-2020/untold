@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Security.RightsManagement;
 using System.Text;
 using System.Windows.Forms;
 
@@ -15,6 +16,8 @@ namespace ConferencePlanner.WinUi
         private readonly IConferenceRepository _conferenceRepository;
         private readonly ISpeakerRepository _speakerRepository;
         private readonly ICityRepository _cityRepository;
+        private readonly ICountyRepository _countyRepository;
+        private readonly ITypeRepository _typeRepository;
 
         private int ObjectId;
         public AreYouSure()
@@ -40,6 +43,32 @@ namespace ConferencePlanner.WinUi
             this.YesButton.Click += SpeakerYesButton_Click;
             this.NoButton.Click += NoDeleteButton_Click;
             this.ObjectId = speakerId;
+        }
+
+        public AreYouSure(ICountyRepository countyRepository, int CountyId)
+        {
+            _countyRepository = countyRepository;
+
+            InitializeComponent();
+            YesButton.Click += DeleteCounntyYesButton_Click;
+            NoButton.Click += NoDeleteButton_Click;
+            ObjectId = CountyId;
+        }
+
+        private void DeleteCounntyYesButton_Click(object sender, EventArgs e)
+        {
+            _countyRepository.DeleteCounty(ObjectId);
+            Close();
+        }
+
+        public AreYouSure(ITypeRepository typeRepository, int confid)
+        {
+            _typeRepository = typeRepository;
+
+            InitializeComponent();
+            this.YesButton.Click += TypeYesButton_Click;
+            this.NoButton.Click += NoDeleteButton_Click;
+            this.ObjectId = confid;
         }
 
         public AreYouSure(ICityRepository cityRepository, int cityId)
@@ -68,7 +97,17 @@ namespace ConferencePlanner.WinUi
 
         private void DeleteCityYesButton_Click(Object sender, EventArgs e)
         {
-            _cityRepository.DeleteCity(this.ObjectId);
+            if (_cityRepository.DeleteCity(ObjectId).Equals("error"))
+            {
+                return;
+               // popUpMethod("A conference will be in this city", "You can't delete it");
+            }
+            this.Close();
+        }
+
+        private void TypeYesButton_Click(Object sender, EventArgs e)
+        {
+            _typeRepository.DeleteType(this.ObjectId);
             this.Close();
         }
         private void NoDeleteButton_Click(object sender, EventArgs e)

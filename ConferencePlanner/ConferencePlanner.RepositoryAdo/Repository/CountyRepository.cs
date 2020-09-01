@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
+using System.Linq.Expressions;
 using System.Text;
 
 namespace ConferencePlanner.Repository.Ado.Repository
@@ -17,7 +18,7 @@ namespace ConferencePlanner.Repository.Ado.Repository
         {
             _sqlConnection = sqlConnection;
         }
-        
+
 
         public BindingList<CountyModel> GetCountyList(int countryId)
         {
@@ -48,6 +49,59 @@ namespace ConferencePlanner.Repository.Ado.Repository
         public BindingList<CountyModel> GetCountyList()
         {
             throw new NotImplementedException();
+        }
+
+        public void InsertCounty(CountyModel County)
+        {
+            string SqlText = "insert into DictionaryCounty values(@DictionaryCountyId, @CountyName, @CountryId)";
+
+            SqlCommand sqlCommand = new SqlCommand(SqlText, _sqlConnection);
+            sqlCommand.Parameters.Add("@DictionaryCountyId", SqlDbType.Int);
+            sqlCommand.Parameters["@DictionaryCountyId"].Value = County.CountyId;
+            sqlCommand.Parameters.Add("@CountyName", SqlDbType.NVarChar);
+            sqlCommand.Parameters["@CountyName"].Value = County.CountyName;
+            sqlCommand.Parameters.Add("@CountryId", SqlDbType.Int);
+            sqlCommand.Parameters["@CountryId"].Value = County.CountryId;
+
+            sqlCommand.ExecuteNonQuery();
+        }
+
+
+        public void UpdateCounty(CountyModel County)
+        {
+            string SqlText = "update DictionaryCounty" +
+                " set CountyName = @CountyName" +
+                " where DictionaryCountyId = @DictionaryCountyId";
+            SqlCommand sqlCommand = new SqlCommand(SqlText, _sqlConnection);
+            sqlCommand.Parameters.Add("@CountyName", SqlDbType.NVarChar);
+            sqlCommand.Parameters["@CountyName"].Value = County.CountyName;
+            sqlCommand.Parameters.Add("@DictionaryCountyId", SqlDbType.Int);
+            sqlCommand.Parameters["@DictionaryCountyId"].Value = County.CountyId;
+
+
+            sqlCommand.ExecuteNonQuery();
+        }
+
+
+
+
+        public string DeleteCounty(int objectId)
+        {
+            string error= "";
+            string SqlText = "delete from DictionaryCounty" +
+                " where DictionaryCountyId = @DictionaryCountyId";
+            SqlCommand sqlCommand = new SqlCommand(SqlText, _sqlConnection);
+            sqlCommand.Parameters.Add("@DictionaryCountyId", SqlDbType.NVarChar);
+            sqlCommand.Parameters["@DictionaryCountyId"].Value = objectId;
+
+            try{
+                sqlCommand.ExecuteNonQuery();
+            }
+            catch(Exception e)
+            {
+                error += "error";
+            }
+            return error;
         }
     }
 }

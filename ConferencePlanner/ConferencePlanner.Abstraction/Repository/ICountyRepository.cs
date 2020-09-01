@@ -8,6 +8,10 @@ namespace ConferencePlanner.Abstraction.Repository
 {
     public interface ICountyRepository
     {
-        BindingList<CountyModel> GetCountyList(int countryId);
+        BindingList<CountyModel> GetCountyList(int CountryId);
+
+        void InsertCounty(CountyModel County);
+        void UpdateCounty(CountyModel County);
+        string DeleteCounty(int objectId);
     }
 }

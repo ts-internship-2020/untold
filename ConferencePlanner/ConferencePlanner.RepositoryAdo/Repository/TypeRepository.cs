@@ -47,7 +47,7 @@ namespace ConferencePlanner.Repository.Ado.Repository
         public void UpdateType(TypeModel type)
         {
             string commandText = "update DictionaryConferenceType " +
-                "set DictionaryConferenceTypeId = @Id, ConferenceTypeName = @Name " +
+                "set ConferenceTypeName = @Name " +
                 "where DictionaryConferenceTypeId = @Id";
 
             SqlCommand sqlCommand = new SqlCommand(commandText, _sqlConnection);

@@ -19,7 +19,7 @@ namespace ConferencePlanner.Repository.Ado.Repository
 
         public BindingList<CityModel> GetCitiesByCountyId(int countyId)
         {
-            string commandText = "select DictionaryCityId, CityName from DictionaryCity where CountyId = @CountyId";
+            string commandText = "select DictionaryCityId, CityName, CountyId from DictionaryCity where CountyId = @CountyId";
             SqlCommand sqlCommand = new SqlCommand(commandText, _sqlConnection);
             sqlCommand.Parameters.Add("@CountyId", SqlDbType.Int);
             sqlCommand.Parameters["@CountyId"].Value = countyId;
@@ -32,7 +32,8 @@ namespace ConferencePlanner.Repository.Ado.Repository
                     CityList.Add(new CityModel()
                     {
                         DictionaryCityId = sqlDataReader.GetInt32("DictionaryCityId"),
-                        CityName = sqlDataReader.GetString("CityName")
+                        CityName = sqlDataReader.GetString("CityName"),
+                        CountyId = sqlDataReader.GetInt32("CountyId")
                     });
                 }
             }
@@ -57,6 +58,34 @@ namespace ConferencePlanner.Repository.Ado.Repository
                 errorMessage += "error";
             }
             return errorMessage;
+        }
+
+        public void InsertCity(CityModel cityModel)
+        {
+            string commandText = "insert into DictionaryCity values(@DictionaryCityId, @CityName, @CountyId)";
+
+            SqlCommand sqlCommand = new SqlCommand(commandText, _sqlConnection);
+            sqlCommand.Parameters.Add("@DictionaryCityId", SqlDbType.Int);
+            sqlCommand.Parameters["@DictionaryCityId"].Value = cityModel.DictionaryCityId;
+            sqlCommand.Parameters.Add("@CityName", SqlDbType.NVarChar);
+            sqlCommand.Parameters["@CityName"].Value = cityModel.CityName;
+            sqlCommand.Parameters.Add("@CountyId", SqlDbType.Int);
+            sqlCommand.Parameters["@CountyId"].Value = cityModel.CountyId;
+            sqlCommand.ExecuteNonQuery();
+        }
+
+        public void UpdateCity(CityModel cityModel)
+        {
+            string commandText = "update DictionaryCity set CityName = @CityName where DictionaryCityId = @Id";
+
+            SqlCommand sqlCommand = new SqlCommand(commandText, _sqlConnection);
+            sqlCommand.Parameters.Add("@CityName", SqlDbType.NVarChar);
+            sqlCommand.Parameters["@CityName"].Value = cityModel.CityName;
+            sqlCommand.Parameters.Add("@Id", SqlDbType.NVarChar);
+            sqlCommand.Parameters["@Id"].Value = cityModel.DictionaryCityId;
+
+
+            sqlCommand.ExecuteNonQuery();
         }
     }
 }
