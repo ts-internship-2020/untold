@@ -38,7 +38,7 @@ namespace ConferencePlanner.WinUi
         private int SelectedCityId;
         private int SelectedSpeakerId = -1;
         private int SelectedTypeId;
-        private int DictionaryCityId = 45;
+        private int DictionaryCityId = 210;
 
         private BindingList<CountryModel> Countries;
         private BindingList<CountyModel> Counties;
@@ -279,14 +279,22 @@ namespace ConferencePlanner.WinUi
             else 
             {
                 //aici face save   
-                
 
             }
         }
 
         private void TabControlLocation_SelectedIndexChanged(object sender, EventArgs e)
         {
-            
+            foreach (TabPage tab in this.TabControlLocation.TabPages)
+            {
+                if (TabControlLocation.SelectedTab != tab)
+                    tab.Enabled = false;
+                else
+                {
+                    tab.Enabled = true;
+                }
+            }
+
             if (TabControlLocation.SelectedIndex == 1)
             {
                 this.LoadCountyTab();
@@ -474,12 +482,38 @@ namespace ConferencePlanner.WinUi
             this.CitiesFirstPage.Enabled = false;
             this.CitiesLastPage.Enabled = false;
 
-            if (opType == "u")
+            if (opType == "update")
             {
                 this.CityListDataGridView.AllowUserToAddRows = false;
             }
 
         }
+        private void CityEndEditLayout(string PopUpTitle, string PopUpMessage)
+        {
+            CitySaveMessageBox.Visible = false;
+            SaveCityButton.Visible = false;
+            popUpMethod(PopUpTitle, PopUpMessage);
+            CityListDataGridView.Columns["delete_column"].Visible = true;
+            SearchBar.Enabled = true;
+            foreach (DataGridViewRow row in CityListDataGridView.Rows)
+            {
+                if (row.Index != UpdateCityRow)
+                {
+                    row.ReadOnly = false;
+                }
+            }
+
+            this.CitiesNextBtn.Enabled = true;
+            this.CitiesBackBtn.Enabled = true;
+            this.CitiesFirstPage.Enabled = true;
+            this.CitiesLastPage.Enabled = true;
+
+            if (!CityListDataGridView.AllowUserToAddRows)
+            {
+                CityListDataGridView.AllowUserToAddRows = true;
+            }
+        }
+
 
         private void CitiesListDataGrid_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
         {
@@ -491,13 +525,13 @@ namespace ConferencePlanner.WinUi
                     (this.CityLastPageLastRow > 0 && this.CityCurrentPage == this.CityTotalPages && this.UpdateCityRow == this.CityLastPageLastRow))
                 {
                     this.AddInsertMessageCity();
-                    this.CitiesBeginEditLayout("i");
+                    this.CitiesBeginEditLayout("insert");
                 }
                 else
                 {
                     string city = this.CityListDataGridView.Rows[this.UpdateCityRow].Cells["CityName"].Value.ToString();
                     this.AddUpdateMessageCity(city);
-                    this.CitiesBeginEditLayout("u");
+                    this.CitiesBeginEditLayout("update");
                 }
             }
             else if (this.UpdateCityRow != e.RowIndex)
@@ -511,24 +545,44 @@ namespace ConferencePlanner.WinUi
             this.CitySaveMessageBox.ForeColor = Color.MediumSeaGreen;
             this.CitySaveMessageBox.Text = "You are now adding a new city. Press the button to Save.";
             this.CitySaveMessageBox.Visible = true;
-            this.CitySaveMessageBox.Visible = true;
+            this.SaveCityButton.Visible = true;
         }
 
         private void AddUpdateMessageCity(string cityName)
         {
             this.CitySaveMessageBox.ForeColor = Color.MediumSeaGreen;
-            this.SpeakerUserMessagesBox.Text = "You are now editing city " + cityName + "'s informations. Press the button to Save.";
-            this.SpeakerUserMessagesBox.Visible = true;
-            this.SpeakerSaveButton.Visible = true;
+            this.CitySaveMessageBox.Text = "You are now editing city " + cityName + "'s informations. Press the button to Save.";
+            this.CitySaveMessageBox.Visible = true;
+            this.SaveCityButton.Visible = true;
         }
 
         private void LoadCityTab()
         {
             CityListDataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             this.Cities = _cityRepository.GetCitiesByCountyId(SelectedCountyId);
+            int[] pages = CalculateTotalPages(Cities.Count);
+            CityListDataGridView.AllowUserToOrderColumns = true;
             CityListDataGridView.DefaultCellStyle.ForeColor = Color.Black;
             CityListDataGridView.DataSource = this.Cities;
+            CityTotalPages = pages[0];
+            CityLastPageLastRow = pages[1];
+            CitiesCreatePage(Cities);
+
         }
+        //private void LoadCountyTab()
+        //{
+        //    this.Counties = _countyRepository.GetCountyList(this.SelectedCountryId);
+        //    CountiesFromSearchBar = Counties;
+        //    int[] pages = CalculateTotalPages(Counties.Count);
+        //    CountiesListGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+        //    CountiesListGridView.AllowUserToOrderColumns = true;
+        //    CountiesListGridView.DefaultCellStyle.ForeColor = Color.Black;
+        //    CountiesTotalPages = pages[0];
+        //    CountiesLastPageLastRow = pages[1];
+
+        //    ContiesCreatePage(Counties);
+
+        
 
         private void CityListDataGridView_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
@@ -576,36 +630,40 @@ namespace ConferencePlanner.WinUi
         private CityModel GetCity()
         {
             CityModel cityModel = new CityModel();
-            cityModel.DictionaryCityId = DictionaryCityId;
+            //cityModel.DictionaryCityId = DictionaryCityId;
+            cityModel.DictionaryCityId = (int)this.CityListDataGridView.Rows[this.UpdateCityRow].Cells["DictionaryCityId"].Value;
             cityModel.CityName = this.CityListDataGridView.Rows[this.UpdateCityRow].Cells["CityName"].Value.ToString();
-            cityModel.CountyId = SelectedCountryId;
-            DictionaryCityId++;
+            cityModel.CountyId = SelectedCountyId;
             return cityModel;
         }
 
         private void SaveCityButton_Click(object sender, EventArgs e)
         {
-            this.SpeakerListDataGrid.EndEdit();
-            if ((this.SpeakersLastPageLastRow > 0 && this.SpeakersCurrentPage == this.SpeakersTotalPages && this.UpdateSpeakerRow == this.SpeakersLastPageLastRow) || (this.UpdateSpeakerRow == this.PageSize))
+            this.CityListDataGridView.EndEdit(); // de facut endedit
+            if ((CityLastPageLastRow > 0 && CityCurrentPage == CityTotalPages && UpdateCityRow == CityLastPageLastRow) || UpdateCityRow == PageSize)
             {
                 CityModel newCity = GetCity();
+                DictionaryCityId++;
+                newCity.DictionaryCityId = DictionaryCityId;
                 _cityRepository.InsertCity(newCity);
                 this.Cities.Add(newCity);
-                //this.SpeakersForSearchBar = this.Speakers;
+                this.CitiesFromSearchBar = this.Cities;
                 int[] aux = this.CalculateTotalPages(this.Cities.Count);
-                this.SpeakersTotalPages = aux[0];
-                this.SpeakersLastPageLastRow = aux[1];
-                //this.SpeakersCurrentPage = 1;
-                //this.SpeakerCreatePage(this.SpeakersForSearchBar);
-                SpeakerEndEditLayout("Done", "You can see the speaker you just added on the last page.");
+                this.CityTotalPages = aux[0];
+                this.CityLastPageLastRow = aux[1];
+                this.CityCurrentPage = 1;
+                this.CitiesCreatePage(this.CitiesFromSearchBar);
+                CityEndEditLayout("Done", "You can see the city you just added on the last page.");
                 //this.SpeakerListDataGrid.CurrentCell = null;
-                this.SpeakerListDataGrid.Rows[0].Selected = false;
+                this.CityListDataGridView.Rows[0].Selected = false;
+
             }
             else
             {
                 CityModel city = GetCity();
+                //city.DictionaryCityId = CityListDataGridView.Columns["DictionaryCityId"]
                 _cityRepository.UpdateCity(city);
-              //  SpeakerEndEditLayout("Done", "Speaker modified succesfully");
+                CityEndEditLayout("Done", "City modified succesfully");
                 this.CityListDataGridView.CurrentCell = null;
                 this.CityListDataGridView.Rows[0].Selected = false;
                 this.UpdateInCityList(city);
@@ -631,14 +689,12 @@ namespace ConferencePlanner.WinUi
                 this.CitiesNextBtn, this.CitiesBackBtn, this.CitiesLastPage, this.CitiesFirstPage);
 
             BindingList<CityModel> cities = new BindingList<CityModel>();
-            //BindingList<SpeakerModel> result2 = new BindingList<SpeakerModel>();
-
             int PreviousPageOffSet = (this.CityCurrentPage - 1) * this.PageSize;
 
-            int aux = Math.Min(PreviousPageOffSet + this.PageSize, cityModels.Count);
+            int min = Math.Min(PreviousPageOffSet + this.PageSize, cityModels.Count);
 
 
-            for (int i = PreviousPageOffSet; i < aux; i++)
+            for (int i = PreviousPageOffSet; i < min; i++)
             {
                 if (i < 0)
                 {
@@ -1063,6 +1119,7 @@ namespace ConferencePlanner.WinUi
         {
             
             this.button3.Visible = false;
+            this.textBox3.Visible = false;
             this.popUpMethod(str1popup, str2popup);
             this.TypeDataGrid.Columns["TypeId"].Visible = false;
             this.TypeDataGrid.Columns["delete_column"].Visible = true;
@@ -1173,6 +1230,7 @@ namespace ConferencePlanner.WinUi
                 }
                 else
                 {
+                    int TypeId = int.Parse(this.TypeDataGrid.Rows[this.UpdateTypeRow].Cells["TypeId"].Value.ToString());
                     //string Id = this.TypeDataGrid.Rows[this.UpdateTypeRow].Cells["DictionaryConferenceTypeId"].Value.ToString();
                     string Name = this.TypeDataGrid.Rows[this.UpdateTypeRow].Cells["TypeName"].Value.ToString();
                     this.AddUpdateMessageType(Name);
@@ -1230,8 +1288,8 @@ namespace ConferencePlanner.WinUi
         private TypeModel GetType()
         {
             TypeModel type = new TypeModel();
-           
-            type.TypeId = (int)this.TypeDataGrid.Rows[this.TypesLastPageLastRow-1].Cells["TypeId"].Value + 2;
+
+            type.TypeId = int.Parse(this.TypeDataGrid.Rows[this.UpdateTypeRow].Cells["TypeId"].Value.ToString());
             type.TypeName = this.TypeDataGrid.Rows[this.UpdateTypeRow].Cells["TypeName"].Value.ToString();
            
 
@@ -1245,6 +1303,7 @@ namespace ConferencePlanner.WinUi
             if ((this.SpeakersLastPageLastRow > 0 && this.SpeakersCurrentPage == this.SpeakersTotalPages && this.UpdateSpeakerRow == this.SpeakersLastPageLastRow) || (this.UpdateSpeakerRow == this.PageSize))
             {
                 SpeakerModel newSpeaker = GetSpeaker();
+                
                 _speakerRepository.InsertSpeaker(newSpeaker);
                 this.Speakers.Add(newSpeaker);
                 this.SpeakersForSearchBar = this.Speakers;
@@ -1273,9 +1332,11 @@ namespace ConferencePlanner.WinUi
 
         private void button3_Click(object sender, EventArgs e)
         {
+            this.TypeDataGrid.EndEdit();
             if ((this.TypesLastPageLastRow > 0 && this.TypesCurrentPage == this.TypesTotalPages && this.UpdateTypeRow == this.TypesLastPageLastRow) || (this.UpdateTypeRow == this.PageSize))
             {
                 TypeModel newType = GetType();
+                newType.TypeId = this.Types.Count +1;
                 _typeRepository.InsertType(newType);
                 this.Types.Add(newType);
                 this.TypesForSearchBar = this.Types;
@@ -1287,19 +1348,25 @@ namespace ConferencePlanner.WinUi
                
                 this.TypeDataGrid.CurrentCell = null;
                 this.TypeDataGrid.Rows[0].Selected = false;
+                this.button3.Visible = false;
+                this.TypesNextBtn.Enabled = true;
+                this.TypesBackBtn.Enabled = true;
+                this.TypesFirstPage.Enabled = true;
+                this.TypesLastPage.Enabled = true;
+                this.textBox3.Visible = false;
             }
             else
             {
                 TypeModel Type = this.GetType();
-                
+            
                 _typeRepository.UpdateType(Type);
                 TypeEndEditLayout("Done", "Type modified succesfully");
-                this.TypeDataGrid.CurrentCell = null;
+                //this.TypeDataGrid.CurrentCell = null;
                 this.TypeDataGrid.Rows[0].Selected = false;
                 this.UpdateTypeArray(Type);
 
             }
-            this.TypeDataGrid.CurrentCell = null;
+            //this.TypeDataGrid.CurrentCell = null;
         }
 
         private void UpdateTypeArray(TypeModel type)
@@ -1421,10 +1488,7 @@ namespace ConferencePlanner.WinUi
                 }
                 
                 int id = (int) this.SpeakerListDataGrid.Rows[e.RowIndex].Cells["SpeakerId"].Value;
-                
-                
-                
-                
+   
                 var newDeleteForm = new AreYouSure(_speakerRepository, id);
 
                 Task t = Task.Run(() => { newDeleteForm.ShowDialog();  } );
@@ -1451,11 +1515,11 @@ namespace ConferencePlanner.WinUi
                 {
                     return;
                 }
-
                 int id = (int)this.TypeDataGrid.Rows[e.RowIndex].Cells["TypeId"].Value;
-                //var newDeleteForm = new AreYouSure(_speakerRepository, id);
+                var newDeleteForm = new AreYouSure(_typeRepository, id);
 
-                _typeRepository.DeleteType(id);
+                Task t = Task.Run(() => { newDeleteForm.ShowDialog(); });
+                t.Wait();
                 this.LoadTypesTab();
 
             }
@@ -1678,6 +1742,7 @@ namespace ConferencePlanner.WinUi
         {
             //return;
             this.TypeDataGrid.Rows[e.RowIndex].Cells[e.ColumnIndex].Style.BackColor = Color.LightGreen;
+            
         }
 
         private void SearchBar_TextChanged(object sender, EventArgs e)
