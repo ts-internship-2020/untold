@@ -92,6 +92,8 @@ namespace ConferencePlanner.WinUi
             {
                 OrganizerDataGrid.Visible = false;
                 NoConferenceLabel.Visible = true;
+                this.OrganizersPaginationSelector.Visible = false;
+                //this.RightArrowPagButton = false;
             }
             else
             {

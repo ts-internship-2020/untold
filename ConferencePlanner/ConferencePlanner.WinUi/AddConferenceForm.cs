@@ -274,14 +274,22 @@ namespace ConferencePlanner.WinUi
             else 
             {
                 //aici face save   
-                
 
             }
         }
 
         private void TabControlLocation_SelectedIndexChanged(object sender, EventArgs e)
         {
-            
+            foreach (TabPage tab in this.TabControlLocation.TabPages)
+            {
+                if (TabControlLocation.SelectedTab != tab)
+                    tab.Enabled = false;
+                else
+                {
+                    tab.Enabled = true;
+                }
+            }
+
             if (TabControlLocation.SelectedIndex == 1)
             {
                 this.LoadCountyTab();
@@ -1049,10 +1057,7 @@ namespace ConferencePlanner.WinUi
                 }
                 
                 int id = (int) this.SpeakerListDataGrid.Rows[e.RowIndex].Cells["SpeakerId"].Value;
-                
-                
-                
-                
+   
                 var newDeleteForm = new AreYouSure(_speakerRepository, id);
 
                 Task t = Task.Run(() => { newDeleteForm.ShowDialog();  } );
