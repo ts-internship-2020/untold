@@ -5,8 +5,10 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Net.Http;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace ConferencePlanner.WinUi
@@ -32,7 +34,15 @@ namespace ConferencePlanner.WinUi
             _ServiceProvider = ServiceProvider;
             InitializeComponent();
         }
-
+        private async Task GetResponse()
+        {
+            HttpClient client = new HttpClient();
+            HttpResponseMessage s = await client.GetAsync("");
+            if (s.IsSuccessStatusCode)
+            {
+                string resp = await s.Content.ReadAsStringAsync();
+            }
+        }
         public void init()
         {
             _conferenceRepository = _ServiceProvider.GetRequiredService<IConferenceRepository>();

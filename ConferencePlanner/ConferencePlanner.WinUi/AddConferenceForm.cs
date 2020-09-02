@@ -6,6 +6,11 @@ using System.Drawing;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Tulpep.NotificationWindow;
+using System.Windows.Controls;
+using System.Threading.Tasks;
+using System.Printing;
+using System.CodeDom.Compiler;
+using System.Net.Http;
 
 namespace ConferencePlanner.WinUi
 {
@@ -31,6 +36,12 @@ namespace ConferencePlanner.WinUi
         private int SelectedCategoryId;
 
         private BindingList<CountryModel> Countries;
+        private BindingList<CountryModel> CountriesFromSearchBar = new BindingList<CountryModel>();
+        private int CountriesTotalPages;
+        private int CountriesCurrentPage = 1;
+        private int CountriesLastPageLastRow = 0;
+        private int UpdateCountriesRow;
+
         private BindingList<CountyModel> Counties;
         private BindingList<CountyModel> CountiesFromSearchBar = new BindingList<CountyModel>();
         private int CountiesTotalPages;
@@ -79,7 +90,9 @@ namespace ConferencePlanner.WinUi
 
         }
 
-        public AddConf()
+        
+
+    public AddConf()
         {
           
             InitializeComponent();
@@ -300,6 +313,11 @@ namespace ConferencePlanner.WinUi
                 }
             }
 
+            
+            if (TabControlLocation.SelectedIndex == 0)
+            {
+                this.LoadCountryTab();
+            }
             if (TabControlLocation.SelectedTab == County)
             {
                 this.LoadCountyTab();
@@ -398,6 +416,19 @@ namespace ConferencePlanner.WinUi
                 prev.Visible = true;
                 first.Visible = true;
             }
+        }
+
+        private void CountriesCreatePage(BindingList<CountryModel> list)
+        {
+            CheckPaginationButtonsVisibility(CountriesCurrentPage, CountriesTotalPages, CountriesNextBtn, CountriesBackBtn, CountriesFirstPageBtn, CountriesFirstPageBtn);
+            BindingList<CountryModel> CountriesList = new BindingList<CountryModel>();
+            int PreviousPageOffSet = (CountriesCurrentPage - 1) * PageSize;
+            int min = Math.Min(PreviousPageOffSet + PageSize, list.Count);
+            for (int i = PreviousPageOffSet; i < min; i++)
+            {
+                CountriesList.Add(list[i]);
+            }
+            this.CountryListDataGridView.DataSource = CountriesList;
         }
 
         private void CountiesCreatePage(BindingList<CountyModel> list)
@@ -806,6 +837,9 @@ namespace ConferencePlanner.WinUi
             this.CityListDataGridView.Rows[0].Selected = false;
         }
 
+        
+       
+
 
         private void LoadTypesTab()
         {
@@ -871,27 +905,108 @@ namespace ConferencePlanner.WinUi
             LoadCountryTab();
         }
 
+      
+       
         private void LoadCountryTab()
         {
-            CountryListDataGridView.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.Fill);
             this.Countries = _countryRepository.GetCountriesList();
+            CountriesFromSearchBar = Countries;
+            int[] pages = CalculateTotalPages(Countries.Count);
+            CountryListDataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            CountryListDataGridView.AllowUserToOrderColumns = true;
             CountryListDataGridView.DefaultCellStyle.ForeColor = Color.Black;
-            CountryListDataGridView.DataSource = this.Countries;
+            CountriesTotalPages = pages[0];
+            CountriesLastPageLastRow = pages[1];
 
+            CountriesCreatePage(Countries);
         }
+
+        
 
         private void CountryListDataGridView_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
-            if(CountryListDataGridView.Columns.Contains("DictionaryCountryId") && CountryListDataGridView.Columns["DictionaryCountryId"].Visible)
+            if (CountryListDataGridView.Columns.Contains("DictionaryCountryId") && CountryListDataGridView.Columns["DictionaryCountryId"].Visible)
             {
                 CountryListDataGridView.Columns["DictionaryCountryId"].Visible = false;
             }
-            CountryListDataGridView.Columns["CountryCode"].HeaderText = "Country Code";
-            CountryListDataGridView.Columns["CountryName"].HeaderText = "Country Name";
-            
+         
+            if (CountryListDataGridView.Columns.Contains("delete_column") == false)
+            {
+                DataGridViewButtonColumn deleteButtonColumn = new DataGridViewButtonColumn();
+                deleteButtonColumn.UseColumnTextForButtonValue = true;
+                deleteButtonColumn.Text = "Delete";
+                deleteButtonColumn.Width = 25;
+                deleteButtonColumn.HeaderText = "";
+                deleteButtonColumn.Name = "delete_column";
 
+                CountryListDataGridView.Columns.Add(deleteButtonColumn);
+
+            }
+            CountryListDataGridView.Columns["CountryName"].HeaderText = "Country Name";
+            CountryListDataGridView.Rows[0].Selected = false;
         }
 
+        private void CountryAddInsertMessage()
+        {
+            CountryEditTextBox.Text = "You are now adding a new country. Press the button to Save. ";
+            CountryEditTextBox.Visible = true;
+            CountrySaveEditBtn.Visible = true;
+        }
+
+        private void CountryAddUpdateMessage(string CountryName)
+        {
+            CountryEditTextBox.Text = "You are now editing the " + CountryName + " country. Press the button to Save.";
+            CountryEditTextBox.Visible = true;
+            CountrySaveEditBtn.Visible = true;
+        }
+
+        private void CountriesBeginEditLayout(string Action)
+        {
+            CountryListDataGridView.Columns["delete_column"].Visible = false;
+            this.SearchBar.Enabled = false;
+            foreach (DataGridViewRow row in CountryListDataGridView.Rows)
+            {
+                if (row.Index != UpdateCountriesRow)
+                {
+                    row.ReadOnly = true;
+                }
+            }
+            CountriesNextBtn.Enabled = false;
+            CountriesLastPage.Enabled = false;
+            CountriesFirstPageBtn.Enabled = false;
+            CountriesBackBtn.Enabled = false;
+
+            if (Action == "Update")
+            {
+                CountryListDataGridView.AllowUserToAddRows = false;
+            }
+        }
+
+        private void CountriesEndEditLayout(string PopUpTitle, string PopUpMessage)
+        {
+            CountryEditTextBox.Visible = false;
+            CountrySaveEditBtn.Visible = false;
+            popUpMethod(PopUpTitle, PopUpMessage);
+            CountryListDataGridView.Columns["delete_column"].Visible = true;
+            SearchBar.Enabled = true;
+            foreach (DataGridViewRow row in CountryListDataGridView.Rows)
+            {
+                if (row.Index != UpdateCountriesRow)
+                {
+                    row.ReadOnly = false;
+                }
+            }
+
+            CountriesNextBtn.Enabled = true;
+            CountriesLastPage.Enabled = true;
+            CountriesFirstPageBtn.Enabled = true;
+            CountriesBackBtn.Enabled = true;
+
+            if (!CountryListDataGridView.AllowUserToAddRows)
+            {
+                CountryListDataGridView.AllowUserToAddRows = true;
+            }
+        }
 
         private void TypeDataGrid_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
@@ -999,6 +1114,7 @@ namespace ConferencePlanner.WinUi
             CountiesListGridView.Columns["CountyName"].HeaderText = "County Name";
             CountiesListGridView.Rows[0].Selected = false;
         }
+
 
         private void CountyAddInsertMessage()
         {
@@ -1273,9 +1389,6 @@ namespace ConferencePlanner.WinUi
                 CategoryDataGridView.AllowUserToAddRows = true;
             }
 
-           
-
-
         }
 
         private void popUpMethod(String titleText, String contentText)
@@ -1286,6 +1399,31 @@ namespace ConferencePlanner.WinUi
             popup.ContentText = contentText;
             popup.Popup();
         }
+
+        private void CountryListDataGridView_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
+        {
+            UpdateCountriesRow = e.RowIndex;
+            if (CountryEditTextBox.Visible == false)
+            {
+                if (UpdateCountriesRow >= PageSize || CountriesLastPageLastRow > 0 && CountriesCurrentPage == CountriesTotalPages && UpdateCountriesRow == CountriesLastPageLastRow || CountriesTotalPages == 0 && CountriesLastPageLastRow == 0)
+                {
+                    CountryAddInsertMessage();
+                    CountiBeginEditLayout("Insert");
+                }
+                else
+                {
+                    string CountryName = CountryListDataGridView.Rows[UpdateCountriesRow].Cells["CountryName"].Value.ToString();
+                    CountryAddUpdateMessage(CountryName);
+                    CountiBeginEditLayout("Update");
+                }
+            }
+            else if (UpdateCountriesRow != e.RowIndex)
+            {
+                this.popUpMethod("Warning!", "Changes made would not be saved unless you click on the Save button");
+            }
+
+        }
+
         private void CountiesListGridView_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
         {
             UpdateCountyRow = e.RowIndex;
@@ -1400,8 +1538,16 @@ namespace ConferencePlanner.WinUi
 
         }
 
+        private CountryModel GetCountry()
+        {
+            CountryModel Country = new CountryModel();
+            Country.DictionaryCountryId = Counties.Count() + 1;
+            Country.CountryName = CountryListDataGridView.Rows[UpdateCountriesRow].Cells["CountryName"].Value.ToString();
+           // Country.CountryId = SelectedCountryId;
 
 
+            return Country;
+        }
 
         private CountyModel GetCounty()
         {
@@ -1612,6 +1758,40 @@ namespace ConferencePlanner.WinUi
             }
         }
 
+        private void CountrySaveEditBtn_Click(object sender, EventArgs e)
+        {
+            CountryListDataGridView.EndEdit();
+            if ((CountriesLastPageLastRow > 0 && CountriesCurrentPage == CountriesTotalPages && UpdateCountriesRow == CountriesLastPageLastRow) || UpdateCountriesRow == PageSize)
+            {
+                CountryModel NewCountry = GetCountry();
+                _countryRepository.InsertCountry(NewCountry);
+                Countries.Add(NewCountry);
+                int[] Temp = CalculateTotalPages(Countries.Count);
+                CountriesTotalPages = Temp[0];
+                CountriesLastPageLastRow = Temp[1];
+                CountriesEndEditLayout("Done", "You can see the coutry you just added on the last page.");
+            }
+            else
+            {
+                CountryModel Country = GetCountry();
+                _countryRepository.UpdateCountry(Country);
+                CountriesEndEditLayout("Done", "County modified succesfully");
+                CountryListDataGridView.CurrentCell = null;
+                CountryListDataGridView.Rows[0].Selected = false;
+                UpdateCountriesArray(Country);
+            }
+        }
+
+        private void UpdateCountriesArray(CountryModel Country)
+        {
+            foreach (CountryModel C in Countries)
+            {
+                if (C.DictionaryCountryId == Country.DictionaryCountryId)
+                {
+                    Countries[Countries.IndexOf(C)].CountryName = Country.CountryName;
+                }
+            }
+        }
         private void UpdateCountiesArray(CountyModel County)
         {
            foreach(CountyModel C in Counties)
@@ -1637,7 +1817,33 @@ namespace ConferencePlanner.WinUi
             }
         }
 
-
+        private void CountryListDataGridView_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex < 0)
+            {
+                return;
+            }
+            if (e.ColumnIndex < 0)
+            {
+                return;
+            }
+            if (CountryListDataGridView.Columns[e.ColumnIndex].Name == "delete_column")
+            {
+                if ((e.RowIndex == PageSize) || (CountriesLastPageLastRow > 0 && CountriesCurrentPage == CountriesTotalPages && e.RowIndex == CountriesLastPageLastRow))
+                {
+                    return;
+                }
+                int DictionaryCountryId = (int)CountryListDataGridView.Rows[e.RowIndex].Cells["DictionaryCountryId"].Value;
+                if (_countryRepository.DeleteCountry(DictionaryCountryId).Equals("error"))
+                {
+                    popUpMethod("Unsuccessfully", "You can't delete a county that has cities assign to it");
+                }
+                var DeleteForm = new AreYouSure(_countryRepository, DictionaryCountryId);
+                Task t = Task.Run(() => { DeleteForm.ShowDialog(); });
+                t.Wait();
+                LoadCountyTab();
+            }
+        }
 
         private void CountiesListGridView_CellClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -1757,12 +1963,31 @@ namespace ConferencePlanner.WinUi
             }
         }
 
+        private void CountryListDataGridView_Layout(object sender, LayoutEventArgs e)
+        {
+            CountryListDataGridView.CurrentCell = null;
+            CountryListDataGridView.DefaultCellStyle.ForeColor = Color.FromArgb(53, 56, 49);
+        }
 
 
         private void CountiesListGridView_Layout(object sender, LayoutEventArgs e)
         {
             CountiesListGridView.CurrentCell = null;
             CountiesListGridView.DefaultCellStyle.ForeColor = Color.FromArgb(53, 56, 49);
+        }
+
+        private void CountriesNextBtn_Click(object sender, EventArgs e)
+        {
+            CountriesCurrentPage++;
+            if (CountriesFromSearchBar.Count > 0)
+            {
+                CountriesCreatePage(CountriesFromSearchBar);
+            }
+            else
+            {
+                CountriesCreatePage(Countries);
+            }
+            CountryListDataGridView.Rows[0].Selected = false;
         }
 
         private void CountiesNextBtn_Click(object sender, EventArgs e)
@@ -1778,6 +2003,7 @@ namespace ConferencePlanner.WinUi
             CountiesListGridView.Rows[0].Selected = false;
         }
 
+        
 
         private void CountiesLastPage_Click(object sender, EventArgs e)
         {
@@ -1791,6 +2017,20 @@ namespace ConferencePlanner.WinUi
                 CountiesCreatePage(Counties);
             }
             CountiesListGridView.Rows[0].Selected = false;
+        }
+
+        private void CountriesLastPage_Click(object sender, EventArgs e)
+        {
+            CountriesCurrentPage = CountriesTotalPages;
+            if (CountriesFromSearchBar.Count > 0)
+            {
+                CountriesCreatePage(CountriesFromSearchBar);
+            }
+            else
+            {
+                CountriesCreatePage(Countries);
+            }
+            CountryListDataGridView.Rows[0].Selected = false;
         }
 
 
@@ -1808,6 +2048,33 @@ namespace ConferencePlanner.WinUi
             CountiesListGridView.Rows[0].Selected = false;
         }
 
+        private void CountriesBackBtn_Click(object sender, EventArgs e)
+        {
+            CountriesCurrentPage--;
+            if (CountriesFromSearchBar.Count > 0)
+            {
+                CountriesCreatePage(CountriesFromSearchBar);
+            }
+            else
+            {
+                CountriesCreatePage(Countries);
+            }
+            CountryListDataGridView.Rows[0].Selected = false;
+        }
+
+        private void CountriesFirstPage_Click(object sender, EventArgs e)
+        {
+            CountriesCurrentPage = 1;
+            if (CountriesFromSearchBar.Count > 0)
+            {
+                CountriesCreatePage(CountriesFromSearchBar);
+            }
+            else
+            {
+                CountriesCreatePage(Countries);
+            }
+            CountryListDataGridView.Rows[0].Selected = false;
+        }
 
         private void CountiesFirstPage_Click(object sender, EventArgs e)
         {
@@ -2052,7 +2319,24 @@ namespace ConferencePlanner.WinUi
 
         private void SearchBar_TextChanged(object sender, EventArgs e)
         {
-            if (TabControlLocation.SelectedTab.Name == "County")
+            if (TabControlLocation.SelectedTab.Name == "Country")
+            {
+                CountriesCurrentPage = 1;
+                BindingList<CountryModel> countries = new BindingList<CountryModel>();
+                foreach (CountryModel country in Countries)
+                {
+                    if (country.CountryName.ToLower().Contains(SearchBar.Text.ToLower()))
+                    {
+                        countries.Add(country);
+                    }
+                }
+                int[] temp = CalculateTotalPages(countries.Count);
+                CountriesTotalPages = temp[0];
+                CountriesLastPageLastRow = temp[1];
+                CountriesFromSearchBar = countries;
+                CountriesCreatePage(CountriesFromSearchBar);
+            }
+            else if (TabControlLocation.SelectedTab.Name == "County")
             {
                 CountiesCurrentPage = 1;
                 BindingList<CountyModel> counties = new BindingList<CountyModel>();
@@ -2168,6 +2452,25 @@ namespace ConferencePlanner.WinUi
                 CountiesCreatePage(CountiesFromSearchBar);
             }
         }
+
+        private void CountryPaginationSelector_DropDownClosed(object sender, EventArgs e)
+        {
+            int index = CountriesPaginationSelector.SelectedIndex;
+            if (index >= 0)
+            {
+                PageSize = int.Parse(CountriesPaginationSelector.Items[index].ToString());
+
+                int[] temp = CalculateTotalPages(CountriesFromSearchBar.Count);
+                CountriesCurrentPage = 1;
+                CountriesTotalPages = temp[0];
+                CountriesLastPageLastRow = temp[1];
+
+                CountriesCreatePage(CountriesFromSearchBar);
+            }
+        }
+
+
+
 
         private void CategoryPaginationSelector_DropDownClosed(object sender, EventArgs e)
         {

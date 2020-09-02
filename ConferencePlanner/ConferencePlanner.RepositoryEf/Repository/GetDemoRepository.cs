@@ -1,6 +1,7 @@
 ﻿using ConferencePlanner.Abstraction.Model;
 using ConferencePlanner.Abstraction.Repository;
 using ConferencePlanner.Repository.Ef.Entities;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,14 +22,25 @@ namespace ConferencePlanner.Repository.Ef.Repository
 
         public List<DemoModel> GetDemo(string name)
         {
-            //List<Demo> demos = _dbContext.Demo.ToList();
-            List<Conference> conferences = _untoldContext.Conference.ToList();
+          //List<Demo> demos = _dbContext.Demo.ToList();
 
-            List<DemoModel> demoModels = conferences.Select(a => new DemoModel() { Id = a.ConferenceId, Name = a.ConferenceName }).ToList();
+          //  List<Conference> conferences = _untoldContext.Conference.ToList();
+
+          //  Conference conference = _untoldContext.Conference.FirstOrDefault(x=>x.ConferenceName == "test"); //pt a aduce prima conferinta
+
+            List<Conference> conferences = _untoldContext.Conference.Include(x=>x.ConferenceType).Include(x => x.ConferenceCategory).ToList();
+
+            List<DemoModel> demoModels = conferences.Select(a => new DemoModel() { Id = a.ConferenceId, Name = a.ConferenceType.ConferenceTypeName }).ToList();
 
             return demoModels;
         }
     }
+
+
     //alt test 
     //petrecere!!!
+
+
+
+
 }

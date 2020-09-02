@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq.Expressions;
 using System.Text;
 
 namespace ConferencePlanner.Repository.Ado.Repository
