@@ -25,6 +25,14 @@ namespace ConferencePlanner.Api.Controllers
             _conferenceRepository = conferenceRepository;
         }
 
-  
+        [HttpGet]
+        [Route("get_conferences_by_date")]
+        public IActionResult FilterConferencesByDate(string email, string sDate, string eDate)
+        {
+            List<ConferenceModel> conferences = _conferenceRepository.FilterConferencesByDate(email, sDate, eDate);
+            return Ok(conferences);
+        }
+
+
     }
 }
