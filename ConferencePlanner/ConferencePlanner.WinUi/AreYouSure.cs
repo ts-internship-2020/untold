@@ -10,6 +10,7 @@ using System.Security.RightsManagement;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Tulpep.NotificationWindow;
 
 namespace ConferencePlanner.WinUi
 {
@@ -129,7 +130,9 @@ namespace ConferencePlanner.WinUi
 
         private void ConferenceYesButton_Click(object sender, EventArgs e)
         {
-            _conferenceRepository.DeleteConferenceById(this.ObjectId);
+            //_conferenceRepository.DeleteConferenceById(this.ObjectId);
+            var t = Task.Run(() => DeleteConference(this.ObjectId));
+            t.Wait();
             this.Close();
         }
 
@@ -155,8 +158,42 @@ namespace ConferencePlanner.WinUi
         private async Task DeleteSpeaker(int id)
         {
             HttpClient client = new HttpClient();
-            HttpResponseMessage s = await client.DeleteAsync("http://localhost:2794/api/Speaker/update_speaker/id=" + id);
 
+            HttpResponseMessage s = await client.DeleteAsync("http://localhost:2794/api/Speaker/delete_speaker/id=" + id);
+
+            if (s.IsSuccessStatusCode)
+            {
+                this.popUpMethod("Done", "You deleted the speaker succesfully");
+            }
+            else
+            {
+                this.popUpMethod("Error", "Something went wrong");
+            }
+
+        }
+        private async Task DeleteConference(int id)
+        {
+            HttpClient client = new HttpClient();
+
+            HttpResponseMessage s = await client.DeleteAsync("http://localhost:2794/api/Conference/delete_conference/id=" + id);
+
+            if (s.IsSuccessStatusCode)
+            {
+                this.popUpMethod("Done", "You deleted the conference succesfully");
+            }
+            else
+            {
+                this.popUpMethod("Error", "Something went wrong");
+            }
+
+        }
+        private void popUpMethod(String titleText, String contentText)
+        {
+            PopupNotifier popup = new PopupNotifier();
+            popup.Image = Properties.Resources.info;
+            popup.TitleText = titleText;
+            popup.ContentText = contentText;
+            popup.Popup();
         }
 
     }
