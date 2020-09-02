@@ -17,6 +17,7 @@ namespace ConferencePlanner.Repository.Ado.Repository
         {
             _sqlConnection = sqlConnection;
         }
+
         public List<CountryModel> GetListCountry()
         {
             SqlCommand sqlCommandCountry = _sqlConnection.CreateCommand();
@@ -68,7 +69,7 @@ namespace ConferencePlanner.Repository.Ado.Repository
         }
 
 
-        public BindingList<CountryModel> GetCountriesList()
+        public BindingList<CountryModel> GetCountriesList()//-----
         {
             SqlCommand sqlCommandCountry = _sqlConnection.CreateCommand();
             sqlCommandCountry.CommandText = "select DictionaryCountryId, CountryCode, CountryName from DictionaryCountry order by CountryName";
@@ -92,5 +93,64 @@ namespace ConferencePlanner.Repository.Ado.Repository
             sqlDataReader.Close();
             return countrylist;
         }
+
+        public void InsertCountry(CountryModel Country)
+        {
+            string SqlText = "insert into DictionaryCountry values(@DictionaryCountryId, @CountryName, @CountryCode)";
+
+            SqlCommand sqlCommand = new SqlCommand(SqlText, _sqlConnection);
+            sqlCommand.Parameters.Add("@DictionaryCountryId", SqlDbType.Int);
+            sqlCommand.Parameters["@DictionaryCountryId"].Value = Country.DictionaryCountryId;
+            sqlCommand.Parameters.Add("@CountryName", SqlDbType.NVarChar);
+            sqlCommand.Parameters["@CountryName"].Value = Country.CountryName;
+            sqlCommand.Parameters.Add("@CountryCode", SqlDbType.Int);
+            sqlCommand.Parameters["@CountryCode"].Value = Country.CountryCode;
+
+            sqlCommand.ExecuteNonQuery();
+        }
+
+        public void UpdateCountry(CountryModel Country)
+        {
+            string SqlText = "update DictionaryCountry" +
+                " set CountryName = @CountryName" +
+                " where DictionaryCountryId = @DictionaryCountryId";
+            SqlCommand sqlCommand = new SqlCommand(SqlText, _sqlConnection);
+            sqlCommand.Parameters.Add("@CountryName", SqlDbType.NVarChar);
+            sqlCommand.Parameters["@CountryName"].Value = Country.CountryName;
+            sqlCommand.Parameters.Add("@DictionaryCountryId", SqlDbType.Int);
+            sqlCommand.Parameters["@DictionaryCountryId"].Value = Country.DictionaryCountryId;
+
+
+            sqlCommand.ExecuteNonQuery();
+        }
+
+        public string DeleteCountry(int objectId)
+        {
+            string error = "";
+            string SqlText = "delete from DictionaryCountry" +
+                " where DictionaryCountryId = @DictionaryCountryId";
+            SqlCommand sqlCommand = new SqlCommand(SqlText, _sqlConnection);
+            sqlCommand.Parameters.Add("@DictionaryCountryId", SqlDbType.NVarChar);
+            sqlCommand.Parameters["@DictionaryCountryId"].Value = objectId;
+
+            try
+            {
+                sqlCommand.ExecuteNonQuery();
+            }
+            catch (Exception e)
+            {
+                error += "error";
+            }
+            return error;
+        }
+
+
+
+
+
+
+
+
+
     }
 }

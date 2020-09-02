@@ -43,8 +43,15 @@ namespace ConferencePlanner.Api
                 });
 
 
-            services.AddScoped<IGetDemoRepository, GetDemoRepository>();
-
+            //services.AddScoped<IGetDemoRepository, GetDemoRepository>();
+            //services.AddScoped<IConferenceRepository, ConferenceRepository>();
+            services.AddScoped<IAttendeeButtonsRepository, AttendeeButtonsRepository>();
+            //services.AddScoped<ICountryRepository, CountryRepository>();
+            //services.AddScoped<ISpeakerRepository, SpeakerRepository>();
+            //// services.AddScoped<IGetDemoRepository, GetDemoRepository>();
+            //services.AddScoped<ICountyRepository, CountyRepository>();
+            //services.AddScoped<ITypeRepository, TypeRepository>();
+            //services.AddScoped<ICityRepository, CityRepository>();
             services.AddSwagger();
         }
 
