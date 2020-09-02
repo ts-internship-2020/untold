@@ -11,6 +11,11 @@ using System.Threading.Tasks;
 using System.Printing;
 using System.CodeDom.Compiler;
 using System.Net.Http;
+using System.Collections;
+using System.Resources.Extensions;
+//using System.Text.Json.Serialization;
+using Newtonsoft.Json;
+
 
 namespace ConferencePlanner.WinUi
 {
@@ -511,11 +516,10 @@ namespace ConferencePlanner.WinUi
 
         private void LoadSpeakersTab()
         {
-            this.Speakers = _speakerRepository.GetAllSpeakers();
-            //if (this.SelectedSpeakerId >= 0)
-            //{
-            //    this.SpeakerListDataGrid.Rows[]
-            //}
+           
+            var t = Task.Run(() => GetAllSpeakers());
+            t.Wait();
+            
             this.SpeakersForSearchBar = this.Speakers;
             
             int[] aux = this.CalculateTotalPages(this.Speakers.Count);
@@ -1544,7 +1548,7 @@ namespace ConferencePlanner.WinUi
         private CountryModel GetCountry()
         {
             CountryModel Country = new CountryModel();
-            Country.DictionaryCountryId = Countries.Count + 1;
+            Country.DictionaryCountryId = Counties.Count + 1;
             Country.CountryName = CountryListDataGridView.Rows[UpdateCountriesRow].Cells["CountryName"].Value.ToString();
            // Country.CountryId = SelectedCountryId;
 
@@ -1619,7 +1623,9 @@ namespace ConferencePlanner.WinUi
             {
                 SpeakerModel newSpeaker = GetSpeaker();
                 
-                _speakerRepository.InsertSpeaker(newSpeaker);
+                //_speakerRepository.InsertSpeaker(newSpeaker);
+                var t = Task.Run(() => InsertSpeaker(newSpeaker));
+                t.Wait();
                 this.Speakers.Add(newSpeaker);
                 this.SpeakersForSearchBar = this.Speakers;
                 int[] aux = this.CalculateTotalPages(this.Speakers.Count);
@@ -1634,7 +1640,9 @@ namespace ConferencePlanner.WinUi
             else
             {
                 SpeakerModel newSpeaker = GetSpeaker();
-                _speakerRepository.UpdateSpeaker(newSpeaker);
+                //_speakerRepository.UpdateSpeaker(newSpeaker);
+                var t = Task.Run(() => UpdateSpeaker(newSpeaker));
+                t.Wait();
                 SpeakerEndEditLayout("Done", "Speaker modified succesfully");
                 this.SpeakerListDataGrid.CurrentCell = null;
                 this.SpeakerListDataGrid.Rows[0].Selected = false;
@@ -2490,6 +2498,41 @@ namespace ConferencePlanner.WinUi
 
                 CategoryCreatePage(CategoriesFromSearch);
             }
+        }
+
+        private async Task GetAllSpeakers()
+        {
+            HttpClient client = new HttpClient();
+            HttpResponseMessage s = await client.GetAsync("http://localhost:2794/api/Speaker/all_speakers");
+            
+            if (s.IsSuccessStatusCode)
+            {
+                string json = await s.Content.ReadAsStringAsync();
+                var t = JsonConvert.DeserializeObject<BindingList<SpeakerModel>>(json);
+                this.Speakers = t;
+                 
+            }
+        }
+
+        private async Task InsertSpeaker(SpeakerModel speakerModel)
+        {
+            var json = JsonConvert.SerializeObject(speakerModel);
+            var httpContent = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
+           
+            HttpClient client = new HttpClient();
+            
+            HttpResponseMessage s = await client.PostAsync("http://localhost:2794/api/Speaker/insert_speaker/", httpContent );
+
+        }
+        private async Task UpdateSpeaker(SpeakerModel speakerModel)
+        {
+            var json = JsonConvert.SerializeObject(speakerModel);
+            var httpContent = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
+
+            HttpClient client = new HttpClient();
+
+            HttpResponseMessage s = await client.PostAsync("http://localhost:2794/api/Speaker/update_speaker/id=" + speakerModel.SpeakerId, httpContent);
+
         }
 
         

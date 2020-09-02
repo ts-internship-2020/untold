@@ -18,38 +18,62 @@ namespace ConferencePlanner.Api.Controllers
     public class TypeController : Controller
     {
 
-        //private readonly ILogger<HomeController> _logger;
-        //private readonly ITypeRepository _typeRepository;
-        //public TypeController(ILogger<TypeController> logger, ITypeRepository typeRepository)
-        //{
-        //    _logger = (ILogger<HomeController>)logger;
-        //    _typeRepository = typeRepository;
-        //}
+       
+        private readonly ITypeRepository _typeRepository;
+        public TypeController(ITypeRepository typeRepository)
+        {
+           
+            _typeRepository = typeRepository;
+        }
 
-        //[HttpGet]
-        //[Route("{Type}")]
+        [HttpGet]
+        [Route("GetType")]
 
-        //public IActionResult GetConferenceType()
-        //{
-        //    BindingList<TypeModel> typelist = _typeRepository.GetConferenceType(Type);
-        //    return Ok(typelist);
-        //}
+        public IActionResult GetConferenceType()
+        {
 
-        //[HttpPost]
-        //[Route("{Type}")]
-        //public IActionResult UpdateType([FromRoute] TypeModel type)
-        //{
-        //    BindingList<TypeModel> typelist = _typeRepository.UpdateType(type);
-        //    return Ok();
-        //}
+            BindingList<TypeModel> types = _typeRepository.GetConferenceType();
 
-        //[HttpPost]
-        //[Route("{Type}")]
-        //public IActionResult InsertType([FromRoute] TypeModel type)
-        //{
-        //    BindingList<TypeModel> typelist = _typeRepository.InsertType(type);
-        //    return Ok();
-        //}
+            return Ok(types);
+        }
+
+        [HttpPost]
+        [Route("UpdateType")]
+        public IActionResult UpdateType(TypeModel type)
+        {
+            _typeRepository.UpdateType(type);
+
+            return Ok();
+        }
+
+        [HttpPost]
+        [Route("InsertType")]
+        public IActionResult InsertType(TypeModel type)
+        {
+            _typeRepository.InsertType(type);
+
+            return Ok();
+        }
+
+
+        [HttpPost]
+        [Route("DeleteType")]
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public IActionResult DeleteType(int id)
+        {
+            _typeRepository.DeleteType(id);
+            return Ok();
+        }
+
+        [HttpGet]
+        [Route("GetTypeById")]
+        public IActionResult GetTypeById(int id)
+        {
+
+            var types = _typeRepository.GetTypeById(id);
+
+            return Ok(types);
+        }
 
 
 
@@ -61,5 +85,5 @@ namespace ConferencePlanner.Api.Controllers
 
 
 
-    
+
 }
