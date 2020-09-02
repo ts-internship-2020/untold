@@ -11,6 +11,7 @@ namespace ConferencePlanner.Abstraction.Repository
         List<CountryModel> GetListCountry();
 
         int GetCountryIdByConferenceId(int id);
+
         BindingList<CountryModel> GetCountriesList();
 
         void InsertCountry(CountryModel Country);

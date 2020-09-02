@@ -51,7 +51,7 @@ namespace ConferencePlanner.WinUi
             _countyRepository = countyRepository;
 
             InitializeComponent();
-            YesButton.Click += DeleteCounntyYesButton_Click;
+            YesButton.Click += DeleteCountyYesButton_Click;
             NoButton.Click += NoDeleteButton_Click;
             ObjectId = CountyId;
         }
@@ -61,12 +61,18 @@ namespace ConferencePlanner.WinUi
             _countryRepository = countryRepository;
 
             InitializeComponent();
-            YesButton.Click += DeleteCounntyYesButton_Click;
+            YesButton.Click += DeleteCountryYesButton_Click;
             NoButton.Click += NoDeleteButton_Click;
             ObjectId = DictionaryCountryId;
         }
 
-        private void DeleteCounntyYesButton_Click(object sender, EventArgs e)
+        private void DeleteCountryYesButton_Click(object sender, EventArgs e)
+        {
+            _countryRepository.DeleteCountry(ObjectId);
+            Close();
+        }
+
+        private void DeleteCountyYesButton_Click(object sender, EventArgs e)
         {
             _countyRepository.DeleteCounty(ObjectId);
             Close();
