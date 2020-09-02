@@ -19,7 +19,10 @@ namespace ConferencePlanner.Repository.Ef.Repository
 
         public void Attend(string email, string barcode, int confId)
         {
-            
+            int statusId = 1;
+            var newMemberToInsert = _untoldContext.Attendee.Where(x => x.StatusId == statusId && x.AttendeeEmail == email && x.EmailCode == barcode && x.ConferenceId == confId).FirstOrDefault();
+            _untoldContext.Attendee.AddAsync(newMemberToInsert);
+           // _untoldContext.Attendee.AddAsync(x => x.StatusId =)
         }
 
         public void WithdrawnCommand(string email, int statusId)
