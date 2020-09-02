@@ -12,11 +12,13 @@ using System.Data.SqlClient;
 using System.Net.Mail;
 using System.Net;
 using ConferencePlanner.Repository.Ado.Repository;
+using System.Net.Http;
 
 namespace ConferencePlanner.WinUi
 {
     public partial class MainPage : Form
     {
+
         private readonly IConferenceRepository _conferenceRepository;
 
         private readonly ICountryRepository _countryRepository;
@@ -36,6 +38,7 @@ namespace ConferencePlanner.WinUi
         private int AttendeeCurrentPageIndex = 1;
         private int AttendeeTotalPage = 0;
 
+        
         public MainPage(IConferenceRepository conferenceRepository, ICountryRepository countryRepository,
             IAttendeeButtonsRepository attendeeButtonsRepository, ISpeakerRepository speakerRepository, ICountyRepository 
             countyRepository, ICityRepository cityRepository, ITypeRepository typeRepository)
@@ -54,6 +57,7 @@ namespace ConferencePlanner.WinUi
             InitializeComponent();
 
         }
+
 
         public MainPage()
         {
