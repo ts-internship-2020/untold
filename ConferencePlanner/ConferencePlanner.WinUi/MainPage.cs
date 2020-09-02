@@ -37,6 +37,7 @@ namespace ConferencePlanner.WinUi
         private int remainingTime = 6;
         private int AttendeeCurrentPageIndex = 1;
         private int AttendeeTotalPage = 0;
+        private static int confId = 0;
 
         
         public MainPage(IConferenceRepository conferenceRepository, ICountryRepository countryRepository,
@@ -528,13 +529,51 @@ namespace ConferencePlanner.WinUi
             
         }
 
+        static async Task AttendAsync()
+        {
+            try
+            {
+                HttpClient client = new HttpClient();
+                string mail = Program.EnteredEmailAddress.Replace("@","#40") ;
+                string qr = Program.qrCode;
+                string link = "http://localhost:2794/api/Attendee/Attend?email=" + mail + "&barcode=" + qr + "&confId=" + confId;
+                HttpResponseMessage response = await client.GetAsync(link);
+                response.EnsureSuccessStatusCode();
+                string responseBody = await response.Content.ReadAsStringAsync();
+            }
+            catch (HttpRequestException e)
+            {
+                return;
+            }
+        }
+
+        static async Task WithdrawnAsync()
+        {
+            try
+            {
+                HttpClient client = new HttpClient();
+                string mail = Program.EnteredEmailAddress.Replace("@", "#40");
+                string qr = Program.qrCode;
+                string link = "http://localhost:2794/api/Attendee/WithdrawnButton?email=" + mail + "&statusId=1";
+                //organizer%40test.com&statusId=1
+                HttpResponseMessage response = await client.GetAsync("http://localhost:2794/api/Attendee/WithdrawnButton?email=robertboghian%40yahoo.com&statusId=1");
+                response.EnsureSuccessStatusCode();
+                string responseBody = await response.Content.ReadAsStringAsync();
+            }
+            catch (HttpRequestException e)
+            {
+                return;
+            }
+        }
         private void Attend_Click(int confId)
         {
             Program.qrCode = BarcodeGenerator();
             string copyqrCode = Program.qrCode;
             //qrCode = setMyQrCode(BarcodeGenerator());
             //BarcodeGenerator();
-            _attendeeButtons.Attend(Program.EnteredEmailAddress, copyqrCode, confId);
+            var a = Task.Run(() => AttendAsync());
+            a.Wait();
+            //_attendeeButtons.Attend(Program.EnteredEmailAddress, copyqrCode, confId);
             PopupNotifier popup = new PopupNotifier();
             popup.Image = Properties.Resources.info;
             popup.TitleText = "Congratulation!";
@@ -548,12 +587,13 @@ namespace ConferencePlanner.WinUi
 
         private void Withdraw_Click(int confId)
         {
-            _attendeeButtons.WithdrawnCommand(Program.EnteredEmailAddress, confId);
+            //_attendeeButtons.WithdrawnCommand(Program.EnteredEmailAddress, confId);
             PopupNotifier popup = new PopupNotifier();
             popup.Image = Properties.Resources.info;
             popup.TitleText = "You withdraw this conference!";
             popup.ContentText = "You can choose from the available ones";
             popup.Popup();
+            WithdrawnAsync();
             CreateAttendeePage();
             coditionsForButtons();
         }
@@ -761,11 +801,11 @@ namespace ConferencePlanner.WinUi
             
             if (e.ColumnIndex == AttendeeGridvw.Columns["attend_column"].Index)
             {
-                int confid = (int)AttendeeGridvw.Rows[e.RowIndex].Cells[5].Value;
+                confId = (int)AttendeeGridvw.Rows[e.RowIndex].Cells[5].Value;
 
                 try
                 {
-                    Attend_Click(confid);
+                    Attend_Click(confId);
 
                 }
                 catch (Exception ee)
