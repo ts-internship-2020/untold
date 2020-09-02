@@ -85,7 +85,6 @@ namespace ConferencePlanner.Repository.Ef.Repository
             speaker.Nationality = speakerModel.Nationality;
             speaker.Rating = speakerModel.Rating;
             _untoldContext.SaveChanges();
-
         }
         public void DeleteSpeaker(int id)
         {
