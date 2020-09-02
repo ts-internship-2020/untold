@@ -5,8 +5,10 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Net.Http;
 using System.Security.RightsManagement;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace ConferencePlanner.WinUi
@@ -113,7 +115,9 @@ namespace ConferencePlanner.WinUi
 
         private void SpeakerYesButton_Click(object sender, EventArgs e)
         {
-            _speakerRepository.DeleteSpeaker(this.ObjectId);
+            //_speakerRepository.DeleteSpeaker(this.ObjectId);
+            var t = Task.Run(() => DeleteSpeaker(this.ObjectId));
+            t.Wait();
             this.Close();
         }
 
@@ -142,7 +146,12 @@ namespace ConferencePlanner.WinUi
         {
             this.Close();
         }
+        private async Task DeleteSpeaker(int id)
+        {
+            HttpClient client = new HttpClient();
+            HttpResponseMessage s = await client.DeleteAsync("http://localhost:2794/api/Speaker/update_speaker/id=" + id);
 
-       
+        }
+
     }
 }

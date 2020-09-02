@@ -35,7 +35,7 @@ namespace ConferencePlanner.Api.Controllers
         }
 
         [HttpGet]
-        [Route("speaker_by_id")]
+        [Route("speaker_by_id/{id}")]
         public IActionResult GetSpeakerById(int id)
         {
             SpeakerModel speaker = _speakerRepository.GetSpeakerById(id);
@@ -49,7 +49,7 @@ namespace ConferencePlanner.Api.Controllers
             return Ok(speaker);
         }
         [HttpPost]
-        [Route("update_speaker")]
+        [Route("update_speaker/id={id}")]
         public IActionResult UpdateSpeaker(SpeakerModel speaker)
         {
             _speakerRepository.UpdateSpeaker(speaker);
@@ -63,7 +63,7 @@ namespace ConferencePlanner.Api.Controllers
             return Ok();
         }
         [HttpDelete]
-        [Route("delete_speaker")]
+        [Route("delete_speaker/id={id}")]
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult DeleteSpeaker(int id)
         {
