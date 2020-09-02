@@ -5,8 +5,10 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Net.Http;
 using System.Security.RightsManagement;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace ConferencePlanner.WinUi
@@ -19,6 +21,7 @@ namespace ConferencePlanner.WinUi
         private readonly ICountyRepository _countyRepository;
         private readonly ICountryRepository _countryRepository;
         private readonly ITypeRepository _typeRepository;
+        private readonly ICategoryRepository _categoryRepository;
 
         private int ObjectId;
         public AreYouSure()
@@ -51,7 +54,7 @@ namespace ConferencePlanner.WinUi
             _countyRepository = countyRepository;
 
             InitializeComponent();
-            YesButton.Click += DeleteCounntyYesButton_Click;
+            YesButton.Click += DeleteCountyYesButton_Click;
             NoButton.Click += NoDeleteButton_Click;
             ObjectId = CountyId;
         }
@@ -61,12 +64,18 @@ namespace ConferencePlanner.WinUi
             _countryRepository = countryRepository;
 
             InitializeComponent();
-            YesButton.Click += DeleteCounntyYesButton_Click;
+            YesButton.Click += DeleteCountryYesButton_Click;
             NoButton.Click += NoDeleteButton_Click;
             ObjectId = DictionaryCountryId;
         }
 
-        private void DeleteCounntyYesButton_Click(object sender, EventArgs e)
+        private void DeleteCountryYesButton_Click(object sender, EventArgs e)
+        {
+            _countryRepository.DeleteCountry(ObjectId);
+            Close();
+        }
+
+        private void DeleteCountyYesButton_Click(object sender, EventArgs e)
         {
             _countyRepository.DeleteCounty(ObjectId);
             Close();
@@ -80,6 +89,22 @@ namespace ConferencePlanner.WinUi
             this.YesButton.Click += TypeYesButton_Click;
             this.NoButton.Click += NoDeleteButton_Click;
             this.ObjectId = confid;
+        }
+
+
+        public AreYouSure(ICategoryRepository categoryRepository, int CategoryId)
+        {
+            _categoryRepository = categoryRepository;
+            InitializeComponent();
+            YesButton.Click += CategoryYesButton_Click;
+            NoButton.Click += NoDeleteButton_Click;
+            ObjectId = CategoryId;
+        }
+
+        private void CategoryYesButton_Click(object sender, EventArgs e)
+        {
+            _categoryRepository.DeleteCategory(ObjectId);
+            Close();
         }
 
         public AreYouSure(ICityRepository cityRepository, int cityId)
@@ -96,7 +121,9 @@ namespace ConferencePlanner.WinUi
 
         private void SpeakerYesButton_Click(object sender, EventArgs e)
         {
-            _speakerRepository.DeleteSpeaker(this.ObjectId);
+            //_speakerRepository.DeleteSpeaker(this.ObjectId);
+            var t = Task.Run(() => DeleteSpeaker(this.ObjectId));
+            t.Wait();
             this.Close();
         }
 
@@ -125,7 +152,12 @@ namespace ConferencePlanner.WinUi
         {
             this.Close();
         }
+        private async Task DeleteSpeaker(int id)
+        {
+            HttpClient client = new HttpClient();
+            HttpResponseMessage s = await client.DeleteAsync("http://localhost:2794/api/Speaker/update_speaker/id=" + id);
 
-       
+        }
+
     }
 }

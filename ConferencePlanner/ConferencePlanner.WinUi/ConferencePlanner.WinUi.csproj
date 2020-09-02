@@ -13,6 +13,7 @@
 <PackageReference Include="MetroModernUI" Version="1.4.0" />
 <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="3.1.7" />
 <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="3.1.7" />
+<PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
 <PackageReference Include="QRCoder" Version="1.3.9" />
 <PackageReference Include="Tulpep.NotificationWindow" Version="1.1.37" />
 </ItemGroup>
