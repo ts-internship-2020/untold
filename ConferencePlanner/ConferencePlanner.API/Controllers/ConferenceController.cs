@@ -16,7 +16,7 @@ namespace ConferencePlanner.Api.Controllers
     public class ConferenceController : Controller
     {
         
-        private readonly IGetDemoRepository _getDemoRepository;
+       
         private readonly IConferenceRepository _conferenceRepository;
 
         public ConferenceController(IConferenceRepository conferenceRepository)
@@ -25,6 +25,44 @@ namespace ConferencePlanner.Api.Controllers
             _conferenceRepository = conferenceRepository;
         }
 
-  
+        [HttpGet]
+        [Route("get_conferences_by_date")]
+        public IActionResult FilterConferencesByDate(string email, string sDate, string eDate)
+        {
+            List<ConferenceModel> conferences = _conferenceRepository.FilterConferencesByDate(email, sDate, eDate);
+            return Ok(conferences);
+        }
+        [HttpGet]
+        [Route("get_conferences_by_organizer")]
+        public IActionResult GetConferencesByOrganizer(string email)
+        {
+            List<ConferenceModel> conferences = _conferenceRepository.GetConferencesByOrganizer(email);
+            return Ok(conferences);
+        }
+        [HttpGet]
+        [Route("get_conferences_by_id")]
+        public IActionResult GetConferenceById(int id)
+        {
+            ConferenceModel conference = _conferenceRepository.GetConferenceById(id);
+            return Ok(conference);
+        }
+
+        [HttpGet]
+        [Route("get_conferences_by_page")]
+        public IActionResult GetConferenceByPage(string email, int startIndex, int endIndex, string sDate, string eDate)
+        {
+            List<ConferenceModel> conferences = _conferenceRepository.GetConferencesByPage(email, startIndex, endIndex, sDate, eDate);
+            return Ok(conferences);
+        }
+
+        [HttpDelete]
+        [Route("delete_conference")]
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public IActionResult DeleteConferenceById(int id)
+        {
+            _conferenceRepository.DeleteConferenceById(id);
+            return Ok();
+        }
+
     }
 }

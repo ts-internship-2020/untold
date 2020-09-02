@@ -102,5 +102,18 @@ namespace ConferencePlanner.Repository.Ado.Repository
             }
             return error;
         }
+
+
+        public int GetLastCountyId()
+        {
+            int DistionaryCountyId = 0;
+            string CommandText = "Select Top 1 DictionaryCountyId from DictionaryCounty order by DictionaryCountyId desc";
+            SqlCommand sqlCommand = new SqlCommand(CommandText, _sqlConnection);
+            SqlDataReader sqlDataReader = sqlCommand.ExecuteReader();
+            sqlDataReader.Read();
+            DistionaryCountyId = sqlDataReader.GetInt32("DictionaryCountyId");
+            sqlDataReader.Close();
+            return DistionaryCountyId;
+        }
     }
 }

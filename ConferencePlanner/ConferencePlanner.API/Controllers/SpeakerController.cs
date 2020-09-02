@@ -49,22 +49,25 @@ namespace ConferencePlanner.Api.Controllers
             return Ok(speaker);
         }
         [HttpPost]
-        [Route("{DemoName}")]
+        [Route("update_speaker")]
         public IActionResult UpdateSpeaker(SpeakerModel speaker)
         {
+            _speakerRepository.UpdateSpeaker(speaker);
             return Ok();
         }
         [HttpPost]
-        [Route("{DemoName2}")]
+        [Route("insert_speaker")]
         public IActionResult InsertSpeaker(SpeakerModel speaker)
         {
+            _speakerRepository.InsertSpeaker(speaker);
             return Ok();
         }
         [HttpDelete]
-        [Route("{DemoName}")]
+        [Route("delete_speaker")]
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult DeleteSpeaker(int id)
         {
+            _speakerRepository.DeleteSpeaker(id);
             return Ok();
         }
     }
