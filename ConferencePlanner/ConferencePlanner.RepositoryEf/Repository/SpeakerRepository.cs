@@ -24,7 +24,14 @@ namespace ConferencePlanner.Repository.Ef.Repository
         public BindingList<SpeakerModel> GetAllSpeakers()
         {
             List<Speaker> speakers = _untoldContext.Speaker.ToList();
-            List<SpeakerModel> speakerModels = speakers.Select(a => new SpeakerModel() { SpeakerId = a.SpeakerId, FirstName = a.FirstName }).ToList();
+            List<SpeakerModel> speakerModels = speakers.Select(a => new SpeakerModel() { 
+                SpeakerId = a.SpeakerId, 
+                FirstName = a.FirstName,
+                LastName = a.LastName,
+                Nationality = a.Nationality,
+                ImagePath = a.ImagePath,
+                Rating = (float)a.Rating
+            }).ToList();
             BindingList<SpeakerModel> speakersBindingList = new BindingList<SpeakerModel>(speakerModels);
 
             return speakersBindingList;
@@ -32,19 +39,28 @@ namespace ConferencePlanner.Repository.Ef.Repository
         public SpeakerModel GetSpeakerById(int id)
         {
             Speaker speaker = _untoldContext.Speaker.Where(s => s.SpeakerId == id).FirstOrDefault();
-            SpeakerModel speakerModel = new SpeakerModel();
-            speakerModel.SpeakerId = speaker.SpeakerId;
-            speakerModel.FirstName = speaker.FirstName;
-            speakerModel.LastName = speaker.LastName;
-            speakerModel.Nationality = speaker.Nationality;
+            SpeakerModel speakerModel = new SpeakerModel() {
+                SpeakerId = speaker.SpeakerId,
+                FirstName = speaker.FirstName,
+                LastName = speaker.LastName,
+                Nationality = speaker.Nationality,
+                Rating = (float)speaker.Rating,
+                ImagePath = speaker.ImagePath};
             return speakerModel;
         }
         public SpeakerModel GetSpeakerByName(string[] names)
         {
-            Speaker speaker = _untoldContext.Speaker.Where(s => s.FirstName == names[0]).Where(s => s.FirstName == names[1]).FirstOrDefault();
-             
-            SpeakerModel speakerModel = new SpeakerModel();
+            Speaker speaker = _untoldContext.Speaker.Where(s => s.FirstName.ToLower() == names[0].ToLower() && s.LastName.ToLower() == names[1].ToLower()).FirstOrDefault();
 
+            SpeakerModel speakerModel = new SpeakerModel()
+            {
+                SpeakerId = speaker.SpeakerId,
+                FirstName = speaker.FirstName,
+                LastName = speaker.LastName,
+                Nationality = speaker.Nationality,
+                Rating = (float)speaker.Rating,
+                ImagePath = speaker.ImagePath
+            };
             return speakerModel;
         }
         public void InsertSpeaker(SpeakerModel speakerModel)
@@ -54,30 +70,29 @@ namespace ConferencePlanner.Repository.Ef.Repository
                 FirstName = speakerModel.FirstName,
                 LastName = speakerModel.LastName,
                 Nationality = speakerModel.Nationality,
+                Rating = speakerModel.Rating,
+                ImagePath = speakerModel.ImagePath
             };
-            //context.Students.Add(std);
+           
             _untoldContext.Speaker.Add(speaker);
-
-
-            //return speaker;
+            _untoldContext.SaveChanges();
         }
         public void UpdateSpeaker(SpeakerModel speakerModel)
         {
             var speaker = _untoldContext.Speaker.Find(speakerModel.SpeakerId);
             speaker.FirstName = speakerModel.FirstName;
+            speaker.LastName = speakerModel.LastName;
+            speaker.Nationality = speakerModel.Nationality;
+            speaker.Rating = speakerModel.Rating;
             _untoldContext.SaveChanges();
-            //SpeakerModel speaker2 = _untoldContext.Speaker
-            //    .Select(a => new Speaker() { SpeakerId = a.SpeakerId, Nationality = a.Nationality }).Where(a.FirstName = names[0], a.LastName = names[1]);
 
-            //return speaker;
         }
         public void DeleteSpeaker(int id)
         {
-            var speaker = _untoldContext.Speaker.Find(id);
+            var speaker = _untoldContext.Speaker.Where(s => s.SpeakerId == id).FirstOrDefault();
             _untoldContext.Speaker.Remove(speaker);
             _untoldContext.SaveChanges();
         }
     }
-    //alt test 
-    //petrecere!!!
+
 }
