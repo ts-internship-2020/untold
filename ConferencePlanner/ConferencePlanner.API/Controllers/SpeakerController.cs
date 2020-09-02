@@ -35,7 +35,7 @@ namespace ConferencePlanner.Api.Controllers
         }
 
         [HttpGet]
-        [Route("speaker_by_id/{id}")]
+        [Route("speaker_by_id/id={id}")]
         public IActionResult GetSpeakerById(int id)
         {
             SpeakerModel speaker = _speakerRepository.GetSpeakerById(id);

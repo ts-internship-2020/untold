@@ -2513,7 +2513,20 @@ namespace ConferencePlanner.WinUi
                  
             }
         }
+        private async Task<SpeakerModel> GetSpeakerById(int id)
+        {
+            HttpClient client = new HttpClient();
+            HttpResponseMessage s = await client.GetAsync("http://localhost:2794/api/Speaker/speaker_by_id/id=" + id);
 
+            if (s.IsSuccessStatusCode)
+            {
+                string json = await s.Content.ReadAsStringAsync();
+                var t = JsonConvert.DeserializeObject<SpeakerModel>(json);
+                return t;
+
+            }
+            return new SpeakerModel();
+        }
         private async Task InsertSpeaker(SpeakerModel speakerModel)
         {
             var json = JsonConvert.SerializeObject(speakerModel);
