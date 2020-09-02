@@ -21,7 +21,7 @@ namespace ConferencePlanner.Api.Controllers
         }
 
         [HttpPost]
-        [Route("{AttendButton}")]
+        //[Route("{AttendButton}")]
         public IActionResult Attend(string email, string barcode, int confId)
         {
             return Ok();
