@@ -21,14 +21,14 @@ namespace ConferencePlanner.Api.Controllers
         }
 
         [HttpPost]
-        [Route("{AttendButton}")]
+       [Route("{AttendButton}")]
         public IActionResult Attend(string email, string barcode, int confId)
         {
             return Ok();
         }
 
         [HttpPost]
-        //[Route("{WithdrawsnButton}")]
+        [Route("{WithdrawsnButton}")]
         public IActionResult WithdrawnCommand(String email, int confId)
         {
             _getAttendeeButtonsRepository.WithdrawnCommand(email, confId);
@@ -36,7 +36,7 @@ namespace ConferencePlanner.Api.Controllers
         }
 
         [HttpPost]
-        [Route("{JoinButton}")]
+       [Route("{JoinButton}")]
         public IActionResult JoinCommand(String email, int confId)
         {
             return Ok();

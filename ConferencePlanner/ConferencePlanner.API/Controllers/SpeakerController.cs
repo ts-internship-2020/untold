@@ -55,7 +55,7 @@ namespace ConferencePlanner.Api.Controllers
             return Ok();
         }
         [HttpPost]
-        [Route("{DemoName}")]
+        [Route("{DemoName2}")]
         public IActionResult InsertSpeaker(SpeakerModel speaker)
         {
             return Ok();
