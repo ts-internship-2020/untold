@@ -56,7 +56,7 @@ namespace ConferencePlanner.Api.Controllers
             return Ok();
         }
         [HttpPost]
-        [Route("insert_speaker")]
+        [Route("{DemoName}")]
         public IActionResult InsertSpeaker(SpeakerModel speaker)
         {
             _speakerRepository.InsertSpeaker(speaker);
