@@ -42,11 +42,11 @@ namespace ConferencePlanner.Repository.Ef.Repository
             var types = new DictionaryConferenceType()
             {
                 DictionaryConferenceTypeId = typeModel.TypeId,
-                ConferenceTypeName = typeModel.TypeName,
+                ConferenceTypeName = typeModel.TypeName
             };
             _untoldContext.DictionaryConferenceType.Add(types);
-           
-           
+            _untoldContext.SaveChanges();
+
         }
 
         public void DeleteType(int id)
