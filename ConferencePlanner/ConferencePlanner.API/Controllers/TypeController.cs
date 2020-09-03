@@ -27,7 +27,7 @@ namespace ConferencePlanner.Api.Controllers
         }
 
         [HttpGet]
-        [Route("GetType")]
+        [Route("GetTypes/")]
 
         public IActionResult GetConferenceType()
         {
@@ -56,7 +56,7 @@ namespace ConferencePlanner.Api.Controllers
         }
 
 
-        [HttpPost]
+        [HttpDelete]
         [Route("DeleteType/id={id}")]
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult DeleteType(int id)
@@ -74,10 +74,6 @@ namespace ConferencePlanner.Api.Controllers
 
             return Ok(typeModel);
         }
-
-
-
-
 
 
     }

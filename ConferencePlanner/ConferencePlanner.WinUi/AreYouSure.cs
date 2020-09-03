@@ -148,7 +148,9 @@ namespace ConferencePlanner.WinUi
 
         private void TypeYesButton_Click(Object sender, EventArgs e)
         {
-            _typeRepository.DeleteType(this.ObjectId);
+            //_typeRepository.DeleteType(this.ObjectId);
+            var t = Task.Run(() => DeleteType(this.ObjectId));
+            t.Wait();
             this.Close();
         }
         private void NoDeleteButton_Click(object sender, EventArgs e)
@@ -176,6 +178,23 @@ namespace ConferencePlanner.WinUi
             HttpClient client = new HttpClient();
 
             HttpResponseMessage s = await client.DeleteAsync("http://localhost:2794/api/Conference/delete_conference/id=" + id);
+
+            if (s.IsSuccessStatusCode)
+            {
+                this.popUpMethod("Done", "You deleted the conference succesfully");
+            }
+            else
+            {
+                this.popUpMethod("Error", "Something went wrong");
+            }
+
+        }
+
+        private async Task DeleteType(int id)
+        {
+            HttpClient client = new HttpClient();
+
+            HttpResponseMessage s = await client.DeleteAsync("http://localhost:2794/api/Type/DeleteType/id=" + id);
 
             if (s.IsSuccessStatusCode)
             {
