@@ -107,6 +107,7 @@ namespace ConferencePlanner.WinUi
                 OrganizerDataGrid.Visible = true;
                 OrganizerDataGrid.DataSource = conferences.ToList();
                 OrganizerDataGrid.AutoGenerateColumns = false;
+                this.OrganizersPaginationSelector.Visible = true;
 
             }
         }
@@ -917,14 +918,14 @@ namespace ConferencePlanner.WinUi
             }
             else
             {
-                popUpMethod("Error", "Something went wrong");
+                //popUpMethod("Error", "Something went wrong");
                 return new List<ConferenceModel>();
             }
         }
         private async Task<ConferenceModel> GetConferenceById(int id)
         {
             HttpClient client = new HttpClient();
-            HttpResponseMessage s = await client.GetAsync("http://localhost:2794/api/Conference/conferences_by_organizer/id=" + id);
+            HttpResponseMessage s = await client.GetAsync("http://localhost:2794/api/Conference/conferences_by_id/id=" + id);
 
             if (s.IsSuccessStatusCode)
             {
@@ -940,7 +941,7 @@ namespace ConferencePlanner.WinUi
         private async Task<List<ConferenceModel>> FilterConferencesByDate(string email, string sDate, string eDate)
         {
             HttpClient client = new HttpClient();
-            HttpResponseMessage s = await client.GetAsync("http://localhost:2794/api/Conference/conferences_by_organizer/email=" + email+ "&sDate="+sDate +"&eDate="+eDate);
+            HttpResponseMessage s = await client.GetAsync("http://localhost:2794/api/Conference/conferences_by_date/email=" + email+ "&sDate="+sDate +"&eDate="+eDate);
 
             if (s.IsSuccessStatusCode)
             {
@@ -956,7 +957,7 @@ namespace ConferencePlanner.WinUi
         private async Task<List<ConferenceModel>> GetConferencesByPage(string email, int sIndex, int eIndex, string sDate, string eDate)
         {
             HttpClient client = new HttpClient();
-            HttpResponseMessage s = await client.GetAsync("http://localhost:2794/api/Conference/conferences_by_organizer/email=" + email +"&sIndex="+ sIndex + "&eIndex=" + eIndex+"&sDate=" + sDate + "&eDate=" + eDate);
+            HttpResponseMessage s = await client.GetAsync("http://localhost:2794/api/Conference/conferences_by_page/email=" + email +"&sIndex="+ sIndex + "&eIndex=" + eIndex+"&sDate=" + sDate + "&eDate=" + eDate);
 
             if (s.IsSuccessStatusCode)
             {
@@ -966,6 +967,7 @@ namespace ConferencePlanner.WinUi
             }
             else
             {
+                popUpMethod("Error", "Something went wrong");
                 return new List<ConferenceModel>();
             }
         }
