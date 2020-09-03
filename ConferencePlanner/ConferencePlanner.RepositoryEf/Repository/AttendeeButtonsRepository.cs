@@ -33,14 +33,16 @@ namespace ConferencePlanner.Repository.Ef.Repository
             _untoldContext.SaveChanges();
         }
 
+        public void WithdrawnCommand(ButtonModel buttonModel)
+        {
+            var statusToUpdate = _untoldContext.Attendee.Where(x => x.StatusId == buttonModel.statusId && x.AttendeeEmail == buttonModel.email).FirstOrDefault();
+            statusToUpdate.StatusId = 3;
+            _untoldContext.SaveChanges();
+        }
+
         public void JoinCommand(ButtonModel buttonModel)
         {
             throw new NotImplementedException();
-        }
-
-        public void WithdrawnCommand(ButtonModel buttonModel)
-        {
-            
         }
 
         //public void WithdrawnCommand(string email, int statusId)
