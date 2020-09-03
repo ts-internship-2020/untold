@@ -1775,7 +1775,9 @@ namespace ConferencePlanner.WinUi
             if ((CountriesLastPageLastRow > 0 && CountriesCurrentPage == CountriesTotalPages && UpdateCountriesRow == CountriesLastPageLastRow) || UpdateCountriesRow == PageSize)
             {
                 CountryModel NewCountry = GetCountry();
-                _countryRepository.InsertCountry(NewCountry);
+               // _countryRepository.InsertCountry(NewCountry);
+                var t = Task.Run(() => InsertCountry(NewCountry));
+                t.Wait();
                 Countries.Add(NewCountry);
                 int[] Temp = CalculateTotalPages(Countries.Count);
                 CountriesTotalPages = Temp[0];
@@ -1785,13 +1787,15 @@ namespace ConferencePlanner.WinUi
             else
             {
                 CountryModel Country = GetCountry();
-                _countryRepository.UpdateCountry(Country);
+                //_countryRepository.UpdateCountry(Country);
+                var t = Task.Run(() => UpdateCountry(Country));
                 CountriesEndEditLayout("Done", "Country modified succesfully");
                 CountryListDataGridView.CurrentCell = null;
                 CountryListDataGridView.Rows[0].Selected = false;
                 UpdateCountriesArray(Country);
             }
         }
+
 
         private void UpdateCountriesArray(CountryModel Country)
         {
@@ -2428,8 +2432,7 @@ namespace ConferencePlanner.WinUi
             this.SearchBar.Text = "";
         }
 
-       
-
+        
         private void SpeakerPaginationSelector_DropDownClosed(object sender, EventArgs e)
         {
             int idx = this.SpeakerPaginationSelector.SelectedIndex;
@@ -2482,8 +2485,6 @@ namespace ConferencePlanner.WinUi
         }
 
 
-
-
         private void CategoryPaginationSelector_DropDownClosed(object sender, EventArgs e)
         {
             int index = CategoryPaginationSelector.SelectedIndex;
@@ -2530,6 +2531,8 @@ namespace ConferencePlanner.WinUi
             }
             return new SpeakerModel();
         }
+
+
         private async Task InsertSpeaker(SpeakerModel speakerModel)
         {
             var json = JsonConvert.SerializeObject(speakerModel);
@@ -2548,6 +2551,8 @@ namespace ConferencePlanner.WinUi
             }
 
         }
+
+        
         private async Task UpdateSpeaker(SpeakerModel speakerModel)
         {
             var json = JsonConvert.SerializeObject(speakerModel);
@@ -2567,7 +2572,51 @@ namespace ConferencePlanner.WinUi
             }
 
         }
-        
+
+
+
+        private async Task InsertCountry(CountryModel countryModel)
+        {
+            var json = JsonConvert.SerializeObject(countryModel);
+            var httpContent = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
+
+            HttpClient client = new HttpClient();
+
+            HttpResponseMessage s = await client.PostAsync("http://localhost:2794/api/Country/insert_country/", httpContent);
+            if (s.IsSuccessStatusCode)
+            {
+                this.popUpMethod("Done", "You added the country succesfully");
+            }
+            else
+            {
+                this.popUpMethod("Error", "Something went wrong");
+            }
+        }
+
+
+
+        private async Task UpdateCountry(CountryModel countryModel)
+        {
+            var json = JsonConvert.SerializeObject(countryModel);
+            var httpContent = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
+
+            HttpClient client = new HttpClient();
+
+            HttpResponseMessage s = await client.PostAsync("http://localhost:2794/api/Country/update_country/id=" + countryModel.DictionaryCountryId, httpContent);
+
+            if (s.IsSuccessStatusCode)
+            {
+                this.popUpMethod("Done", "You updated the country succesfully");
+            }
+            else
+            {
+                this.popUpMethod("Error", "Something went wrong");
+            }
+
+        }
+
+
+
 
     }
 }
