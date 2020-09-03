@@ -147,8 +147,11 @@ namespace ConferencePlanner.WinUi
                 t.Wait();
                 var allConferences = t.Result;
 
-                var conferences = _conferenceRepository.GetConferencesByPage(Program.EnteredEmailAddress, PreviousPageOffSet + 1, PreviousPageOffSet + this.PageSize + 1, dates[0], dates[1]);
-
+                //var conferences = _conferenceRepository.GetConferencesByPage(Program.EnteredEmailAddress, PreviousPageOffSet + 1, PreviousPageOffSet + this.PageSize + 1, dates[0], dates[1]);
+                var t2 = Task.Run(() => GetConferencesByPage(Program.EnteredEmailAddress, PreviousPageOffSet + 1, PreviousPageOffSet + this.PageSize + 1, dates[0], dates[1]));
+                t2.Wait();
+                var conferences = t2.Result;
+                
                 CalculateTotalPages(allConferences, this.TabControl.SelectedTab);
                 this.CheckPaginationButtonsVisibility();
 
@@ -237,9 +240,13 @@ namespace ConferencePlanner.WinUi
             this.CheckPaginationButtonsVisibility();
 
             int PreviousPageOffSet = (this.OrganizerCurrentPageIndex - 1) * this.PageSize;
-            CheckNumberOfRows(_conferenceRepository.GetConferencesByPage(
-                Program.EnteredEmailAddress, PreviousPageOffSet + 1, PreviousPageOffSet + this.PageSize + 1, dates[0], dates[1]));
-        }
+            
+            var t = Task.Run(() => GetConferencesByPage(Program.EnteredEmailAddress, PreviousPageOffSet + 1, PreviousPageOffSet + this.PageSize + 1, dates[0], dates[1]));
+            t.Wait();
+            var conferences = t.Result;
+            CheckNumberOfRows(conferences);
+
+            }
 
         private void CreateAttendeePage()
         {
@@ -473,8 +480,10 @@ namespace ConferencePlanner.WinUi
                 t.Wait();
                 var allConferences = t.Result;
                 this.CalculateTotalPages(allConferences, TabControl.SelectedTab);
-                var conferences = _conferenceRepository.GetConferencesByPage(Program.EnteredEmailAddress, 1, this.PageSize + 1, dates[0], dates[1]);
-
+                //var conferences = _conferenceRepository.GetConferencesByPage(Program.EnteredEmailAddress,1 ,this.PageSize+1, dates[0], dates[1]);
+                var t2 = Task.Run(() => GetConferencesByPage(Program.EnteredEmailAddress, 1, this.PageSize + 1, dates[0], dates[1]));
+                t2.Wait();
+                var conferences = t2.Result;
                 this.CheckPaginationButtonsVisibility();
                 CheckNumberOfRows(conferences);
 
@@ -622,10 +631,15 @@ namespace ConferencePlanner.WinUi
                 check = 1;
                 this.OrganizerCurrentPageIndex = 1;
 
-                var allConferences = _conferenceRepository.FilterConferencesByDate(Program.EnteredEmailAddress, dates[0], dates[1]);
+                //var allConferences = _conferenceRepository.FilterConferencesByDate(Program.EnteredEmailAddress, dates[0], dates[1]);
+                var t = Task.Run(() => FilterConferencesByDate(Program.EnteredEmailAddress, dates[0], dates[1]));
+                t.Wait();
+                var allConferences = t.Result;
                 this.CalculateTotalPages(allConferences, TabControl.SelectedTab);
-                var conferences = _conferenceRepository.GetConferencesByPage(Program.EnteredEmailAddress, 1, this.PageSize + 1, dates[0], dates[1]);
-
+                //var conferences = _conferenceRepository.GetConferencesByPage(Program.EnteredEmailAddress, 1, this.PageSize+1, dates[0], dates[1]);
+                var t2 = Task.Run(() => GetConferencesByPage(Program.EnteredEmailAddress, 1, this.PageSize + 1, dates[0], dates[1]));
+                t2.Wait();
+                var conferences = t2.Result;
                 this.CheckPaginationButtonsVisibility();
                 CheckNumberOfRows(conferences);
             }
@@ -834,8 +848,10 @@ namespace ConferencePlanner.WinUi
             if (e.ColumnIndex == AttendeeGridvw.Columns["Speaker"].Index)
             {
                 string[] names = AttendeeGridvw.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString().Split(" ");
-                SpeakerModel speaker = this._speakerRepository.GetSpeakerByName(names);
-
+                //SpeakerModel speaker = this._speakerRepository.GetSpeakerByName(names);
+                var t = Task.Run(() => GetSpeakerByName(names));
+                t.Wait();
+                SpeakerModel speaker = t.Result;
                 var varSpeakerDetails = new SpeakerDetails(speaker);
                 varSpeakerDetails.ShowDialog();
 
@@ -923,7 +939,7 @@ namespace ConferencePlanner.WinUi
         private async Task<List<ConferenceModel>> GetConferenceByOrganizer(string email)
         {
             HttpClient client = new HttpClient();
-            HttpResponseMessage s = await client.GetAsync("http://localhost:2794/api/Conference/get_conferences_by_organizer/email=" + email);
+            HttpResponseMessage s = await client.GetAsync("http://localhost:2794/api/Conference/conferences_by_organizer/email=" + email);
 
             if (s.IsSuccessStatusCode)
             {
@@ -933,13 +949,14 @@ namespace ConferencePlanner.WinUi
             }
             else
             {
+                popUpMethod("Error", "Something went wrong");
                 return new List<ConferenceModel>();
             }
         }
         private async Task<ConferenceModel> GetConferenceById(int id)
         {
             HttpClient client = new HttpClient();
-            HttpResponseMessage s = await client.GetAsync("http://localhost:2794/api/Conference/get_conferences_by_organizer/id=" + id);
+            HttpResponseMessage s = await client.GetAsync("http://localhost:2794/api/Conference/conferences_by_organizer/id=" + id);
 
             if (s.IsSuccessStatusCode)
             {
@@ -955,7 +972,7 @@ namespace ConferencePlanner.WinUi
         private async Task<List<ConferenceModel>> FilterConferencesByDate(string email, string sDate, string eDate)
         {
             HttpClient client = new HttpClient();
-            HttpResponseMessage s = await client.GetAsync("http://localhost:2794/api/Conference/get_conferences_by_organizer/email=" + email + "&sDate=" + sDate + "&eDate=" + eDate);
+            HttpResponseMessage s = await client.GetAsync("http://localhost:2794/api/Conference/conferences_by_organizer/email=" + email+ "&sDate="+sDate +"&eDate="+eDate);
 
             if (s.IsSuccessStatusCode)
             {
@@ -967,6 +984,40 @@ namespace ConferencePlanner.WinUi
             {
                 return new List<ConferenceModel>();
             }
+        }
+        private async Task<List<ConferenceModel>> GetConferencesByPage(string email, int sIndex, int eIndex, string sDate, string eDate)
+        {
+            HttpClient client = new HttpClient();
+            HttpResponseMessage s = await client.GetAsync("http://localhost:2794/api/Conference/conferences_by_organizer/email=" + email +"&sIndex="+ sIndex + "&eIndex=" + eIndex+"&sDate=" + sDate + "&eDate=" + eDate);
+
+            if (s.IsSuccessStatusCode)
+            {
+                string json = await s.Content.ReadAsStringAsync();
+                var t = JsonConvert.DeserializeObject<List<ConferenceModel>>(json);
+                return t;
+            }
+            else
+            {
+                return new List<ConferenceModel>();
+            }
+        }
+        private async Task<SpeakerModel> GetSpeakerByName(string[] names)
+        {
+            HttpClient client = new HttpClient();
+            HttpResponseMessage s = await client.GetAsync("http://localhost:2794/api/Speaker/speaker_by_name/fName=" + names[0] + "&lName=" + names[1]);
+
+            if (s.IsSuccessStatusCode)
+            {
+                string json = await s.Content.ReadAsStringAsync();
+                var t = JsonConvert.DeserializeObject<SpeakerModel>(json);
+                return t;
+
+            }
+            else
+            {
+                return new SpeakerModel();
+            }
+            
         }
 
 

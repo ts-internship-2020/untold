@@ -8,6 +8,9 @@ using System.Windows.Forms;
 using ConferencePlanner.Abstraction.Repository;
 using ConferencePlanner.Abstraction.Model;
 using ConferencePlanner.WinUi.Properties;
+using System.Net.Http;
+using Newtonsoft.Json;
+using System.Threading.Tasks;
 
 namespace ConferencePlanner.WinUi
 {
@@ -46,5 +49,6 @@ namespace ConferencePlanner.WinUi
             this.speakerPhoto.Image = img;
             this.speakerPhoto.SizeMode = PictureBoxSizeMode.StretchImage;
         }
+        
     }
 }

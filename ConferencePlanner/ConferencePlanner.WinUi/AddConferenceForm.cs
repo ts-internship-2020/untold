@@ -2510,10 +2510,26 @@ namespace ConferencePlanner.WinUi
                 string json = await s.Content.ReadAsStringAsync();
                 var t = JsonConvert.DeserializeObject<BindingList<SpeakerModel>>(json);
                 this.Speakers = t;
-                 
+            }
+            else
+            {
+                this.Speakers = new BindingList<SpeakerModel>();
             }
         }
+        private async Task<SpeakerModel> GetSpeakerById(int id)
+        {
+            HttpClient client = new HttpClient();
+            HttpResponseMessage s = await client.GetAsync("http://localhost:2794/api/Speaker/speaker_by_id/id=" + id);
 
+            if (s.IsSuccessStatusCode)
+            {
+                string json = await s.Content.ReadAsStringAsync();
+                var t = JsonConvert.DeserializeObject<SpeakerModel>(json);
+                return t;
+
+            }
+            return new SpeakerModel();
+        }
         private async Task InsertSpeaker(SpeakerModel speakerModel)
         {
             var json = JsonConvert.SerializeObject(speakerModel);
@@ -2522,6 +2538,14 @@ namespace ConferencePlanner.WinUi
             HttpClient client = new HttpClient();
             
             HttpResponseMessage s = await client.PostAsync("http://localhost:2794/api/Speaker/insert_speaker/", httpContent );
+            if (s.IsSuccessStatusCode)
+            {
+                this.popUpMethod("Done", "You added the speaker succesfully");
+            }
+            else
+            {
+                this.popUpMethod("Error", "Something went wrong");
+            }
 
         }
         private async Task UpdateSpeaker(SpeakerModel speakerModel)
@@ -2533,8 +2557,17 @@ namespace ConferencePlanner.WinUi
 
             HttpResponseMessage s = await client.PostAsync("http://localhost:2794/api/Speaker/update_speaker/id=" + speakerModel.SpeakerId, httpContent);
 
-        }
+            if (s.IsSuccessStatusCode)
+            {
+                this.popUpMethod("Done", "You updated the speaker succesfully");
+            }
+            else
+            {
+                this.popUpMethod("Error", "Something went wrong");
+            }
 
+        }
         
+
     }
 }
