@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ConferencePlanner.Abstraction.Model;
 using ConferencePlanner.Abstraction.Repository;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -12,33 +13,35 @@ namespace ConferencePlanner.Api.Controllers
     [ApiController]
     public class AttendeeController : Controller
     {
-       // private readonly ILogger<HomeController> _logger;
-        private readonly IAttendeeButtonsRepository _getAttendeeButtonsRepository;
+        // private readonly ILogger<HomeController> _logger;
+        private readonly IButtons _buttons;
 
-        public AttendeeController(IAttendeeButtonsRepository getAttendeeButtonsRepository)
+        public AttendeeController(IButtons getAttendeeButtonsRepository)
         {
-            _getAttendeeButtonsRepository = getAttendeeButtonsRepository;
+            _buttons = getAttendeeButtonsRepository;
         }
 
         [HttpPost]
-       [Route("{AttendButton}")]
-        public IActionResult Attend(string email, string barcode, int confId)
+        [Route("Attend")]
+        public IActionResult Attend(ButtonModel buttonModel)
         {
+            _buttons.Attend(buttonModel);
             return Ok();
         }
 
         [HttpPost]
-        [Route("{WithdrawsnButton}")]
-        public IActionResult WithdrawnCommand(String email, int confId)
+        [Route("WithdrawnButton")]
+        public IActionResult WithdrawnCommand(ButtonModel buttonModel)
         {
-            _getAttendeeButtonsRepository.WithdrawnCommand(email, confId);
+            _buttons.WithdrawnCommand(buttonModel);
             return Ok();
         }
 
         [HttpPost]
-       [Route("{JoinButton}")]
-        public IActionResult JoinCommand(String email, int confId)
+        [Route("JoinButton")]
+        public IActionResult JoinCommand(ButtonModel buttonModel)
         {
+            _buttons.JoinCommand(buttonModel);
             return Ok();
         }
     }
