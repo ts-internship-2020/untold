@@ -276,14 +276,7 @@ namespace ConferencePlanner.WinUi
             }
         }
 
-        private void popUpMethod(String titleText, String contentText)
-        {
-            PopupNotifier popup = new PopupNotifier();
-            popup.Image = Properties.Resources.info;
-            popup.TitleText = titleText;
-            popup.ContentText = contentText;
-            popup.Popup();
-        }
+        
 
     }
 }
