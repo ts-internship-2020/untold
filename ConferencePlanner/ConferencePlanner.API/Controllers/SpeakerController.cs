@@ -45,7 +45,7 @@ namespace ConferencePlanner.Api.Controllers
         [Route("speaker_by_name/")]
         public IActionResult GetSpeakerByName(string[] names)
         {
-            SpeakerModel speaker = _speakerRepository.GetSpeakerByName(names);
+            SpeakerModel speaker = _speakerRepository.GetSpeakerByName(names[0], names[1]);
             return Ok(speaker);
         }
         [HttpPost]

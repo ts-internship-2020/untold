@@ -2437,6 +2437,23 @@ namespace ConferencePlanner.WinUi
                 CountiesFromSearchBar = counties;
                 CountiesCreatePage(CountiesFromSearchBar);
             }
+            else if (this.TabControlLocation.SelectedTab.Name == "City")
+            {
+                CityCurrentPage = 1;
+                BindingList<CityModel> cities = new BindingList<CityModel>();
+                foreach(CityModel cityModel in Cities)
+                {
+                    if (cityModel.CityName.ToLower().Contains(SearchBar.Text.ToLower()))
+                    {
+                        cities.Add(cityModel);
+                    }
+                }
+                int[] tmp = CalculateTotalPages(cities.Count);
+                CityTotalPages = tmp[0];
+                CityLastPageLastRow = tmp[1];
+                CitiesFromSearchBar = cities;
+                CitiesCreatePage(CitiesFromSearchBar);
+            }
             else if(this.TabControlLocation.SelectedTab.Name == "SpeakerTab")
             {
                 //this.ActiveControl = null;

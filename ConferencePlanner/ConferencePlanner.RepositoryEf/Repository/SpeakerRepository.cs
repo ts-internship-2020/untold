@@ -47,9 +47,9 @@ namespace ConferencePlanner.Repository.Ef.Repository
                 ImagePath = speaker.ImagePath};
             return speakerModel;
         }
-        public SpeakerModel GetSpeakerByName(string[] names)
+        public SpeakerModel GetSpeakerByName(string fname, string lname)
         {
-            Speaker speaker = _untoldContext.Speaker.Where(s => s.FirstName.ToLower() == names[0].ToLower() && s.LastName.ToLower() == names[1].ToLower()).FirstOrDefault();
+            Speaker speaker = _untoldContext.Speaker.Where(s => s.FirstName.ToLower() == fname.ToLower() && s.LastName.ToLower() == lname.ToLower()).FirstOrDefault();
 
             SpeakerModel speakerModel = new SpeakerModel()
             {
