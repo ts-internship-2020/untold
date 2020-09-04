@@ -1571,7 +1571,7 @@ namespace ConferencePlanner.WinUi
         private CountryModel GetCountry()
         {
             CountryModel Country = new CountryModel();
-            Country.DictionaryCountryId = Counties.Count + 1;
+            Country.DictionaryCountryId = Countries.Count + 1;
             Country.CountryName = CountryListDataGridView.Rows[UpdateCountriesRow].Cells["CountryName"].Value.ToString();
            // Country.CountryId = SelectedCountryId;
 
