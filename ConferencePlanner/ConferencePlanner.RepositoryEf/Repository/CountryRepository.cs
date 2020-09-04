@@ -1,6 +1,7 @@
 ﻿using ConferencePlanner.Abstraction.Model;
 using ConferencePlanner.Abstraction.Repository;
 using ConferencePlanner.Repository.Ef.Entities;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -37,32 +38,20 @@ namespace ConferencePlanner.Repository.Ef.Repository
 
         public int GetCountryIdByConferenceId(int id)
         {
-            throw new NotImplementedException();
+
+            Conference conference = _untoldContext.Conference.Where(c => c.ConferenceId == id)
+                .Include(x => x.Location)
+                 .ThenInclude(x => x.City)
+                 .ThenInclude(x => x.County)
+                 .ThenInclude(x => x.Country)
+                 .FirstOrDefault();
+            
+            return conference.Location.City.County.Country.DictionaryCountryId;
+
         }
 
-        /*
-        
-           string commandText = "select DictionaryCountryId from Conference C " +
-                "join vwLocationIds vwL on C.LocationId = vwL.LocationId " +
-                "where ConferenceId = @ConferenceId";
-            SqlCommand sqlCommand = new SqlCommand(commandText, _sqlConnection);
-            
-            sqlCommand.Parameters.Add("@ConferenceId", SqlDbType.Int);
-            sqlCommand.Parameters["@ConferenceId"].Value = id;
 
-            SqlDataReader sqlDataReader = sqlCommand.ExecuteReader();
-            int ID = 0;
-            if (sqlDataReader.Read())
-            {
-                ID =(int)sqlDataReader.GetInt32("DictionaryCountryId");
-            }
-           
-            sqlDataReader.Close();
-
-            return ID;
-
-
-         */
+      
 
         public List<CountryModel> GetListCountry()
         {

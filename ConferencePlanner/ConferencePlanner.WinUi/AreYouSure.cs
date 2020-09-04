@@ -65,16 +65,19 @@ namespace ConferencePlanner.WinUi
             _countryRepository = countryRepository;
 
             InitializeComponent();
-            YesButton.Click += DeleteCountryYesButton_Click;
+            YesButton.Click += CountryYesButton_Click;
             NoButton.Click += NoDeleteButton_Click;
             ObjectId = DictionaryCountryId;
         }
 
-        private void DeleteCountryYesButton_Click(object sender, EventArgs e)
+        private void CountryYesButton_Click(object sender, EventArgs e)
         {
-            _countryRepository.DeleteCountry(ObjectId);
+           // _countryRepository.DeleteCountry(ObjectId);
+            var t = Task.Run(() => DeleteCountry(ObjectId));
+            t.Wait();
             Close();
         }
+
 
         private void DeleteCountyYesButton_Click(object sender, EventArgs e)
         {
@@ -120,6 +123,7 @@ namespace ConferencePlanner.WinUi
         }
 
 
+
         private void SpeakerYesButton_Click(object sender, EventArgs e)
         {
             //_speakerRepository.DeleteSpeaker(this.ObjectId);
@@ -127,6 +131,8 @@ namespace ConferencePlanner.WinUi
             t.Wait();
             this.Close();
         }
+
+        
 
         private void ConferenceYesButton_Click(object sender, EventArgs e)
         {
@@ -148,7 +154,9 @@ namespace ConferencePlanner.WinUi
 
         private void TypeYesButton_Click(Object sender, EventArgs e)
         {
-            _typeRepository.DeleteType(this.ObjectId);
+            //_typeRepository.DeleteType(this.ObjectId);
+            var t = Task.Run(() => DeleteType(this.ObjectId));
+            t.Wait();
             this.Close();
         }
         private void NoDeleteButton_Click(object sender, EventArgs e)
@@ -176,6 +184,40 @@ namespace ConferencePlanner.WinUi
             HttpClient client = new HttpClient();
 
             HttpResponseMessage s = await client.DeleteAsync("http://localhost:2794/api/Conference/delete_conference/id=" + id);
+
+            if (s.IsSuccessStatusCode)
+            {
+                this.popUpMethod("Done", "You deleted the conference succesfully");
+            }
+            else
+            {
+                this.popUpMethod("Error", "Something went wrong");
+            }
+
+        }
+
+        private async Task DeleteCountry(int id)
+        {
+            HttpClient client = new HttpClient();
+
+            HttpResponseMessage s = await client.DeleteAsync("http://localhost:2794/api/Country/delete_country/id=" + id);
+
+            if (s.IsSuccessStatusCode)
+            {
+                this.popUpMethod("Done", "You deleted the country succesfully");
+            }
+            else
+            {
+                this.popUpMethod("Error", "Something went wrong");
+            }
+
+        }
+
+        private async Task DeleteType(int id)
+        {
+            HttpClient client = new HttpClient();
+
+            HttpResponseMessage s = await client.DeleteAsync("http://localhost:2794/api/Type/DeleteType/id=" + id);
 
             if (s.IsSuccessStatusCode)
             {
