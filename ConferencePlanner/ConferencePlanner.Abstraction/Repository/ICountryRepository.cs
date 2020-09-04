@@ -10,6 +10,8 @@ namespace ConferencePlanner.Abstraction.Repository
     {
         List<CountryModel> GetListCountry();
 
+        //CountryModel GetCountryIdByConferenceId(int id);
+
         int GetCountryIdByConferenceId(int id);
 
         BindingList<CountryModel> GetCountriesList();
