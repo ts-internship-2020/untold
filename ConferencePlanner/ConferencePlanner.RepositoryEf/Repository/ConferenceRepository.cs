@@ -22,13 +22,13 @@ namespace ConferencePlanner.Repository.Ef.Repository
         public List<ConferenceModel> AttendeeConferences(string email)
         {
             List<Conference> conferences = _untoldContext.Conference
+                .Include(x => x.MainSpeaker)
                 .Include(x => x.ConferenceCategory)
                 .Include(x => x.ConferenceType)
                 .Include(x => x.Location)
                 .ThenInclude(x => x.City)
                 .ThenInclude(x => x.County)
                 .ThenInclude(x => x.Country)
-                .Include(x => x.MainSpeaker)
                 .ToList();
             List<Attendee> attendees = _untoldContext.Attendee.Where(c => c.AttendeeEmail == email).ToList();
 

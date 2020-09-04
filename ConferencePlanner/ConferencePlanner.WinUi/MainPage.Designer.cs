@@ -71,11 +71,10 @@ namespace ConferencePlanner.WinUi
             this.TabAttendee.Location = new System.Drawing.Point(4, 26);
             this.TabAttendee.Name = "TabAttendee";
             this.TabAttendee.Padding = new System.Windows.Forms.Padding(3);
-            this.TabAttendee.Size = new System.Drawing.Size(1052, 396);
+            this.TabAttendee.Size = new System.Drawing.Size(1052, 228);
             this.TabAttendee.TabIndex = 0;
             this.TabAttendee.Text = "Attendee";
             this.TabAttendee.UseVisualStyleBackColor = true;
-            //this.TabAttendee.Click += new System.EventHandler(this.TabAttendee_Click_1);
             this.TabAttendee.Layout += new System.Windows.Forms.LayoutEventHandler(this.tabPage1_Layout);
             // 
             // AttendeeGridvw
@@ -87,15 +86,15 @@ namespace ConferencePlanner.WinUi
             this.AttendeeGridvw.BackgroundColor = System.Drawing.SystemColors.InactiveBorder;
             this.AttendeeGridvw.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.AttendeeGridvw.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.AttendeeGridvw.Dock = System.Windows.Forms.DockStyle.Fill;
             this.AttendeeGridvw.Location = new System.Drawing.Point(3, 3);
             this.AttendeeGridvw.Name = "AttendeeGridvw";
             this.AttendeeGridvw.ReadOnly = true;
             this.AttendeeGridvw.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
             this.AttendeeGridvw.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
-            this.AttendeeGridvw.Size = new System.Drawing.Size(1046, 390);
+            this.AttendeeGridvw.Size = new System.Drawing.Size(1046, 370);
             this.AttendeeGridvw.TabIndex = 3;
             this.AttendeeGridvw.Text = "dataGridView1";
+            this.AttendeeGridvw.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.AttendeeGridvw_DataBindingComplete);
             this.AttendeeGridvw.Layout += new System.Windows.Forms.LayoutEventHandler(this.tabPage1_Layout);
             // 
             // button5
@@ -133,7 +132,7 @@ namespace ConferencePlanner.WinUi
             this.TabOrganizer.Location = new System.Drawing.Point(4, 26);
             this.TabOrganizer.Name = "TabOrganizer";
             this.TabOrganizer.Padding = new System.Windows.Forms.Padding(3);
-            this.TabOrganizer.Size = new System.Drawing.Size(1052, 396);
+            this.TabOrganizer.Size = new System.Drawing.Size(1052, 228);
             this.TabOrganizer.TabIndex = 1;
             this.TabOrganizer.Text = "Organizer";
             this.TabOrganizer.UseVisualStyleBackColor = true;
@@ -189,17 +188,17 @@ namespace ConferencePlanner.WinUi
             this.TabControl.Controls.Add(this.TabAttendee);
             this.TabControl.Controls.Add(this.TabOrganizer);
             this.TabControl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.TabControl.Location = new System.Drawing.Point(3, 113);
+            this.TabControl.Location = new System.Drawing.Point(3, 70);
             this.TabControl.Name = "TabControl";
             this.TabControl.SelectedIndex = 0;
-            this.TabControl.Size = new System.Drawing.Size(1060, 426);
+            this.TabControl.Size = new System.Drawing.Size(1060, 258);
             this.TabControl.TabIndex = 3;
             this.TabControl.SelectedIndexChanged += new System.EventHandler(this.TabOrganizer_SelectedIndexChanged);
             // 
             // AddConferenceButton
             // 
             this.AddConferenceButton.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.AddConferenceButton.Location = new System.Drawing.Point(832, 26);
+            this.AddConferenceButton.Location = new System.Drawing.Point(832, 5);
             this.AddConferenceButton.Name = "AddConferenceButton";
             this.AddConferenceButton.Size = new System.Drawing.Size(85, 53);
             this.AddConferenceButton.TabIndex = 4;
@@ -212,7 +211,7 @@ namespace ConferencePlanner.WinUi
             this.StartDatePicker.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.StartDatePicker.CustomFormat = "yyyy-MM-dd hh:mm:ss";
             this.StartDatePicker.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.StartDatePicker.Location = new System.Drawing.Point(203, 78);
+            this.StartDatePicker.Location = new System.Drawing.Point(203, 35);
             this.StartDatePicker.Name = "StartDatePicker";
             this.StartDatePicker.Size = new System.Drawing.Size(138, 25);
             this.StartDatePicker.TabIndex = 5;
@@ -223,7 +222,7 @@ namespace ConferencePlanner.WinUi
             this.EndDatePicker.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.EndDatePicker.CustomFormat = "yyyy-MM-dd hh:mm:ss";
             this.EndDatePicker.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.EndDatePicker.Location = new System.Drawing.Point(347, 78);
+            this.EndDatePicker.Location = new System.Drawing.Point(347, 35);
             this.EndDatePicker.Name = "EndDatePicker";
             this.EndDatePicker.Size = new System.Drawing.Size(162, 25);
             this.EndDatePicker.TabIndex = 6;
@@ -240,31 +239,38 @@ namespace ConferencePlanner.WinUi
             // 
             // LeftArrowPagButton
             // 
-            this.LeftArrowPagButton.Dock = System.Windows.Forms.DockStyle.Right;
-            this.LeftArrowPagButton.Location = new System.Drawing.Point(537, 3);
+            this.LeftArrowPagButton.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.LeftArrowPagButton.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("LeftArrowPagButton.BackgroundImage")));
+            this.LeftArrowPagButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.LeftArrowPagButton.FlatAppearance.BorderSize = 0;
+            this.LeftArrowPagButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.LeftArrowPagButton.Location = new System.Drawing.Point(518, 10);
             this.LeftArrowPagButton.Name = "LeftArrowPagButton";
-            this.LeftArrowPagButton.Size = new System.Drawing.Size(35, 31);
+            this.LeftArrowPagButton.Size = new System.Drawing.Size(40, 40);
             this.LeftArrowPagButton.TabIndex = 7;
-            this.LeftArrowPagButton.Text = "<";
             this.LeftArrowPagButton.UseVisualStyleBackColor = true;
             this.LeftArrowPagButton.MouseClick += new System.Windows.Forms.MouseEventHandler(this.LeftArrowPagButton_MouseClick);
+            this.LeftArrowPagButton.MouseEnter += new System.EventHandler(this.LeftArrowPagButton_MouseEnter);
+            this.LeftArrowPagButton.MouseLeave += new System.EventHandler(this.LeftArrowPagButton_MouseLeave);
             // 
             // RightArrowPagButton
             // 
+            this.RightArrowPagButton.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.RightArrowPagButton.BackColor = System.Drawing.Color.Transparent;
             this.RightArrowPagButton.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("RightArrowPagButton.BackgroundImage")));
             this.RightArrowPagButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.RightArrowPagButton.Dock = System.Windows.Forms.DockStyle.Left;
             this.RightArrowPagButton.FlatAppearance.BorderSize = 0;
             this.RightArrowPagButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.RightArrowPagButton.Location = new System.Drawing.Point(576, 1);
+            this.RightArrowPagButton.Location = new System.Drawing.Point(562, 10);
             this.RightArrowPagButton.Margin = new System.Windows.Forms.Padding(1);
             this.RightArrowPagButton.Name = "RightArrowPagButton";
-            this.RightArrowPagButton.Size = new System.Drawing.Size(30, 35);
+            this.RightArrowPagButton.Size = new System.Drawing.Size(40, 40);
             this.RightArrowPagButton.TabIndex = 8;
             this.RightArrowPagButton.UseCompatibleTextRendering = true;
             this.RightArrowPagButton.UseVisualStyleBackColor = false;
             this.RightArrowPagButton.MouseClick += new System.Windows.Forms.MouseEventHandler(this.RightArrowPagButton_MouseClick);
+            this.RightArrowPagButton.MouseEnter += new System.EventHandler(this.RightArrowPagButton_MouseEnter);
+            this.RightArrowPagButton.MouseLeave += new System.EventHandler(this.RightArrowPagButton_MouseLeave);
             // 
             // button_woc1
             // 
@@ -299,7 +305,7 @@ namespace ConferencePlanner.WinUi
             this.tableLayoutPanel1.RowCount = 3;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20.31746F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 79.68254F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 251F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(1066, 583);
             this.tableLayoutPanel1.TabIndex = 10;
             // 
@@ -318,24 +324,24 @@ namespace ConferencePlanner.WinUi
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 1;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(1062, 106);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(1062, 63);
             this.tableLayoutPanel2.TabIndex = 0;
             // 
             // tableLayoutPanel3
             // 
+            this.tableLayoutPanel3.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.tableLayoutPanel3.ColumnCount = 3;
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 89.00928F));
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10.99071F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 86.8421F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 13.1579F));
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 415F));
             this.tableLayoutPanel3.Controls.Add(this.LeftArrowPagButton, 0, 0);
             this.tableLayoutPanel3.Controls.Add(this.RightArrowPagButton, 1, 0);
-            this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel3.Location = new System.Drawing.Point(2, 544);
+            this.tableLayoutPanel3.Location = new System.Drawing.Point(2, 333);
             this.tableLayoutPanel3.Margin = new System.Windows.Forms.Padding(2);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
             this.tableLayoutPanel3.RowCount = 1;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(1062, 37);
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(1062, 60);
             this.tableLayoutPanel3.TabIndex = 1;
             // 
             // MainPage

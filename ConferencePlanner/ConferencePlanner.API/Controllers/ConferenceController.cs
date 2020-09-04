@@ -66,7 +66,7 @@ namespace ConferencePlanner.Api.Controllers
 
         [HttpGet]
         [Route("attendees_by_email/email={email}")]
-        public IActionResult GetAttendeesByEmail(string email)
+        public IActionResult AttendeeConferences(string email)
         {
             List<ConferenceModel> conferences = _conferenceRepository.AttendeeConferences(email);
             return Ok(conferences);

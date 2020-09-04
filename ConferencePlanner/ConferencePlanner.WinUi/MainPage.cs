@@ -53,12 +53,16 @@ namespace ConferencePlanner.WinUi
             _typeRepository = typeRepository;
             _categoryRepository = categoryRepository;
             InitializeComponent();
+            this.ShowDialog();
 
+        }
+        public MainPage() {
+            InitializeComponent();
         }
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-
+            
         }
 
         //metoda de generat codul de bare.
@@ -272,7 +276,7 @@ namespace ConferencePlanner.WinUi
             {
                 this.AttendeeCurrentPageIndex++;
                 this.CreateAttendeePage();
-                coditionsForButtons();
+                ConditionsForButtons();
             }
         }
 
@@ -287,7 +291,7 @@ namespace ConferencePlanner.WinUi
             {
                 this.AttendeeCurrentPageIndex--;
                 this.CreateAttendeePage();
-                coditionsForButtons();
+                ConditionsForButtons();
             }
         }
 
@@ -309,75 +313,18 @@ namespace ConferencePlanner.WinUi
             var t = Task.Run(() => GetAttendeesByEmail(Program.EnteredEmailAddress));
             t.Wait();
             var allConferences = t.Result;
-
+           
             var t2 = Task.Run(() => GetAttendeesByPage(Program.EnteredEmailAddress, PreviousPageOffSet + 1, PreviousPageOffSet + this.PageSize + 1, dates[0], dates[1]));
             t2.Wait();
             var attendees = t2.Result;
-
+            
             this.CheckPaginationButtonsVisibilityAttendee();
 
             CalculateTotalPages(allConferences, this.TabControl.SelectedTab);
 
             AttendeeGridvw.DataSource = attendees;
 
-            AttendeeGridvw.Columns["RowNum"].Visible = false;
-            AttendeeGridvw.Columns["StatusId"].Visible = false;
-            AttendeeGridvw.Columns["ConferenceId"].Visible = false;
-            AttendeeGridvw.AutoResizeColumns();
-
-            AttendeeGridvw.Columns[3].HeaderText = "Name";
-            AttendeeGridvw.Columns[4].HeaderText = "Category";
-            AttendeeGridvw.Columns[5].HeaderText = "Type";
-           
-            if (a == 0)
-            {
-                a++;
-                DataGridViewButtonColumn attendButtonColumn = new DataGridViewButtonColumn();
-                attendButtonColumn.Name = "attend_column";
-                attendButtonColumn.Text = "Attend";
-                attendButtonColumn.HeaderText = "Attend";
-                attendButtonColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
-                attendButtonColumn.DefaultCellStyle.Padding = new Padding(22);
-                attendButtonColumn.FlatStyle = FlatStyle.Flat;
-
-                int columnIndex = AttendeeGridvw.ColumnCount;
-
-                AttendeeGridvw.Columns.Insert(columnIndex, attendButtonColumn);
-
-                columnIndex = AttendeeGridvw.ColumnCount;
-                DataGridViewButtonColumn withdrawButtonColumn = new DataGridViewButtonColumn();
-                withdrawButtonColumn.Name = "withdraw_column";
-                withdrawButtonColumn.Text = "Withdraw";
-                withdrawButtonColumn.HeaderText = "Withdraw";
-                withdrawButtonColumn.FlatStyle = FlatStyle.Flat;
-                withdrawButtonColumn.DefaultCellStyle.Padding = new Padding(20);
-
-                withdrawButtonColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
-
-                AttendeeGridvw.Columns.Insert(columnIndex, withdrawButtonColumn);
-                columnIndex = AttendeeGridvw.ColumnCount;
-
-                DataGridViewButtonColumn joinButtonColumn = new DataGridViewButtonColumn();
-                joinButtonColumn.Name = "join_column";
-                joinButtonColumn.Text = "Join";
-                joinButtonColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
-
-                joinButtonColumn.DefaultCellStyle.Padding = new Padding(20);
-                joinButtonColumn.HeaderText = "Join";
-                joinButtonColumn.FlatStyle = FlatStyle.Flat;
-
-                DataGridViewColumn dataGridViewColumn = new DataGridViewColumn();
-
-                AttendeeGridvw.Columns[2].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-
-                AttendeeGridvw.Columns["RowNum"].Visible = false;
-                AttendeeGridvw.Columns["StatusId"].Visible = false;
-                AttendeeGridvw.Columns["ConferenceId"].Visible = false;
-                AttendeeGridvw.Columns.Insert(columnIndex, joinButtonColumn);
-
-                AttendeeGridvw.CellClick += AttendeeGridvw_CellClick;
-            }
-            coditionsForButtons();
+            
 
         }
 
@@ -430,7 +377,7 @@ namespace ConferencePlanner.WinUi
                 var t2 = Task.Run(() => GetAttendeesByPage(Program.EnteredEmailAddress,1,this.PageSize+1, dates[0], dates[1]));
                 t2.Wait();
                 var conferences = t2.Result;
-
+                //this.ConditionsForButtons();
                 this.CheckPaginationButtonsVisibilityAttendee();
                 CheckNumberOfRowsAttendee(conferences);
             }
@@ -500,7 +447,7 @@ namespace ConferencePlanner.WinUi
             popup.ContentText = "You succesfully attended to this conference!";
             popup.Popup();
             CreateAttendeePage();
-            coditionsForButtons();
+            ConditionsForButtons();
             var newForm = new QRCodeForm();
             newForm.ShowDialog();
         }
@@ -519,7 +466,7 @@ namespace ConferencePlanner.WinUi
             var t = Task.Run(() => WithdrawnAsync(buttonModel));
             t.Wait();
             CreateAttendeePage();
-            coditionsForButtons();
+            ConditionsForButtons();
         }
 
         private void Join_Click(int statusId)
@@ -564,6 +511,7 @@ namespace ConferencePlanner.WinUi
                 var t2 = Task.Run(() => GetAttendeesByPage(Program.EnteredEmailAddress, 1, this.PageSize + 1, dates[0], dates[1]));
                 t2.Wait();
                 var conferences = t2.Result;
+                //this.ConditionsForButtons();
                 this.CheckPaginationButtonsVisibilityAttendee();
                 CheckNumberOfRowsAttendee(conferences);
             }
@@ -649,7 +597,7 @@ namespace ConferencePlanner.WinUi
             }
         }
 
-        public void coditionsForButtons()
+        public void ConditionsForButtons()
         {
             for (int i = 0; i < AttendeeGridvw.Rows.Count; i++)
             {
@@ -703,7 +651,7 @@ namespace ConferencePlanner.WinUi
         {
             if (e.RowIndex < 0)
             {
-                coditionsForButtons();
+                ConditionsForButtons();
                 return;
             }
 
@@ -814,7 +762,7 @@ namespace ConferencePlanner.WinUi
         private async Task<ConferenceModel> GetConferenceById(int id)
         {
             HttpClient client = new HttpClient();
-            HttpResponseMessage s = await client.GetAsync("http://localhost:2794/api/Conference/conferences_by_id/id=" + id);
+            HttpResponseMessage s = await client.GetAsync("http://localhost:2794/api/Conference/conference_by_id/id=" + id);
 
             if (s.IsSuccessStatusCode)
             {
@@ -924,6 +872,92 @@ namespace ConferencePlanner.WinUi
                 popUpMethod("Error", "Something went wrong");
                 return new List<ConferenceModel>();
             }
+        }
+
+        private void AttendeeGridvw_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+            AttendeeGridvw.Columns["RowNum"].Visible = false;
+            AttendeeGridvw.Columns["StatusId"].Visible = false;
+            AttendeeGridvw.Columns["ConferenceId"].Visible = false;
+            AttendeeGridvw.AutoResizeColumns();
+
+            AttendeeGridvw.Columns[3].HeaderText = "Name";
+            AttendeeGridvw.Columns[4].HeaderText = "Category";
+            AttendeeGridvw.Columns[5].HeaderText = "Type";
+
+            if (a == 0)
+            {
+                a++;
+                DataGridViewButtonColumn attendButtonColumn = new DataGridViewButtonColumn();
+                attendButtonColumn.Name = "attend_column";
+                attendButtonColumn.Text = "Attend";
+                attendButtonColumn.HeaderText = "Attend";
+                attendButtonColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+                attendButtonColumn.DefaultCellStyle.Padding = new Padding(22);
+                attendButtonColumn.FlatStyle = FlatStyle.Flat;
+
+                int columnIndex = AttendeeGridvw.ColumnCount;
+
+                AttendeeGridvw.Columns.Insert(columnIndex, attendButtonColumn);
+
+                columnIndex = AttendeeGridvw.ColumnCount;
+                DataGridViewButtonColumn withdrawButtonColumn = new DataGridViewButtonColumn();
+                withdrawButtonColumn.Name = "withdraw_column";
+                withdrawButtonColumn.Text = "Withdraw";
+                withdrawButtonColumn.HeaderText = "Withdraw";
+                withdrawButtonColumn.FlatStyle = FlatStyle.Flat;
+                withdrawButtonColumn.DefaultCellStyle.Padding = new Padding(20);
+
+                withdrawButtonColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+
+                AttendeeGridvw.Columns.Insert(columnIndex, withdrawButtonColumn);
+                columnIndex = AttendeeGridvw.ColumnCount;
+
+                DataGridViewButtonColumn joinButtonColumn = new DataGridViewButtonColumn();
+                joinButtonColumn.Name = "join_column";
+                joinButtonColumn.Text = "Join";
+                joinButtonColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+
+                joinButtonColumn.DefaultCellStyle.Padding = new Padding(20);
+                joinButtonColumn.HeaderText = "Join";
+                joinButtonColumn.FlatStyle = FlatStyle.Flat;
+
+                DataGridViewColumn dataGridViewColumn = new DataGridViewColumn();
+
+                AttendeeGridvw.Columns[2].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+
+                AttendeeGridvw.Columns["RowNum"].Visible = false;
+                AttendeeGridvw.Columns["StatusId"].Visible = false;
+                AttendeeGridvw.Columns["ConferenceId"].Visible = false;
+                AttendeeGridvw.Columns.Insert(columnIndex, joinButtonColumn);
+
+                AttendeeGridvw.CellClick += AttendeeGridvw_CellClick;
+            }
+            ConditionsForButtons();
+        }
+        private void RightArrowPagButton_MouseEnter(object sender, EventArgs e)
+        {
+            RightArrowPagButton.FlatAppearance.MouseOverBackColor = Color.Transparent;
+            RightArrowPagButton.BackgroundImageLayout = ImageLayout.Stretch;
+        }
+
+        private void RightArrowPagButton_MouseLeave(object sender, EventArgs e)
+        {
+            RightArrowPagButton.FlatAppearance.MouseOverBackColor = Color.Transparent;
+            RightArrowPagButton.BackgroundImageLayout = ImageLayout.Center;
+        }
+        private void LeftArrowPagButton_MouseEnter(object sender, EventArgs e)
+        {
+            RightArrowPagButton.FlatAppearance.MouseDownBackColor = Color.Transparent;
+            LeftArrowPagButton.FlatAppearance.MouseOverBackColor = Color.Transparent;
+            LeftArrowPagButton.BackgroundImageLayout = ImageLayout.Stretch;
+        }
+
+        private void LeftArrowPagButton_MouseLeave(object sender, EventArgs e)
+        {
+            LeftArrowPagButton.FlatAppearance.MouseDownBackColor = Color.Transparent;
+            LeftArrowPagButton.FlatAppearance.MouseOverBackColor = Color.Transparent;
+            LeftArrowPagButton.BackgroundImageLayout = ImageLayout.Center;
         }
     }
 }
