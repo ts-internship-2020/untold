@@ -176,9 +176,9 @@ namespace ConferencePlanner.Repository.Ef.Repository
                 Location = c.Location.City.County.Country.CountryName + ", " + c.Location.City.County.CountyName + ", " + c.Location.City.CityName
             }).ToList();
 
-            int aux = Math.Min(conferenceModels.Count, endIndex);
+            int aux = Math.Min(conferenceModels.Count, endIndex-1);
             List<ConferenceModel> result = new List<ConferenceModel>();
-            for(int i=startIndex; i<aux; i++)
+            for(int i=startIndex-1; i<aux; i++)
             {
                 result.Add(conferenceModels[i]);
             }

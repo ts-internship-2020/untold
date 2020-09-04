@@ -12,18 +12,16 @@ namespace ConferencePlanner.Repository.Ef.Repository
 {
     public class SpeakerRepository : ISpeakerRepository
     {
-        //private readonly neverseaContext _dbContext;
         private readonly untoldContext _untoldContext;
 
         public SpeakerRepository(untoldContext untoldContext)
         {
-            //_dbContext = dbContext;
             _untoldContext = untoldContext;
         }
 
         public BindingList<SpeakerModel> GetAllSpeakers()
         {
-            List<Speaker> speakers = _untoldContext.Speaker.ToList();
+            List<Speaker> speakers = _untoldContext.Speaker.Where(s => s.SpeakerId != 21).ToList();
             List<SpeakerModel> speakerModels = speakers.Select(a => new SpeakerModel() { 
                 SpeakerId = a.SpeakerId, 
                 FirstName = a.FirstName,
@@ -32,6 +30,7 @@ namespace ConferencePlanner.Repository.Ef.Repository
                 ImagePath = a.ImagePath,
                 Rating = (float)a.Rating
             }).ToList();
+
             BindingList<SpeakerModel> speakersBindingList = new BindingList<SpeakerModel>(speakerModels);
 
             return speakersBindingList;
@@ -65,7 +64,7 @@ namespace ConferencePlanner.Repository.Ef.Repository
         }
         public void InsertSpeaker(SpeakerModel speakerModel)
         {
-            var speaker = new Speaker()
+            Speaker speaker = new Speaker()
             {
                 FirstName = speakerModel.FirstName,
                 LastName = speakerModel.LastName,
@@ -79,7 +78,7 @@ namespace ConferencePlanner.Repository.Ef.Repository
         }
         public void UpdateSpeaker(SpeakerModel speakerModel)
         {
-            var speaker = _untoldContext.Speaker.Find(speakerModel.SpeakerId);
+            Speaker speaker = _untoldContext.Speaker.Find(speakerModel.SpeakerId);
             speaker.FirstName = speakerModel.FirstName;
             speaker.LastName = speakerModel.LastName;
             speaker.Nationality = speakerModel.Nationality;
@@ -87,9 +86,21 @@ namespace ConferencePlanner.Repository.Ef.Repository
             _untoldContext.SaveChanges();
         }
         public void DeleteSpeaker(int id)
-        {
-            var speaker = _untoldContext.Speaker.Where(s => s.SpeakerId == id).FirstOrDefault();
-            _untoldContext.Speaker.Remove(speaker);
+        { 
+            Speaker speaker = _untoldContext.Speaker.Where(s => s.SpeakerId == id).FirstOrDefault();
+            try
+            {
+                _untoldContext.Speaker.Remove(speaker);
+            }
+            catch (Exception e)
+            {
+                List<Conference> conferences = _untoldContext.Conference.Where(c => c.MainSpeakerId == id).ToList();
+                conferences.ForEach(c => { c.MainSpeakerId = 21; });
+                List<ConferenceXspeaker> conferenceXspeakers = _untoldContext.ConferenceXspeaker.Where(cxs => cxs.SpeakerId == id).ToList();
+                conferenceXspeakers.ForEach(cxs => { cxs.SpeakerId = 21; });
+                _untoldContext.Speaker.Remove(speaker);
+            }
+
             _untoldContext.SaveChanges();
         }
     }

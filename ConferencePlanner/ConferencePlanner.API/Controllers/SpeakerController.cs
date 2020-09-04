@@ -27,7 +27,7 @@ namespace ConferencePlanner.Api.Controllers
 
 
         [HttpGet]
-        [Route("all_speakers")]
+        [Route("all_speakers/")]
         public IActionResult GetAllSpeakers()
         {
             BindingList<SpeakerModel> speakers = _speakerRepository.GetAllSpeakers();
@@ -42,7 +42,7 @@ namespace ConferencePlanner.Api.Controllers
             return Ok(speaker);
         }
         [HttpGet]
-        [Route("speaker_by_name")]
+        [Route("speaker_by_name/")]
         public IActionResult GetSpeakerByName(string[] names)
         {
             SpeakerModel speaker = _speakerRepository.GetSpeakerByName(names);
@@ -56,7 +56,7 @@ namespace ConferencePlanner.Api.Controllers
             return Ok();
         }
         [HttpPost]
-        [Route("{DemoName}")]
+        [Route("insert_speaker/")]
         public IActionResult InsertSpeaker(SpeakerModel speaker)
         {
             _speakerRepository.InsertSpeaker(speaker);

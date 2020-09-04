@@ -23,15 +23,19 @@ namespace ConferencePlanner.Repository.Ef.Repository
         {
             List<DictionaryConferenceType> types = _untoldContext.DictionaryConferenceType.ToList();
 
-            List<TypeModel> typemodels = types.Select(t => new TypeModel() { TypeId =t.DictionaryConferenceTypeId, TypeName = t.ConferenceTypeName }).ToList();
-            BindingList<TypeModel> typeslist = new BindingList<TypeModel>(typemodels);
-            return typeslist;
+            List<TypeModel> typeModels = types.Select(t => new TypeModel() { 
+                TypeId =t.DictionaryConferenceTypeId, 
+                TypeName = t.ConferenceTypeName 
+            }).ToList();
+            
+            BindingList<TypeModel> typesList = new BindingList<TypeModel>(typeModels);
+            return typesList;
         }
         public void UpdateType(TypeModel typeModel)
         {
 
-            var typesconference = _untoldContext.DictionaryConferenceType.Find(typeModel.TypeId);
-            typesconference.ConferenceTypeName = typeModel.TypeName;
+            DictionaryConferenceType type = _untoldContext.DictionaryConferenceType.Where(t => t.DictionaryConferenceTypeId == typeModel.TypeId).FirstOrDefault();
+            type.ConferenceTypeName = typeModel.TypeName;
             _untoldContext.SaveChanges();
 
         }
@@ -39,12 +43,12 @@ namespace ConferencePlanner.Repository.Ef.Repository
         public void InsertType(TypeModel typeModel)
         {
             //string commandText = "insert into DictionaryConferenceType values(@Id, @Name)";
-            var types = new DictionaryConferenceType()
+            DictionaryConferenceType type = new DictionaryConferenceType()
             {
                 DictionaryConferenceTypeId = typeModel.TypeId,
                 ConferenceTypeName = typeModel.TypeName
             };
-            _untoldContext.DictionaryConferenceType.Add(types);
+            _untoldContext.DictionaryConferenceType.Add(type);
             _untoldContext.SaveChanges();
 
         }
@@ -52,8 +56,8 @@ namespace ConferencePlanner.Repository.Ef.Repository
         public void DeleteType(int id)
         {
             //string commandText = "delete from DictionaryConferenceType where DictionaryConferenceTypeId = @Id";
-            var del = _untoldContext.DictionaryConferenceType.Find(id);
-            _untoldContext.DictionaryConferenceType.Remove(del);
+            DictionaryConferenceType type = _untoldContext.DictionaryConferenceType.Where(t => t.DictionaryConferenceTypeId == id).FirstOrDefault();
+            _untoldContext.DictionaryConferenceType.Remove(type);
             _untoldContext.SaveChanges();
         }
 
@@ -62,20 +66,14 @@ namespace ConferencePlanner.Repository.Ef.Repository
             //string commandText = "select DictionaryConferenceTypeId,ConferenceTypeName from DictionaryConferenceType where DictionaryConferenceTypeId = @Id";
             //DictionaryConferenceType types = _untoldContext.DictionaryConferenceType.Where(a => a.DictionaryConferenceTypeId == id).Select(a => a.DictionaryConferenceTypeId,a=>a.C);
             //DictionaryConferenceType types = _untoldContext.DictionaryConferenceType.Select(a => new DictionaryConferenceType() { DictionaryConferenceTypeId = a.DictionaryConferenceTypeId, ConferenceTypeName = a.ConferenceTypeName });
-            var type = _untoldContext.DictionaryConferenceType.Find(id);
-            TypeModel types = new TypeModel
+            DictionaryConferenceType type = _untoldContext.DictionaryConferenceType.Where(t => t.DictionaryConferenceTypeId==id).FirstOrDefault();
+            TypeModel typeModel = new TypeModel
             {
                 TypeId = type.DictionaryConferenceTypeId,
                 TypeName = type.ConferenceTypeName,
             };
-            return types;
+            return typeModel;
         }
-
-
-
-
-
-
 
     }
 }

@@ -12,8 +12,8 @@ namespace ConferencePlanner.Abstraction.Repository
         BindingList<TypeModel> GetConferenceType();
         TypeModel GetTypeById(int id);
         
-        void UpdateType(TypeModel speaker);
-        void InsertType(TypeModel speaker);
+        void UpdateType(TypeModel type);
+        void InsertType(TypeModel type);
 
         void DeleteType(int id);
     }

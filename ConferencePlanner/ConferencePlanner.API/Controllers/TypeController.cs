@@ -27,7 +27,7 @@ namespace ConferencePlanner.Api.Controllers
         }
 
         [HttpGet]
-        [Route("GetType")]
+        [Route("GetTypes/")]
 
         public IActionResult GetConferenceType()
         {
@@ -38,7 +38,7 @@ namespace ConferencePlanner.Api.Controllers
         }
 
         [HttpPost]
-        [Route("UpdateType")]
+        [Route("UpdateType/id={id}")]
         public IActionResult UpdateType(TypeModel type)
         {
             _typeRepository.UpdateType(type);
@@ -48,16 +48,16 @@ namespace ConferencePlanner.Api.Controllers
 
         [HttpPost]
         [Route("InsertType")]
-        public IActionResult InsertType(TypeModel type)
+        public IActionResult InsertType(TypeModel typeModel)
         {
-            _typeRepository.InsertType(type);
+            _typeRepository.InsertType(typeModel);
 
             return Ok();
         }
 
 
-        [HttpPost]
-        [Route("DeleteType")]
+        [HttpDelete]
+        [Route("DeleteType/id={id}")]
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult DeleteType(int id)
         {
@@ -66,18 +66,14 @@ namespace ConferencePlanner.Api.Controllers
         }
 
         [HttpGet]
-        [Route("GetTypeById")]
+        [Route("GetTypeById/id={id}")]
         public IActionResult GetTypeById(int id)
         {
 
-            var types = _typeRepository.GetTypeById(id);
+            TypeModel typeModel = _typeRepository.GetTypeById(id);
 
-            return Ok(types);
+            return Ok(typeModel);
         }
-
-
-
-
 
 
     }

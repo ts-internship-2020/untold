@@ -26,21 +26,21 @@ namespace ConferencePlanner.Api.Controllers
         }
 
         [HttpGet]
-        [Route("get_conferences_by_date/email={email}&sDate={sDate}&endDate={eDate}")]
+        [Route("conferences_by_date/email={email}&sDate={sDate}&endDate={eDate}")]
         public IActionResult FilterConferencesByDate(string email, string sDate, string eDate)
         {
             List<ConferenceModel> conferences = _conferenceRepository.FilterConferencesByDate(email, sDate, eDate);
             return Ok(conferences);
         }
         [HttpGet]
-        [Route("get_conferences_by_organizer/email={email}")]
+        [Route("conferences_by_organizer/email={email}")]
         public IActionResult GetConferencesByOrganizer(string email)
         {
             List<ConferenceModel> conferences = _conferenceRepository.GetConferencesByOrganizer(email);
             return Ok(conferences);
         }
         [HttpGet]
-        [Route("get_conference_by_id/id={id}")]
+        [Route("conference_by_id/id={id}")]
         public IActionResult GetConferenceById(int id)
         {
             ConferenceModel conference = _conferenceRepository.GetConferenceById(id);
@@ -48,7 +48,7 @@ namespace ConferencePlanner.Api.Controllers
         }
 
         [HttpGet]
-        [Route("get_conferences_by_page/email={email}&sIndex={startIndex}&eIndex={endIndex}&sDate={sDate}&eDate={eDate}")]
+        [Route("conferences_by_page/email={email}&sIndex={startIndex}&eIndex={endIndex}&sDate={sDate}&eDate={eDate}")]
         public IActionResult GetConferenceByPage(string email, int startIndex, int endIndex, string sDate, string eDate)
         {
             List<ConferenceModel> conferences = _conferenceRepository.GetConferencesByPage(email, startIndex, endIndex, sDate, eDate);

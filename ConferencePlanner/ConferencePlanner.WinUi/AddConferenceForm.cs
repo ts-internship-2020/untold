@@ -884,7 +884,10 @@ namespace ConferencePlanner.WinUi
 
         private void LoadTypesTab()
         {
-            this.Types = _typeRepository.GetConferenceType();
+            //this.Types = _typeRepository.GetConferenceType();
+            var t = Task.Run(() => GetTypes());
+            t.Wait();
+
             this.TypesForSearchBar = this.Types;
             int[] aux = this.CalculateTotalPages(this.Types.Count);
             this.TypesTotalPages = aux[0];
@@ -1695,7 +1698,10 @@ namespace ConferencePlanner.WinUi
             {
                 TypeModel newType = GetType();
                 newType.TypeId = this.Types.Count +1;
-                _typeRepository.InsertType(newType);
+                //_typeRepository.InsertType(newType);
+                var t = Task.Run(() => InsertType(newType));
+                t.Wait();
+
                 this.Types.Add(newType);
                 this.TypesForSearchBar = this.Types;
                 int[] aux = this.CalculateTotalPages(this.Types.Count);
@@ -1715,13 +1721,15 @@ namespace ConferencePlanner.WinUi
             }
             else
             {
-                TypeModel Type = this.GetType();
+                TypeModel type = this.GetType();
             
-                _typeRepository.UpdateType(Type);
+                //_typeRepository.UpdateType(Type);
+                var t = Task.Run(() => UpdateType(type));
+                t.Wait();
                 TypeEndEditLayout("Done", "Type modified succesfully");
                 //this.TypeDataGrid.CurrentCell = null;
                 this.TypeDataGrid.Rows[0].Selected = false;
-                this.UpdateTypeArray(Type);
+                this.UpdateTypeArray(type);
 
             }
             //this.TypeDataGrid.CurrentCell = null;
@@ -1815,7 +1823,9 @@ namespace ConferencePlanner.WinUi
             if ((CountriesLastPageLastRow > 0 && CountriesCurrentPage == CountriesTotalPages && UpdateCountriesRow == CountriesLastPageLastRow) || UpdateCountriesRow == PageSize)
             {
                 CountryModel NewCountry = GetCountry();
-                _countryRepository.InsertCountry(NewCountry);
+               // _countryRepository.InsertCountry(NewCountry);
+                var t = Task.Run(() => InsertCountry(NewCountry));
+                t.Wait();
                 Countries.Add(NewCountry);
                 int[] Temp = CalculateTotalPages(Countries.Count);
                 CountriesTotalPages = Temp[0];
@@ -1825,13 +1835,15 @@ namespace ConferencePlanner.WinUi
             else
             {
                 CountryModel Country = GetCountry();
-                _countryRepository.UpdateCountry(Country);
+                //_countryRepository.UpdateCountry(Country);
+                var t = Task.Run(() => UpdateCountry(Country));
                 CountriesEndEditLayout("Done", "Country modified succesfully");
                 CountryListDataGridView.CurrentCell = null;
                 CountryListDataGridView.Rows[0].Selected = false;
                 UpdateCountriesArray(Country);
             }
         }
+
 
         private void UpdateCountriesArray(CountryModel Country)
         {
@@ -2468,8 +2480,7 @@ namespace ConferencePlanner.WinUi
             this.SearchBar.Text = "";
         }
 
-       
-
+        
         private void SpeakerPaginationSelector_DropDownClosed(object sender, EventArgs e)
         {
             int idx = this.SpeakerPaginationSelector.SelectedIndex;
@@ -2522,8 +2533,6 @@ namespace ConferencePlanner.WinUi
         }
 
 
-
-
         private void CategoryPaginationSelector_DropDownClosed(object sender, EventArgs e)
         {
             int index = CategoryPaginationSelector.SelectedIndex;
@@ -2550,7 +2559,10 @@ namespace ConferencePlanner.WinUi
                 string json = await s.Content.ReadAsStringAsync();
                 var t = JsonConvert.DeserializeObject<BindingList<SpeakerModel>>(json);
                 this.Speakers = t;
-                 
+            }
+            else
+            {
+                this.Speakers = new BindingList<SpeakerModel>();
             }
         }
         private async Task<SpeakerModel> GetSpeakerById(int id)
@@ -2567,6 +2579,8 @@ namespace ConferencePlanner.WinUi
             }
             return new SpeakerModel();
         }
+
+
         private async Task InsertSpeaker(SpeakerModel speakerModel)
         {
             var json = JsonConvert.SerializeObject(speakerModel);
@@ -2575,8 +2589,18 @@ namespace ConferencePlanner.WinUi
             HttpClient client = new HttpClient();
             
             HttpResponseMessage s = await client.PostAsync("http://localhost:2794/api/Speaker/insert_speaker/", httpContent );
+            if (s.IsSuccessStatusCode)
+            {
+                this.popUpMethod("Done", "You added the speaker succesfully");
+            }
+            else
+            {
+                this.popUpMethod("Error", "Something went wrong");
+            }
 
         }
+
+
         private async Task UpdateSpeaker(SpeakerModel speakerModel)
         {
             var json = JsonConvert.SerializeObject(speakerModel);
@@ -2585,22 +2609,147 @@ namespace ConferencePlanner.WinUi
             HttpClient client = new HttpClient();
 
             HttpResponseMessage s = await client.PostAsync("http://localhost:2794/api/Speaker/update_speaker/id=" + speakerModel.SpeakerId, httpContent);
+        
+
+            if (s.IsSuccessStatusCode)
+            {
+                this.popUpMethod("Done", "You updated the speaker succesfully");
+            }
+            else
+            {
+                this.popUpMethod("Error", "Something went wrong");
+            }
 
         }
-
-        private async Task GetConferenceCategories()
+        private async Task GetTypes()
         {
             HttpClient client = new HttpClient();
-            HttpResponseMessage s = await client.GetAsync("http://localhost:2794/api/Category/get_categories/");
+            HttpResponseMessage s = await client.GetAsync("http://localhost:2794/api/Type/GetTypes/");
+
             if (s.IsSuccessStatusCode)
             {
                 string json = await s.Content.ReadAsStringAsync();
-                var t = JsonConvert.DeserializeObject<BindingList<CategoryModel>>(json);
-                Categories = t;
+                var t = JsonConvert.DeserializeObject<BindingList<TypeModel>>(json);
+                this.Types = t;
+            }
+            else
+            {
+                this.Types = new BindingList<TypeModel>();
+            }
+        }
+        private async Task<TypeModel> GetTypeById(int id)
+        {
+            HttpClient client = new HttpClient();
+            HttpResponseMessage s = await client.GetAsync("http://localhost:2794/api/Type/GetTypeById/id=" + id);
+
+            if (s.IsSuccessStatusCode)
+            {
+                string json = await s.Content.ReadAsStringAsync();
+                var t = JsonConvert.DeserializeObject<TypeModel>(json);
+                return t;
 
             }
-            
+            return new TypeModel();
         }
+        private async Task InsertType(TypeModel typeModel)
+        {
+            var json = JsonConvert.SerializeObject(typeModel);
+            var httpContent = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
+
+            HttpClient client = new HttpClient();
+
+            HttpResponseMessage s = await client.PostAsync("http://localhost:2794/api/Type/InsertType/", httpContent);
+            if (s.IsSuccessStatusCode)
+            {
+                this.popUpMethod("Done", "You added the speaker succesfully");
+            }
+            else
+            {
+                this.popUpMethod("Error", "Something went wrong");
+            }
+
+        }
+        private async Task UpdateType(TypeModel typeModel)
+        {
+            var json = JsonConvert.SerializeObject(typeModel);
+            var httpContent = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
+
+            HttpClient client = new HttpClient();
+
+            HttpResponseMessage s = await client.PostAsync("http://localhost:2794/api/Type/UpdateType/id=" + typeModel.TypeId, httpContent);
+
+            if (s.IsSuccessStatusCode)
+            {
+                this.popUpMethod("Done", "You updated the speaker succesfully");
+            }
+            else
+            {
+                this.popUpMethod("Error", "Something went wrong");
+            }
+
+        }
+
+
+
+
+        private async Task InsertCountry(CountryModel countryModel)
+        {
+            var json = JsonConvert.SerializeObject(countryModel);
+            var httpContent = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
+
+            HttpClient client = new HttpClient();
+
+            HttpResponseMessage s = await client.PostAsync("http://localhost:2794/api/Country/insert_country/", httpContent);
+            if (s.IsSuccessStatusCode)
+            {
+                this.popUpMethod("Done", "You added the country succesfully");
+            }
+            else
+            {
+                this.popUpMethod("Error", "Something went wrong");
+            }
+        }
+
+
+
+        private async Task UpdateCountry(CountryModel countryModel)
+        {
+            var json = JsonConvert.SerializeObject(countryModel);
+            var httpContent = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
+
+            HttpClient client = new HttpClient();
+
+            HttpResponseMessage s = await client.PostAsync("http://localhost:2794/api/Country/update_country/id=" + countryModel.DictionaryCountryId, httpContent);
+
+            if (s.IsSuccessStatusCode)
+            {
+                this.popUpMethod("Done", "You updated the country succesfully");
+            }
+            else
+            {
+                this.popUpMethod("Error", "Something went wrong");
+            }
+
+        }
+
+
+
+
+        
+
+    private async Task GetConferenceCategories()
+    {
+        HttpClient client = new HttpClient();
+        HttpResponseMessage s = await client.GetAsync("http://localhost:2794/api/Category/get_categories/");
+        if (s.IsSuccessStatusCode)
+        {
+            string json = await s.Content.ReadAsStringAsync();
+            var t = JsonConvert.DeserializeObject<BindingList<CategoryModel>>(json);
+            Categories = t;
+
+        }
+
+    }
 
         private async Task InsertCategory(CategoryModel categoryModel)
         {
