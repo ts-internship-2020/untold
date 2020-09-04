@@ -2777,8 +2777,16 @@ namespace ConferencePlanner.WinUi
             var httpContent = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
 
             HttpClient Client = new HttpClient();
-
             HttpResponseMessage message = await Client.PostAsync("http://localhost:2794/api/Category/insert_category", httpContent);
+
+            if (message.IsSuccessStatusCode)
+            {
+                popUpMethod("Succes", "Your category has been added");
+            }
+            else
+            {
+                popUpMethod("Error", "Insert failed");
+            }
         } 
 
         public async Task UpdateCategory(CategoryModel category)
@@ -2788,6 +2796,14 @@ namespace ConferencePlanner.WinUi
 
             HttpClient client = new HttpClient();
             HttpResponseMessage message = await client.PostAsync("http://localhost:2794/api/Category/update_category" + category.ConferenceCategoryId, httpContent);
+            if (message.IsSuccessStatusCode)
+            {
+                popUpMethod("Succes", "Your category has been updated");
+            }
+            else
+            {
+                popUpMethod("Error", "Update failed");
+            }
         }
         
         public async Task GetCountyList(int CountryId)
@@ -2822,6 +2838,14 @@ namespace ConferencePlanner.WinUi
 
             HttpClient client = new HttpClient();
             HttpResponseMessage message = await client.PostAsync("http://localhost:2794/api/County/insert_county", httpContent);
+            if (message.IsSuccessStatusCode)
+            {
+                popUpMethod("Succes", "Your county has been added");
+            }
+            else
+            {
+                popUpMethod("Error", "Insert failed");
+            }
         }
 
         public async Task UpdateCounty(CountyModel county)
@@ -2830,6 +2854,14 @@ namespace ConferencePlanner.WinUi
             var httpContent = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
             HttpClient client = new HttpClient();
             HttpResponseMessage message = await client.PostAsync("http://localhost:2794/api/County/update_county", httpContent);
+            if (message.IsSuccessStatusCode)
+            {
+                popUpMethod("Succes", "Your county has been updated");
+            }
+            else
+            {
+                popUpMethod("Error", "Update failed");
+            }
         }
     }
 }
