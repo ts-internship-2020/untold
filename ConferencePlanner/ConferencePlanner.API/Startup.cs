@@ -52,7 +52,7 @@ namespace ConferencePlanner.Api
             services.AddScoped<ICountyRepository, CountyRepository>();
             services.AddScoped<ICategoryRepository, CategoryPepository>();
             services.AddScoped<ITypeRepository, TypeRepository>();
-            //services.AddScoped<ICityRepository, CityRepository>();
+            services.AddScoped<ICityRepository, CityRepository>();
             services.AddSwagger();
         }
 
