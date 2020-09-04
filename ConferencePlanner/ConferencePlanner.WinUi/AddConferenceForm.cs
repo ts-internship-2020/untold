@@ -39,7 +39,7 @@ namespace ConferencePlanner.WinUi
         private int SelectedTypeId;
         private int DictionaryCityId;
         private int SelectedCategoryId;
-
+        private DataGridView CurrentGridView;
         private BindingList<CountryModel> Countries;
         private BindingList<CountryModel> CountriesFromSearchBar = new BindingList<CountryModel>();
         private int CountriesTotalPages;
@@ -241,65 +241,95 @@ namespace ConferencePlanner.WinUi
         private void NextBtn_Click(object sender, EventArgs e)
         {
             //int selectedRowCount = CountryListDataGridView.Rows.GetRowCount(DataGridViewElementStates.Selected);
-            Point StartPtn = new Point(3, 43);
-        
-            DataGridView CurrentGridView = (DataGridView)TabControlLocation.SelectedTab.GetChildAtPoint(StartPtn);
+            var SelectedRowIndex = 0;
+
             string Text = TabControlLocation.SelectedTab.Text;
 
-            if (NextTabBtn.Text=="Next>>")
+            if (NextTabBtn.Text == "Next>>")
             {
-                if(IndexChange(Text, CurrentGridView))
-                {
-                    var SelectedRowIndex = 0;
-                    if(CurrentGridView == this.SpeakerListDataGrid)
-                    {
-                        int col_idx = CurrentGridView.Columns["main_speaker"].Index;
-                        foreach (DataGridViewRow row in CurrentGridView.Rows)
-                        {
-
-                            if (Convert.ToBoolean(row.Cells[col_idx].Value) == true)
-                            {
-                                SelectedRowIndex = row.Index;
-                            }
-                        }
-                    }
-                    else
-                    {
-                        SelectedRowIndex = CurrentGridView.SelectedRows[0].Index;
-                    }
-                    
 
                     if (TabControlLocation.SelectedIndex == 0)
+                {
+                    CurrentGridView = CountryListDataGridView;
+                    if (IndexChange(Text, CurrentGridView))
                     {
-                        SelectedCountryId = (int)CurrentGridView.Rows[SelectedRowIndex].Cells["DictionaryCountryId"].Value;
+                        SelectedCountryId = (int)CurrentGridView.SelectedRows[0].Cells["DictionaryCountryId"].Value;
+
                     }
-                    if (TabControlLocation.SelectedIndex == 1)
+
+                }
+                if (TabControlLocation.SelectedIndex == 1)
+                {
+                    CurrentGridView = CountiesListGridView;
+                    if (IndexChange(Text, CurrentGridView))
                     {
-                        SelectedCountyId = (int)CurrentGridView.Rows[SelectedRowIndex].Cells["CountyId"].Value;
+                        SelectedCountyId = (int)CurrentGridView.SelectedRows[0].Cells["CountyId"].Value;
+
                     }
-                    if (TabControlLocation.SelectedTab == this.City)
+                }
+                if (TabControlLocation.SelectedTab == this.City)
+                {
+                    CurrentGridView = CityListDataGridView;
+                    if (IndexChange(Text, CurrentGridView))
                     {
-                         SelectedCityId = (int)CurrentGridView.Rows[SelectedRowIndex].Cells["DictionaryCityId"].Value;
+                        SelectedCityId = (int)CurrentGridView.SelectedRows[0].Cells["DictionaryCityId"].Value;
+
                     }
-                    if (TabControlLocation.SelectedTab == this.SpeakerTab)
+                }
+                if (TabControlLocation.SelectedTab == TypeTab)
+                {
+                    CurrentGridView = TypeDataGrid;
+                    if (IndexChange(Text, CurrentGridView))
                     {
+                        SelectedTypeId = (int)CurrentGridView.SelectedRows[0].Cells["TypeId"].Value;
+
+                    }
+                }
+                if (TabControlLocation.SelectedTab == this.SpeakerTab)
+                {
+                    CurrentGridView = SpeakerListDataGrid;
+                    if (IndexChange(Text, CurrentGridView))
+                    {
+                        if (CurrentGridView == this.SpeakerListDataGrid)
+                        {
+                            int col_idx = CurrentGridView.Columns["main_speaker"].Index;
+                            foreach (DataGridViewRow row in CurrentGridView.Rows)
+                            {
+
+                                if (Convert.ToBoolean(row.Cells[col_idx].Value) == true)
+                                {
+                                    SelectedRowIndex = row.Index;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            SelectedRowIndex = CurrentGridView.SelectedRows[0].Index;
+                        }
+
                         SelectedSpeakerId = (int)CurrentGridView.Rows[SelectedRowIndex].Cells["SpeakerId"].Value;
                     }
-                    if (TabControlLocation.SelectedTab == CategoryTab)
-                    {
-                        SelectedCategoryId = (int)CurrentGridView.Rows[SelectedRowIndex].Cells["CategoryId"].Value;
-                    }
-
-                    TabControlLocation.SelectedIndex++;
-
                 }
-
-                else
+                if (TabControlLocation.SelectedTab == CategoryTab)
                 {
-                    //label cu mesaj
+                    CurrentGridView = CategoryDataGridView;
+                    if (IndexChange(Text, CurrentGridView))
+                    {
+                        SelectedCategoryId = (int)CurrentGridView.SelectedRows[0].Cells["CategoryId"].Value;
+
+                    }
                 }
+
+                TabControlLocation.SelectedIndex++;
+
             }
-            else 
+
+            //else
+            //{
+            //    //label cu mesaj
+            //}
+            //}
+            else
             {
                 //aici face save   
 
@@ -532,8 +562,13 @@ namespace ConferencePlanner.WinUi
 
         private void LoadCategoryTab()
         {
+
+            var t = Task.Run(() => GetConferenceCategories());
+            t.Wait();
+
+
             CategoryDataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            Categories = _categoryRepository.GetConferenceCategories();
+            //Categories = _categoryRepository.GetConferenceCategories();
             CategoriesFromSearch = Categories;
             int[] temp = CalculateTotalPages(Categories.Count);
             CategoriesToatlPages = temp[0];
@@ -1713,7 +1748,10 @@ namespace ConferencePlanner.WinUi
             {
                 CategoryModel Category = GetCategory();
                 Category.ConferenceCategoryId = Categories.Count + 1;
-                _categoryRepository.InsertCategory(Category);
+
+                var t = Task.Run(() => InsertCategory(Category));
+                t.Wait(); 
+                //_categoryRepository.InsertCategory(Category);
                 Categories.Add(Category);
                 int[] Temp = CalculateTotalPages(Categories.Count);
                 CategoriesToatlPages = Temp[0];
@@ -1724,7 +1762,9 @@ namespace ConferencePlanner.WinUi
             else
             {
                 CategoryModel Category = GetCategory();
-                _categoryRepository.UpdateCategory(Category);
+                var t = Task.Run(() => UpdateCategory(Category));
+                t.Wait();
+                //_categoryRepository.UpdateCategory(Category);
                 CategoryEndEditLayout("Done", "Category modified succesfully");
                 CategoryDataGridView.Rows[0].Selected = false;
                 UpdateCategoryArray(Category);
@@ -2548,6 +2588,79 @@ namespace ConferencePlanner.WinUi
 
         }
 
+        private async Task GetConferenceCategories()
+        {
+            HttpClient client = new HttpClient();
+            HttpResponseMessage s = await client.GetAsync("http://localhost:2794/api/Category/get_categories/");
+            if (s.IsSuccessStatusCode)
+            {
+                string json = await s.Content.ReadAsStringAsync();
+                var t = JsonConvert.DeserializeObject<BindingList<CategoryModel>>(json);
+                Categories = t;
+
+            }
+            
+        }
+
+        private async Task InsertCategory(CategoryModel categoryModel)
+        {
+            var json = JsonConvert.SerializeObject(categoryModel);
+            var httpContent = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
+
+            HttpClient Client = new HttpClient();
+
+            HttpResponseMessage message = await Client.PostAsync("http://localhost:2794/api/Category/insert_category", httpContent);
+        } 
+
+        public async Task UpdateCategory(CategoryModel category)
+        {
+            var json = JsonConvert.SerializeObject(category);
+            var httpContent = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
+
+            HttpClient client = new HttpClient();
+            HttpResponseMessage message = await client.PostAsync("http://localhost:2794/api/Category/update_category" + category.ConferenceCategoryId, httpContent);
+        }
         
+        public async Task GetCountyList(int CountryId)
+        {
+            HttpClient client = new HttpClient();
+            HttpResponseMessage message = await client.GetAsync("http://localhost:2794/api/County/county_by_countryId?countryID=" + CountryId);
+            if (message.IsSuccessStatusCode)
+            {
+                string json = await message.Content.ReadAsStringAsync();
+                var t = JsonConvert.DeserializeObject<BindingList<CountyModel>>(json);
+                Counties = t;
+            }
+        }
+
+        public async Task<int> GetLastCountyId()
+        {
+            HttpClient client = new HttpClient();
+            HttpResponseMessage message = await client.GetAsync("http://localhost:2794/api/County/county_last_id");
+            if (message.IsSuccessStatusCode)
+            {
+                string json = await message.Content.ReadAsStringAsync();
+                var t = JsonConvert.DeserializeObject<int>(json);
+                return t;
+            }
+            return 1;
+        }
+        
+        public async Task InsertCounty(CountyModel county)
+        {
+            var json = JsonConvert.SerializeObject(county);
+            var httpContent = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
+
+            HttpClient client = new HttpClient();
+            HttpResponseMessage message = await client.PostAsync("http://localhost:2794/api/County/insert_county", httpContent);
+        }
+
+        public async Task UpdateCounty(CountyModel county)
+        {
+            var json = JsonConvert.SerializeObject(county);
+            var httpContent = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
+            HttpClient client = new HttpClient();
+            HttpResponseMessage message = await client.PostAsync("http://localhost:2794/api/County/update_county", httpContent);
+        }
     }
 }
