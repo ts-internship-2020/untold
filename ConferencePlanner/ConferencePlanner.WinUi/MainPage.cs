@@ -260,13 +260,13 @@ namespace ConferencePlanner.WinUi
             else
             {
                 dates = GetCurrentDateFilterSelection();
+                coditionsForButtons();
             }
             this.CheckPaginationButtonsVisibilityAttendee();
 
             int PreviousPageOffSet = (this.AttendeeCurrentPageIndex - 1) * this.PageSize;
             CheckNumberOfRowsAttendee(_conferenceRepository.GetAttendeesByPage(
                 Program.EnteredEmailAddress, PreviousPageOffSet + 1, PreviousPageOffSet + this.PageSize + 1, dates[0], dates[1]));
-
 
         }
 
@@ -501,7 +501,6 @@ namespace ConferencePlanner.WinUi
 
                 this.CheckPaginationButtonsVisibilityAttendee();
                 CheckNumberOfRowsAttendee(conferences);
-
                 //var allConferences = _conferenceRepository.FilterConfAttendeeByDate(Program.EnteredEmailAddress, dates[0], dates[1]);
 
                 //var conferences = FilterAttendee(allConferences, StartDate, EndDate);
@@ -1020,7 +1019,31 @@ namespace ConferencePlanner.WinUi
             
         }
 
+        private void RightArrowPagButton_MouseEnter(object sender, EventArgs e)
+        {
+            RightArrowPagButton.FlatAppearance.MouseOverBackColor = Color.Transparent;
+            RightArrowPagButton.BackgroundImageLayout = ImageLayout.Stretch;
+        }
 
+        private void RightArrowPagButton_MouseLeave(object sender, EventArgs e)
+        {
+            RightArrowPagButton.FlatAppearance.MouseOverBackColor = Color.Transparent;
+            RightArrowPagButton.BackgroundImageLayout = ImageLayout.Center;
+        }
+
+        private void LeftArrowPagButton_MouseEnter(object sender, EventArgs e)
+        {
+            RightArrowPagButton.FlatAppearance.MouseDownBackColor = Color.Transparent;
+            LeftArrowPagButton.FlatAppearance.MouseOverBackColor = Color.Transparent;
+            LeftArrowPagButton.BackgroundImageLayout = ImageLayout.Stretch;
+        }
+
+        private void LeftArrowPagButton_MouseLeave(object sender, EventArgs e)
+        {
+            LeftArrowPagButton.FlatAppearance.MouseDownBackColor = Color.Transparent;
+            LeftArrowPagButton.FlatAppearance.MouseOverBackColor = Color.Transparent;
+            LeftArrowPagButton.BackgroundImageLayout = ImageLayout.Center;
+        }
     }
 }
 
