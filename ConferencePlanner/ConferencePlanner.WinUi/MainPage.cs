@@ -571,8 +571,6 @@ namespace ConferencePlanner.WinUi
             buttonModel.barcode = copyqrCode;
             buttonModel.confId = confId;
             buttonModel.statusId = 1;
-
-            //_speakerRepository.InsertSpeaker(newSpeaker);
             var t = Task.Run(() => AttendAsync(buttonModel));
             t.Wait();
             //_attendeeButtons.Attend(Program.EnteredEmailAddress, copyqrCode, confId);

@@ -637,19 +637,6 @@ namespace ConferencePlanner.WinUi
             this.SaveCityButton.Visible = true;
         }
 
-        private void LoadCityTab()
-        {
-            CityListDataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            this.Cities = _cityRepository.GetCitiesByCountyId(SelectedCountyId);
-            int[] pages = CalculateTotalPages(Cities.Count);
-            CityListDataGridView.AllowUserToOrderColumns = true;
-            CityListDataGridView.DefaultCellStyle.ForeColor = Color.Black;
-            CityListDataGridView.DataSource = this.Cities;
-            CityTotalPages = pages[0];
-            CityLastPageLastRow = pages[1];
-            CitiesCreatePage(Cities);
-        }
-
         private void CityListDataGridView_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
             if (CityListDataGridView.Columns.Contains("DictionaryCityId") && CityListDataGridView.Columns["DictionaryCityId"].Visible)
@@ -707,11 +694,44 @@ namespace ConferencePlanner.WinUi
             return cityModel;
         }
 
+        private async Task GetCityAsync(int id)
+        {
+            HttpClient client = new HttpClient();
+            HttpResponseMessage httpResponseMessage = await client.GetAsync("http://localhost:2794/api/City/getAllCitiesByCountyId=" + id);
+            if (httpResponseMessage.IsSuccessStatusCode)
+            {
+                string json = await httpResponseMessage.Content.ReadAsStringAsync();
+                var t = JsonConvert.DeserializeObject<BindingList<CityModel>>(json);
+                this.Cities =  t;
+            } else
+            {
+                this.Cities = new BindingList<CityModel>();
+            }
+        }
+
+        private void LoadCityTab()
+        {
+            CityListDataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            var t = Task.Run(() => GetCityAsync(SelectedCountyId));
+            t.Wait();
+            //_cityRepository.GetCitiesByCountyId(SelectedCountyId);
+            int[] pages = CalculateTotalPages(Cities.Count);
+            CityListDataGridView.AllowUserToOrderColumns = true;
+            CityListDataGridView.DefaultCellStyle.ForeColor = Color.Black;
+            CityListDataGridView.DataSource = this.Cities;
+            CityTotalPages = pages[0];
+            CityLastPageLastRow = pages[1];
+            CitiesCreatePage(Cities);
+        }
+
+
+
         private void SaveCityButton_Click(object sender, EventArgs e)
         {
             this.CityListDataGridView.EndEdit(); // de facut endedit
             if ((CityLastPageLastRow > 0 && CityCurrentPage == CityTotalPages && UpdateCityRow == CityLastPageLastRow) || UpdateCityRow == PageSize)
             {
+
                 CityModel newCity = GetCity();
                 newCity.DictionaryCityId = _cityRepository.LastDictionaryCityId() + 1;
                 _cityRepository.InsertCity(newCity);
