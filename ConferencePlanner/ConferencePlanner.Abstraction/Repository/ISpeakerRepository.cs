@@ -10,7 +10,7 @@ namespace ConferencePlanner.Abstraction.Repository
     public interface ISpeakerRepository
     {
         SpeakerModel GetSpeakerById(int id);
-        SpeakerModel GetSpeakerByName(string[] names);
+        SpeakerModel GetSpeakerByName(string fname, string lname);
         BindingList<SpeakerModel> GetAllSpeakers();
         void UpdateSpeaker(SpeakerModel speaker);
         void InsertSpeaker(SpeakerModel speaker);

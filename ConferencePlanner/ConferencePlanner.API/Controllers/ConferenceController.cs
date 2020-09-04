@@ -64,5 +64,26 @@ namespace ConferencePlanner.Api.Controllers
             return Ok();
         }
 
+        [HttpGet]
+        [Route("attendees_by_email/email={email}")]
+        public IActionResult AttendeeConferences(string email)
+        {
+            List<ConferenceModel> conferences = _conferenceRepository.AttendeeConferences(email);
+            return Ok(conferences);
+        }
+        [HttpGet]
+        [Route("filter_attendees_by_date/email={email}&sDate={sDate}&eDate={eDate}")]
+        public IActionResult FilterAttendeesByDate(string email, string sDate, string eDate)
+        {
+            List<ConferenceModel> conferences = _conferenceRepository.FilterAttendeesByDate(email, sDate , eDate);
+            return Ok(conferences);
+        }
+        [HttpGet]
+        [Route("attendees_by_page/email={email}&sIndex={sIndex}&eIndex={eINdex}&sDate={sDate}&eDate={eDate}")]
+        public IActionResult GetAttendeesByPage(string email, int sIndex, int eIndex, string sDate, string eDate)
+        {
+            List<ConferenceModel> conferences = _conferenceRepository.GetAttendeesByPage(email, sIndex, eIndex, sDate, eDate);
+            return Ok(conferences);
+        }
     }
 }

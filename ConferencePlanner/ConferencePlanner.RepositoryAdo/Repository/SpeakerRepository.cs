@@ -51,23 +51,23 @@ namespace ConferencePlanner.Repository.Ado.Repository
         }
 
 
-        public SpeakerModel GetSpeakerByName(string[] names)
+        public SpeakerModel GetSpeakerByName(string fname, string lname)
         {
             string commandText = "select Nationality, Rating, ImagePath from Speaker where FirstName =  @firstName and LastName = @lastName" ;
 
             SqlCommand sqlCommand = new SqlCommand(commandText, _sqlConnection);
             sqlCommand.Parameters.Add("@firstName", SqlDbType.NVarChar);
-            sqlCommand.Parameters["@firstName"].Value = names[0];
+            sqlCommand.Parameters["@firstName"].Value = fname;
             sqlCommand.Parameters.Add("@lastName", SqlDbType.NVarChar);
-            sqlCommand.Parameters["@lastName"].Value = names[1];
+            sqlCommand.Parameters["@lastName"].Value = lname;
 
 
             SqlDataReader sqlDataReader = sqlCommand.ExecuteReader();
             SpeakerModel speaker = new SpeakerModel();
             if (sqlDataReader.Read())
             {
-                speaker.FirstName = names[0];
-                speaker.LastName = names[1];
+                speaker.FirstName = fname;
+                speaker.LastName = lname;
                 speaker.Nationality = sqlDataReader.GetString("Nationality");
                 speaker.Rating = (float)sqlDataReader.GetDouble("Rating");
                 speaker.ImagePath = sqlDataReader.GetString("ImagePath");

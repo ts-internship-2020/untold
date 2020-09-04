@@ -51,8 +51,6 @@ namespace ConferencePlanner.Repository.Ef.Repository
         }
 
 
-      
-
         public List<CountryModel> GetListCountry()
         {
             throw new NotImplementedException();
