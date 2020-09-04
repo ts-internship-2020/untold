@@ -118,8 +118,9 @@ namespace ConferencePlanner.WinUi
         }
         private void PopulateForm(ConferenceModel conference)
         {
-            this.CountryListDataGridView.Rows[0].Selected = false;
-            this.CountiesListGridView.Rows[0].Selected = false;
+            
+             //this.CountryListDataGridView.Rows[0].Selected = false;
+             //this.CountiesListGridView.Rows[0].Selected = false;
 
             this.ConfName.Text = conference.ConferenceName;
 

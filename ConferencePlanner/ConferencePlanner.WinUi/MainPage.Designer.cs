@@ -75,7 +75,6 @@ namespace ConferencePlanner.WinUi
             this.TabAttendee.TabIndex = 0;
             this.TabAttendee.Text = "Attendee";
             this.TabAttendee.UseVisualStyleBackColor = true;
-            //this.TabAttendee.Click += new System.EventHandler(this.TabAttendee_Click_1);
             this.TabAttendee.Layout += new System.Windows.Forms.LayoutEventHandler(this.tabPage1_Layout);
             // 
             // AttendeeGridvw
@@ -96,6 +95,7 @@ namespace ConferencePlanner.WinUi
             this.AttendeeGridvw.Size = new System.Drawing.Size(1046, 390);
             this.AttendeeGridvw.TabIndex = 3;
             this.AttendeeGridvw.Text = "dataGridView1";
+            this.AttendeeGridvw.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.AttendeeGridvw_DataBindingComplete);
             this.AttendeeGridvw.Layout += new System.Windows.Forms.LayoutEventHandler(this.tabPage1_Layout);
             // 
             // button5
