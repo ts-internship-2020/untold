@@ -81,7 +81,12 @@ namespace ConferencePlanner.WinUi
 
         private void DeleteCountyYesButton_Click(object sender, EventArgs e)
         {
-            _countyRepository.DeleteCounty(ObjectId);
+            //if (_countyRepository.DeleteCounty(ObjectId).Equals("error"))
+            //{
+            //    popUpMethod("Error", "This county has cities and can't be deleted.");
+            //}
+            var t = Task.Run(() => DeleteCounty(ObjectId));
+            t.Wait();
             Close();
         }
 
@@ -107,7 +112,10 @@ namespace ConferencePlanner.WinUi
 
         private void CategoryYesButton_Click(object sender, EventArgs e)
         {
-            _categoryRepository.DeleteCategory(ObjectId);
+            //_categoryRepository.DeleteCategory(ObjectId);
+            var t = Task.Run(() => DeleteCategory(ObjectId));
+            t.Wait();
+            
             Close();
         }
 
@@ -146,8 +154,9 @@ namespace ConferencePlanner.WinUi
         {
             if (_cityRepository.DeleteCity(ObjectId).Equals("error"))
             {
+                
+               popUpMethod("A conference will be in this city", "You can't delete it");
                 return;
-               // popUpMethod("A conference will be in this city", "You can't delete it");
             }
             this.Close();
         }
@@ -237,6 +246,37 @@ namespace ConferencePlanner.WinUi
             popup.ContentText = contentText;
             popup.Popup();
         }
+
+        private async Task DeleteCounty(int id)
+        {
+            HttpClient client = new HttpClient();
+            HttpResponseMessage s = await client.DeleteAsync("http://localhost:2794/api/County/delete_county");
+            if (s.IsSuccessStatusCode)
+            {
+                popUpMethod("Succes", "The County was deleted!");
+            }
+            else
+            {
+                popUpMethod("Error", "This county has cities and can't be deleted.");
+            }
+
+        }
+
+        private async Task DeleteCategory(int id)
+        {
+            HttpClient client = new HttpClient();
+            HttpResponseMessage message = await client.DeleteAsync("http://localhost:2794/api/Category/delete_category");
+            if (message.IsSuccessStatusCode)
+            {
+                popUpMethod("Succes", "The category was deleted!");
+            }
+            else
+            {
+                popUpMethod("Error", "Unexpected error");
+            }
+        }
+
+        
 
     }
 }

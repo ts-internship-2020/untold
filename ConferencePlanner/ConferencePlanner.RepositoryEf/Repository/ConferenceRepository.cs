@@ -111,7 +111,37 @@ namespace ConferencePlanner.Repository.Ef.Repository
 
         public List<ConferenceModel> FilterConfAttendeeByDate(string email, string sDate, string eDate)
         {
-            throw new NotImplementedException();
+            List<Conference> conferences = _untoldContext.Conference.Where(c => c.StartDate >= DateTime.Parse(sDate) && c.EndDate <= DateTime.Parse(eDate))
+                .Include(x => x.ConferenceCategory)
+                .Include(x => x.ConferenceType)
+                .Include(x => x.Location)
+                .ThenInclude(x => x.City)
+                .ThenInclude(x => x.County)
+                .ThenInclude(x => x.Country)
+                .Include(x => x.MainSpeaker)
+                .ToList();
+
+            List<Attendee> attendees = _untoldContext.Attendee.Where(c => c.StatusId != 3 && c.AttendeeEmail==email).ToList();
+
+
+            List<ConferenceModel> conferenceModels = conferences.Select(c => new ConferenceModel()
+            {
+                ConferenceId = c.ConferenceId,
+                ConferenceCategoryName = c.ConferenceCategory.ConferenceCategoryName,
+                ConferenceTypeName = c.ConferenceType.ConferenceTypeName,
+                Location = c.Location.City.County.Country.CountryName + ", " + c.Location.City.County.CountyName + ", " + c.Location.City.CityName,
+                Speaker = c.MainSpeaker.FirstName + " " + c.MainSpeaker.LastName,
+                Period = c.StartDate + " - " + c.EndDate,
+                ConferenceName = c.ConferenceName,
+                StatusId = 0    
+            }).ToList();
+
+            for(int i =0;i<conferenceModels.Count; i++)
+            {
+                conferenceModels[i].StatusId = attendees[i].StatusId;
+            }
+            
+            return conferenceModels;
         }
 
         public List<ConferenceModel> FilterConferencesByDate(string email, string sDate, string eDate)
@@ -207,6 +237,8 @@ namespace ConferencePlanner.Repository.Ef.Repository
             return conferenceModel;
 
         }
+
+
 
         public List<ConferenceModel> GetConferencesByOrganizer(string email)
         {
