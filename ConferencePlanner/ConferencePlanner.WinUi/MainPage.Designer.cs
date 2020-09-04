@@ -353,7 +353,7 @@ namespace ConferencePlanner.WinUi
             this.Name = "MainPage";
             this.Text = "MainForm";
             this.TransparencyKey = System.Drawing.Color.WhiteSmoke;
-            //this.Load += new System.EventHandler(this.MainForm_Load);
+            this.Load += new System.EventHandler(this.MainForm_Load);
             this.TabAttendee.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.AttendeeGridvw)).EndInit();
             this.TabOrganizer.ResumeLayout(false);

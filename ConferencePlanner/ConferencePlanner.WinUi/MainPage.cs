@@ -56,12 +56,11 @@ namespace ConferencePlanner.WinUi
 
         }
 
-        public MainPage()
+        private void MainForm_Load(object sender, EventArgs e)
         {
 
-            InitializeComponent();
         }
-        
+
         //metoda de generat codul de bare.
         public String BarcodeGenerator()
         {
