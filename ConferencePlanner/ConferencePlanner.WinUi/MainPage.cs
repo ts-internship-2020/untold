@@ -428,6 +428,14 @@ namespace ConferencePlanner.WinUi
             HttpResponseMessage httpResponseMessage = await client.PostAsync("http://localhost:2794/api/Attendee/WithdrawnButton", httpContent);
         }
 
+        static async Task JoinAsync(ButtonModel buttonModel)
+        {
+            var json = JsonConvert.SerializeObject(buttonModel);
+            var httpContent = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
+            HttpClient client = new HttpClient();
+            HttpResponseMessage httpResponseMessage = await client.PostAsync("http://localhost:2794/api/Attendee/JoinButton", httpContent);
+        }
+
         private void Attend_Click(int confId)
         {
             Program.qrCode = BarcodeGenerator();
@@ -469,11 +477,17 @@ namespace ConferencePlanner.WinUi
             ConditionsForButtons();
         }
 
-        private void Join_Click(int statusId)
+        private void Join_Click(int confId)
         {
+            ButtonModel buttonModel = new ButtonModel();
+            buttonModel.email = Program.EnteredEmailAddress;
+            buttonModel.statusId = 2;
+            buttonModel.confId = confId;
             var newform = new WebviewForm();
             newform.ShowDialog();
-            _attendeeButtons.JoinCommand(Program.EnteredEmailAddress, statusId);
+            var t = Task.Run(() => JoinAsync(buttonModel));
+            t.Wait();
+            //_attendeeButtons.JoinCommand(Program.EnteredEmailAddress, confId);
         }
 
         private void EndDatePicker_ValueChanged(object sender, EventArgs e)
@@ -658,13 +672,13 @@ namespace ConferencePlanner.WinUi
             if (e.ColumnIndex == AttendeeGridvw.Columns["attend_column"].Index)
             {
                 confId = (int)AttendeeGridvw.Rows[e.RowIndex].Cells[5].Value;
-
-                try
+                int statusId = (int)AttendeeGridvw.Rows[e.RowIndex].Cells[4].Value;
+                if (statusId == 0)
                 {
                     Attend_Click(confId);
 
                 }
-                catch (Exception ee)
+                else if (statusId == 1)
                 {
                     AttendeeGridvw.Rows[e.RowIndex].Cells["attend_column"].ReadOnly = true;
 

@@ -51,7 +51,15 @@ namespace ConferencePlanner.Repository.Ef.Repository
 
         public void InsertCity(CityModel cityModel)
         {
-            throw new NotImplementedException();
+            DictionaryCity dictionaryCity = new DictionaryCity()
+            {
+                DictionaryCityId = cityModel.DictionaryCityId,
+                CityName = cityModel.CityName,
+                CountyId = cityModel.CountyId
+            };
+
+            _untoldContext.DictionaryCity.Add(dictionaryCity);
+            _untoldContext.SaveChanges();
         }
 
         public int LastDictionaryCityId()
@@ -61,7 +69,10 @@ namespace ConferencePlanner.Repository.Ef.Repository
 
         public void UpdateCity(CityModel cityModel)
         {
-            throw new NotImplementedException();
+            DictionaryCity dictionaryCity = _untoldContext.DictionaryCity.Find(cityModel.DictionaryCityId);
+            dictionaryCity.CityName = cityModel.CityName;
+            dictionaryCity.CountyId = cityModel.CountyId;
+            _untoldContext.SaveChanges();
         }
     }
 }
