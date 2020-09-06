@@ -1,20 +1,14 @@
 ﻿using ConferencePlanner.Abstraction.Model;
 using ConferencePlanner.Abstraction.Repository;
+//using System.Text.Json.Serialization;
+using Newtonsoft.Json;
 using System;
 using System.ComponentModel;
 using System.Drawing;
+using System.Net.Http;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Tulpep.NotificationWindow;
-using System.Windows.Controls;
-using System.Threading.Tasks;
-using System.Printing;
-using System.CodeDom.Compiler;
-using System.Net.Http;
-using System.Collections;
-using System.Resources.Extensions;
-//using System.Text.Json.Serialization;
-using Newtonsoft.Json;
 
 
 namespace ConferencePlanner.WinUi
@@ -79,9 +73,7 @@ namespace ConferencePlanner.WinUi
         private int CategoriesLastPageLastRow = 0;
         private int UpdateCategoryRow;
 
-
-        //lista de ce facem
-
+        private bool isEditingConference = false;
         public AddConf(IConferenceRepository conferenceRepository, ICountryRepository countryRepository, ICountyRepository countyRepository, ISpeakerRepository speakerRepository, ITypeRepository typeRepository, ICityRepository cityRepository, ICategoryRepository categoryRepository)
         {
             _conferenceRepository = conferenceRepository;
@@ -113,6 +105,7 @@ namespace ConferencePlanner.WinUi
             _categoryRepository = categoryRepository;
             InitializeComponent();
 
+            this.isEditingConference = true;
             this.PopulateForm(conference);
 
         }
@@ -328,21 +321,30 @@ namespace ConferencePlanner.WinUi
                     {
                         SelectedCategoryId = (int)CurrentGridView.SelectedRows[0].Cells["CategoryId"].Value;
                         TabControlLocation.SelectedIndex++;
-
-
                     }
                 }
             }
-
-            //else
-            //{
-            //    //label cu mesaj
-            //}
-            //}
             else
             {
                 //aici face save   
+                if (this.isEditingConference)
+                {
+                    ConferenceModelWithEmail newConference = CreateConferenceForInsert();
 
+                    var t = Task.Run(() => UpdateConference(newConference));
+                    t.Wait();
+
+                    this.Close();
+                }
+                else
+                {
+                    ConferenceModelWithEmail newConference = CreateConferenceForInsert();
+
+                    var t = Task.Run(() => InsertConference(newConference));
+                    t.Wait();
+
+                    this.Close();
+                }
             }
         }
 
@@ -406,23 +408,47 @@ namespace ConferencePlanner.WinUi
                 NextTabBtn.Text = "Next>>";
             }
         }
-
-        private void SaveInDataBase()
+        public void ResetForm()
         {
-
-
-            //insert in bd
-            //o sa fie apelata si la else in next btn
-        }
-
-
-
-        private void SaveNew_Click(object sender, EventArgs e)
-        {
-
             ConfName.Text = string.Empty;
             StardDatePicker.Value = DateTime.Today;
             EndDatePicker.Value = DateTime.Today;
+            this.StartHour.Value = DateTime.Today;
+            this.EndHour.Value = DateTime.Today;
+
+            //mai trebuie niste variabile 
+
+        }
+        public ConferenceModelWithEmail CreateConferenceForInsert()
+        {
+            ConferenceModelWithEmail newConference = new ConferenceModelWithEmail();
+
+            DateTime ConferenceStartDate = this.StardDatePicker.Value;
+            DateTime ConferenceEndDate = this.EndDatePicker.Value;
+            DateTime ConferenceStartHour = this.StartHour.Value;
+            DateTime ConferenceEndHour = this.EndHour.Value;
+
+            string startDate = ConferenceStartDate.ToString("yyyy-MM-dd hh:mm:ss").Split(" ")[0] + " " + ConferenceStartHour.ToString().Split(" ")[1];
+            string endDate = ConferenceEndDate.ToString("yyyy-MM-dd hh:mm:ss").Split(" ")[0] + " " + ConferenceEndHour.ToString().Split(" ")[1];
+
+            newConference.Email = Program.EnteredEmailAddress;
+            newConference.ConferenceName = this.ConfName.Text;
+            newConference.ConferenceCategoryName = this.SelectedCategoryId.ToString();
+            newConference.ConferenceTypeName = this.SelectedTypeId.ToString();
+            newConference.Speaker = this.SelectedSpeakerId.ToString();
+            newConference.Location = this.SelectedCityId.ToString();
+            newConference.Period = startDate + " - " + endDate;
+
+            return newConference;
+        }
+        private void SaveNew_Click(object sender, EventArgs e)
+        {
+            ConferenceModelWithEmail newConference = CreateConferenceForInsert(); 
+
+            var t = Task.Run(() => InsertConference(newConference));
+            t.Wait();
+
+            ResetForm();
         }
 
         private int[] CalculateTotalPages(int NumOfObjects)
@@ -465,6 +491,7 @@ namespace ConferencePlanner.WinUi
 
         private void CountriesCreatePage(BindingList<CountryModel> list)
         {
+            this.CountriesPages.Text = "Page" + this.CountriesCurrentPage + " of " + this.CountriesTotalPages;
             CheckPaginationButtonsVisibility(CountriesCurrentPage, CountriesTotalPages, CountriesNextBtn, CountriesBackBtn, CountriesFirstPageBtn, CountriesFirstPageBtn);
             BindingList<CountryModel> CountriesList = new BindingList<CountryModel>();
             int PreviousPageOffSet = (CountriesCurrentPage - 1) * PageSize;
@@ -478,6 +505,7 @@ namespace ConferencePlanner.WinUi
 
         private void CountiesCreatePage(BindingList<CountyModel> list)
         {
+            this.CountriesPages.Text = "Page" + this.CountiesCurrentPage + " of " + this.CountiesTotalPages;
             CheckPaginationButtonsVisibility(CountiesCurrentPage, CountiesTotalPages, CountiesNextBtn, CountiesBackBtn, CountiesFirstPage, CountiesFirstPage);
             BindingList<CountyModel> CountiesList = new BindingList<CountyModel>();
             int PreviousPageOffSet = (CountiesCurrentPage - 1) * PageSize;
@@ -491,11 +519,12 @@ namespace ConferencePlanner.WinUi
 
         private void SpeakerCreatePage(BindingList<SpeakerModel> lst)
         {
+            this.SpeakersPages.Text = "Page" + this.SpeakersCurrentPage + " of " + this.SpeakersTotalPages;
+
             this.CheckPaginationButtonsVisibility(this.SpeakersCurrentPage, this.SpeakersTotalPages,
                 this.SpeakersNextBtn, this.SpeakersBackBtn, this.SpeakersLastPage, this.SpeakersFirstPage);
 
             BindingList<SpeakerModel> result = new BindingList<SpeakerModel>();
-            //BindingList<SpeakerModel> result2 = new BindingList<SpeakerModel>();
 
             int PreviousPageOffSet = (this.SpeakersCurrentPage - 1) * this.PageSize;
 
@@ -514,6 +543,8 @@ namespace ConferencePlanner.WinUi
 
         private void TypeCreatePage(BindingList<TypeModel> lst)
         {
+            this.TypesPages.Text = "Page" + this.TypesCurrentPage+ " of " + this.TypesTotalPages;
+
             this.CheckPaginationButtonsVisibility(this.TypesCurrentPage, this.TypesTotalPages,
                 this.TypesNextBtn, this.TypesBackBtn, this.TypesLastPage, this.TypesFirstPage);
             BindingList<TypeModel> result = new BindingList<TypeModel>();
@@ -535,6 +566,7 @@ namespace ConferencePlanner.WinUi
 
         private void CategoryCreatePage(BindingList<CategoryModel> list)
         {
+            this.CategoriesPages.Text = "Page" + this.CategoriesCurrentPage + " of " + this.CategoriesToatlPages;
             CheckPaginationButtonsVisibility(CategoriesCurrentPage, CategoriesToatlPages, CategoriesNextBtn, CategoriesBackBtn, CategoriesLastPage, CategoriesFirstPage);
             BindingList<CategoryModel> categoryModels = new BindingList<CategoryModel>();
 
@@ -561,7 +593,7 @@ namespace ConferencePlanner.WinUi
             t.Wait();
 
             this.SpeakersForSearchBar = this.Speakers;
-
+         
             int[] aux = this.CalculateTotalPages(this.Speakers.Count);
             this.SpeakersTotalPages = aux[0];
             this.SpeakersLastPageLastRow = aux[1];
@@ -865,6 +897,7 @@ namespace ConferencePlanner.WinUi
 
         private void CitiesCreatePage(BindingList<CityModel> cityModels)
         {
+            this.CitiesPages.Text = "Page" + this.CityCurrentPage + " of " + this.CityTotalPages;
             this.CheckPaginationButtonsVisibility(this.CityCurrentPage, this.CityTotalPages,
                 this.CitiesNextBtn, this.CitiesBackBtn, this.CitiesLastPage, this.CitiesFirstPage);
 
@@ -1351,6 +1384,8 @@ namespace ConferencePlanner.WinUi
         }
         private void SpeakerBeginEditLayout(string opType)
         {
+            this.SpeakerPaginationSelector.Enabled = false;
+            this.SpeakerListDataGrid.SelectionMode = (DataGridViewSelectionMode) 0; //CellSelect
             this.SpeakerListDataGrid.Columns["main_speaker"].ReadOnly = true;
             this.SpeakerListDataGrid.Columns["main_speaker"].DefaultCellStyle.BackColor = Color.LightGray;
             this.SpeakerListDataGrid.Columns["delete_column"].Visible = false;
@@ -1425,6 +1460,8 @@ namespace ConferencePlanner.WinUi
         }
         private void SpeakerEndEditLayout(string str1popup, string str2popup)
         {
+            this.SpeakerPaginationSelector.Enabled = true;
+            this.SpeakerListDataGrid.SelectionMode = (DataGridViewSelectionMode) 1; //FullRowSelect
             this.SpeakerUserMessagesBox.Visible = false;
             this.SpeakerSaveButton.Visible = false;
             this.popUpMethod(str1popup, str2popup);
@@ -2937,6 +2974,70 @@ namespace ConferencePlanner.WinUi
             {
                 popUpMethod("Error", "Update failed");
             }
+        }
+        private async Task InsertConference(ConferenceModelWithEmail newConference)
+        {
+            var json = JsonConvert.SerializeObject(newConference);
+            var httpContent = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
+
+            HttpClient Client = new HttpClient();
+            HttpResponseMessage message = await Client.PostAsync("http://localhost:2794/api/Conference/add_conference", httpContent);
+
+            if (message.IsSuccessStatusCode)
+            {
+                popUpMethod("Succes", "Your conference has been added");
+            }
+            else
+            {
+                popUpMethod("Error", "Insert failed");
+            }       
+        }
+        private async Task UpdateConference(ConferenceModelWithEmail newConference)
+        {
+            var json = JsonConvert.SerializeObject(newConference);
+            var httpContent = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
+
+            HttpClient Client = new HttpClient();
+            HttpResponseMessage message = await Client.PostAsync("http://localhost:2794/api/Conference/update_conference", httpContent);
+
+            if (message.IsSuccessStatusCode)
+            {
+                popUpMethod("Succes", "Your conference has been modified");
+            }
+            else
+            {
+                popUpMethod("Error", "Update failed");
+            }
+        }
+        private void SpeakerListDataGrid_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+            this.SpeakerListDataGrid.BeginEdit(true);
+        }
+
+        private void CountryListDataGridView_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            this.CountryListDataGridView.BeginEdit(true);
+        }
+
+        private void CountiesListGridView_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            this.CountiesListGridView.BeginEdit(true);
+        }
+
+        private void CityListDataGridView_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            this.CityListDataGridView.BeginEdit(true);
+        }
+
+        private void TypeDataGrid_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            this.TypeDataGrid.BeginEdit(true);
+        }
+
+        private void CategoryDataGridView_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            this.CategoryDataGridView.BeginEdit(true);
         }
     }
 }

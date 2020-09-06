@@ -16,8 +16,4 @@ namespace ConferencePlanner.Abstraction.Model
         public string Speaker { get; set; }
         public string Period { get; set; }
     }
-
-    
-
-
 }

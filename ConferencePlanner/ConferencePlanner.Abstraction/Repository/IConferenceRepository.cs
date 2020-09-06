@@ -19,6 +19,9 @@ namespace ConferencePlanner.Abstraction.Repository
         List<ConferenceModel> GetAttendeesByPage(string email, int startIndex, int endIndex, string sDate, string eDate);
         ConferenceModel GetConferenceById(int id);
         void DeleteConferenceById(int id);
+        void InsertConference(ConferenceModelWithEmail conference);
+
+        void UpdateConference(ConferenceModelWithEmail conference);
 
 
     }
