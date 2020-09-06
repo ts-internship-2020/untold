@@ -825,7 +825,7 @@ namespace ConferencePlanner.WinUi
         private async Task<SpeakerModel> GetSpeakerByName(string fname, string lname)
         {
             HttpClient client = new HttpClient();
-            HttpResponseMessage s = await client.GetAsync("http://localhost:2794/api/Speaker/speaker_by_name/fName=" + fname + "&lName=" + lname);
+            HttpResponseMessage s = await client.GetAsync("http://localhost:2794/api/Speaker/speaker_by_name/fname=" + fname + "&lname=" + lname);
 
             if (s.IsSuccessStatusCode)
             {
