@@ -35,28 +35,16 @@ namespace ConferencePlanner.Repository.Ef.Repository
 
         public void WithdrawnCommand(ButtonModel buttonModel)
         {
-            var statusToUpdate = _untoldContext.Attendee.Where(x => x.StatusId == buttonModel.statusId && x.AttendeeEmail == buttonModel.email).FirstOrDefault();
+            var statusToUpdate = _untoldContext.Attendee.Where(x => x.ConferenceId == buttonModel.confId && x.AttendeeEmail == buttonModel.email).FirstOrDefault();
             statusToUpdate.StatusId = 3;
             _untoldContext.SaveChanges();
         }
 
         public void JoinCommand(ButtonModel buttonModel)
         {
-            throw new NotImplementedException();
+            var statusToUpdate = _untoldContext.Attendee.Where(x => x.ConferenceId == buttonModel.confId && x.AttendeeEmail == buttonModel.email).FirstOrDefault();
+            statusToUpdate.StatusId = 2;
+            _untoldContext.SaveChanges();
         }
-
-        //public void WithdrawnCommand(string email, int statusId)
-        //{
-        //    var statusToUpdate = _untoldContext.Attendee.Where(x => x.StatusId == statusId && x.AttendeeEmail == email).FirstOrDefault();
-        //    statusToUpdate.StatusId = 3;
-        //    _untoldContext.SaveChanges();
-        //}
-
-        //public void JoinCommand(string email, int statusId)
-        //{
-        //    var statusToUpdate = _untoldContext.Attendee.Where(x => x.StatusId == statusId && x.AttendeeEmail == email).FirstOrDefault();
-        //    statusToUpdate.StatusId = 2;
-        //    _untoldContext.SaveChanges();
-        //}
     }
 }

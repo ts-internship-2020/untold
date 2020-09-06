@@ -28,11 +28,25 @@ namespace ConferencePlanner.Api.Controllers
             BindingList<CityModel> speakers = _cityRepository.GetCitiesByCountyId(id);
             return Ok(speakers);
         }
-        [HttpPost]
-        [Route("DeleteCity")]
+        [HttpDelete]
+        [Route("DeleteCity={id}")]
         public IActionResult DeleteCity(int id)
         {
             _cityRepository.DeleteCity(id);
+            return Ok();
+        }
+        [HttpPost]
+        [Route("UpdateCity")]
+        public IActionResult UpdateSpeaker(CityModel cityModel)
+        {
+            _cityRepository.UpdateCity(cityModel);
+            return Ok();
+        }
+        [HttpPost]
+        [Route("InsertCity")]
+        public IActionResult InsertCity(CityModel cityModel)
+        {
+            _cityRepository.InsertCity(cityModel);
             return Ok();
         }
     }

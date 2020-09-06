@@ -770,7 +770,46 @@ namespace ConferencePlanner.WinUi
             CitiesCreatePage(Cities);
         }
 
+        private async Task InsertCityAsync(CityModel cityModel)
+        {
+            var json = JsonConvert.SerializeObject(cityModel);
+            var httpContent = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
 
+            HttpClient client = new HttpClient();
+
+            HttpResponseMessage s = await client.PostAsync("http://localhost:2794/api/City/InsertCity", httpContent);
+            if (s.IsSuccessStatusCode)
+            {
+                this.popUpMethod("Done", "You added the city succesfully");
+            }
+            else
+            {
+                this.popUpMethod("Error", "Something went wrong");
+            }
+
+        }
+
+
+        private async Task UpdateCityAsync(CityModel cityModel)
+        {
+            var json = JsonConvert.SerializeObject(cityModel);
+            var httpContent = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
+
+            HttpClient client = new HttpClient();
+
+            HttpResponseMessage s = await client.PostAsync("http://localhost:2794/api/City/UpdateCity", httpContent);
+
+
+            if (s.IsSuccessStatusCode)
+            {
+                this.popUpMethod("Done", "You updated the city succesfully");
+            }
+            else
+            {
+                this.popUpMethod("Error", "Something went wrong");
+            }
+
+        }
 
         private void SaveCityButton_Click(object sender, EventArgs e)
         {
@@ -780,7 +819,9 @@ namespace ConferencePlanner.WinUi
 
                 CityModel newCity = GetCity();
                 newCity.DictionaryCityId = _cityRepository.LastDictionaryCityId() + 1;
-                _cityRepository.InsertCity(newCity);
+                //_cityRepository.InsertCity(newCity);
+                var t = Task.Run(() => InsertCityAsync(newCity));
+                t.Wait();
                 this.Cities.Add(newCity);
                 this.CitiesFromSearchBar = this.Cities;
                 int[] aux = this.CalculateTotalPages(this.Cities.Count);
@@ -797,7 +838,9 @@ namespace ConferencePlanner.WinUi
             {
                 CityModel city = GetCity();
                 //city.DictionaryCityId = CityListDataGridView.Columns["DictionaryCityId"]
-                _cityRepository.UpdateCity(city);
+                //_cityRepository.UpdateCity(city);
+                var t = Task.Run(() => UpdateCityAsync(city));
+                t.Wait();
                 CityEndEditLayout("Done", "City modified succesfully");
                 this.CityListDataGridView.CurrentCell = null;
                 this.CityListDataGridView.Rows[0].Selected = false;
