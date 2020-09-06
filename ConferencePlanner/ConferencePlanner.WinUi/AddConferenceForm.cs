@@ -82,7 +82,7 @@ namespace ConferencePlanner.WinUi
 
         //lista de ce facem
 
-        public AddConf(IConferenceRepository conferenceRepository, ICountryRepository  countryRepository, ICountyRepository countyRepository, ISpeakerRepository speakerRepository, ITypeRepository typeRepository,ICityRepository cityRepository, ICategoryRepository categoryRepository)
+        public AddConf(IConferenceRepository conferenceRepository, ICountryRepository countryRepository, ICountyRepository countyRepository, ISpeakerRepository speakerRepository, ITypeRepository typeRepository, ICityRepository cityRepository, ICategoryRepository categoryRepository)
         {
             _conferenceRepository = conferenceRepository;
             _countryRepository = countryRepository;
@@ -95,11 +95,11 @@ namespace ConferencePlanner.WinUi
 
         }
 
-        
 
-    public AddConf()
+
+        public AddConf()
         {
-          
+
             InitializeComponent();
         }
         public AddConf(ConferenceModel conference, IConferenceRepository conferenceRepository, ICountryRepository countryRepository, ICountyRepository countyRepository, ISpeakerRepository speakerRepository, ITypeRepository typeRepository, ICityRepository cityRepository, ICategoryRepository categoryRepository)
@@ -118,9 +118,9 @@ namespace ConferencePlanner.WinUi
         }
         private void PopulateForm(ConferenceModel conference)
         {
-            
-             //this.CountryListDataGridView.Rows[0].Selected = false;
-             //this.CountiesListGridView.Rows[0].Selected = false;
+
+            //this.CountryListDataGridView.Rows[0].Selected = false;
+            //this.CountiesListGridView.Rows[0].Selected = false;
 
             this.ConfName.Text = conference.ConferenceName;
 
@@ -131,7 +131,7 @@ namespace ConferencePlanner.WinUi
 
             int selectedCountryId = this._countryRepository.GetCountryIdByConferenceId(conference.ConferenceId);
             int selectedRowId = this.SearchIdInDataGrid(selectedCountryId, "DictionaryCountryId", this.CountryListDataGridView);
-           // this.ConfName.Text = selectedRowId.ToString();
+            // this.ConfName.Text = selectedRowId.ToString();
 
             if (selectedRowId > 0)
             {
@@ -162,20 +162,20 @@ namespace ConferencePlanner.WinUi
         {
             TabControlLocation.SelectedIndex = 2;
         }
-        
+
         private void button1_Click(object sender, EventArgs e)
         {
-            if(ConfName.Text == string.Empty)
+            if (ConfName.Text == string.Empty)
             {
                 ErrorName.SetError(ConfName, "Please enter a value in the conference name fild!");
                 return;
             }
-           
+
 
         }
 
-       
-        
+
+
 
 
 
@@ -187,7 +187,7 @@ namespace ConferencePlanner.WinUi
         private void SaveAndNewBtnCityTab_Click(object sender, EventArgs e)
         {
             //SaveAndNewBtnCityTab.Enabled = true;
-            
+
             //CountryComboBox.SelectedItem = string.Empty;
             //CountyComboBox.SelectedItem = string.Empty;
             //CityComboBox.SelectedItem = string.Empty;
@@ -216,21 +216,22 @@ namespace ConferencePlanner.WinUi
                 int col_idx = CurrentDataGrid.Columns["main_speaker"].Index;
                 foreach (DataGridViewRow row in CurrentDataGrid.Rows)
                 {
-                    
+
                     if (Convert.ToBoolean(row.Cells[col_idx].Value) == true)
                     {
                         selectedSpeakersCount++;
                     }
                 }
             }
-            if ((CurrentDataGrid != this.SpeakerListDataGrid && CurrentDataGrid.Rows.GetRowCount(DataGridViewElementStates.Selected) < 1) || 
-                (CurrentDataGrid == this.SpeakerListDataGrid && selectedSpeakersCount <1))
+            if ((CurrentDataGrid != this.SpeakerListDataGrid && CurrentDataGrid.Rows.GetRowCount(DataGridViewElementStates.Selected) < 1) ||
+                (CurrentDataGrid == this.SpeakerListDataGrid && selectedSpeakersCount < 1))
             {
                 PopUpMessage = "Select a " + TabName;
                 popUpMethod(PopUpTitle, PopUpMessage);
                 return false;
-            } else if ((CurrentDataGrid != this.SpeakerListDataGrid && CurrentDataGrid.Rows.GetRowCount(DataGridViewElementStates.Selected) > 1) || 
-                (CurrentDataGrid == this.SpeakerListDataGrid && selectedSpeakersCount > 1))
+            }
+            else if ((CurrentDataGrid != this.SpeakerListDataGrid && CurrentDataGrid.Rows.GetRowCount(DataGridViewElementStates.Selected) > 1) ||
+              (CurrentDataGrid == this.SpeakerListDataGrid && selectedSpeakersCount > 1))
             {
                 PopUpMessage = "Select just a " + TabName;
                 popUpMethod(PopUpTitle, PopUpMessage);
@@ -249,22 +250,25 @@ namespace ConferencePlanner.WinUi
             if (NextTabBtn.Text == "Next>>")
             {
 
-                    if (TabControlLocation.SelectedIndex == 0)
+                if (TabControlLocation.SelectedTab == this.Country)
                 {
                     CurrentGridView = CountryListDataGridView;
+
                     if (IndexChange(Text, CurrentGridView))
                     {
                         SelectedCountryId = (int)CurrentGridView.SelectedRows[0].Cells["DictionaryCountryId"].Value;
+                        TabControlLocation.SelectedIndex++;
 
                     }
 
                 }
-                if (TabControlLocation.SelectedIndex == 1)
+                if (TabControlLocation.SelectedTab == this.County)
                 {
                     CurrentGridView = CountiesListGridView;
                     if (IndexChange(Text, CurrentGridView))
                     {
                         SelectedCountyId = (int)CurrentGridView.SelectedRows[0].Cells["CountyId"].Value;
+                        TabControlLocation.SelectedIndex++;
 
                     }
                 }
@@ -274,18 +278,21 @@ namespace ConferencePlanner.WinUi
                     if (IndexChange(Text, CurrentGridView))
                     {
                         SelectedCityId = (int)CurrentGridView.SelectedRows[0].Cells["DictionaryCityId"].Value;
+                        TabControlLocation.SelectedIndex++;
 
                     }
                 }
-                if (TabControlLocation.SelectedTab == TypeTab)
+                if (TabControlLocation.SelectedTab == this.TypeTab)
                 {
                     CurrentGridView = TypeDataGrid;
                     if (IndexChange(Text, CurrentGridView))
                     {
                         SelectedTypeId = (int)CurrentGridView.SelectedRows[0].Cells["TypeId"].Value;
+                        TabControlLocation.SelectedIndex++;
 
                     }
                 }
+
                 if (TabControlLocation.SelectedTab == this.SpeakerTab)
                 {
                     CurrentGridView = SpeakerListDataGrid;
@@ -309,20 +316,22 @@ namespace ConferencePlanner.WinUi
                         }
 
                         SelectedSpeakerId = (int)CurrentGridView.Rows[SelectedRowIndex].Cells["SpeakerId"].Value;
+                        TabControlLocation.SelectedIndex++;
+
                     }
                 }
+
                 if (TabControlLocation.SelectedTab == CategoryTab)
                 {
                     CurrentGridView = CategoryDataGridView;
                     if (IndexChange(Text, CurrentGridView))
                     {
                         SelectedCategoryId = (int)CurrentGridView.SelectedRows[0].Cells["CategoryId"].Value;
+                        TabControlLocation.SelectedIndex++;
+
 
                     }
                 }
-
-                TabControlLocation.SelectedIndex++;
-
             }
 
             //else
@@ -349,7 +358,7 @@ namespace ConferencePlanner.WinUi
                 }
             }
 
-            
+
             if (TabControlLocation.SelectedIndex == 0)
             {
                 this.LoadCountryTab();
@@ -357,7 +366,7 @@ namespace ConferencePlanner.WinUi
             if (TabControlLocation.SelectedTab == County)
             {
                 this.LoadCountyTab();
-                
+
             }
             if (TabControlLocation.SelectedTab == this.City)
             {
@@ -373,7 +382,7 @@ namespace ConferencePlanner.WinUi
             {
                 this.LoadTypesTab();
             }
-            if(TabControlLocation.SelectedTab == CategoryTab)
+            if (TabControlLocation.SelectedTab == CategoryTab)
             {
                 LoadCategoryTab();
             }
@@ -386,9 +395,9 @@ namespace ConferencePlanner.WinUi
             {
                 BackTabBtn.Enabled = false;
             }
-            if(TabControlLocation.SelectedIndex >= 5)
+            if (TabControlLocation.SelectedIndex >= 5)
             {
-                SaveNew.Visible = true; 
+                SaveNew.Visible = true;
                 NextTabBtn.Text = "Save";
             }
             else
@@ -400,8 +409,8 @@ namespace ConferencePlanner.WinUi
 
         private void SaveInDataBase()
         {
-            
-            
+
+
             //insert in bd
             //o sa fie apelata si la else in next btn
         }
@@ -417,19 +426,19 @@ namespace ConferencePlanner.WinUi
         }
 
         private int[] CalculateTotalPages(int NumOfObjects)
-        {  
+        {
             int TotalPages = NumOfObjects / this.PageSize;
             int LastPageLastRow = NumOfObjects % this.PageSize;
 
             if (LastPageLastRow > 0)
             {
                 TotalPages += 1;
-             
+
             }
             return new int[] { TotalPages, LastPageLastRow };
 
         }
-        private void CheckPaginationButtonsVisibility(int currentPage, int totalPages, System.Windows.Forms.Button next, 
+        private void CheckPaginationButtonsVisibility(int currentPage, int totalPages, System.Windows.Forms.Button next,
             System.Windows.Forms.Button prev, System.Windows.Forms.Button last, System.Windows.Forms.Button first)
         {
             if (currentPage == totalPages)
@@ -473,7 +482,7 @@ namespace ConferencePlanner.WinUi
             BindingList<CountyModel> CountiesList = new BindingList<CountyModel>();
             int PreviousPageOffSet = (CountiesCurrentPage - 1) * PageSize;
             int min = Math.Min(PreviousPageOffSet + PageSize, list.Count);
-            for (int i= PreviousPageOffSet; i<min; i++)
+            for (int i = PreviousPageOffSet; i < min; i++)
             {
                 CountiesList.Add(list[i]);
             }
@@ -489,17 +498,17 @@ namespace ConferencePlanner.WinUi
             //BindingList<SpeakerModel> result2 = new BindingList<SpeakerModel>();
 
             int PreviousPageOffSet = (this.SpeakersCurrentPage - 1) * this.PageSize;
-            
-            int aux = Math.Min(PreviousPageOffSet+this.PageSize, lst.Count);
 
-     
-            for (int i= PreviousPageOffSet; i < aux; i++)
+            int aux = Math.Min(PreviousPageOffSet + this.PageSize, lst.Count);
+
+
+            for (int i = PreviousPageOffSet; i < aux; i++)
             {
                 result.Add(lst[i]);
             }
-            
+
             this.SpeakerListDataGrid.DataSource = result;
-            
+
 
         }
 
@@ -532,31 +541,31 @@ namespace ConferencePlanner.WinUi
             int PreviosPageOffSet = (CategoriesCurrentPage - 1) * PageSize;
             int temp = Math.Min(PreviosPageOffSet + PageSize, list.Count);
 
-            for(int i = PreviosPageOffSet; i< temp; i++)
+            for (int i = PreviosPageOffSet; i < temp; i++)
             {
                 categoryModels.Add(list[i]);
 
             }
 
             CategoryDataGridView.DataSource = categoryModels;
-        
-        
-        
+
+
+
         }
 
 
         private void LoadSpeakersTab()
         {
-           
+
             var t = Task.Run(() => GetAllSpeakers());
             t.Wait();
-            
+
             this.SpeakersForSearchBar = this.Speakers;
-            
+
             int[] aux = this.CalculateTotalPages(this.Speakers.Count);
             this.SpeakersTotalPages = aux[0];
-            this.SpeakersLastPageLastRow = aux[1]; 
-                
+            this.SpeakersLastPageLastRow = aux[1];
+
             this.SpeakerCreatePage(this.Speakers);
         }
 
@@ -578,7 +587,7 @@ namespace ConferencePlanner.WinUi
             CategoryCreatePage(Categories);
 
 
-            
+
 
         }
 
@@ -738,8 +747,9 @@ namespace ConferencePlanner.WinUi
             {
                 string json = await httpResponseMessage.Content.ReadAsStringAsync();
                 var t = JsonConvert.DeserializeObject<BindingList<CityModel>>(json);
-                this.Cities =  t;
-            } else
+                this.Cities = t;
+            }
+            else
             {
                 this.Cities = new BindingList<CityModel>();
             }
@@ -826,7 +836,8 @@ namespace ConferencePlanner.WinUi
                 if (i < 0)
                 {
                     return;
-                }else
+                }
+                else
                 {
                     cities.Add(cityModels[i]);
 
@@ -899,8 +910,8 @@ namespace ConferencePlanner.WinUi
             this.CityListDataGridView.Rows[0].Selected = false;
         }
 
-        
-       
+
+
 
 
         private void LoadTypesTab()
@@ -923,11 +934,11 @@ namespace ConferencePlanner.WinUi
             {
                 this.SpeakerListDataGrid.Columns.Remove("ImagePath");
             }
-            if(SpeakerListDataGrid.Columns.Contains("SpeakerId") && SpeakerListDataGrid.Columns["SpeakerId"].Visible)
+            if (SpeakerListDataGrid.Columns.Contains("SpeakerId") && SpeakerListDataGrid.Columns["SpeakerId"].Visible)
             {
                 SpeakerListDataGrid.Columns["SpeakerId"].Visible = false;
             }
-            if (SpeakerListDataGrid.Columns.Contains("main_speaker")==false)
+            if (SpeakerListDataGrid.Columns.Contains("main_speaker") == false)
             {
                 DataGridViewCheckBoxColumn MainSpeaker = new DataGridViewCheckBoxColumn();
                 MainSpeaker.ValueType = typeof(bool);
@@ -945,7 +956,7 @@ namespace ConferencePlanner.WinUi
                 deleteButtonColumn.Name = "delete_column";
 
                 SpeakerListDataGrid.Columns.Add(deleteButtonColumn);
-                
+
             }
 
             this.SpeakerListDataGrid.Columns["FirstName"].HeaderText = "First Name";
@@ -953,10 +964,10 @@ namespace ConferencePlanner.WinUi
 
             //this.SpeakerListDataGrid.CurrentCell = null;
             this.SpeakerListDataGrid.Rows[0].Selected = false;
-            
+
             this.SpeakerListDataGrid.Controls[1].Enabled = true;
 
-            
+
             //this.SpeakerListDataGrid.PerformLayout();
 
         }
@@ -970,8 +981,8 @@ namespace ConferencePlanner.WinUi
             LoadCountryTab();
         }
 
-      
-       
+
+
         private void LoadCountryTab()
         {
             this.Countries = _countryRepository.GetCountriesList();
@@ -986,7 +997,7 @@ namespace ConferencePlanner.WinUi
             CountriesCreatePage(Countries);
         }
 
-        
+
 
         private void CountryListDataGridView_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
@@ -994,7 +1005,7 @@ namespace ConferencePlanner.WinUi
             {
                 CountryListDataGridView.Columns["DictionaryCountryId"].Visible = false;
             }
-         
+
             if (CountryListDataGridView.Columns.Contains("delete_column") == false)
             {
                 DataGridViewButtonColumn deleteButtonColumn = new DataGridViewButtonColumn();
@@ -1072,7 +1083,7 @@ namespace ConferencePlanner.WinUi
                 CountryListDataGridView.AllowUserToAddRows = true;
             }
         }
-        
+
 
         private void TypeDataGrid_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
@@ -1080,7 +1091,7 @@ namespace ConferencePlanner.WinUi
             {
                 TypeDataGrid.Columns["TypeId"].Visible = false;
             }
-           
+
             this.TypeDataGrid.Columns["TypeName"].HeaderText = "Conference Type";
             if (TypeDataGrid.Columns.Contains("delete_column") == false)
             {
@@ -1104,13 +1115,13 @@ namespace ConferencePlanner.WinUi
 
         private void CategoryDataGridVIew_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
-            if(CategoryDataGridView.Columns.Contains("ConferenceCategoryId") && CategoryDataGridView.Columns["ConferenceCategoryId"].Visible) 
+            if (CategoryDataGridView.Columns.Contains("ConferenceCategoryId") && CategoryDataGridView.Columns["ConferenceCategoryId"].Visible)
             {
                 CategoryDataGridView.Columns["ConferenceCategoryId"].Visible = false;
             }
 
             CategoryDataGridView.Columns["ConferenceCategoryName"].HeaderText = "Conference Category";
-            if(CategoryDataGridView.Columns.Contains("delete_column") == false)
+            if (CategoryDataGridView.Columns.Contains("delete_column") == false)
             {
                 DataGridViewButtonColumn deleteButtonColumn = new DataGridViewButtonColumn();
                 deleteButtonColumn.UseColumnTextForButtonValue = true;
@@ -1250,7 +1261,7 @@ namespace ConferencePlanner.WinUi
             this.SpeakerUserMessagesBox.Visible = true;
             this.SpeakerSaveButton.Visible = true;
         }
-     
+
 
         private void AddInsertMessageType()
         {
@@ -1273,7 +1284,7 @@ namespace ConferencePlanner.WinUi
         private void SpeakerAddUpdateMessage(string fName, string lName)
         {
             this.SpeakerUserMessagesBox.ForeColor = Color.MediumSeaGreen;
-            string sName = fName +" "+ lName;
+            string sName = fName + " " + lName;
             this.SpeakerUserMessagesBox.Text = "You are now editing speaker " + sName + "'s informations. Press the button to Save.";
             this.SpeakerUserMessagesBox.Visible = true;
             this.SpeakerSaveButton.Visible = true;
@@ -1284,7 +1295,7 @@ namespace ConferencePlanner.WinUi
             this.textBox3.ForeColor = Color.MediumSeaGreen;
             string confname = name;
             //int idtype = id;
-            this.textBox3.Text = "You are now editing conference type "+ confname + " Press the button to Save.";
+            this.textBox3.Text = "You are now editing conference type " + confname + " Press the button to Save.";
             this.textBox3.Visible = true;
             this.button3.Visible = true;
         }
@@ -1301,7 +1312,7 @@ namespace ConferencePlanner.WinUi
             this.SpeakerListDataGrid.Columns["main_speaker"].DefaultCellStyle.BackColor = Color.LightGray;
             this.SpeakerListDataGrid.Columns["delete_column"].Visible = false;
             this.SearchBar.Enabled = false;
-            
+
             foreach (DataGridViewRow row in SpeakerListDataGrid.Rows)
             {
                 if (row.Index != this.UpdateSpeakerRow)
@@ -1313,7 +1324,7 @@ namespace ConferencePlanner.WinUi
             this.SpeakersBackBtn.Enabled = false;
             this.SpeakersFirstPage.Enabled = false;
             this.SpeakersLastPage.Enabled = false;
-            
+
             if (opType == "u")
             {
                 this.SpeakerListDataGrid.AllowUserToAddRows = false;
@@ -1324,7 +1335,7 @@ namespace ConferencePlanner.WinUi
 
         private void TypeBeginEditLayout(string opType)
         {
-            
+
             this.TypeDataGrid.Columns["delete_column"].Visible = false;
             this.SearchBar.Enabled = false;
 
@@ -1353,7 +1364,7 @@ namespace ConferencePlanner.WinUi
 
             foreach (DataGridViewRow row in CategoryDataGridView.Rows)
             {
-                if(row.Index != UpdateCategoryRow)
+                if (row.Index != UpdateCategoryRow)
                 {
                     row.ReadOnly = true;
                 }
@@ -1364,7 +1375,7 @@ namespace ConferencePlanner.WinUi
             CategoriesFirstPage.Enabled = false;
             CategoriesLastPage.Enabled = false;
 
-            if(action == "update")
+            if (action == "update")
             {
                 CategoryDataGridView.AllowUserToAddRows = false;
             }
@@ -1376,7 +1387,7 @@ namespace ConferencePlanner.WinUi
             this.popUpMethod(str1popup, str2popup);
             this.SpeakerListDataGrid.Columns["main_speaker"].ReadOnly = false;
             this.SpeakerListDataGrid.Columns["main_speaker"].DefaultCellStyle.BackColor = Color.White;
-           
+
             this.SpeakerListDataGrid.Columns["delete_column"].Visible = true;
             this.SearchBar.Enabled = true;
 
@@ -1387,7 +1398,7 @@ namespace ConferencePlanner.WinUi
                     row.ReadOnly = false;
                 }
             }
-            this.SpeakersNextBtn.Enabled = true;    
+            this.SpeakersNextBtn.Enabled = true;
             this.SpeakersBackBtn.Enabled = true;
             this.SpeakersFirstPage.Enabled = true;
             this.SpeakersLastPage.Enabled = true;
@@ -1400,7 +1411,7 @@ namespace ConferencePlanner.WinUi
 
         private void TypeEndEditLayout(string str1popup, string str2popup)
         {
-            
+
             this.button3.Visible = false;
             this.textBox3.Visible = false;
             this.popUpMethod(str1popup, str2popup);
@@ -1450,7 +1461,7 @@ namespace ConferencePlanner.WinUi
             CategoriesBackBtn.Enabled = true;
             CategoriesFirstPage.Enabled = true;
             CategoriesLastPage.Enabled = true;
-            if(CategoryDataGridView.AllowUserToAddRows == false)
+            if (CategoryDataGridView.AllowUserToAddRows == false)
             {
                 CategoryDataGridView.AllowUserToAddRows = true;
             }
@@ -1493,8 +1504,9 @@ namespace ConferencePlanner.WinUi
         private void CountiesListGridView_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
         {
             UpdateCountyRow = e.RowIndex;
-            if (CountyEditTextBox.Visible == false) {
-                if (UpdateCountyRow >= PageSize || CountiesLastPageLastRow > 0 && CountiesCurrentPage == CountiesTotalPages && UpdateCountyRow == CountiesLastPageLastRow || CountiesTotalPages==0 && CountiesLastPageLastRow==0)
+            if (CountyEditTextBox.Visible == false)
+            {
+                if (UpdateCountyRow >= PageSize || CountiesLastPageLastRow > 0 && CountiesCurrentPage == CountiesTotalPages && UpdateCountyRow == CountiesLastPageLastRow || CountiesTotalPages == 0 && CountiesLastPageLastRow == 0)
                 {
                     CountyAddInsertMessage();
                     CountiBeginEditLayout("Insert");
@@ -1504,8 +1516,9 @@ namespace ConferencePlanner.WinUi
                     string CountyName = CountiesListGridView.Rows[UpdateCountyRow].Cells["CountyName"].Value.ToString();
                     CountyAddUpdateMessage(CountyName);
                     CountiBeginEditLayout("Update");
-                } 
-            } else if(UpdateCountyRow != e.RowIndex)
+                }
+            }
+            else if (UpdateCountyRow != e.RowIndex)
             {
                 this.popUpMethod("Warning!", "Changes made would not be saved unless you click on the Save button");
             }
@@ -1521,8 +1534,8 @@ namespace ConferencePlanner.WinUi
             }
             if (SpeakerUserMessagesBox.Visible == false)
             {
-                if (this.UpdateSpeakerRow >= this.PageSize || 
-                    (this.SpeakersLastPageLastRow > 0 && this.SpeakersCurrentPage == this.SpeakersTotalPages && this.UpdateSpeakerRow ==this.SpeakersLastPageLastRow))
+                if (this.UpdateSpeakerRow >= this.PageSize ||
+                    (this.SpeakersLastPageLastRow > 0 && this.SpeakersCurrentPage == this.SpeakersTotalPages && this.UpdateSpeakerRow == this.SpeakersLastPageLastRow))
                 {
                     this.SpeakerAddInsertMessage();
                     this.SpeakerBeginEditLayout("i");
@@ -1535,7 +1548,7 @@ namespace ConferencePlanner.WinUi
                     this.SpeakerBeginEditLayout("u");
                 }
             }
-            else if (this.UpdateSpeakerRow != e.RowIndex) 
+            else if (this.UpdateSpeakerRow != e.RowIndex)
             {
                 this.popUpMethod("Warning!", "Changes made would not be saved unless you click on the Save button");
             }
@@ -1581,8 +1594,8 @@ namespace ConferencePlanner.WinUi
             UpdateCategoryRow = e.RowIndex;
             if (!CategoryEditTextField.Visible)
             {
-                if (UpdateCategoryRow >= PageSize || (CategoriesLastPageLastRow == 0 && CategoriesCurrentPage == CategoriesToatlPages && UpdateTypeRow == CategoriesLastPageLastRow)) 
-                { 
+                if (UpdateCategoryRow >= PageSize || (CategoriesLastPageLastRow == 0 && CategoriesCurrentPage == CategoriesToatlPages && UpdateTypeRow == CategoriesLastPageLastRow))
+                {
                     CategoryAddInsertMessage();
                     CategoryBeginEditLayout("insert");
                 }
@@ -1593,7 +1606,7 @@ namespace ConferencePlanner.WinUi
                     CategoryAddUpdatedMessage(CategoryName);
                     CategoryBeginEditLayout("update");
 
-                } 
+                }
             }
             else if (UpdateCategoryRow != e.RowIndex)
             {
@@ -1609,7 +1622,7 @@ namespace ConferencePlanner.WinUi
             CountryModel Country = new CountryModel();
             Country.DictionaryCountryId = Countries.Count + 1;
             Country.CountryName = CountryListDataGridView.Rows[UpdateCountriesRow].Cells["CountryName"].Value.ToString();
-           // Country.CountryId = SelectedCountryId;
+            // Country.CountryId = SelectedCountryId;
 
 
             return Country;
@@ -1647,7 +1660,7 @@ namespace ConferencePlanner.WinUi
             speaker.FirstName = this.SpeakerListDataGrid.Rows[this.UpdateSpeakerRow].Cells["FirstName"].Value.ToString();
             speaker.LastName = this.SpeakerListDataGrid.Rows[this.UpdateSpeakerRow].Cells["LastName"].Value.ToString();
             speaker.Nationality = this.SpeakerListDataGrid.Rows[this.UpdateSpeakerRow].Cells["Nationality"].Value.ToString();
-          
+
             speaker.SpeakerId = (int)this.SpeakerListDataGrid.Rows[this.UpdateSpeakerRow].Cells["SpeakerId"].Value;
 
             return speaker;
@@ -1659,7 +1672,7 @@ namespace ConferencePlanner.WinUi
 
             type.TypeId = int.Parse(this.TypeDataGrid.Rows[this.UpdateTypeRow].Cells["TypeId"].Value.ToString());
             type.TypeName = this.TypeDataGrid.Rows[this.UpdateTypeRow].Cells["TypeName"].Value.ToString();
-           
+
 
             return type;
         }
@@ -1671,7 +1684,7 @@ namespace ConferencePlanner.WinUi
             categoryModel.ConferenceCategoryId = int.Parse(CategoryDataGridView.Rows[UpdateCategoryRow].Cells["ConferenceCategoryId"].Value.ToString());
             categoryModel.ConferenceCategoryName = CategoryDataGridView.Rows[UpdateCategoryRow].Cells["ConferenceCategoryName"].Value.ToString();
             return categoryModel;
-        
+
         }
 
 
@@ -1681,7 +1694,7 @@ namespace ConferencePlanner.WinUi
             if ((this.SpeakersLastPageLastRow > 0 && this.SpeakersCurrentPage == this.SpeakersTotalPages && this.UpdateSpeakerRow == this.SpeakersLastPageLastRow) || (this.UpdateSpeakerRow == this.PageSize))
             {
                 SpeakerModel newSpeaker = GetSpeaker();
-                
+
                 //_speakerRepository.InsertSpeaker(newSpeaker);
                 var t = Task.Run(() => InsertSpeaker(newSpeaker));
                 t.Wait();
@@ -1718,7 +1731,7 @@ namespace ConferencePlanner.WinUi
             if ((this.TypesLastPageLastRow > 0 && this.TypesCurrentPage == this.TypesTotalPages && this.UpdateTypeRow == this.TypesLastPageLastRow) || (this.UpdateTypeRow == this.PageSize))
             {
                 TypeModel newType = GetType();
-                newType.TypeId = this.Types.Count +1;
+                newType.TypeId = this.Types.Count + 1;
                 //_typeRepository.InsertType(newType);
                 var t = Task.Run(() => InsertType(newType));
                 t.Wait();
@@ -1730,7 +1743,7 @@ namespace ConferencePlanner.WinUi
                 this.TypesLastPageLastRow = aux[1];
                 this.TypesCurrentPage = 1;
                 this.TypeCreatePage(this.Types);
-               
+
                 this.TypeDataGrid.CurrentCell = null;
                 this.TypeDataGrid.Rows[0].Selected = false;
                 this.button3.Visible = false;
@@ -1743,7 +1756,7 @@ namespace ConferencePlanner.WinUi
             else
             {
                 TypeModel type = this.GetType();
-            
+
                 //_typeRepository.UpdateType(Type);
                 var t = Task.Run(() => UpdateType(type));
                 t.Wait();
@@ -1764,7 +1777,7 @@ namespace ConferencePlanner.WinUi
                 {
                     this.Types[this.Types.IndexOf(ts)].TypeId = type.TypeId;
                     this.Types[this.Types.IndexOf(ts)].TypeName = type.TypeName;
-                    
+
                 }
             }
         }
@@ -1773,13 +1786,13 @@ namespace ConferencePlanner.WinUi
         private void CategoryEditSaveBtn_Click(object sender, EventArgs e)
         {
             CategoryDataGridView.EndEdit();
-            if((CategoriesLastPageLastRow > 0 && CategoriesCurrentPage == CategoriesToatlPages && UpdateCategoryRow == CategoriesLastPageLastRow) || UpdateCategoryRow == PageSize)
+            if ((CategoriesLastPageLastRow > 0 && CategoriesCurrentPage == CategoriesToatlPages && UpdateCategoryRow == CategoriesLastPageLastRow) || UpdateCategoryRow == PageSize)
             {
                 CategoryModel Category = GetCategory();
                 Category.ConferenceCategoryId = Categories.Count + 1;
 
                 var t = Task.Run(() => InsertCategory(Category));
-                t.Wait(); 
+                t.Wait();
                 //_categoryRepository.InsertCategory(Category);
                 Categories.Add(Category);
                 int[] Temp = CalculateTotalPages(Categories.Count);
@@ -1802,9 +1815,9 @@ namespace ConferencePlanner.WinUi
 
         private void UpdateCategoryArray(CategoryModel category)
         {
-            foreach(CategoryModel cat in Categories)
+            foreach (CategoryModel cat in Categories)
             {
-                if(cat.ConferenceCategoryId == category.ConferenceCategoryId)
+                if (cat.ConferenceCategoryId == category.ConferenceCategoryId)
                 {
                     Categories[Categories.IndexOf(cat)].ConferenceCategoryId = category.ConferenceCategoryId;
                     Categories[Categories.IndexOf(cat)].ConferenceCategoryName = category.ConferenceCategoryName;
@@ -1816,7 +1829,7 @@ namespace ConferencePlanner.WinUi
         private void CountySaveEditBtn_Click(object sender, EventArgs e)
         {
             CountiesListGridView.EndEdit();
-            if((CountiesLastPageLastRow > 0 && CountiesCurrentPage == CountiesTotalPages && UpdateCountyRow == CountiesLastPageLastRow) || UpdateCountyRow == PageSize)
+            if ((CountiesLastPageLastRow > 0 && CountiesCurrentPage == CountiesTotalPages && UpdateCountyRow == CountiesLastPageLastRow) || UpdateCountyRow == PageSize)
             {
                 CountyModel NewCounty = GetCounty();
                 NewCounty.CountyId = _countyRepository.GetLastCountyId();
@@ -1844,7 +1857,7 @@ namespace ConferencePlanner.WinUi
             if ((CountriesLastPageLastRow > 0 && CountriesCurrentPage == CountriesTotalPages && UpdateCountriesRow == CountriesLastPageLastRow) || UpdateCountriesRow == PageSize)
             {
                 CountryModel NewCountry = GetCountry();
-               // _countryRepository.InsertCountry(NewCountry);
+                // _countryRepository.InsertCountry(NewCountry);
                 var t = Task.Run(() => InsertCountry(NewCountry));
                 t.Wait();
                 Countries.Add(NewCountry);
@@ -1878,9 +1891,9 @@ namespace ConferencePlanner.WinUi
         }
         private void UpdateCountiesArray(CountyModel County)
         {
-           foreach(CountyModel C in Counties)
+            foreach (CountyModel C in Counties)
             {
-                if(C.CountyId == County.CountyId)
+                if (C.CountyId == County.CountyId)
                 {
                     Counties[Counties.IndexOf(C)].CountyName = County.CountyName;
                 }
@@ -1929,7 +1942,7 @@ namespace ConferencePlanner.WinUi
             }
         }
 
-      
+
         private void CountiesListGridView_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex < 0)
@@ -1942,7 +1955,7 @@ namespace ConferencePlanner.WinUi
             }
             if (CountiesListGridView.Columns[e.ColumnIndex].Name == "delete_column")
             {
-                if((e.RowIndex == PageSize) || (CountiesLastPageLastRow >0 && CountiesCurrentPage == CountiesTotalPages && e.RowIndex == CountiesLastPageLastRow))
+                if ((e.RowIndex == PageSize) || (CountiesLastPageLastRow > 0 && CountiesCurrentPage == CountiesTotalPages && e.RowIndex == CountiesLastPageLastRow))
                 {
                     return;
                 }
@@ -1964,7 +1977,7 @@ namespace ConferencePlanner.WinUi
 
         private void SpeakerListDataGrid_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-          
+
             if (e.ColumnIndex == this.SpeakerListDataGrid.Columns["main_speaker"].Index && this.SpeakerUserMessagesBox.Visible == true)
             {
                 this.popUpMethod("Notice", "You can't select the conference main speaker when in edit mode.");
@@ -1977,21 +1990,21 @@ namespace ConferencePlanner.WinUi
             {
                 return;
             }
-            if(this.SpeakerListDataGrid.Columns[e.ColumnIndex].Name == "delete_column")
+            if (this.SpeakerListDataGrid.Columns[e.ColumnIndex].Name == "delete_column")
             {
-                if((e.RowIndex == this.PageSize) || (this.SpeakersLastPageLastRow>0 && this.SpeakersCurrentPage ==this.SpeakersTotalPages && e.RowIndex == this.SpeakersLastPageLastRow))
+                if ((e.RowIndex == this.PageSize) || (this.SpeakersLastPageLastRow > 0 && this.SpeakersCurrentPage == this.SpeakersTotalPages && e.RowIndex == this.SpeakersLastPageLastRow))
                 {
                     return;
                 }
-                
-                int id = (int) this.SpeakerListDataGrid.Rows[e.RowIndex].Cells["SpeakerId"].Value;
-   
+
+                int id = (int)this.SpeakerListDataGrid.Rows[e.RowIndex].Cells["SpeakerId"].Value;
+
                 var newDeleteForm = new AreYouSure(_speakerRepository, id);
 
-                Task t = Task.Run(() => { newDeleteForm.ShowDialog();  } );
+                Task t = Task.Run(() => { newDeleteForm.ShowDialog(); });
                 t.Wait();
                 this.LoadSpeakersTab();
-               
+
             }
 
         }
@@ -2033,9 +2046,9 @@ namespace ConferencePlanner.WinUi
             {
                 return;
             }
-            if(CategoryDataGridView.Columns[e.ColumnIndex].Name == "delete_column")
+            if (CategoryDataGridView.Columns[e.ColumnIndex].Name == "delete_column")
             {
-                if((e.RowIndex == PageSize) || (CategoriesLastPageLastRow > 0 && CategoriesCurrentPage == CategoriesToatlPages && e.RowIndex == CategoriesLastPageLastRow))
+                if ((e.RowIndex == PageSize) || (CategoriesLastPageLastRow > 0 && CategoriesCurrentPage == CategoriesToatlPages && e.RowIndex == CategoriesLastPageLastRow))
                 {
                     return;
                 }
@@ -2078,17 +2091,18 @@ namespace ConferencePlanner.WinUi
         private void CountiesNextBtn_Click(object sender, EventArgs e)
         {
             CountiesCurrentPage++;
-            if(CountiesFromSearchBar.Count > 0)
+            if (CountiesFromSearchBar.Count > 0)
             {
                 CountiesCreatePage(CountiesFromSearchBar);
-            }else
+            }
+            else
             {
                 CountiesCreatePage(Counties);
             }
             CountiesListGridView.Rows[0].Selected = false;
         }
 
-        
+
 
         private void CountiesLastPage_Click(object sender, EventArgs e)
         {
@@ -2177,9 +2191,9 @@ namespace ConferencePlanner.WinUi
 
         private void SpeakerListDataGrid_Layout(object sender, LayoutEventArgs e)
         {
-            
+
             this.SpeakerListDataGrid.CurrentCell = null;
-            
+
             this.SpeakerListDataGrid.DefaultCellStyle.ForeColor = Color.FromArgb(53, 56, 49);
         }
 
@@ -2206,7 +2220,7 @@ namespace ConferencePlanner.WinUi
             if (this.SpeakersForSearchBar.Count > 0)
             {
                 this.SpeakerCreatePage(this.SpeakersForSearchBar);
-               
+
             }
             else
             {
@@ -2234,7 +2248,7 @@ namespace ConferencePlanner.WinUi
         private void CategoriesNextBtn_Click(object sender, EventArgs e)
         {
             CategoriesCurrentPage++;
-            if(CategoriesFromSearch.Count > 0)
+            if (CategoriesFromSearch.Count > 0)
             {
                 CategoryCreatePage(CategoriesFromSearch);
             }
@@ -2265,7 +2279,7 @@ namespace ConferencePlanner.WinUi
         private void CategoriesLastPage_Click(object sender, EventArgs e)
         {
             CategoriesCurrentPage = CategoriesToatlPages;
-            if(CategoriesFromSearch.Count > 0)
+            if (CategoriesFromSearch.Count > 0)
             {
                 CategoryCreatePage(CategoriesFromSearch);
             }
@@ -2294,7 +2308,7 @@ namespace ConferencePlanner.WinUi
             this.SpeakerListDataGrid.Rows[0].Selected = false;
         }
 
-      
+
 
         private void TypesBackBtn_Click(object sender, EventArgs e)
         {
@@ -2315,7 +2329,7 @@ namespace ConferencePlanner.WinUi
         private void CategoriesBackBtn_Click(object sender, EventArgs e)
         {
             CategoriesCurrentPage--;
-            if(CategoriesFromSearch.Count >0)
+            if (CategoriesFromSearch.Count > 0)
             {
                 CategoryCreatePage(CategoriesFromSearch);
             }
@@ -2377,8 +2391,8 @@ namespace ConferencePlanner.WinUi
 
         private void SpeakerListDataGrid_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
-            
-            if(e.ColumnIndex == this.SpeakerListDataGrid.Columns["Rating"].Index)
+
+            if (e.ColumnIndex == this.SpeakerListDataGrid.Columns["Rating"].Index)
             {
                 float rating;
                 if (float.TryParse((string)this.SpeakerListDataGrid.Rows[e.RowIndex].Cells["Rating"].Value, out rating))
@@ -2389,17 +2403,17 @@ namespace ConferencePlanner.WinUi
                 {
                     this.SpeakerListDataGrid.Rows[e.RowIndex].Cells["Rating"].Value = 0;
                     this.popUpMethod("Warning", "Rating must be a number! The value you inserted won't be saved");
-      
+
                 }
             }
-            
+
         }
 
         private void TypeDataGrid_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
             //return;
             this.TypeDataGrid.Rows[e.RowIndex].Cells[e.ColumnIndex].Style.BackColor = Color.LightGreen;
-            
+
         }
 
         private void SearchBar_TextChanged(object sender, EventArgs e)
@@ -2442,7 +2456,7 @@ namespace ConferencePlanner.WinUi
             {
                 CityCurrentPage = 1;
                 BindingList<CityModel> cities = new BindingList<CityModel>();
-                foreach(CityModel cityModel in Cities)
+                foreach (CityModel cityModel in Cities)
                 {
                     if (cityModel.CityName.ToLower().Contains(SearchBar.Text.ToLower()))
                     {
@@ -2455,7 +2469,7 @@ namespace ConferencePlanner.WinUi
                 CitiesFromSearchBar = cities;
                 CitiesCreatePage(CitiesFromSearchBar);
             }
-            else if(this.TabControlLocation.SelectedTab.Name == "SpeakerTab")
+            else if (this.TabControlLocation.SelectedTab.Name == "SpeakerTab")
             {
                 //this.ActiveControl = null;
                 this.SpeakersCurrentPage = 1;
@@ -2466,7 +2480,7 @@ namespace ConferencePlanner.WinUi
                     {
                         result.Add(speaker);
                     }
-            }
+                }
                 int[] aux = this.CalculateTotalPages(result.Count);
                 this.SpeakersTotalPages = aux[0];
                 this.SpeakersLastPageLastRow = aux[1];
@@ -2492,11 +2506,11 @@ namespace ConferencePlanner.WinUi
                 this.TypeCreatePage(this.TypesForSearchBar);
 
             }
-            else if (TabControlLocation.SelectedTab.Name == "CategoryTab") 
+            else if (TabControlLocation.SelectedTab.Name == "CategoryTab")
             {
                 CategoriesCurrentPage = 1;
                 BindingList<CategoryModel> categoryModels = new BindingList<CategoryModel>();
-                foreach(CategoryModel category in Categories)
+                foreach (CategoryModel category in Categories)
                 {
                     if (category.ConferenceCategoryName.ToLower().Contains(SearchBar.Text.ToLower()))
                     {
@@ -2518,7 +2532,7 @@ namespace ConferencePlanner.WinUi
             this.SearchBar.Text = "";
         }
 
-        
+
         private void SpeakerPaginationSelector_DropDownClosed(object sender, EventArgs e)
         {
             int idx = this.SpeakerPaginationSelector.SelectedIndex;
@@ -2533,15 +2547,15 @@ namespace ConferencePlanner.WinUi
 
                 this.SpeakerCreatePage(this.SpeakersForSearchBar);
             }
-            
+
         }
 
-       
+
 
         private void CountyPaginationSelector_DropDownClosed(object sender, EventArgs e)
         {
             int index = CountyPaginationSelector.SelectedIndex;
-            if(index >= 0)
+            if (index >= 0)
             {
                 PageSize = int.Parse(CountyPaginationSelector.Items[index].ToString());
 
@@ -2574,7 +2588,7 @@ namespace ConferencePlanner.WinUi
         private void CategoryPaginationSelector_DropDownClosed(object sender, EventArgs e)
         {
             int index = CategoryPaginationSelector.SelectedIndex;
-            if(index >= 0)
+            if (index >= 0)
             {
                 PageSize = int.Parse(CategoryPaginationSelector.Items[index].ToString());
 
@@ -2591,7 +2605,7 @@ namespace ConferencePlanner.WinUi
         {
             HttpClient client = new HttpClient();
             HttpResponseMessage s = await client.GetAsync("http://localhost:2794/api/Speaker/all_speakers");
-            
+
             if (s.IsSuccessStatusCode)
             {
                 string json = await s.Content.ReadAsStringAsync();
@@ -2623,10 +2637,10 @@ namespace ConferencePlanner.WinUi
         {
             var json = JsonConvert.SerializeObject(speakerModel);
             var httpContent = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
-           
+
             HttpClient client = new HttpClient();
-            
-            HttpResponseMessage s = await client.PostAsync("http://localhost:2794/api/Speaker/insert_speaker/", httpContent );
+
+            HttpResponseMessage s = await client.PostAsync("http://localhost:2794/api/Speaker/insert_speaker/", httpContent);
             if (s.IsSuccessStatusCode)
             {
                 this.popUpMethod("Done", "You added the speaker succesfully");
@@ -2647,7 +2661,7 @@ namespace ConferencePlanner.WinUi
             HttpClient client = new HttpClient();
 
             HttpResponseMessage s = await client.PostAsync("http://localhost:2794/api/Speaker/update_speaker/id=" + speakerModel.SpeakerId, httpContent);
-        
+
 
             if (s.IsSuccessStatusCode)
             {
@@ -2773,21 +2787,21 @@ namespace ConferencePlanner.WinUi
 
 
 
-        
 
-    private async Task GetConferenceCategories()
-    {
-        HttpClient client = new HttpClient();
-        HttpResponseMessage s = await client.GetAsync("http://localhost:2794/api/Category/get_categories/");
-        if (s.IsSuccessStatusCode)
+
+        private async Task GetConferenceCategories()
         {
-            string json = await s.Content.ReadAsStringAsync();
-            var t = JsonConvert.DeserializeObject<BindingList<CategoryModel>>(json);
-            Categories = t;
+            HttpClient client = new HttpClient();
+            HttpResponseMessage s = await client.GetAsync("http://localhost:2794/api/Category/get_categories/");
+            if (s.IsSuccessStatusCode)
+            {
+                string json = await s.Content.ReadAsStringAsync();
+                var t = JsonConvert.DeserializeObject<BindingList<CategoryModel>>(json);
+                Categories = t;
+
+            }
 
         }
-
-    }
 
         private async Task InsertCategory(CategoryModel categoryModel)
         {
@@ -2805,7 +2819,7 @@ namespace ConferencePlanner.WinUi
             {
                 popUpMethod("Error", "Insert failed");
             }
-        } 
+        }
 
         public async Task UpdateCategory(CategoryModel category)
         {
@@ -2823,7 +2837,7 @@ namespace ConferencePlanner.WinUi
                 popUpMethod("Error", "Update failed");
             }
         }
-        
+
         public async Task GetCountyList(int CountryId)
         {
             HttpClient client = new HttpClient();
@@ -2848,7 +2862,7 @@ namespace ConferencePlanner.WinUi
             }
             return 1;
         }
-        
+
         public async Task InsertCounty(CountyModel county)
         {
             var json = JsonConvert.SerializeObject(county);
