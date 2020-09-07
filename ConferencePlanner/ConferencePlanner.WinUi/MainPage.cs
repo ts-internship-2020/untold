@@ -88,6 +88,10 @@ namespace ConferencePlanner.WinUi
             TabControl.SelectedIndex = 1;
             this.popUpMethod("Context Changed", "You are now an organizer!");
             varAddConf.ShowDialog();
+            PanelAttendee.Visible = false;
+            PanelOrganizer.Visible = false;
+            PanelAnc.Visible = true;
+            PanelFilter.Visible = false;
         }
 
         private void CheckNumberOfRows(List<ConferenceModel> conferences)
@@ -972,6 +976,42 @@ namespace ConferencePlanner.WinUi
             LeftArrowPagButton.FlatAppearance.MouseDownBackColor = Color.Transparent;
             LeftArrowPagButton.FlatAppearance.MouseOverBackColor = Color.Transparent;
             LeftArrowPagButton.BackgroundImageLayout = ImageLayout.Center;
+        }
+
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            PanelAttendee.Visible = true;
+            PanelOrganizer.Visible = false;
+            PanelAnc.Visible = false;
+            PanelFilter.Visible = false;
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            PanelAttendee.Visible = false;
+            PanelOrganizer.Visible = true;
+            PanelAnc.Visible = false;
+            PanelFilter.Visible = false;
+        }
+        public int tmp = 0;
+        private void FIlterByDate_Click(object sender, EventArgs e)
+        {
+            PanelAttendee.Visible = false;
+            PanelOrganizer.Visible = false;
+            PanelAnc.Visible = false;
+            PanelFilter.Visible = true;
+            if (tmp == 0)
+            {
+                StartDatePicker.Visible = true;
+                EndDatePicker.Visible = true;
+                tmp = 1;
+            } else if (tmp == 1)
+            {
+                StartDatePicker.Visible = false;
+                EndDatePicker.Visible = false;
+                tmp = 0;
+            }
+            ;
         }
     }
 }
