@@ -298,8 +298,51 @@ namespace ConferencePlanner.Repository.Ef.Repository
             return result;
 
         }
+        public void InsertConference(ConferenceModelWithEmail conferenceModel)
+        {
+            int locationId = 0;
+            int cityId = int.Parse(conferenceModel.Location);
+            string[] aux = conferenceModel.Period.Split(" - ");
+            DateTime startDate = DateTime.Parse(aux[0]);
+            DateTime endDate = DateTime.Parse(aux[1]);
+            
+            try
+            {
+                locationId = _untoldContext.Location.Where(l => l.CityId == cityId).Select(l => l.LocationId).FirstOrDefault();
+            }
+            catch (Exception e)
+            {
+                Location location = new Location(){
+                    CityId = cityId
+                };
+                _untoldContext.Location.Add(location);
+                _untoldContext.SaveChanges();
+                locationId = _untoldContext.Location.Where(l => l.CityId == cityId).Select(l => l.LocationId).FirstOrDefault();
+            }
+            finally
+            {
+                Conference newConference = new Conference()
+                {
+                    ConferenceName = conferenceModel.ConferenceName,
+                    ConferenceCategoryId = int.Parse(conferenceModel.ConferenceCategoryName),
+                    ConferenceTypeId = int.Parse(conferenceModel.ConferenceTypeName),
+                    MainSpeakerId = int.Parse(conferenceModel.Speaker),
+                    LocationId = locationId,
+                    StartDate = startDate,
+                    EndDate = endDate,
+                    EmailOrganizer =conferenceModel.Email
+                };
+                _untoldContext.Conference.Add(newConference);
+                _untoldContext.SaveChanges();
+            }
+        }
 
+        public void UpdateConference(ConferenceModelWithEmail conference)
+        {
+            Conference conferenceUpdate = _untoldContext.Conference.Find(conference.ConferenceId);
+            conferenceUpdate.ConferenceName = conference.ConferenceName;
 
+        }
     }
 
 

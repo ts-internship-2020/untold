@@ -85,5 +85,20 @@ namespace ConferencePlanner.Api.Controllers
             List<ConferenceModel> conferences = _conferenceRepository.GetAttendeesByPage(email, sIndex, eIndex, sDate, eDate);
             return Ok(conferences);
         }
+
+        [HttpPost]
+        [Route("add_conference")]
+        public IActionResult InsertConference(ConferenceModelWithEmail conferenceModel)
+        {
+            _conferenceRepository.InsertConference(conferenceModel);
+            return Ok();
+        }
+        [HttpPost]
+        [Route("update_conference")]
+        public IActionResult UpdateConference(ConferenceModelWithEmail conferenceModel)
+        {
+            _conferenceRepository.UpdateConference(conferenceModel);
+            return Ok();
+        }
     }
 }

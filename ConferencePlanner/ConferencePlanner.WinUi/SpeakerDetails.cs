@@ -43,8 +43,16 @@ namespace ConferencePlanner.WinUi
             //strB.AppendFormat("../../../Resources/speakersPhotos/{0}_{1}.jpg", this.Speaker.LastName.ToLower(), this.Speaker.FirstName.ToLower());
 
             //Image img = Image.FromFile(strB.ToString());
-
-            Image img = Image.FromFile(this.Speaker.ImagePath);
+            Image img;
+            try
+            {
+                img = Image.FromFile(this.Speaker.ImagePath);
+            }
+            catch (System.ArgumentNullException ex)
+            {
+                img = Image.FromFile("../../../Resources/speakersPhotos/unknown_user.jpg");
+            }
+          
 
             this.speakerPhoto.Image = img;
             this.speakerPhoto.SizeMode = PictureBoxSizeMode.StretchImage;

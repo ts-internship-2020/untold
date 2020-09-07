@@ -367,6 +367,16 @@ namespace ConferencePlanner.Repository.Ado.Repository
             }
 
         }
+
+        public void InsertConference(ConferenceModelWithEmail conference)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void UpdateConference(ConferenceModelWithEmail conference)
+        {
+            throw new NotImplementedException();
+        }
     }
     }
 
