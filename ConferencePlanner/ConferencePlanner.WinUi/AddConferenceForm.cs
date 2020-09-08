@@ -255,7 +255,7 @@ namespace ConferencePlanner.WinUi
                     if (IndexChange(Text, CurrentGridView))
                     {
                         SelectedCountryId = (int)CurrentGridView.SelectedRows[0].Cells["DictionaryCountryId"].Value;
-
+                        TabControlLocation.SelectedIndex++;
                     }
 
                 }
@@ -265,7 +265,7 @@ namespace ConferencePlanner.WinUi
                     if (IndexChange(Text, CurrentGridView))
                     {
                         SelectedCountyId = (int)CurrentGridView.SelectedRows[0].Cells["CountyId"].Value;
-
+                        TabControlLocation.SelectedIndex++;
                     }
                 }
                 if (TabControlLocation.SelectedTab == this.City)
@@ -274,7 +274,7 @@ namespace ConferencePlanner.WinUi
                     if (IndexChange(Text, CurrentGridView))
                     {
                         SelectedCityId = (int)CurrentGridView.SelectedRows[0].Cells["DictionaryCityId"].Value;
-
+                        TabControlLocation.SelectedIndex++;
                     }
                 }
                 if (TabControlLocation.SelectedTab == TypeTab)
@@ -283,7 +283,7 @@ namespace ConferencePlanner.WinUi
                     if (IndexChange(Text, CurrentGridView))
                     {
                         SelectedTypeId = (int)CurrentGridView.SelectedRows[0].Cells["TypeId"].Value;
-
+                        TabControlLocation.SelectedIndex++;
                     }
                 }
                 if (TabControlLocation.SelectedTab == this.SpeakerTab)
@@ -309,6 +309,7 @@ namespace ConferencePlanner.WinUi
                         }
 
                         SelectedSpeakerId = (int)CurrentGridView.Rows[SelectedRowIndex].Cells["SpeakerId"].Value;
+                        TabControlLocation.SelectedIndex++;
                     }
                 }
                 if (TabControlLocation.SelectedTab == CategoryTab)
@@ -316,12 +317,14 @@ namespace ConferencePlanner.WinUi
                     CurrentGridView = CategoryDataGridView;
                     if (IndexChange(Text, CurrentGridView))
                     {
+                        
                         SelectedCategoryId = (int)CurrentGridView.SelectedRows[0].Cells["CategoryId"].Value;
+                        TabControlLocation.SelectedIndex++;
 
                     }
                 }
 
-                TabControlLocation.SelectedIndex++;
+                
 
             }
 
