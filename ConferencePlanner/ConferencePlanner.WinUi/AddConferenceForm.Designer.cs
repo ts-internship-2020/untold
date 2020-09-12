@@ -301,10 +301,12 @@ namespace ConferencePlanner.WinUi
             // 
             // CountriesPages
             // 
+            this.CountriesPages.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.CountriesPages.Dock = System.Windows.Forms.DockStyle.Fill;
             this.CountriesPages.Location = new System.Drawing.Point(344, 3);
             this.CountriesPages.Name = "CountriesPages";
-            this.CountriesPages.Size = new System.Drawing.Size(69, 29);
+            this.CountriesPages.ReadOnly = true;
+            this.CountriesPages.Size = new System.Drawing.Size(69, 22);
             this.CountriesPages.TabIndex = 4;
             // 
             // CountriesPaginationSelector
@@ -318,19 +320,24 @@ namespace ConferencePlanner.WinUi
             // 
             // CountryListDataGridView
             // 
+            this.CountryListDataGridView.AllowUserToResizeColumns = false;
+            this.CountryListDataGridView.AllowUserToResizeRows = false;
             this.CountryListDataGridView.BackgroundColor = System.Drawing.Color.White;
             this.CountryListDataGridView.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.CountryListDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.CountryListDataGridView.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnKeystroke;
             this.CountryListDataGridView.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(0)))), ((int)(((byte)(62)))));
             this.CountryListDataGridView.Location = new System.Drawing.Point(3, 43);
             this.CountryListDataGridView.Name = "CountryListDataGridView";
             this.CountryListDataGridView.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.CountryListDataGridView.RowHeadersVisible = false;
             this.CountryListDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.CountryListDataGridView.Size = new System.Drawing.Size(935, 196);
             this.CountryListDataGridView.TabIndex = 1;
             this.CountryListDataGridView.Text = "dataGridView1";
             this.CountryListDataGridView.CellBeginEdit += new System.Windows.Forms.DataGridViewCellCancelEventHandler(this.CountryListDataGridView_CellBeginEdit);
             this.CountryListDataGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.CountryListDataGridView_CellClick);
+            this.CountryListDataGridView.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.CountryListDataGridView_CellDoubleClick);
             this.CountryListDataGridView.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.CountryListDataGridView_DataBindingComplete);
             this.CountryListDataGridView.Layout += new System.Windows.Forms.LayoutEventHandler(this.CountryListDataGridView_Layout);
             // 
@@ -455,14 +462,17 @@ namespace ConferencePlanner.WinUi
             // 
             // CountiesPages
             // 
+            this.CountiesPages.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.CountiesPages.Dock = System.Windows.Forms.DockStyle.Fill;
             this.CountiesPages.Location = new System.Drawing.Point(313, 3);
             this.CountiesPages.Name = "CountiesPages";
-            this.CountiesPages.Size = new System.Drawing.Size(73, 29);
+            this.CountiesPages.ReadOnly = true;
+            this.CountiesPages.Size = new System.Drawing.Size(73, 22);
             this.CountiesPages.TabIndex = 4;
             // 
             // CountyPaginationSelector
             // 
+            this.CountyPaginationSelector.DisplayMember = "5";
             this.CountyPaginationSelector.FormattingEnabled = true;
             this.CountyPaginationSelector.Items.AddRange(new object[] {
             "5",
@@ -480,12 +490,14 @@ namespace ConferencePlanner.WinUi
             this.CountiesListGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.CountiesListGridView.Location = new System.Drawing.Point(3, 43);
             this.CountiesListGridView.Name = "CountiesListGridView";
+            this.CountiesListGridView.RowHeadersVisible = false;
             this.CountiesListGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.CountiesListGridView.Size = new System.Drawing.Size(939, 195);
             this.CountiesListGridView.TabIndex = 2;
             this.CountiesListGridView.Text = "dataGridView2";
             this.CountiesListGridView.CellBeginEdit += new System.Windows.Forms.DataGridViewCellCancelEventHandler(this.CountiesListGridView_CellBeginEdit);
             this.CountiesListGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.CountiesListGridView_CellClick);
+            this.CountiesListGridView.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.CountiesListGridView_CellDoubleClick);
             this.CountiesListGridView.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.CountiesListGridView_DataBindingComplete);
             this.CountiesListGridView.Layout += new System.Windows.Forms.LayoutEventHandler(this.CountiesListGridView_Layout);
             // 
@@ -606,10 +618,12 @@ namespace ConferencePlanner.WinUi
             // 
             // CitiesPages
             // 
+            this.CitiesPages.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.CitiesPages.Dock = System.Windows.Forms.DockStyle.Fill;
             this.CitiesPages.Location = new System.Drawing.Point(262, 3);
             this.CitiesPages.Name = "CitiesPages";
-            this.CitiesPages.Size = new System.Drawing.Size(87, 29);
+            this.CitiesPages.ReadOnly = true;
+            this.CitiesPages.Size = new System.Drawing.Size(87, 22);
             this.CitiesPages.TabIndex = 4;
             // 
             // CityListDataGridView
@@ -618,12 +632,14 @@ namespace ConferencePlanner.WinUi
             this.CityListDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.CityListDataGridView.Location = new System.Drawing.Point(3, 43);
             this.CityListDataGridView.Name = "CityListDataGridView";
+            this.CityListDataGridView.RowHeadersVisible = false;
             this.CityListDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.CityListDataGridView.Size = new System.Drawing.Size(932, 197);
             this.CityListDataGridView.TabIndex = 0;
             this.CityListDataGridView.Text = "dataGridView6";
             this.CityListDataGridView.CellBeginEdit += new System.Windows.Forms.DataGridViewCellCancelEventHandler(this.CitiesListDataGrid_CellBeginEdit);
             this.CityListDataGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.CityListDataGridView_CellClick);
+            this.CityListDataGridView.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.CityListDataGridView_CellDoubleClick);
             this.CityListDataGridView.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.CityListDataGridView_DataBindingComplete);
             // 
             // TypeTab
@@ -741,10 +757,12 @@ namespace ConferencePlanner.WinUi
             // 
             // TypesPages
             // 
+            this.TypesPages.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.TypesPages.Dock = System.Windows.Forms.DockStyle.Fill;
             this.TypesPages.Location = new System.Drawing.Point(252, 3);
             this.TypesPages.Name = "TypesPages";
-            this.TypesPages.Size = new System.Drawing.Size(88, 29);
+            this.TypesPages.ReadOnly = true;
+            this.TypesPages.Size = new System.Drawing.Size(88, 22);
             this.TypesPages.TabIndex = 4;
             // 
             // TypeDataGrid
@@ -753,12 +771,14 @@ namespace ConferencePlanner.WinUi
             this.TypeDataGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.TypeDataGrid.Location = new System.Drawing.Point(3, 43);
             this.TypeDataGrid.Name = "TypeDataGrid";
+            this.TypeDataGrid.RowHeadersVisible = false;
             this.TypeDataGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.TypeDataGrid.Size = new System.Drawing.Size(939, 206);
             this.TypeDataGrid.TabIndex = 0;
             this.TypeDataGrid.Text = "dataGridView3";
             this.TypeDataGrid.CellBeginEdit += new System.Windows.Forms.DataGridViewCellCancelEventHandler(this.TypeDataGrid_CellBeginEdit);
             this.TypeDataGrid.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.TypeDataGrid_CellClick);
+            this.TypeDataGrid.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.TypeDataGrid_CellDoubleClick);
             this.TypeDataGrid.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.TypeDataGrid_CellEndEdit);
             this.TypeDataGrid.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.TypeDataGrid_DataBindingComplete);
             this.TypeDataGrid.Layout += new System.Windows.Forms.LayoutEventHandler(this.TypeDataGrid_Layout);
@@ -824,11 +844,13 @@ namespace ConferencePlanner.WinUi
             this.SpeakerListDataGrid.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnKeystroke;
             this.SpeakerListDataGrid.Location = new System.Drawing.Point(3, 43);
             this.SpeakerListDataGrid.Name = "SpeakerListDataGrid";
+            this.SpeakerListDataGrid.RowHeadersVisible = false;
             this.SpeakerListDataGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.SpeakerListDataGrid.Size = new System.Drawing.Size(936, 204);
             this.SpeakerListDataGrid.TabIndex = 0;
             this.SpeakerListDataGrid.CellBeginEdit += new System.Windows.Forms.DataGridViewCellCancelEventHandler(this.SpeakerListDataGrid_CellBeginEdit);
             this.SpeakerListDataGrid.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.SpeakerListDataGrid_CellClick);
+            this.SpeakerListDataGrid.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.SpeakerListDataGrid_CellDoubleClick);
             this.SpeakerListDataGrid.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.SpeakerListDataGrid_CellEndEdit);
             this.SpeakerListDataGrid.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.SpeakerListDataGrid_DataBindingComplete);
             this.SpeakerListDataGrid.Layout += new System.Windows.Forms.LayoutEventHandler(this.SpeakerListDataGrid_Layout);
@@ -902,10 +924,13 @@ namespace ConferencePlanner.WinUi
             // 
             // SpeakersPages
             // 
+            this.SpeakersPages.BackColor = System.Drawing.SystemColors.Window;
+            this.SpeakersPages.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.SpeakersPages.Dock = System.Windows.Forms.DockStyle.Fill;
             this.SpeakersPages.Location = new System.Drawing.Point(349, 3);
             this.SpeakersPages.Name = "SpeakersPages";
-            this.SpeakersPages.Size = new System.Drawing.Size(69, 29);
+            this.SpeakersPages.ReadOnly = true;
+            this.SpeakersPages.Size = new System.Drawing.Size(69, 22);
             this.SpeakersPages.TabIndex = 4;
             // 
             // SpeakerPaginationSelector
@@ -1040,10 +1065,12 @@ namespace ConferencePlanner.WinUi
             // 
             // CategoriesPages
             // 
+            this.CategoriesPages.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.CategoriesPages.Dock = System.Windows.Forms.DockStyle.Fill;
             this.CategoriesPages.Location = new System.Drawing.Point(291, 3);
             this.CategoriesPages.Name = "CategoriesPages";
-            this.CategoriesPages.Size = new System.Drawing.Size(64, 29);
+            this.CategoriesPages.ReadOnly = true;
+            this.CategoriesPages.Size = new System.Drawing.Size(64, 22);
             this.CategoriesPages.TabIndex = 4;
             // 
             // CategoryPaginationSelector
@@ -1065,12 +1092,14 @@ namespace ConferencePlanner.WinUi
             this.CategoryDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.CategoryDataGridView.Location = new System.Drawing.Point(3, 43);
             this.CategoryDataGridView.Name = "CategoryDataGridView";
+            this.CategoryDataGridView.RowHeadersVisible = false;
             this.CategoryDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.CategoryDataGridView.Size = new System.Drawing.Size(932, 200);
             this.CategoryDataGridView.TabIndex = 0;
             this.CategoryDataGridView.Text = "dataGridView5";
             this.CategoryDataGridView.CellBeginEdit += new System.Windows.Forms.DataGridViewCellCancelEventHandler(this.CategoryDataGridVIew_CellBeginEdit);
             this.CategoryDataGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.CategoryDataGridView_CellClick);
+            this.CategoryDataGridView.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.CategoryDataGridView_CellDoubleClick);
             this.CategoryDataGridView.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.CategoryDataGridVIew_DataBindingComplete);
             this.CategoryDataGridView.Layout += new System.Windows.Forms.LayoutEventHandler(this.CategoryDataGridView_Layout);
             // 
@@ -1172,21 +1201,28 @@ namespace ConferencePlanner.WinUi
             // 
             // StartHour
             // 
+            this.StartHour.AllowDrop = true;
+            this.StartHour.CustomFormat = "HH:mm";
             this.StartHour.Dock = System.Windows.Forms.DockStyle.Left;
-            this.StartHour.Format = System.Windows.Forms.DateTimePickerFormat.Time;
+            this.StartHour.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.StartHour.Location = new System.Drawing.Point(445, 74);
             this.StartHour.Name = "StartHour";
+            this.StartHour.ShowUpDown = true;
             this.StartHour.Size = new System.Drawing.Size(111, 27);
             this.StartHour.TabIndex = 9;
+            this.StartHour.Value = new System.DateTime(2020, 9, 6, 0, 0, 0, 0);
             // 
             // EndHour
             // 
+            this.EndHour.CustomFormat = "HH:mm";
             this.EndHour.Dock = System.Windows.Forms.DockStyle.Left;
-            this.EndHour.Format = System.Windows.Forms.DateTimePickerFormat.Time;
+            this.EndHour.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.EndHour.Location = new System.Drawing.Point(445, 146);
             this.EndHour.Name = "EndHour";
+            this.EndHour.ShowUpDown = true;
             this.EndHour.Size = new System.Drawing.Size(111, 27);
             this.EndHour.TabIndex = 10;
+            this.EndHour.Value = new System.DateTime(2020, 9, 6, 0, 0, 0, 0);
             // 
             // SearchBar
             // 

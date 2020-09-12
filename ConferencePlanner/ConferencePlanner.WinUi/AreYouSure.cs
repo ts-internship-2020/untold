@@ -70,6 +70,7 @@ namespace ConferencePlanner.WinUi
             ObjectId = DictionaryCountryId;
         }
 
+
         private void CountryYesButton_Click(object sender, EventArgs e)
         {
            // _countryRepository.DeleteCountry(ObjectId);
@@ -152,12 +153,15 @@ namespace ConferencePlanner.WinUi
 
         private void DeleteCityYesButton_Click(Object sender, EventArgs e)
         {
-            if (_cityRepository.DeleteCity(ObjectId).Equals("error"))
-            {
-                
-               popUpMethod("A conference will be in this city", "You can't delete it");
-                return;
-            }
+            //if (_cityRepository.DeleteCity(ObjectId).Equals("error"))
+            //{
+
+            //   popUpMethod("A conference will be in this city", "You can't delete it");
+            //    return;
+            //}
+            var t = Task.Run(() => DeteleteCityAsync(ObjectId));
+            t.Wait();
+            Close();
             this.Close();
         }
 
@@ -276,7 +280,19 @@ namespace ConferencePlanner.WinUi
             }
         }
 
-        
+        private async Task DeteleteCityAsync(int id)
+        {
+            HttpClient client = new HttpClient();
+            HttpResponseMessage message = await client.DeleteAsync("http://localhost:2794/api/City/DeleteCity=" + id);
+            if (message.IsSuccessStatusCode)
+            {
+                popUpMethod("Succes", "The city was deleted!");
+            }
+            else
+            {
+                popUpMethod("Error", "Unexpected error");
+            }
+        }
 
     }
 }

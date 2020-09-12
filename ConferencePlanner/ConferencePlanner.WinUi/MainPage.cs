@@ -88,6 +88,10 @@ namespace ConferencePlanner.WinUi
             TabControl.SelectedIndex = 1;
             this.popUpMethod("Context Changed", "You are now an organizer!");
             newAddConf.ShowDialog();
+            PanelAttendee.Visible = false;
+            PanelOrganizer.Visible = false;
+            PanelAnc.Visible = true;
+            PanelFilter.Visible = false;
         }
 
         private void CheckNumberOfRows(List<ConferenceModel> conferences)
@@ -428,6 +432,14 @@ namespace ConferencePlanner.WinUi
             HttpResponseMessage httpResponseMessage = await client.PostAsync("http://localhost:2794/api/Attendee/WithdrawnButton", httpContent);
         }
 
+        static async Task JoinAsync(ButtonModel buttonModel)
+        {
+            var json = JsonConvert.SerializeObject(buttonModel);
+            var httpContent = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
+            HttpClient client = new HttpClient();
+            HttpResponseMessage httpResponseMessage = await client.PostAsync("http://localhost:2794/api/Attendee/JoinButton", httpContent);
+        }
+
         private void Attend_Click(int confId)
         {
             Program.qrCode = BarcodeGenerator();
@@ -469,11 +481,17 @@ namespace ConferencePlanner.WinUi
             ConditionsForButtons();
         }
 
-        private void Join_Click(int statusId)
+        private void Join_Click(int confId)
         {
+            ButtonModel buttonModel = new ButtonModel();
+            buttonModel.email = Program.EnteredEmailAddress;
+            buttonModel.statusId = 2;
+            buttonModel.confId = confId;
             var newform = new WebviewForm();
             newform.ShowDialog();
-            _attendeeButtons.JoinCommand(Program.EnteredEmailAddress, statusId);
+            var t = Task.Run(() => JoinAsync(buttonModel));
+            t.Wait();
+            //_attendeeButtons.JoinCommand(Program.EnteredEmailAddress, confId);
         }
 
         private void EndDatePicker_ValueChanged(object sender, EventArgs e)
@@ -658,13 +676,13 @@ namespace ConferencePlanner.WinUi
             if (e.ColumnIndex == AttendeeGridvw.Columns["attend_column"].Index)
             {
                 confId = (int)AttendeeGridvw.Rows[e.RowIndex].Cells[5].Value;
-
-                try
+                int statusId = (int)AttendeeGridvw.Rows[e.RowIndex].Cells[4].Value;
+                if (statusId == 0)
                 {
                     Attend_Click(confId);
 
                 }
-                catch (Exception ee)
+                else if (statusId == 1)
                 {
                     AttendeeGridvw.Rows[e.RowIndex].Cells["attend_column"].ReadOnly = true;
 
@@ -811,7 +829,7 @@ namespace ConferencePlanner.WinUi
         private async Task<SpeakerModel> GetSpeakerByName(string fname, string lname)
         {
             HttpClient client = new HttpClient();
-            HttpResponseMessage s = await client.GetAsync("http://localhost:2794/api/Speaker/speaker_by_name/fName=" + fname + "&lName=" + lname);
+            HttpResponseMessage s = await client.GetAsync("http://localhost:2794/api/Speaker/speaker_by_name/fname=" + fname + "&lname=" + lname);
 
             if (s.IsSuccessStatusCode)
             {
@@ -958,6 +976,42 @@ namespace ConferencePlanner.WinUi
             LeftArrowPagButton.FlatAppearance.MouseDownBackColor = Color.Transparent;
             LeftArrowPagButton.FlatAppearance.MouseOverBackColor = Color.Transparent;
             LeftArrowPagButton.BackgroundImageLayout = ImageLayout.Center;
+        }
+
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            PanelAttendee.Visible = true;
+            PanelOrganizer.Visible = false;
+            PanelAnc.Visible = false;
+            PanelFilter.Visible = false;
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            PanelAttendee.Visible = false;
+            PanelOrganizer.Visible = true;
+            PanelAnc.Visible = false;
+            PanelFilter.Visible = false;
+        }
+        public int tmp = 0;
+        private void FIlterByDate_Click(object sender, EventArgs e)
+        {
+            PanelAttendee.Visible = false;
+            PanelOrganizer.Visible = false;
+            PanelAnc.Visible = false;
+            PanelFilter.Visible = true;
+            if (tmp == 0)
+            {
+                StartDatePicker.Visible = true;
+                EndDatePicker.Visible = true;
+                tmp = 1;
+            } else if (tmp == 1)
+            {
+                StartDatePicker.Visible = false;
+                EndDatePicker.Visible = false;
+                tmp = 0;
+            }
+            ;
         }
     }
 }
