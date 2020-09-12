@@ -84,8 +84,7 @@ namespace ConferencePlanner.WinUi
 
         private void AddConferenceButton_Click(object sender, EventArgs e)
         {
-            var varAddConf = new AddConf(_conferenceRepository, _countryRepository, _countyRepository, _speakerRepository, _typeRepository, _cityRepository, _categoryRepository);
-
+            var newAddConf = new Form1(_conferenceRepository, _countryRepository, _countyRepository, _speakerRepository, _typeRepository, _cityRepository, _categoryRepository);
             OrganizerDataGrid.Visible = true;
             AttendeeGridvw.Visible = false;
             gridName = "o";
@@ -96,6 +95,7 @@ namespace ConferencePlanner.WinUi
             PanelOrganizer.Visible = false;
             PanelAnc.Visible = true;
             PanelFilter.Visible = false;
+
         }
 
         private void CheckNumberOfRows(List<ConferenceModel> conferences)
