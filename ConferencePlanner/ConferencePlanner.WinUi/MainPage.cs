@@ -91,7 +91,7 @@ namespace ConferencePlanner.WinUi
             gridName = "o";
             Organizer_SelectedIndexChangedRemake("o");
             this.popUpMethod("Context Changed", "You are now an organizer!");
-            varAddConf.ShowDialog();
+            newAddConf.ShowDialog();
             PanelAttendee.Visible = false;
             PanelOrganizer.Visible = false;
             PanelAnc.Visible = true;
