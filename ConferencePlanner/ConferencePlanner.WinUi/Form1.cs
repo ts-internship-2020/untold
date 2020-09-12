@@ -299,7 +299,7 @@ namespace ConferencePlanner.WinUi
 
         private void LoadSpeakersTab()
         {
-
+            SpeakerGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             var t = Task.Run(() => GetAllSpeakers());
             t.Wait();
 
@@ -314,7 +314,7 @@ namespace ConferencePlanner.WinUi
 
         private void LoadTypesTab()
         {
-            //this.Types = _typeRepository.GetConferenceType();
+            TypeGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             var t = Task.Run(() => GetTypes());
             t.Wait();
 
@@ -1653,6 +1653,8 @@ namespace ConferencePlanner.WinUi
         }
         private void SpeakerBeginEditLayout(string opType)
         {
+            PaginationSelector.Enabled = false;
+            SpeakerGridView.SelectionMode = (DataGridViewSelectionMode)0;
             this.SpeakerGridView.Columns["main_speaker"].ReadOnly = true;
             this.SpeakerGridView.Columns["main_speaker"].DefaultCellStyle.BackColor = Color.LightGray;
             this.SpeakerGridView.Columns["delete_column"].Visible = false;
@@ -1769,7 +1771,7 @@ namespace ConferencePlanner.WinUi
 
         private void TypeBeginEditLayout(string opType)
         {
-
+            PaginationSelector.Enabled = false;
             this.TypeGridView.Columns["delete_column"].Visible = false;
             this.SearchBar.Enabled = false;
 
@@ -1875,6 +1877,7 @@ namespace ConferencePlanner.WinUi
         }
         private void CitiesBeginEditLayout(string opType)
         {
+            PaginationSelector.Enabled = false;
             this.CityGridView.Columns["delete_column"].Visible = false;
             this.SearchBar.Enabled = false;
 
@@ -1976,6 +1979,7 @@ namespace ConferencePlanner.WinUi
 
         private void CountyBeginEditLayout(string Action)
         {
+            PaginationSelector.Enabled = false;
             CountyGridView.Columns["delete_column"].Visible = false;
             this.SearchBar.Enabled = false;
             foreach (DataGridViewRow row in CountyGridView.Rows)
@@ -1998,6 +2002,7 @@ namespace ConferencePlanner.WinUi
 
         private void CountiesEndEditLayout(string PopUpTitle, string PopUpMessage)
         {
+            PaginationSelector.Enabled = true;
             EditTextBox.Visible = false;
             SaveEditBtn.Visible = false;
             popUpMethod(PopUpTitle, PopUpMessage);
@@ -2095,6 +2100,7 @@ namespace ConferencePlanner.WinUi
         }
         private void CountriesEndEditLayout(string PopUpTitle, string PopUpMessage)
         {
+            PaginationSelector.Enabled = true;
             EditTextBox.Visible = false;
             SaveEditBtn.Visible = false;
             popUpMethod(PopUpTitle, PopUpMessage);
@@ -2176,6 +2182,8 @@ namespace ConferencePlanner.WinUi
         }
         private void SpeakerEndEditLayout(string str1popup, string str2popup)
         {
+            PaginationSelector.Enabled = true;
+            SpeakerGridView.SelectionMode = (DataGridViewSelectionMode)1;
             this.EditTextBox.Visible = false;
             this.SaveEditBtn.Visible = false;
             this.popUpMethod(str1popup, str2popup);
@@ -2227,7 +2235,7 @@ namespace ConferencePlanner.WinUi
         }
         private void TypeEndEditLayout(string str1popup, string str2popup)
         {
-
+            PaginationSelector.Enabled = true;
             this.SaveEditBtn.Visible = false;
             this.EditTextBox.Visible = false;
             this.popUpMethod(str1popup, str2popup);
@@ -2278,6 +2286,7 @@ namespace ConferencePlanner.WinUi
         }
         private void CityEndEditLayout(string PopUpTitle, string PopUpMessage)
         {
+            PaginationSelector.Enabled = true;
             EditTextBox.Visible = false;
             SaveEditBtn.Visible = false;
             popUpMethod(PopUpTitle, PopUpMessage);
@@ -2322,6 +2331,7 @@ namespace ConferencePlanner.WinUi
 
         private void CategoryEndEditLayout(string PopUpTitle, string PopUpMessage)
         {
+            PaginationSelector.Enabled = true;
             SaveEditBtn.Visible = false;
             EditTextBox.Visible = false;
             popUpMethod(PopUpTitle, PopUpMessage);
@@ -2851,6 +2861,36 @@ namespace ConferencePlanner.WinUi
             t.Wait();
 
             ResetForm();
+        }
+
+        private void SpeakerGridView_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            this.SpeakerGridView.BeginEdit(true);
+        }
+
+        private void TypeGridView_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            this.TypeGridView.BeginEdit(true);
+        }
+
+        private void CityGridView_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            this.CityGridView.BeginEdit(true);
+        }
+
+        private void CountyGridView_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            this.CountyGridView.BeginEdit(true);
+        }
+
+        private void CountryGridView_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            this.CountryGridView.BeginEdit(true);
+        }
+
+        private void CategoryGridView_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            this.CategoryGridView.BeginEdit(true);
         }
     }
 }
