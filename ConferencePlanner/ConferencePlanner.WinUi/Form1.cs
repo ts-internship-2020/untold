@@ -87,6 +87,7 @@ namespace ConferencePlanner.WinUi
         string Type;
         string Speaker;
         string Category;
+        private bool isEditingConference = false;
 
         public Form1(IConferenceRepository conferenceRepository, ICountryRepository countryRepository, ICountyRepository countyRepository, ISpeakerRepository speakerRepository, ITypeRepository typeRepository, ICityRepository cityRepository, ICategoryRepository categoryRepository)
         {
@@ -115,6 +116,7 @@ namespace ConferencePlanner.WinUi
             _categoryRepository = categoryRepository;
             InitializeComponent();
 
+            this.isEditingConference = true;
             this.PopulateForm(conference);
         }
 
@@ -1091,7 +1093,24 @@ namespace ConferencePlanner.WinUi
             }
             else
             {
-                //save
+                if (this.isEditingConference)
+                {
+                    ConferenceModelWithEmail newConference = CreateConferenceForInsert();
+
+                    var t = Task.Run(() => UpdateConference(newConference));
+                    t.Wait();
+
+                    this.Close();
+                }
+                else
+                {
+                    ConferenceModelWithEmail newConference = CreateConferenceForInsert();
+
+                    var t = Task.Run(() => InsertConference(newConference));
+                    t.Wait();
+
+                    this.Close();
+                }
             }
         }
 
@@ -2537,6 +2556,40 @@ namespace ConferencePlanner.WinUi
             }
         }
 
+        private async Task InsertConference(ConferenceModelWithEmail newConference)
+        {
+            var json = JsonConvert.SerializeObject(newConference);
+            var httpContent = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
+
+            HttpClient Client = new HttpClient();
+            HttpResponseMessage message = await Client.PostAsync("http://localhost:2794/api/Conference/add_conference", httpContent);
+
+            if (message.IsSuccessStatusCode)
+            {
+                popUpMethod("Succes", "Your conference has been added");
+            }
+            else
+            {
+                popUpMethod("Error", "Insert failed");
+            }
+        }
+        private async Task UpdateConference(ConferenceModelWithEmail newConference)
+        {
+            var json = JsonConvert.SerializeObject(newConference);
+            var httpContent = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
+
+            HttpClient Client = new HttpClient();
+            HttpResponseMessage message = await Client.PostAsync("http://localhost:2794/api/Conference/update_conference", httpContent);
+
+            if (message.IsSuccessStatusCode)
+            {
+                popUpMethod("Succes", "Your conference has been modified");
+            }
+            else
+            {
+                popUpMethod("Error", "Update failed");
+            }
+        }
         private void SearchBar_TextChanged(object sender, EventArgs e)
         {
             if (IndexGridChange == 1)
@@ -2647,7 +2700,40 @@ namespace ConferencePlanner.WinUi
             }
 
         }
+        public ConferenceModelWithEmail CreateConferenceForInsert()
+        {
+            ConferenceModelWithEmail newConference = new ConferenceModelWithEmail();
 
+            DateTime ConferenceStartDate = this.StartDatePicker.Value;
+            DateTime ConferenceEndDate = this.EndDatePicker.Value;
+            DateTime ConferenceStartHour = this.StartHourPicker.Value;
+            DateTime ConferenceEndHour = this.EndHourPicker.Value;
+
+            string startDate = ConferenceStartDate.ToString("yyyy-MM-dd hh:mm:ss").Split(" ")[0] + " " + ConferenceStartHour.ToString().Split(" ")[1];
+            string endDate = ConferenceEndDate.ToString("yyyy-MM-dd hh:mm:ss").Split(" ")[0] + " " + ConferenceEndHour.ToString().Split(" ")[1];
+
+            newConference.Email = Program.EnteredEmailAddress;
+            newConference.ConferenceName = this.ConfName.Text;
+            newConference.ConferenceCategoryName = this.SelectedCategoryId.ToString();
+            newConference.ConferenceTypeName = this.SelectedTypeId.ToString();
+            newConference.Speaker = this.SelectedSpeakerId.ToString();
+            newConference.Location = this.SelectedCityId.ToString();
+            newConference.Period = startDate + " - " + endDate;
+
+            return newConference;
+        }
+
+        public void ResetForm()
+        {
+            ConfName.Text = string.Empty;
+            StartDatePicker.Value = DateTime.Today;
+            EndDatePicker.Value = DateTime.Today;
+            this.StartHourPicker.Value = DateTime.Today;
+            this.EndHourPicker.Value = DateTime.Today;
+
+            //mai trebuie niste variabile 
+
+        }
         private void SearchBar_Enter(object sender, EventArgs e)
         {
             this.SearchBar.Text = "";
@@ -2755,6 +2841,16 @@ namespace ConferencePlanner.WinUi
         private void ConfName_Leave(object sender, EventArgs e)
         {
             CheckError();
+        }
+
+        private void SaveNewBtn_Click(object sender, EventArgs e)
+        {
+            ConferenceModelWithEmail newConference = CreateConferenceForInsert();
+
+            var t = Task.Run(() => InsertConference(newConference));
+            t.Wait();
+
+            ResetForm();
         }
     }
 }
