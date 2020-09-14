@@ -57,6 +57,23 @@ namespace ConferencePlanner.WinUi
             this.speakerPhoto.Image = img;
             this.speakerPhoto.SizeMode = PictureBoxSizeMode.StretchImage;
         }
-        
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void pictureBox1_MouseEnter(object sender, EventArgs e)
+        {
+            pictureBox1.BackgroundImageLayout = ImageLayout.Stretch;
+
+            //    RightArrowPagButton.FlatAppearance.MouseOverBackColor = Color.Transparent;
+            //RightArrowPagButton.BackgroundImageLayout = ImageLayout.Center;
+        }
+
+        private void pictureBox1_MouseLeave(object sender, EventArgs e)
+        {
+            pictureBox1.BackgroundImageLayout = ImageLayout.Center;
+        }
     }
 }

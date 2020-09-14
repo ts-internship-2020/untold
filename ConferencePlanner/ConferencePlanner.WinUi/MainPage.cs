@@ -38,6 +38,7 @@ namespace ConferencePlanner.WinUi
         private int AttendeeCurrentPageIndex = 1;
         private int AttendeeTotalPage = 0;
         private static int confId = 0;
+        private String gridName = "a";
 
 
         public MainPage(IConferenceRepository conferenceRepository, ICountryRepository countryRepository,
@@ -83,15 +84,18 @@ namespace ConferencePlanner.WinUi
 
         private void AddConferenceButton_Click(object sender, EventArgs e)
         {
-           
             var newAddConf = new Form1(_conferenceRepository, _countryRepository, _countyRepository, _speakerRepository, _typeRepository, _cityRepository, _categoryRepository);
-            TabControl.SelectedIndex = 1;
+            OrganizerDataGrid.Visible = true;
+            AttendeeGridvw.Visible = false;
+            gridName = "o";
+            Organizer_SelectedIndexChangedRemake("o");
             this.popUpMethod("Context Changed", "You are now an organizer!");
             newAddConf.ShowDialog();
             PanelAttendee.Visible = false;
             PanelOrganizer.Visible = false;
             PanelAnc.Visible = true;
             PanelFilter.Visible = false;
+
         }
 
         private void CheckNumberOfRows(List<ConferenceModel> conferences)
@@ -99,18 +103,16 @@ namespace ConferencePlanner.WinUi
             if (conferences.Count() == 0)
             {
                 this.OrganizerDataGrid.Visible = false;
-                this.NoConferenceLabel.Visible = true;
                 this.OrganizersPaginationSelector.Visible = false;
-                //this.RightArrowPagButton.Visible = false;
+                this.RightArrowPagButton.Visible = false;
             }
             else
             {
-                NoConferenceLabel.Visible = false;
                 OrganizerDataGrid.Visible = true;
                 OrganizerDataGrid.DataSource = conferences.ToList();
                 OrganizerDataGrid.AutoGenerateColumns = false;
                 this.OrganizersPaginationSelector.Visible = true;
-                //this.RightArrowPagButton.Visible = true;
+                this.RightArrowPagButton.Visible = true;
 
             }
         }
@@ -127,9 +129,10 @@ namespace ConferencePlanner.WinUi
                 AttendeeGridvw.AutoGenerateColumns = false;
             }
         }
-        private void TabOrganizer_SelectedIndexChanged(object sender, EventArgs e)
+
+        public void Organizer_SelectedIndexChangedRemake(String gridName)
         {
-            if (this.TabControl.SelectedTab.Name == "TabOrganizer")
+            if (gridName.Equals("o"))
             {
                 string[] dates = new string[2];
                 if (check == 0)
@@ -150,20 +153,25 @@ namespace ConferencePlanner.WinUi
                 var t2 = Task.Run(() => GetConferencesByPage(Program.EnteredEmailAddress, PreviousPageOffSet + 1, PreviousPageOffSet + this.PageSize + 1, dates[0], dates[1]));
                 t2.Wait();
                 var conferences = t2.Result;
-                
-                CalculateTotalPages(allConferences, this.TabControl.SelectedTab);
+
+                CalculateTotalPages(allConferences, "o");
                 this.CheckPaginationButtonsVisibility();
 
                 CheckNumberOfRows(conferences);
             }
+        }
+
+        //genereaza layout organizer asta se sterge si se apeleaza la clik-ul de organizer
+        private void TabOrganizer_SelectedIndexChanged(object sender, EventArgs e)
+        {
 
         }
 
-        private void CalculateTotalPages(List<ConferenceModel> allConferences, TabPage test)
+        private void CalculateTotalPages(List<ConferenceModel> allConferences, String gridName)
         {
             int rowCount = allConferences.Count();
 
-            if (test.Name == "TabOrganizer")
+            if (gridName.Equals("o"))
             {
                 this.OrganizerTotalPage = rowCount / this.PageSize;
 
@@ -171,7 +179,7 @@ namespace ConferencePlanner.WinUi
                     this.OrganizerTotalPage += 1;
 
             }
-            else if (test.Name == "TabAttendee")
+            else if (gridName.Equals("a"))
             {
 
                 this.AttendeeTotalPage = rowCount / this.PageSize;
@@ -270,13 +278,13 @@ namespace ConferencePlanner.WinUi
 
         private void RightArrowPagButton_MouseClick(object sender, EventArgs e)
         {
-            if (this.TabControl.SelectedTab.Name == "TabOrganizer")
+            if (gridName.Equals("o"))
             {
                 this.OrganizerCurrentPageIndex++;
                 this.CreatePage();
 
             }
-            else if (this.TabControl.SelectedTab.Name == "TabAttendee")
+            else if (gridName.Equals("a"))
             {
                 this.AttendeeCurrentPageIndex++;
                 this.CreateAttendeePage();
@@ -286,12 +294,12 @@ namespace ConferencePlanner.WinUi
 
         private void LeftArrowPagButton_MouseClick(object sender, EventArgs e)
         {
-            if (this.TabControl.SelectedTab.Name == "TabOrganizer")
+            if (gridName.Equals("o"))
             {
                 this.OrganizerCurrentPageIndex--;
                 this.CreatePage();
             }
-            else if (this.TabControl.SelectedTab.Name == "TabAttendee")
+            else if (gridName.Equals("a"))
             {
                 this.AttendeeCurrentPageIndex--;
                 this.CreateAttendeePage();
@@ -324,7 +332,7 @@ namespace ConferencePlanner.WinUi
             
             this.CheckPaginationButtonsVisibilityAttendee();
 
-            CalculateTotalPages(allConferences, this.TabControl.SelectedTab);
+            CalculateTotalPages(allConferences, "a");
 
             AttendeeGridvw.DataSource = attendees;
 
@@ -348,7 +356,7 @@ namespace ConferencePlanner.WinUi
 
             string[] dates = this.GetCurrentDateFilterSelection();
 
-            if (TabControl.SelectedTab.Name == "TabOrganizer")
+            if (gridName.Equals("o"))
             {
                 check = 1;
                 OrganizerDataGrid.DataSource = null;
@@ -357,7 +365,7 @@ namespace ConferencePlanner.WinUi
                 var t = Task.Run(() => FilterConferencesByDate(Program.EnteredEmailAddress, dates[0], dates[1]));
                 t.Wait();
                 var allConferences = t.Result;
-                this.CalculateTotalPages(allConferences, TabControl.SelectedTab);
+                this.CalculateTotalPages(allConferences, "o");
 
                 var t2 = Task.Run(() => GetConferencesByPage(Program.EnteredEmailAddress, 1, this.PageSize + 1, dates[0], dates[1]));
                 t2.Wait();
@@ -366,7 +374,7 @@ namespace ConferencePlanner.WinUi
                 CheckNumberOfRows(conferences);
 
             }
-            else if (TabControl.SelectedTab.Name == "TabAttendee")
+            else if (gridName.Equals("a"))
             {
                 check2 = 1;
                 AttendeeGridvw.DataSource = null;
@@ -376,7 +384,7 @@ namespace ConferencePlanner.WinUi
                 t.Wait();
                 var allConferences = t.Result;
 
-                this.CalculateTotalPages(allConferences, TabControl.SelectedTab);
+                this.CalculateTotalPages(allConferences, "a");
 
                 var t2 = Task.Run(() => GetAttendeesByPage(Program.EnteredEmailAddress,1,this.PageSize+1, dates[0], dates[1]));
                 t2.Wait();
@@ -498,7 +506,7 @@ namespace ConferencePlanner.WinUi
         {
             string[] dates = GetCurrentDateFilterSelection();
 
-            if (TabControl.SelectedTab.Name == "TabOrganizer")
+            if (gridName.Equals("o"))
             {
                 OrganizerDataGrid.DataSource = null;
                 check = 1;
@@ -507,7 +515,7 @@ namespace ConferencePlanner.WinUi
                 var t = Task.Run(() => FilterConferencesByDate(Program.EnteredEmailAddress, dates[0], dates[1]));
                 t.Wait();
                 var allConferences = t.Result;
-                this.CalculateTotalPages(allConferences, TabControl.SelectedTab);
+                this.CalculateTotalPages(allConferences, "o");
 
                 var t2 = Task.Run(() => GetConferencesByPage(Program.EnteredEmailAddress, 1, this.PageSize + 1, dates[0], dates[1]));
                 t2.Wait();
@@ -515,7 +523,7 @@ namespace ConferencePlanner.WinUi
                 this.CheckPaginationButtonsVisibility();
                 CheckNumberOfRows(conferences);
             }
-            else if (TabControl.SelectedTab.Name == "TabAttendee")
+            else if (gridName.Equals("a"))
             {
                 check2 = 1;
                 AttendeeGridvw.DataSource = null;
@@ -524,7 +532,7 @@ namespace ConferencePlanner.WinUi
                 var t = Task.Run(() => FilterAttendeesByDate(Program.EnteredEmailAddress, dates[0], dates[1]));
                 t.Wait();
                 var allConferences = t.Result;
-                this.CalculateTotalPages(allConferences, TabControl.SelectedTab);
+                this.CalculateTotalPages(allConferences, "a");
 
                 var t2 = Task.Run(() => GetAttendeesByPage(Program.EnteredEmailAddress, 1, this.PageSize + 1, dates[0], dates[1]));
                 t2.Wait();
@@ -755,7 +763,7 @@ namespace ConferencePlanner.WinUi
                 t.Wait();
                 var allConferences = t.Result;
 
-                this.CalculateTotalPages(allConferences, this.TabOrganizer);
+                this.CalculateTotalPages(allConferences, "o");
                 this.OrganizerCurrentPageIndex = 1;
 
                 this.CreatePage();
@@ -984,6 +992,11 @@ namespace ConferencePlanner.WinUi
             PanelOrganizer.Visible = false;
             PanelAnc.Visible = false;
             PanelFilter.Visible = false;
+            AttendeeGridvw.Visible = true;
+            OrganizerDataGrid.Visible = false;
+            gridName = "a";
+            //Organizer_SelectedIndexChangedRemake("a");
+
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -992,6 +1005,11 @@ namespace ConferencePlanner.WinUi
             PanelOrganizer.Visible = true;
             PanelAnc.Visible = false;
             PanelFilter.Visible = false;
+            //tmpForOrganizer();
+            AttendeeGridvw.Visible = false;
+            OrganizerDataGrid.Visible = true;
+            gridName = "o";
+            Organizer_SelectedIndexChangedRemake("o");
         }
         public int tmp = 0;
         private void FIlterByDate_Click(object sender, EventArgs e)
