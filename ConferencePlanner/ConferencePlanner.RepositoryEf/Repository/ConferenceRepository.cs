@@ -301,47 +301,51 @@ namespace ConferencePlanner.Repository.Ef.Repository
         public void InsertConference(ConferenceModelWithEmail conferenceModel)
         {
             int locationId = 0;
-            int cityId = int.Parse(conferenceModel.Location);
-            string[] aux = conferenceModel.Period.Split(" - ");
-            DateTime startDate = DateTime.Parse(aux[0]);
-            DateTime endDate = DateTime.Parse(aux[1]);
-            
+            int cityId = conferenceModel.LocationId;
+
             try
             {
                 locationId = _untoldContext.Location.Where(l => l.CityId == cityId).Select(l => l.LocationId).FirstOrDefault();
             }
             catch (Exception e)
             {
-                Location location = new Location(){
+                Location location = new Location()
+                {
                     CityId = cityId
                 };
                 _untoldContext.Location.Add(location);
                 _untoldContext.SaveChanges();
                 locationId = _untoldContext.Location.Where(l => l.CityId == cityId).Select(l => l.LocationId).FirstOrDefault();
             }
-            finally
-            {
-                Conference newConference = new Conference()
+
+            Conference newConference = new Conference()
                 {
                     ConferenceName = conferenceModel.ConferenceName,
-                    ConferenceCategoryId = int.Parse(conferenceModel.ConferenceCategoryName),
-                    ConferenceTypeId = int.Parse(conferenceModel.ConferenceTypeName),
-                    MainSpeakerId = int.Parse(conferenceModel.Speaker),
+                    ConferenceCategoryId = conferenceModel.ConferenceCategoryId,
+                    ConferenceTypeId = conferenceModel.ConferenceTypeId,
+                    MainSpeakerId = conferenceModel.MainSpeakerId,
                     LocationId = locationId,
-                    StartDate = startDate,
-                    EndDate = endDate,
+                    StartDate = conferenceModel.StartDate,
+                    EndDate = conferenceModel.EndDate,
                     EmailOrganizer =conferenceModel.Email
                 };
                 _untoldContext.Conference.Add(newConference);
                 _untoldContext.SaveChanges();
-            }
+            
         }
 
-        public void UpdateConference(ConferenceModelWithEmail conference)
+        public void UpdateConference(ConferenceModelWithEmail conferenceModel)
         {
-            Conference conferenceUpdate = _untoldContext.Conference.Find(conference.ConferenceId);
-            conferenceUpdate.ConferenceName = conference.ConferenceName;
+            Conference conferenceUpdate = _untoldContext.Conference.Find(conferenceModel.ConferenceId);
+            conferenceUpdate.ConferenceName = conferenceModel.ConferenceName;
+            conferenceUpdate.ConferenceCategoryId = conferenceModel.ConferenceCategoryId;
+            conferenceUpdate.ConferenceTypeId = conferenceModel.ConferenceTypeId;
+            conferenceUpdate.MainSpeakerId = conferenceModel.MainSpeakerId;
+            conferenceUpdate.LocationId = conferenceModel.LocationId;
+            conferenceUpdate.StartDate = conferenceModel.StartDate;
+            conferenceUpdate.EndDate = conferenceModel.EndDate;
 
+            _untoldContext.SaveChanges();
         }
     }
 

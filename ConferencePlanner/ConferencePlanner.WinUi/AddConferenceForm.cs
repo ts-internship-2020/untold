@@ -428,17 +428,20 @@ namespace ConferencePlanner.WinUi
             DateTime ConferenceStartHour = this.StartHour.Value;
             DateTime ConferenceEndHour = this.EndHour.Value;
 
-            string startDate = ConferenceStartDate.ToString("yyyy-MM-dd hh:mm:ss").Split(" ")[0] + " " + ConferenceStartHour.ToString().Split(" ")[1];
-            string endDate = ConferenceEndDate.ToString("yyyy-MM-dd hh:mm:ss").Split(" ")[0] + " " + ConferenceEndHour.ToString().Split(" ")[1];
+            DateTime startDate = ConferenceStartDate.Date + ConferenceStartHour.TimeOfDay;
+            DateTime endDate = ConferenceEndDate.Date + ConferenceEndHour.TimeOfDay;
+            //string startDate = ConferenceStartDate.ToString("yyyy-MM-dd hh:mm:ss").Split(" ")[0] + " " + ConferenceStartHour.ToString().Split(" ")[1];
+            //string endDate = ConferenceEndDate.ToString("yyyy-MM-dd hh:mm:ss").Split(" ")[0] + " " + ConferenceEndHour.ToString().Split(" ")[1];
 
             newConference.Email = Program.EnteredEmailAddress;
             newConference.ConferenceName = this.ConfName.Text;
-            newConference.ConferenceCategoryName = this.SelectedCategoryId.ToString();
-            newConference.ConferenceTypeName = this.SelectedTypeId.ToString();
-            newConference.Speaker = this.SelectedSpeakerId.ToString();
-            newConference.Location = this.SelectedCityId.ToString();
-            newConference.Period = startDate + " - " + endDate;
-
+            newConference.ConferenceCategoryId = this.SelectedCategoryId;
+            newConference.ConferenceTypeId = this.SelectedTypeId;
+            newConference.MainSpeakerId = this.SelectedSpeakerId;
+            newConference.LocationId = this.SelectedCityId;
+            //newConference.Period = startDate + " - " + endDate;
+            newConference.StartDate = startDate;
+            newConference.StartDate = endDate;
             return newConference;
         }
         private void SaveNew_Click(object sender, EventArgs e)
@@ -734,6 +737,7 @@ namespace ConferencePlanner.WinUi
                 deleteButtonColumn.Name = "delete_column";
                 CityListDataGridView.Columns.Add(deleteButtonColumn);
             }
+            this.CityListDataGridView.Rows[0].Selected = false;
         }
 
         private void CityListDataGridView_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -3038,6 +3042,22 @@ namespace ConferencePlanner.WinUi
         private void CategoryDataGridView_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             this.CategoryDataGridView.BeginEdit(true);
+        }
+
+        private void StartHour_ValueChanged(object sender, EventArgs e)
+        {
+            if (this.EndHour.Value <= this.StartHour.Value)
+            {
+                this.EndHour.Value = this.StartHour.Value;
+            }
+        }
+
+        private void StardDatePicker_ValueChanged(object sender, EventArgs e)
+        {
+            if(this.EndDatePicker.Value <= this.StardDatePicker.Value)
+            {
+                this.EndDatePicker.Value = this.StardDatePicker.Value;
+            }
         }
     }
 }
