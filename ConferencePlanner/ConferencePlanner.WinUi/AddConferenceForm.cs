@@ -671,8 +671,7 @@ namespace ConferencePlanner.WinUi
                 CityListDataGridView.AllowUserToAddRows = true;
             }
         }
-
-
+        
         private void CitiesListDataGrid_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
         {
             this.UpdateCityRow = e.RowIndex;
