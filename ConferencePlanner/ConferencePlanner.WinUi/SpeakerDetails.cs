@@ -62,5 +62,18 @@ namespace ConferencePlanner.WinUi
         {
             this.Close();
         }
+
+        private void pictureBox1_MouseEnter(object sender, EventArgs e)
+        {
+            pictureBox1.BackgroundImageLayout = ImageLayout.Stretch;
+
+            //    RightArrowPagButton.FlatAppearance.MouseOverBackColor = Color.Transparent;
+            //RightArrowPagButton.BackgroundImageLayout = ImageLayout.Center;
+        }
+
+        private void pictureBox1_MouseLeave(object sender, EventArgs e)
+        {
+            pictureBox1.BackgroundImageLayout = ImageLayout.Center;
+        }
     }
 }
