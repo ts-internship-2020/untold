@@ -37,16 +37,18 @@ namespace ConferencePlanner.WinUi
             this.speakerRating = new System.Windows.Forms.TextBox();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.speakerPhoto)).BeginInit();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // speakerPhoto
             // 
             this.speakerPhoto.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.speakerPhoto.Location = new System.Drawing.Point(105, 123);
-            this.speakerPhoto.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.speakerPhoto.Margin = new System.Windows.Forms.Padding(4);
             this.speakerPhoto.Name = "speakerPhoto";
             this.speakerPhoto.Size = new System.Drawing.Size(154, 172);
             this.speakerPhoto.TabIndex = 0;
@@ -58,7 +60,7 @@ namespace ConferencePlanner.WinUi
             this.speakerName.BackColor = System.Drawing.Color.Indigo;
             this.speakerName.ForeColor = System.Drawing.SystemColors.Window;
             this.speakerName.Location = new System.Drawing.Point(4, 98);
-            this.speakerName.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.speakerName.Margin = new System.Windows.Forms.Padding(4);
             this.speakerName.Name = "speakerName";
             this.speakerName.Size = new System.Drawing.Size(199, 29);
             this.speakerName.TabIndex = 1;
@@ -69,7 +71,7 @@ namespace ConferencePlanner.WinUi
             this.speakerNationality.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.speakerNationality.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(176)))), ((int)(((byte)(218)))), ((int)(((byte)(241)))));
             this.speakerNationality.Location = new System.Drawing.Point(4, 182);
-            this.speakerNationality.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.speakerNationality.Margin = new System.Windows.Forms.Padding(4);
             this.speakerNationality.Name = "speakerNationality";
             this.speakerNationality.Size = new System.Drawing.Size(199, 29);
             this.speakerNationality.TabIndex = 2;
@@ -78,7 +80,7 @@ namespace ConferencePlanner.WinUi
             // 
             this.speakerRating.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(176)))), ((int)(((byte)(218)))), ((int)(((byte)(241)))));
             this.speakerRating.Location = new System.Drawing.Point(4, 266);
-            this.speakerRating.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.speakerRating.Margin = new System.Windows.Forms.Padding(4);
             this.speakerRating.Name = "speakerRating";
             this.speakerRating.Size = new System.Drawing.Size(199, 29);
             this.speakerRating.TabIndex = 3;
@@ -93,7 +95,7 @@ namespace ConferencePlanner.WinUi
             this.tableLayoutPanel1.Controls.Add(this.speakerPhoto, 0, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
@@ -103,14 +105,16 @@ namespace ConferencePlanner.WinUi
             // 
             // tableLayoutPanel2
             // 
-            this.tableLayoutPanel2.ColumnCount = 1;
+            this.tableLayoutPanel2.ColumnCount = 2;
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 59F));
             this.tableLayoutPanel2.Controls.Add(this.speakerName, 0, 0);
             this.tableLayoutPanel2.Controls.Add(this.speakerRating, 0, 2);
             this.tableLayoutPanel2.Controls.Add(this.speakerNationality, 0, 1);
+            this.tableLayoutPanel2.Controls.Add(this.pictureBox1, 1, 0);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel2.Location = new System.Drawing.Point(368, 4);
-            this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 3;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
@@ -118,6 +122,18 @@ namespace ConferencePlanner.WinUi
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 148F));
             this.tableLayoutPanel2.Size = new System.Drawing.Size(357, 410);
             this.tableLayoutPanel2.TabIndex = 0;
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.pictureBox1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pictureBox1.BackgroundImage")));
+            this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.pictureBox1.Location = new System.Drawing.Point(309, 3);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(45, 43);
+            this.pictureBox1.TabIndex = 4;
+            this.pictureBox1.TabStop = false;
+            this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
             // 
             // SpeakerDetails
             // 
@@ -129,7 +145,7 @@ namespace ConferencePlanner.WinUi
             this.Controls.Add(this.tableLayoutPanel1);
             this.Font = new System.Drawing.Font("Nirmala UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "SpeakerDetails";
             this.Text = "SpeakerDetails";
             this.Load += new System.EventHandler(this.SpeakerDetails_Load);
@@ -137,6 +153,7 @@ namespace ConferencePlanner.WinUi
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
             this.tableLayoutPanel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -149,5 +166,6 @@ namespace ConferencePlanner.WinUi
         private System.Windows.Forms.TextBox speakerRating;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
+        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }
