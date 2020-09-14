@@ -21,7 +21,7 @@ namespace ConferencePlanner.WinUi
         /// </summary>
         /// 
         [STAThread]
-        static void Main()
+        static void Main(string[] args)
         {
             Application.SetHighDpiMode(HighDpiMode.SystemAware);
             Application.EnableVisualStyles();

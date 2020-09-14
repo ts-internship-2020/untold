@@ -305,7 +305,9 @@ namespace ConferencePlanner.Repository.Ef.Repository
 
             try
             {
-                locationId = _untoldContext.Location.Where(l => l.CityId == cityId).Select(l => l.LocationId).FirstOrDefault();
+                locationId = _untoldContext.Location
+                    .Where(l => l.CityId == cityId)
+                    .Select(l => l.LocationId).First();
             }
             catch (Exception e)
             {
@@ -315,7 +317,7 @@ namespace ConferencePlanner.Repository.Ef.Repository
                 };
                 _untoldContext.Location.Add(location);
                 _untoldContext.SaveChanges();
-                locationId = _untoldContext.Location.Where(l => l.CityId == cityId).Select(l => l.LocationId).FirstOrDefault();
+                locationId = _untoldContext.Location.Where(l => l.CityId == cityId).Select(l => l.LocationId).First();
             }
 
             Conference newConference = new Conference()

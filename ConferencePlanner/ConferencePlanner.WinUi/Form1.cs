@@ -1120,7 +1120,7 @@ namespace ConferencePlanner.WinUi
                 {
                     if(IndexChange("Category", CategoryGridView))
                     {
-                        SelectedTypeId = (int)CategoryGridView.SelectedRows[0].Cells["ConferenceCategoryId"].Value;
+                        SelectedCategoryId = (int)CategoryGridView.SelectedRows[0].Cells["ConferenceCategoryId"].Value;
                         Category = (string)CategoryGridView.SelectedRows[0].Cells["ConferenceCategoryName"].Value;
                         IndexGridChange++;
                         ChechGridVisibility();
