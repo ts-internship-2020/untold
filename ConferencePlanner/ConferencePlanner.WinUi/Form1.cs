@@ -192,6 +192,8 @@ namespace ConferencePlanner.WinUi
             }
             else if(IndexGridChange == 7)
             {
+                PageControlTableLayout.Visible = false;
+                SearchTableLayout.Visible = false;
                 SavePanel.Visible = true;
                 SaveBar.Visible = true;
                 LoadSaveTab();
@@ -347,8 +349,8 @@ namespace ConferencePlanner.WinUi
 
         private void LoadSaveTab()
         {
-            PageControlTableLayout.Visible = false;
-            SearchTableLayout.Visible = false;
+            
+           
             ConfNameSaveLabel.Text = "Conference name: " +  ConferenceName;
             SratdDateSaveLabel.Text = "Start date: " + StartDate + " " + StartHour;
             EndDateSaveLabel.Text = "End date: " + EndDate + " " + EndHour;
@@ -2850,7 +2852,11 @@ namespace ConferencePlanner.WinUi
 
         private void ConfName_Leave(object sender, EventArgs e)
         {
-            CheckError();
+            if (CheckError())
+            {
+                ConferenceName = ConfName.Text;
+                LoadSaveTab();
+            }
         }
 
         private void SaveNewBtn_Click(object sender, EventArgs e)
@@ -2891,6 +2897,30 @@ namespace ConferencePlanner.WinUi
         private void CategoryGridView_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             this.CategoryGridView.BeginEdit(true);
+        }
+
+        private void StartDatePicker_ValueChanged(object sender, EventArgs e)
+        {
+            StartDate = StartDatePicker.Value.ToString();
+            LoadSaveTab();
+        }
+
+        private void EndDatePicker_ValueChanged(object sender, EventArgs e)
+        {
+            EndDate = EndDatePicker.Value.ToString();
+            LoadSaveTab();
+        }
+
+        private void StartHourPicker_ValueChanged(object sender, EventArgs e)
+        {
+            StartHour = StartHourPicker.Value.ToString();
+            LoadSaveTab();
+        }
+
+        private void EndHourPicker_ValueChanged(object sender, EventArgs e)
+        {
+            EndHour = EndHourPicker.Value.ToString();
+            LoadSaveTab();
         }
     }
 }
