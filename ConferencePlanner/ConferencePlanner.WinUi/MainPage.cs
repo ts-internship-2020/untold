@@ -163,7 +163,7 @@ namespace ConferencePlanner.WinUi
                 var conferences = t2.Result;
 
                 CalculateTotalPages(allConferences, "o");
-                this.CheckPaginationButtonsVisibility();
+                this.CheckPaginationButtonsVisibility(this.OrganizerCurrentPageIndex, this.OrganizerTotalPage);
                 CheckNumberOfRows(conferences);
    
             }
@@ -1002,7 +1002,7 @@ namespace ConferencePlanner.WinUi
             AttendeeGridvw.Visible = true;
             OrganizerDataGrid.Visible = false;
             gridName = "a";
-            this.CheckPaginationButtonsVisibilityAttendee();
+            this.CheckPaginationButtonsVisibility(this.OrganizerCurrentPageIndex, this.OrganizerTotalPage);
             //Organizer_SelectedIndexChangedRemake("a");
 
         }
