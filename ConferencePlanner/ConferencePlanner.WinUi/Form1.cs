@@ -166,6 +166,9 @@ namespace ConferencePlanner.WinUi
             {
                 CountryGridView.Visible = true;
                 CountryBar.Visible = true;
+
+                this.SearchTableLayout.Visible = true;
+                this.PageControlTableLayout.Visible = true;
                 LoadCountryTab();
                 CheckIndexChangeBtns();
             }
@@ -244,7 +247,9 @@ namespace ConferencePlanner.WinUi
             {
                 BackGridBtn.Enabled = false;
                 this.SaveNewBtn.Visible = false;
-            }else
+                
+            }
+            else
             {
                 BackGridBtn.Enabled = true;
             }
