@@ -270,8 +270,10 @@ namespace ConferencePlanner.WinUi
 
         private void LoadCountyTab()
         {
-            this.Counties = _countyRepository.GetCountyList(this.SelectedCountryId);
-            CountiesFromSearchBar = Counties;
+            
+
+            var t = Task.Run(() => GetCountyList(SelectedCountryId));
+            t.Wait();
             int[] pages = CalculateTotalPages(Counties.Count);
             CountyGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             CountyGridView.AllowUserToOrderColumns = true;
@@ -348,9 +350,7 @@ namespace ConferencePlanner.WinUi
         }
 
         private void LoadSaveTab()
-        {
-            
-           
+        {       
             ConfNameSaveLabel.Text = "Conference name: " +  ConferenceName;
             SratdDateSaveLabel.Text = "Start date: " + StartDate + " " + StartHour;
             EndDateSaveLabel.Text = "End date: " + EndDate + " " + EndHour;
@@ -777,7 +777,7 @@ namespace ConferencePlanner.WinUi
         public async Task GetCountyList(int CountryId)
         {
             HttpClient client = new HttpClient();
-            HttpResponseMessage message = await client.GetAsync("http://localhost:2794/api/County/county_by_countryId?countryID=" + CountryId);
+            HttpResponseMessage message = await client.GetAsync("http://localhost:2794/api/County/county_by_countryId/countryId=" + CountryId);
             if (message.IsSuccessStatusCode)
             {
                 string json = await message.Content.ReadAsStringAsync();
@@ -1553,7 +1553,7 @@ namespace ConferencePlanner.WinUi
 
         private void CategoryAddInsertMessage()
         {
-            EditTextBox.Text = "You are now adding a new conference category.  Press the button to Save.";
+            EditTextBox.Text = "You are now adding a new conference category. Press the button to Save.";
             EditTextBox.Visible = true;
             SaveEditBtn.Visible = true;
         }
@@ -2435,7 +2435,7 @@ namespace ConferencePlanner.WinUi
                     CountyModel NewCounty = GetCounty();
                     var t=Task.Run(() => GetLastCountyId());
                     t.Wait();
-                    NewCounty.CountyId = t.Result;
+                    NewCounty.CountyId = t.Result+1;
 
                     var task = Task.Run(() => InsertCounty(NewCounty));
                     task.Wait();

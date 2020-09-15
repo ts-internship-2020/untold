@@ -23,9 +23,9 @@ namespace ConferencePlanner.Api.Controllers
 
         [HttpGet]
         [Route("county_by_countryId/countryId={id}")]
-        public IActionResult GetCountyList(int countryID)
+        public IActionResult GetCountyList(int id)
         {
-            BindingList<CountyModel> counties = _countyRepository.GetCountyList(countryID);
+            BindingList<CountyModel> counties = _countyRepository.GetCountyList(id);
             return Ok(counties);
         }
 
