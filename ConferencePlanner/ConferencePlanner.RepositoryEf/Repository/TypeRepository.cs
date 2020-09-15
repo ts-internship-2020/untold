@@ -34,7 +34,13 @@ namespace ConferencePlanner.Repository.Ef.Repository
         public void UpdateType(TypeModel typeModel)
         {
 
-            DictionaryConferenceType type = _untoldContext.DictionaryConferenceType.Where(t => t.DictionaryConferenceTypeId == typeModel.TypeId).FirstOrDefault();
+            DictionaryConferenceType type = _untoldContext
+                .DictionaryConferenceType
+                .FirstOrDefault(t => t.DictionaryConferenceTypeId == typeModel.TypeId);
+            if (type == null)
+            {
+                return;
+            }
             type.ConferenceTypeName = typeModel.TypeName;
             _untoldContext.SaveChanges();
 
@@ -42,7 +48,7 @@ namespace ConferencePlanner.Repository.Ef.Repository
 
         public void InsertType(TypeModel typeModel)
         {
-            //string commandText = "insert into DictionaryConferenceType values(@Id, @Name)";
+            
             DictionaryConferenceType type = new DictionaryConferenceType()
             {
                 DictionaryConferenceTypeId = typeModel.TypeId,
@@ -56,16 +62,18 @@ namespace ConferencePlanner.Repository.Ef.Repository
         public void DeleteType(int id)
         {
             //string commandText = "delete from DictionaryConferenceType where DictionaryConferenceTypeId = @Id";
-            DictionaryConferenceType type = _untoldContext.DictionaryConferenceType.Where(t => t.DictionaryConferenceTypeId == id).FirstOrDefault();
+            DictionaryConferenceType type = _untoldContext.DictionaryConferenceType.FirstOrDefault(t => t.DictionaryConferenceTypeId == id);
+            if (type == null)
+            {
+                return;
+            }
             _untoldContext.DictionaryConferenceType.Remove(type);
             _untoldContext.SaveChanges();
         }
 
         public TypeModel GetTypeById(int id)
         {
-            //string commandText = "select DictionaryConferenceTypeId,ConferenceTypeName from DictionaryConferenceType where DictionaryConferenceTypeId = @Id";
-            //DictionaryConferenceType types = _untoldContext.DictionaryConferenceType.Where(a => a.DictionaryConferenceTypeId == id).Select(a => a.DictionaryConferenceTypeId,a=>a.C);
-            //DictionaryConferenceType types = _untoldContext.DictionaryConferenceType.Select(a => new DictionaryConferenceType() { DictionaryConferenceTypeId = a.DictionaryConferenceTypeId, ConferenceTypeName = a.ConferenceTypeName });
+            
             DictionaryConferenceType type = _untoldContext.DictionaryConferenceType.Where(t => t.DictionaryConferenceTypeId==id).FirstOrDefault();
             TypeModel typeModel = new TypeModel
             {

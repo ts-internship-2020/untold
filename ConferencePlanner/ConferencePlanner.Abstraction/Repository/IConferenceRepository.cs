@@ -11,7 +11,7 @@ namespace ConferencePlanner.Abstraction.Repository
     public interface IConferenceRepository
     {
         List<ConferenceModel> GetConferencesByOrganizer(string email);
-        List<ConferenceModel> AttendeeConferences(String name);
+        List<ConferenceModel> AttendeeConferences(String name,int pageSize,int currentPage);
         List<ConferenceModel> FilterConferencesByDate(String email, string sDate, string eDate);
         List<ConferenceModel> FilterAttendeesByDate(String email, string sDate, string eDate);
         List<ConferenceModel> FilterConfAttendeeByDate(String email, string sDate, string eDate);

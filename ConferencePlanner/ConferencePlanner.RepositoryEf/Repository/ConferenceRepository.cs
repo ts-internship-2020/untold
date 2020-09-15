@@ -15,22 +15,25 @@ namespace ConferencePlanner.Repository.Ef.Repository
 
         public ConferenceRepository(untoldContext untoldContext)
         {
-           
+
             _untoldContext = untoldContext;
         }
 
-        public List<ConferenceModel> AttendeeConferences(string email)
+        public List<ConferenceModel> AttendeeConferences(string email, int pageSize, int currentPage)
         {
-            List<Conference> conferences = _untoldContext.Conference
+            IQueryable<Conference> conferences = _untoldContext.Conference
                 .Include(x => x.MainSpeaker)
+                .Include(x => x.Attendee)
                 .Include(x => x.ConferenceCategory)
                 .Include(x => x.ConferenceType)
                 .Include(x => x.Location)
                 .ThenInclude(x => x.City)
                 .ThenInclude(x => x.County)
                 .ThenInclude(x => x.Country)
-                .ToList();
-            List<Attendee> attendees = _untoldContext.Attendee.Where(c => c.AttendeeEmail == email).ToList();
+                .Where(x => x.Attendee.Any(a => a.AttendeeEmail == email && a.StatusId != 3))
+                .Skip((currentPage - 1) * pageSize)
+                .Take(pageSize);
+
 
             List<ConferenceModel> conferenceModels = conferences.Select(c => new ConferenceModel()
             {
@@ -41,20 +44,10 @@ namespace ConferencePlanner.Repository.Ef.Repository
                 Speaker = c.MainSpeaker.FirstName + " " + c.MainSpeaker.LastName,
                 Period = c.StartDate + " - " + c.EndDate,
                 ConferenceName = c.ConferenceName,
-                StatusId = 0
+                StatusId = c.Attendee.First().StatusId
             }).ToList();
 
-            foreach (Attendee a in attendees)
-            {
-                if (a.StatusId == 3)
-                {
-                    conferenceModels.Remove(conferenceModels.Where(x => x.ConferenceId == a.ConferenceId).FirstOrDefault());
-                }
-                else
-                {
-                    conferenceModels.Where(x => x.ConferenceId == a.ConferenceId).FirstOrDefault().StatusId = a.StatusId;
-                }
-            }
+           
 
             return conferenceModels.OrderByDescending(x => x.StatusId).ToList();
 
@@ -94,9 +87,9 @@ namespace ConferencePlanner.Repository.Ef.Repository
                 StatusId = 0
             }).ToList();
 
-            foreach(Attendee a in attendees)
+            foreach (Attendee a in attendees)
             {
-                if(a.StatusId == 3)
+                if (a.StatusId == 3)
                 {
                     conferenceModels.Remove(conferenceModels.Where(x => x.ConferenceId == a.ConferenceId).FirstOrDefault());
                 }
@@ -121,7 +114,7 @@ namespace ConferencePlanner.Repository.Ef.Repository
                 .Include(x => x.MainSpeaker)
                 .ToList();
 
-            List<Attendee> attendees = _untoldContext.Attendee.Where(c => c.StatusId != 3 && c.AttendeeEmail==email).ToList();
+            List<Attendee> attendees = _untoldContext.Attendee.Where(c => c.StatusId != 3 && c.AttendeeEmail == email).ToList();
 
 
             List<ConferenceModel> conferenceModels = conferences.Select(c => new ConferenceModel()
@@ -133,14 +126,14 @@ namespace ConferencePlanner.Repository.Ef.Repository
                 Speaker = c.MainSpeaker.FirstName + " " + c.MainSpeaker.LastName,
                 Period = c.StartDate + " - " + c.EndDate,
                 ConferenceName = c.ConferenceName,
-                StatusId = 0    
+                StatusId = 0
             }).ToList();
 
-            for(int i =0;i<conferenceModels.Count; i++)
+            for (int i = 0; i < conferenceModels.Count; i++)
             {
                 conferenceModels[i].StatusId = attendees[i].StatusId;
             }
-            
+
             return conferenceModels;
         }
 
@@ -210,7 +203,7 @@ namespace ConferencePlanner.Repository.Ef.Repository
             List<ConferenceModel> orderedConferences = conferenceModels.OrderByDescending(x => x.StatusId).ToList();
             int aux = Math.Min(orderedConferences.Count, endIndex - 1);
             List<ConferenceModel> result = new List<ConferenceModel>();
-            
+
             for (int i = startIndex - 1; i < aux; i++)
             {
                 result.Add(orderedConferences[i]);
@@ -305,14 +298,15 @@ namespace ConferencePlanner.Repository.Ef.Repository
             string[] aux = conferenceModel.Period.Split(" - ");
             DateTime startDate = DateTime.Parse(aux[0]);
             DateTime endDate = DateTime.Parse(aux[1]);
-            
+
             try
             {
                 locationId = _untoldContext.Location.Where(l => l.CityId == cityId).Select(l => l.LocationId).FirstOrDefault();
             }
             catch (Exception e)
             {
-                Location location = new Location(){
+                Location location = new Location()
+                {
                     CityId = cityId
                 };
                 _untoldContext.Location.Add(location);
@@ -330,7 +324,7 @@ namespace ConferencePlanner.Repository.Ef.Repository
                     LocationId = locationId,
                     StartDate = startDate,
                     EndDate = endDate,
-                    EmailOrganizer =conferenceModel.Email
+                    EmailOrganizer = conferenceModel.Email
                 };
                 _untoldContext.Conference.Add(newConference);
                 _untoldContext.SaveChanges();
