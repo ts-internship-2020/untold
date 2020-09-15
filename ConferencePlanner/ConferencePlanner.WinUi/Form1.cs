@@ -322,7 +322,7 @@ namespace ConferencePlanner.WinUi
 
         private void LoadSpeakersTab()
         {
-
+            SpeakerGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             var t = Task.Run(() => GetAllSpeakers());
             t.Wait();
 
@@ -337,7 +337,7 @@ namespace ConferencePlanner.WinUi
 
         private void LoadTypesTab()
         {
-            //this.Types = _typeRepository.GetConferenceType();
+            TypeGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             var t = Task.Run(() => GetTypes());
             t.Wait();
 
@@ -1698,6 +1698,8 @@ namespace ConferencePlanner.WinUi
         }
         private void SpeakerBeginEditLayout(string opType)
         {
+            PaginationSelector.Enabled = false;
+            SpeakerGridView.SelectionMode = (DataGridViewSelectionMode)0;
             this.SpeakerGridView.Columns["main_speaker"].ReadOnly = true;
             this.SpeakerGridView.Columns["main_speaker"].DefaultCellStyle.BackColor = Color.LightGray;
             this.SpeakerGridView.Columns["delete_column"].Visible = false;
@@ -1816,7 +1818,7 @@ namespace ConferencePlanner.WinUi
 
         private void TypeBeginEditLayout(string opType)
         {
-
+            PaginationSelector.Enabled = false;
             this.TypeGridView.Columns["delete_column"].Visible = false;
             this.SearchBar.Enabled = false;
 
@@ -1924,6 +1926,7 @@ namespace ConferencePlanner.WinUi
         }
         private void CitiesBeginEditLayout(string opType)
         {
+            PaginationSelector.Enabled = false;
             this.CityGridView.Columns["delete_column"].Visible = false;
             this.SearchBar.Enabled = false;
 
@@ -1954,6 +1957,29 @@ namespace ConferencePlanner.WinUi
             this.EditTextBox.Visible = true;
             this.SaveEditBtn.Visible = true;
         }
+        //private void CountryGridView_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
+        //{
+        //    UpdateCountriesRow = e.RowIndex;
+        //    if (EditTextBox.Visible == false)
+        //    {
+        //        if (UpdateCountriesRow >= PageSize || CountriesLastPageLastRow > 0 && CountriesCurrentPage == CountriesTotalPages && UpdateCountriesRow == CountriesLastPageLastRow || CountriesTotalPages == 0 && CountriesLastPageLastRow == 0)
+        //        {
+        //            CountryAddInsertMessage();
+        //            CountriesBeginEditLayout("Insert");
+        //        }
+        //        else
+        //        {
+        //            string CountryName = CountryGridView.Rows[UpdateCountriesRow].Cells["CountryName"].Value.ToString();
+        //            CountryAddUpdateMessage(CountryName);
+        //            CountriesBeginEditLayout("Update");
+        //        }
+        //    }
+        //    else if (UpdateCountriesRow != e.RowIndex)
+        //    {
+        //        this.popUpMethod("Warning!", "Changes made would not be saved unless you click on the Save button");
+        //    }
+        //}
+
 
         private void CityGridView_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
         {
@@ -1961,8 +1987,9 @@ namespace ConferencePlanner.WinUi
 
             if (EditTextBox.Visible == false)
             {
-                if (this.UpdateCityRow >= this.PageSize ||
-                    (this.CityLastPageLastRow > 0 && this.CityCurrentPage == this.CityTotalPages && this.UpdateCityRow == this.CityLastPageLastRow))
+                if ((this.UpdateCityRow >= this.PageSize) ||
+                    (this.CityLastPageLastRow > 0 && this.CityCurrentPage == this.CityTotalPages && this.UpdateCityRow == this.CityLastPageLastRow) ||
+                    (this.CityLastPageLastRow == 0 && this.CityTotalPages == 0 && this.CityCurrentPage == 1))
                 {
                     this.AddInsertMessageCity();
                     this.CitiesBeginEditLayout("insert");
@@ -2027,6 +2054,7 @@ namespace ConferencePlanner.WinUi
 
         private void CountyBeginEditLayout(string Action)
         {
+            PaginationSelector.Enabled = false;
             CountyGridView.Columns["delete_column"].Visible = false;
             this.SearchBar.Enabled = false;
             foreach (DataGridViewRow row in CountyGridView.Rows)
@@ -2051,6 +2079,7 @@ namespace ConferencePlanner.WinUi
 
         private void CountiesEndEditLayout(string PopUpTitle, string PopUpMessage)
         {
+            PaginationSelector.Enabled = true;
             EditTextBox.Visible = false;
             SaveEditBtn.Visible = false;
             popUpMethod(PopUpTitle, PopUpMessage);
@@ -2150,6 +2179,7 @@ namespace ConferencePlanner.WinUi
         }
         private void CountriesEndEditLayout(string PopUpTitle, string PopUpMessage)
         {
+            PaginationSelector.Enabled = true;
             EditTextBox.Visible = false;
             SaveEditBtn.Visible = false;
             popUpMethod(PopUpTitle, PopUpMessage);
@@ -2233,6 +2263,8 @@ namespace ConferencePlanner.WinUi
         }
         private void SpeakerEndEditLayout(string str1popup, string str2popup)
         {
+            PaginationSelector.Enabled = true;
+            SpeakerGridView.SelectionMode = (DataGridViewSelectionMode)1;
             this.EditTextBox.Visible = false;
             this.SaveEditBtn.Visible = false;
             this.popUpMethod(str1popup, str2popup);
@@ -2287,7 +2319,7 @@ namespace ConferencePlanner.WinUi
         }
         private void TypeEndEditLayout(string str1popup, string str2popup)
         {
-
+            PaginationSelector.Enabled = true;
             this.SaveEditBtn.Visible = false;
             this.EditTextBox.Visible = false;
             this.popUpMethod(str1popup, str2popup);
@@ -2341,6 +2373,7 @@ namespace ConferencePlanner.WinUi
         }
         private void CityEndEditLayout(string PopUpTitle, string PopUpMessage)
         {
+            PaginationSelector.Enabled = true;
             EditTextBox.Visible = false;
             SaveEditBtn.Visible = false;
             popUpMethod(PopUpTitle, PopUpMessage);
@@ -2387,6 +2420,7 @@ namespace ConferencePlanner.WinUi
 
         private void CategoryEndEditLayout(string PopUpTitle, string PopUpMessage)
         {
+            PaginationSelector.Enabled = true;
             SaveEditBtn.Visible = false;
             EditTextBox.Visible = false;
             popUpMethod(PopUpTitle, PopUpMessage);
@@ -2425,12 +2459,17 @@ namespace ConferencePlanner.WinUi
                 }
             }
         }
+
+        //(this.UpdateCityRow >= this.PageSize) ||
+        //            (this.CityLastPageLastRow > 0 && this.CityCurrentPage == this.CityTotalPages && this.UpdateCityRow == this.CityLastPageLastRow) ||
+        //            (this.CityLastPageLastRow == 0 && this.CityTotalPages == 0 && this.CityCurrentPage == 1))
         private void SaveEditBtn_Click(object sender, EventArgs e)
         {
             if(IndexGridChange == 1)
             {
                 CountryGridView.EndEdit();
-                if ((CountriesLastPageLastRow > 0 && CountriesCurrentPage == CountriesTotalPages && UpdateCountriesRow == CountriesLastPageLastRow) || UpdateCountriesRow == PageSize)
+                if ((CountriesLastPageLastRow > 0 && CountriesCurrentPage == CountriesTotalPages && UpdateCountriesRow == CountriesLastPageLastRow) || (UpdateCountriesRow == PageSize) ||
+                        (this.CountriesLastPageLastRow == 0 && this.CountriesTotalPages == 0 && this.CountriesCurrentPage == 1))
                 {
                     CountryModel NewCountry = GetCountry();
                     // _countryRepository.InsertCountry(NewCountry);
@@ -2456,7 +2495,8 @@ namespace ConferencePlanner.WinUi
             if (IndexGridChange == 2)
             {
                 CountyGridView.EndEdit();
-                if ((CountiesLastPageLastRow > 0 && CountiesCurrentPage == CountiesTotalPages && UpdateCountyRow == CountiesLastPageLastRow) || UpdateCountyRow == PageSize)
+                if ((CountiesLastPageLastRow > 0 && CountiesCurrentPage == CountiesTotalPages && UpdateCountyRow == CountiesLastPageLastRow) || (UpdateCountyRow == PageSize) ||
+                    (this.CountiesLastPageLastRow == 0 && this.CountiesTotalPages == 0 && this.CountiesCurrentPage == 1))
                 {
                     CountyModel NewCounty = GetCounty();
                     var t=Task.Run(() => GetLastCountyId());
@@ -2484,8 +2524,9 @@ namespace ConferencePlanner.WinUi
             }
             if (IndexGridChange == 3)
             {
-                this.CityGridView.EndEdit(); // de facut endedit
-                if ((CityLastPageLastRow > 0 && CityCurrentPage == CityTotalPages && UpdateCityRow == CityLastPageLastRow) || UpdateCityRow == PageSize)
+                this.CityGridView.EndEdit();
+                if ((CityLastPageLastRow > 0 && CityCurrentPage == CityTotalPages && UpdateCityRow == CityLastPageLastRow) || (UpdateCityRow == PageSize) ||
+                    (this.CityLastPageLastRow == 0 && this.CityTotalPages == 0 && this.CityCurrentPage == 1))
                 {
 
                     CityModel newCity = GetCity();
@@ -2519,7 +2560,8 @@ namespace ConferencePlanner.WinUi
             if (IndexGridChange == 4)
             {
                 this.TypeGridView.EndEdit();
-                if ((this.TypesLastPageLastRow > 0 && this.TypesCurrentPage == this.TypesTotalPages && this.UpdateTypeRow == this.TypesLastPageLastRow) || (this.UpdateTypeRow == this.PageSize))
+                if ((this.TypesLastPageLastRow > 0 && this.TypesCurrentPage == this.TypesTotalPages && this.UpdateTypeRow == this.TypesLastPageLastRow) || (this.UpdateTypeRow == this.PageSize)
+                    || (this.TypesLastPageLastRow == 0 && this.TypesTotalPages == 0 && this.TypesCurrentPage == 1))
                 {
                     TypeModel newType = GetType();
                     newType.TypeId = this.Types.Count + 1;
@@ -2561,7 +2603,8 @@ namespace ConferencePlanner.WinUi
             if (IndexGridChange == 5)
             {
                 this.SpeakerGridView.EndEdit();
-                if ((this.SpeakersLastPageLastRow > 0 && this.SpeakersCurrentPage == this.SpeakersTotalPages && this.UpdateSpeakerRow == this.SpeakersLastPageLastRow) || (this.UpdateSpeakerRow == this.PageSize))
+                if ((this.SpeakersLastPageLastRow > 0 && this.SpeakersCurrentPage == this.SpeakersTotalPages && this.UpdateSpeakerRow == this.SpeakersLastPageLastRow) || (this.UpdateSpeakerRow == this.PageSize) ||
+                    (this.SpeakersLastPageLastRow == 0 && this.SpeakersTotalPages == 0 && this.SpeakersCurrentPage == 1))
                 {
                     SpeakerModel newSpeaker = GetSpeaker();
 
@@ -2596,7 +2639,8 @@ namespace ConferencePlanner.WinUi
             if (IndexGridChange == 6)
             {
                 CategoryGridView.EndEdit();
-                if ((CategoriesLastPageLastRow > 0 && CategoriesCurrentPage == CategoriesToatlPages && UpdateCategoryRow == CategoriesLastPageLastRow) || UpdateCategoryRow == PageSize)
+                if ((CategoriesLastPageLastRow > 0 && CategoriesCurrentPage == CategoriesToatlPages && UpdateCategoryRow == CategoriesLastPageLastRow) || (UpdateCategoryRow == PageSize) ||
+                    (this.CategoriesLastPageLastRow == 0 && this.CategoriesToatlPages == 0 && this.CategoriesCurrentPage == 1))
                 {
                     CategoryModel Category = GetCategory();
                     Category.ConferenceCategoryId = Categories.Count + 1;
@@ -2950,6 +2994,36 @@ namespace ConferencePlanner.WinUi
             {
                 this.EndDatePicker.Value = this.StartDatePicker.Value;
             }
+        }
+
+        private void SpeakerGridView_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            this.SpeakerGridView.BeginEdit(true);
+        }
+
+        private void TypeGridView_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            this.TypeGridView.BeginEdit(true);
+        }
+
+        private void CityGridView_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            this.CityGridView.BeginEdit(true);
+        }
+
+        private void CountyGridView_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            this.CountyGridView.BeginEdit(true);
+        }
+
+        private void CountryGridView_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            this.CountryGridView.BeginEdit(true);
+        }
+
+        private void CategoryGridView_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            this.CategoryGridView.BeginEdit(true);
         }
     }
 }

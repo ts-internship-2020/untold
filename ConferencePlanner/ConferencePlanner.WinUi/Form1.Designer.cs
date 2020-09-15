@@ -158,7 +158,7 @@
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 57.3975F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 143F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 35F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 29F));
             this.tableLayoutPanel2.Controls.Add(this.ConfNameLabel, 0, 0);
             this.tableLayoutPanel2.Controls.Add(this.StartDateLabel, 0, 1);
             this.tableLayoutPanel2.Controls.Add(this.EndDateLabel, 0, 2);
@@ -184,7 +184,7 @@
             this.ConfNameLabel.AutoSize = true;
             this.ConfNameLabel.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.ConfNameLabel.ForeColor = System.Drawing.Color.White;
-            this.ConfNameLabel.Location = new System.Drawing.Point(41, 20);
+            this.ConfNameLabel.Location = new System.Drawing.Point(42, 20);
             this.ConfNameLabel.Name = "ConfNameLabel";
             this.ConfNameLabel.Size = new System.Drawing.Size(145, 21);
             this.ConfNameLabel.TabIndex = 0;
@@ -196,7 +196,7 @@
             this.StartDateLabel.AutoSize = true;
             this.StartDateLabel.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.StartDateLabel.ForeColor = System.Drawing.Color.White;
-            this.StartDateLabel.Location = new System.Drawing.Point(68, 82);
+            this.StartDateLabel.Location = new System.Drawing.Point(69, 82);
             this.StartDateLabel.Name = "StartDateLabel";
             this.StartDateLabel.Size = new System.Drawing.Size(92, 21);
             this.StartDateLabel.TabIndex = 1;
@@ -209,7 +209,7 @@
             this.EndDateLabel.AutoSize = true;
             this.EndDateLabel.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.EndDateLabel.ForeColor = System.Drawing.Color.White;
-            this.EndDateLabel.Location = new System.Drawing.Point(72, 139);
+            this.EndDateLabel.Location = new System.Drawing.Point(73, 139);
             this.EndDateLabel.Name = "EndDateLabel";
             this.EndDateLabel.Size = new System.Drawing.Size(84, 21);
             this.EndDateLabel.TabIndex = 2;
@@ -218,10 +218,10 @@
             // ConfName
             // 
             this.ConfName.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.ConfName.Location = new System.Drawing.Point(243, 18);
+            this.ConfName.Location = new System.Drawing.Point(245, 18);
             this.ConfName.Margin = new System.Windows.Forms.Padding(15, 3, 15, 3);
             this.ConfName.Name = "ConfName";
-            this.ConfName.Size = new System.Drawing.Size(277, 26);
+            this.ConfName.Size = new System.Drawing.Size(281, 26);
             this.ConfName.TabIndex = 3;
             this.ConfName.Enter += new System.EventHandler(this.ConfName_Enter);
             this.ConfName.Leave += new System.EventHandler(this.ConfName_Leave);
@@ -230,21 +230,20 @@
             // 
             this.StartDatePicker.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.StartDatePicker.Font = new System.Drawing.Font("Century Gothic", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.StartDatePicker.Location = new System.Drawing.Point(243, 80);
+            this.StartDatePicker.Location = new System.Drawing.Point(245, 80);
             this.StartDatePicker.Margin = new System.Windows.Forms.Padding(15, 3, 15, 3);
             this.StartDatePicker.Name = "StartDatePicker";
-            this.StartDatePicker.Size = new System.Drawing.Size(277, 26);
+            this.StartDatePicker.Size = new System.Drawing.Size(281, 26);
             this.StartDatePicker.TabIndex = 4;
-            this.StartDatePicker.ValueChanged += new System.EventHandler(this.StartDatePicker_ValueChanged);
             // 
             // EndDatePicker
             // 
             this.EndDatePicker.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.EndDatePicker.Font = new System.Drawing.Font("Century Gothic", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.EndDatePicker.Location = new System.Drawing.Point(243, 137);
+            this.EndDatePicker.Location = new System.Drawing.Point(245, 137);
             this.EndDatePicker.Margin = new System.Windows.Forms.Padding(15, 3, 15, 3);
             this.EndDatePicker.Name = "EndDatePicker";
-            this.EndDatePicker.Size = new System.Drawing.Size(277, 26);
+            this.EndDatePicker.Size = new System.Drawing.Size(281, 26);
             this.EndDatePicker.TabIndex = 5;
             // 
             // StartHourPicker
@@ -253,20 +252,19 @@
             this.StartHourPicker.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.StartHourPicker.CustomFormat = "HH:mm";
             this.StartHourPicker.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.StartHourPicker.Location = new System.Drawing.Point(571, 80);
+            this.StartHourPicker.Location = new System.Drawing.Point(577, 80);
             this.StartHourPicker.Name = "StartHourPicker";
             this.StartHourPicker.ShowUpDown = true;
             this.StartHourPicker.Size = new System.Drawing.Size(111, 26);
             this.StartHourPicker.TabIndex = 9;
             this.StartHourPicker.Value = new System.DateTime(2020, 9, 6, 0, 0, 0, 0);
-            this.StartHourPicker.ValueChanged += new System.EventHandler(this.StartHourPicker_ValueChanged);
             // 
             // EndHourPicker
             // 
             this.EndHourPicker.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.EndHourPicker.CustomFormat = "HH:mm";
             this.EndHourPicker.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.EndHourPicker.Location = new System.Drawing.Point(571, 137);
+            this.EndHourPicker.Location = new System.Drawing.Point(577, 137);
             this.EndHourPicker.Name = "EndHourPicker";
             this.EndHourPicker.ShowUpDown = true;
             this.EndHourPicker.Size = new System.Drawing.Size(111, 26);
@@ -541,12 +539,14 @@
             this.CountryGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.CountryGridView.Location = new System.Drawing.Point(50, 373);
             this.CountryGridView.Name = "CountryGridView";
+            this.CountryGridView.RowHeadersVisible = false;
             this.CountryGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.CountryGridView.Size = new System.Drawing.Size(1121, 209);
+            this.CountryGridView.Size = new System.Drawing.Size(1121, 280);
             this.CountryGridView.TabIndex = 1;
             this.CountryGridView.Text = "dataGridView1";
             this.CountryGridView.CellBeginEdit += new System.Windows.Forms.DataGridViewCellCancelEventHandler(this.CountryGridView_CellBeginEdit);
             this.CountryGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.CountryGridView_CellClick);
+            this.CountryGridView.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.CountryGridView_CellDoubleClick);
             this.CountryGridView.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.CountryGridView_CellEndEdit);
             this.CountryGridView.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.CountryGridView_DataBindingComplete);
             this.CountryGridView.Layout += new System.Windows.Forms.LayoutEventHandler(this.CountryGridView_Layout);
@@ -559,7 +559,7 @@
             this.tableLayoutPanel5.Controls.Add(this.tableLayoutPanel7, 0, 1);
             this.tableLayoutPanel5.Controls.Add(this.PageControlTableLayout, 0, 0);
             this.tableLayoutPanel5.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.tableLayoutPanel5.Location = new System.Drawing.Point(50, 584);
+            this.tableLayoutPanel5.Location = new System.Drawing.Point(50, 655);
             this.tableLayoutPanel5.Name = "tableLayoutPanel5";
             this.tableLayoutPanel5.RowCount = 2;
             this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
@@ -749,13 +749,15 @@
             this.CountyGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.CountyGridView.Location = new System.Drawing.Point(50, 373);
             this.CountyGridView.Name = "CountyGridView";
+            this.CountyGridView.RowHeadersVisible = false;
             this.CountyGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.CountyGridView.Size = new System.Drawing.Size(1121, 209);
+            this.CountyGridView.Size = new System.Drawing.Size(1121, 280);
             this.CountyGridView.TabIndex = 1;
             this.CountyGridView.Text = "dataGridView1";
             this.CountyGridView.Visible = false;
             this.CountyGridView.CellBeginEdit += new System.Windows.Forms.DataGridViewCellCancelEventHandler(this.CountyGridView_CellBeginEdit);
             this.CountyGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.CountyGridView_CellClick);
+            this.CountyGridView.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.CountyGridView_CellDoubleClick);
             this.CountyGridView.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.CountyGridView_CellEndEdit);
             this.CountyGridView.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.CountyGridView_DataBindingComplete);
             this.CountyGridView.Layout += new System.Windows.Forms.LayoutEventHandler(this.CountyGridView_Layout);
@@ -768,13 +770,15 @@
             this.CityGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.CityGridView.Location = new System.Drawing.Point(50, 373);
             this.CityGridView.Name = "CityGridView";
+            this.CityGridView.RowHeadersVisible = false;
             this.CityGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.CityGridView.Size = new System.Drawing.Size(1121, 209);
+            this.CityGridView.Size = new System.Drawing.Size(1121, 280);
             this.CityGridView.TabIndex = 1;
             this.CityGridView.Text = "dataGridView1";
             this.CityGridView.Visible = false;
             this.CityGridView.CellBeginEdit += new System.Windows.Forms.DataGridViewCellCancelEventHandler(this.CityGridView_CellBeginEdit);
             this.CityGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.CityGridView_CellClick);
+            this.CityGridView.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.CityGridView_CellDoubleClick);
             this.CityGridView.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.CityGridView_CellEndEdit);
             this.CityGridView.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.CityGridView_DataBindingComplete);
             this.CityGridView.Layout += new System.Windows.Forms.LayoutEventHandler(this.CityGridView_Layout);
@@ -787,13 +791,15 @@
             this.TypeGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.TypeGridView.Location = new System.Drawing.Point(50, 373);
             this.TypeGridView.Name = "TypeGridView";
+            this.TypeGridView.RowHeadersVisible = false;
             this.TypeGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.TypeGridView.Size = new System.Drawing.Size(1121, 209);
+            this.TypeGridView.Size = new System.Drawing.Size(1121, 280);
             this.TypeGridView.TabIndex = 1;
             this.TypeGridView.Text = "dataGridView1";
             this.TypeGridView.Visible = false;
             this.TypeGridView.CellBeginEdit += new System.Windows.Forms.DataGridViewCellCancelEventHandler(this.TypeGridView_CellBeginEdit);
             this.TypeGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.TypeGridView_CellClick);
+            this.TypeGridView.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.TypeGridView_CellDoubleClick);
             this.TypeGridView.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.TypeGridView_CellEndEdit);
             this.TypeGridView.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.TypeGridView_DataBindingComplete);
             this.TypeGridView.Layout += new System.Windows.Forms.LayoutEventHandler(this.TypeGridView_Layout);
@@ -806,13 +812,15 @@
             this.SpeakerGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.SpeakerGridView.Location = new System.Drawing.Point(50, 373);
             this.SpeakerGridView.Name = "SpeakerGridView";
+            this.SpeakerGridView.RowHeadersVisible = false;
             this.SpeakerGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.SpeakerGridView.Size = new System.Drawing.Size(1121, 209);
+            this.SpeakerGridView.Size = new System.Drawing.Size(1121, 280);
             this.SpeakerGridView.TabIndex = 1;
             this.SpeakerGridView.Text = "dataGridView1";
             this.SpeakerGridView.Visible = false;
             this.SpeakerGridView.CellBeginEdit += new System.Windows.Forms.DataGridViewCellCancelEventHandler(this.SpeakerGridView_CellBeginEdit);
             this.SpeakerGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.SpeakerGridView_CellClick);
+            this.SpeakerGridView.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.SpeakerGridView_CellDoubleClick);
             this.SpeakerGridView.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.SpeakerGridView_CellEndEdit);
             this.SpeakerGridView.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.SpeakerGridView_DataBindingComplete);
             this.SpeakerGridView.Layout += new System.Windows.Forms.LayoutEventHandler(this.SpeakerGridView_Layout);
@@ -825,13 +833,15 @@
             this.CategoryGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.CategoryGridView.Location = new System.Drawing.Point(50, 373);
             this.CategoryGridView.Name = "CategoryGridView";
+            this.CategoryGridView.RowHeadersVisible = false;
             this.CategoryGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.CategoryGridView.Size = new System.Drawing.Size(1121, 209);
+            this.CategoryGridView.Size = new System.Drawing.Size(1121, 280);
             this.CategoryGridView.TabIndex = 1;
             this.CategoryGridView.Text = "dataGridView1";
             this.CategoryGridView.Visible = false;
             this.CategoryGridView.CellBeginEdit += new System.Windows.Forms.DataGridViewCellCancelEventHandler(this.CategoryGridView_CellBeginEdit);
             this.CategoryGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.CategoryGridView_CellClick);
+            this.CategoryGridView.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.CategoryGridView_CellDoubleClick);
             this.CategoryGridView.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.CategoryGridView_CellEndEdit);
             this.CategoryGridView.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.CategoryGridView_DataBindingComplete);
             this.CategoryGridView.Layout += new System.Windows.Forms.LayoutEventHandler(this.CategoryGridView_Layout);
@@ -996,16 +1006,16 @@
             this.BackColor = System.Drawing.SystemColors.Desktop;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.ClientSize = new System.Drawing.Size(1224, 749);
+            this.ClientSize = new System.Drawing.Size(1224, 820);
             this.Controls.Add(this.tableLayoutPanel5);
             this.Controls.Add(this.tableLayoutPanel1);
+            this.Controls.Add(this.CategoryGridView);
             this.Controls.Add(this.SavePanel);
             this.Controls.Add(this.SpeakerGridView);
             this.Controls.Add(this.TypeGridView);
             this.Controls.Add(this.CityGridView);
             this.Controls.Add(this.CountyGridView);
             this.Controls.Add(this.CountryGridView);
-            this.Controls.Add(this.CategoryGridView);
             this.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.Name = "Form1";
             this.Padding = new System.Windows.Forms.Padding(50, 56, 50, 56);
