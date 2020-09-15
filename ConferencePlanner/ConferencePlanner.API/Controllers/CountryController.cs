@@ -46,8 +46,13 @@ namespace ConferencePlanner.Api.Controllers
             return Ok();
         }
 
-
-
+        [HttpGet]
+        [Route("get_country_id_by_conference_id/id={conferenceId}")]
+        public IActionResult GetCountryIdByConferenceId(int conferenceId)
+        {
+            int countryId = _countryRepository.GetCountryIdByConferenceId(conferenceId);
+            return Ok();
+        }
 
     }
 }

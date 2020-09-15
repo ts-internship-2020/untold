@@ -158,7 +158,7 @@
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 57.3975F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 143F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 36F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 31F));
             this.tableLayoutPanel2.Controls.Add(this.ConfNameLabel, 0, 0);
             this.tableLayoutPanel2.Controls.Add(this.StartDateLabel, 0, 1);
             this.tableLayoutPanel2.Controls.Add(this.EndDateLabel, 0, 2);
@@ -545,7 +545,7 @@
             this.CountryGridView.Name = "CountryGridView";
             this.CountryGridView.RowHeadersVisible = false;
             this.CountryGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.CountryGridView.Size = new System.Drawing.Size(1121, 280);
+            this.CountryGridView.Size = new System.Drawing.Size(1121, 209);
             this.CountryGridView.TabIndex = 1;
             this.CountryGridView.Text = "dataGridView1";
             this.CountryGridView.CellBeginEdit += new System.Windows.Forms.DataGridViewCellCancelEventHandler(this.CountryGridView_CellBeginEdit);
@@ -563,7 +563,7 @@
             this.tableLayoutPanel5.Controls.Add(this.tableLayoutPanel7, 0, 1);
             this.tableLayoutPanel5.Controls.Add(this.PageControlTableLayout, 0, 0);
             this.tableLayoutPanel5.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.tableLayoutPanel5.Location = new System.Drawing.Point(50, 655);
+            this.tableLayoutPanel5.Location = new System.Drawing.Point(50, 584);
             this.tableLayoutPanel5.Name = "tableLayoutPanel5";
             this.tableLayoutPanel5.RowCount = 2;
             this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
@@ -755,7 +755,7 @@
             this.CountyGridView.Name = "CountyGridView";
             this.CountyGridView.RowHeadersVisible = false;
             this.CountyGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.CountyGridView.Size = new System.Drawing.Size(1121, 280);
+            this.CountyGridView.Size = new System.Drawing.Size(1121, 209);
             this.CountyGridView.TabIndex = 1;
             this.CountyGridView.Text = "dataGridView1";
             this.CountyGridView.Visible = false;
@@ -776,7 +776,7 @@
             this.CityGridView.Name = "CityGridView";
             this.CityGridView.RowHeadersVisible = false;
             this.CityGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.CityGridView.Size = new System.Drawing.Size(1121, 280);
+            this.CityGridView.Size = new System.Drawing.Size(1121, 209);
             this.CityGridView.TabIndex = 1;
             this.CityGridView.Text = "dataGridView1";
             this.CityGridView.Visible = false;
@@ -797,7 +797,7 @@
             this.TypeGridView.Name = "TypeGridView";
             this.TypeGridView.RowHeadersVisible = false;
             this.TypeGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.TypeGridView.Size = new System.Drawing.Size(1121, 280);
+            this.TypeGridView.Size = new System.Drawing.Size(1121, 209);
             this.TypeGridView.TabIndex = 1;
             this.TypeGridView.Text = "dataGridView1";
             this.TypeGridView.Visible = false;
@@ -818,7 +818,7 @@
             this.SpeakerGridView.Name = "SpeakerGridView";
             this.SpeakerGridView.RowHeadersVisible = false;
             this.SpeakerGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.SpeakerGridView.Size = new System.Drawing.Size(1121, 280);
+            this.SpeakerGridView.Size = new System.Drawing.Size(1121, 209);
             this.SpeakerGridView.TabIndex = 1;
             this.SpeakerGridView.Text = "dataGridView1";
             this.SpeakerGridView.Visible = false;
@@ -839,7 +839,7 @@
             this.CategoryGridView.Name = "CategoryGridView";
             this.CategoryGridView.RowHeadersVisible = false;
             this.CategoryGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.CategoryGridView.Size = new System.Drawing.Size(1121, 280);
+            this.CategoryGridView.Size = new System.Drawing.Size(1121, 209);
             this.CategoryGridView.TabIndex = 1;
             this.CategoryGridView.Text = "dataGridView1";
             this.CategoryGridView.Visible = false;
@@ -1010,7 +1010,7 @@
             this.BackColor = System.Drawing.SystemColors.Desktop;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.ClientSize = new System.Drawing.Size(1224, 820);
+            this.ClientSize = new System.Drawing.Size(1224, 749);
             this.Controls.Add(this.tableLayoutPanel5);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.CategoryGridView);

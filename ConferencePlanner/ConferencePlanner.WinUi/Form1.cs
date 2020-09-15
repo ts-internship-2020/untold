@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -87,8 +88,9 @@ namespace ConferencePlanner.WinUi
         string Type;
         string Speaker;
         string Category;
-        private bool isEditingConference = false;
 
+        private bool isEditingConference = false;
+        private ConferenceModel updatingConference = new ConferenceModel();
         public Form1(IConferenceRepository conferenceRepository, ICountryRepository countryRepository, ICountyRepository countyRepository, ISpeakerRepository speakerRepository, ITypeRepository typeRepository, ICityRepository cityRepository, ICategoryRepository categoryRepository)
         {
             _conferenceRepository = conferenceRepository;
@@ -117,18 +119,32 @@ namespace ConferencePlanner.WinUi
             InitializeComponent();
 
             this.isEditingConference = true;
-            this.PopulateForm(conference);
+            this.updatingConference = conference;
+            this.PopulateForm();
+            //this.ChangeToEditLayout();
         }
+        //private void ChangeToEditLayout()
+        //{
 
-        private void PopulateForm(ConferenceModel conference)
+        //}
+        private void PopulateForm()
         {
-            ConfName.Text = conference.ConferenceName;
+            ConfName.Text = updatingConference.ConferenceName;
 
-            string[] dates = conference.Period.Split(" - ");
+            string[] dates = updatingConference.Period.Split(" - ");
+
             this.StartDatePicker.Value = DateTime.Parse(dates[0]);
             this.EndDatePicker.Value = DateTime.Parse(dates[1]);
+            this.StartHourPicker.Value = DateTime.Parse(dates[0]);
+            this.EndHourPicker.Value = DateTime.Parse(dates[1]);
+
+            string[] places = updatingConference.Location.Split(", ");
+            //var test = this.CountryGridView
+            var t = Task.Run(() => GetCountryIdByConferenceID(this.updatingConference.ConferenceId));
+            t.Wait();
+            int id = t.Result;
         }
-        private void ChechGridVisibility()
+        private void CheckGridVisibility()
         {
             CountryGridView.Visible = false;
             CountryBar.Visible = false;
@@ -144,10 +160,15 @@ namespace ConferencePlanner.WinUi
             CategoryBar.Visible = false;
             SavePanel.Visible = false;
 
+            this.SearchBar.Text = "";
+
             if (IndexGridChange == 1)
             {
                 CountryGridView.Visible = true;
                 CountryBar.Visible = true;
+
+                this.SearchTableLayout.Visible = true;
+                this.PageControlTableLayout.Visible = true;
                 LoadCountryTab();
                 CheckIndexChangeBtns();
             }
@@ -204,7 +225,7 @@ namespace ConferencePlanner.WinUi
         private void BackGridBtn_Click(object sender, EventArgs e)
         {
             IndexGridChange--;
-            ChechGridVisibility();
+            CheckGridVisibility();
         }
 
         public bool CheckError()
@@ -212,6 +233,7 @@ namespace ConferencePlanner.WinUi
             if (ConfName.Text == "")
             {
                 ConfNameError.SetError(ConfName, "Insert a name!");
+                this.popUpMethod("Error", "Insert a name!");
                 return false;
             }
             else
@@ -226,7 +248,10 @@ namespace ConferencePlanner.WinUi
             if(IndexGridChange == 1)
             {
                 BackGridBtn.Enabled = false;
-            }else
+                this.SaveNewBtn.Visible = false;
+                
+            }
+            else
             {
                 BackGridBtn.Enabled = true;
             }
@@ -258,9 +283,12 @@ namespace ConferencePlanner.WinUi
             this.Countries = _countryRepository.GetCountriesList();
             CountriesFromSearchBar = Countries;
             int[] pages = CalculateTotalPages(Countries.Count);
+
             CountryGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             CountryGridView.AllowUserToOrderColumns = true;
+            
             CountryGridView.DefaultCellStyle.ForeColor = Color.Black;
+            
             CountriesTotalPages = pages[0];
             CountriesLastPageLastRow = pages[1];
 
@@ -350,14 +378,20 @@ namespace ConferencePlanner.WinUi
         }
 
         private void LoadSaveTab()
-        {       
-            ConfNameSaveLabel.Text = "Conference name: " +  ConferenceName;
-            SratdDateSaveLabel.Text = "Start date: " + StartDate + " " + StartHour;
-            EndDateSaveLabel.Text = "End date: " + EndDate + " " + EndHour;
-            LocationSaveLabel.Text = "Location: " + City + " , " + County + " , " + Country;
-            TypeSaveLabel.Text = "Type: " + Type;
-            SpeakerSaveLabel.Text = "Speaker: " + Speaker;
-            CategorySaveLabel.Text = "Category: " + Category;
+        {
+            PageControlTableLayout.Visible = false;
+            SearchTableLayout.Visible = false;
+            ConfNameSaveLabel.Text = "Conference name: " +  this.ConfName.Text;
+            DateTime sDate = (this.StartDatePicker.Value).Date + this.StartHourPicker.Value.TimeOfDay;
+            DateTime eDate = (this.EndDatePicker.Value).Date + this.EndHourPicker.Value.TimeOfDay;
+            SratdDateSaveLabel.Text = "Start date: " + sDate.ToShortDateString() + " " + sDate.ToShortTimeString();
+            EndDateSaveLabel.Text = "End date: " + eDate.ToShortDateString() + " " + eDate.ToShortTimeString();
+            LocationSaveLabel.Text = "Location: " + this.Countries.Where(a => a.DictionaryCountryId == this.SelectedCountryId).Select(a => a.CountryName).First() + ", " +
+                this.Counties.Where(a => a.CountyId == this.SelectedCountyId).Select(a => a.CountyName).First() + ", " +
+                this.Cities.Where(a => a.DictionaryCityId == this.SelectedCityId).Select(a => a.CityName).First();
+            TypeSaveLabel.Text = "Type: " + this.Types.Where(a => a.TypeId == this.SelectedTypeId).Select(a => a.TypeName).First();
+            SpeakerSaveLabel.Text = "Speaker: " + this.Speakers.Where(a => a.SpeakerId == this.SelectedSpeakerId).Select(a => a.FirstName + ' ' + a.LastName).First();
+            CategorySaveLabel.Text = "Category: " + this.Categories.Where(a => a.ConferenceCategoryId == this.SelectedCategoryId).Select(a => a.ConferenceCategoryName).First();
         }
         private bool IndexChange(string TabName, DataGridView CurrentDataGrid)
         {
@@ -529,6 +563,20 @@ namespace ConferencePlanner.WinUi
 
 
 
+        }
+        private async Task<int> GetCountryIdByConferenceID(int conferenceId)
+        {
+            HttpClient client = new HttpClient();
+            HttpResponseMessage s = await client.GetAsync("http://localhost:2794/api/Country/get_country_id_by_conference_id/id=" + conferenceId);
+
+            if (s.IsSuccessStatusCode)
+            {
+                string json = await s.Content.ReadAsStringAsync();
+                var t = JsonConvert.DeserializeObject<int>(json);
+                return t;
+
+            }
+            return 0;
         }
         private async Task GetAllSpeakers()
         {
@@ -954,6 +1002,7 @@ namespace ConferencePlanner.WinUi
                 deleteButtonColumn.Name = "delete_column";
                 CityGridView.Columns.Add(deleteButtonColumn);
             }
+            this.CityGridView.Rows[0].Selected = false;
         }
 
         private void CountyGridView_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
@@ -979,7 +1028,7 @@ namespace ConferencePlanner.WinUi
 
             }
             CountyGridView.Columns["CountyName"].HeaderText = "County Name";
-            CountyGridView.Rows[0].Selected = false;
+            this.CountyGridView.Rows[0].Selected = false;
         }
 
         private void CountryGridView_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
@@ -1024,10 +1073,10 @@ namespace ConferencePlanner.WinUi
                         if (IndexChange("Country", CountryGridView))
                         {
                             SelectedCountryId = (int)CountryGridView.SelectedRows[0].Cells["DictionaryCountryId"].Value;
-                            object value = CountryGridView.SelectedRows[0].Cells["CountryName"].Value;
-                            Country = (string)value;
+                            //object value = CountryGridView.SelectedRows[0].Cells["CountryName"].Value;
+                            //Country = (string)value;
                             IndexGridChange++;
-                            ChechGridVisibility();
+                            CheckGridVisibility();
                         }
                     }
                 }
@@ -1036,9 +1085,9 @@ namespace ConferencePlanner.WinUi
                     if (IndexChange("County", CountyGridView))
                     {
                         SelectedCountyId = (int)CountyGridView.SelectedRows[0].Cells["CountyId"].Value;
-                        County = (string)CountyGridView.SelectedRows[0].Cells["CountyName"].Value;
+                        //County = (string)CountyGridView.SelectedRows[0].Cells["CountyName"].Value;
                         IndexGridChange++;
-                        ChechGridVisibility();
+                        CheckGridVisibility();
                     }
                 }
                 if (IndexGridChange == 3)
@@ -1046,9 +1095,9 @@ namespace ConferencePlanner.WinUi
                     if (IndexChange("City", CityGridView))
                     {
                         SelectedCityId = (int)CityGridView.SelectedRows[0].Cells["DictionaryCityId"].Value;
-                        City = (string)CityGridView.SelectedRows[0].Cells["CityName"].Value;
+                        //City = (string)CityGridView.SelectedRows[0].Cells["CityName"].Value;
                         IndexGridChange++;
-                        ChechGridVisibility();
+                        CheckGridVisibility();
                     }
                 }
                 if (IndexGridChange == 4)
@@ -1056,9 +1105,9 @@ namespace ConferencePlanner.WinUi
                     if (IndexChange("Type", TypeGridView))
                     {
                         SelectedTypeId = (int)TypeGridView.SelectedRows[0].Cells["TypeId"].Value;
-                        Type = (string)TypeGridView.SelectedRows[0].Cells["TypeName"].Value;
+                        //Type = (string)TypeGridView.SelectedRows[0].Cells["TypeName"].Value;
                         IndexGridChange++;
-                        ChechGridVisibility();
+                        CheckGridVisibility();
                     }
                 }
 
@@ -1077,19 +1126,19 @@ namespace ConferencePlanner.WinUi
                         }
 
                         SelectedSpeakerId = (int)SpeakerGridView.Rows[SelectedRowIndex].Cells["SpeakerId"].Value;
-                        Speaker = (string)SpeakerGridView.Rows[SelectedRowIndex].Cells["FirstName"].Value + " " + (string)SpeakerGridView.Rows[SelectedRowIndex].Cells["LastName"].Value;
+                        //Speaker = (string)SpeakerGridView.Rows[SelectedRowIndex].Cells["FirstName"].Value + " " + (string)SpeakerGridView.Rows[SelectedRowIndex].Cells["LastName"].Value;
                         IndexGridChange++;
-                        ChechGridVisibility();
+                        CheckGridVisibility();
                     }
                 }
                 if(IndexGridChange == 6)
                 {
                     if(IndexChange("Category", CategoryGridView))
                     {
-                        SelectedTypeId = (int)CategoryGridView.SelectedRows[0].Cells["ConferenceCategoryId"].Value;
-                        Category = (string)CategoryGridView.SelectedRows[0].Cells["ConferenceCategoryName"].Value;
+                        SelectedCategoryId = (int)CategoryGridView.SelectedRows[0].Cells["ConferenceCategoryId"].Value;
+                        //Category = (string)CategoryGridView.SelectedRows[0].Cells["ConferenceCategoryName"].Value;
                         IndexGridChange++;
-                        ChechGridVisibility();
+                        CheckGridVisibility();
                     }
                 }
             }
@@ -1510,7 +1559,8 @@ namespace ConferencePlanner.WinUi
             LastPageBtn.Enabled = false;
             FirstPageBtn.Enabled = false;
             BackPageBtn.Enabled = false;
-
+            this.NextGridBtn.Enabled = false;
+            this.BackGridBtn.Enabled = false;
             if (Action == "Update")
             {
                 CountryGridView.AllowUserToAddRows = false;
@@ -1574,6 +1624,8 @@ namespace ConferencePlanner.WinUi
             BackPageBtn.Enabled = false;
             FirstPageBtn.Enabled = false;
             LastPageBtn.Enabled = false;
+            this.NextGridBtn.Enabled = false;
+            this.BackGridBtn.Enabled = false;
 
             if (action == "update")
             {
@@ -1673,6 +1725,8 @@ namespace ConferencePlanner.WinUi
             this.BackPageBtn.Enabled = false;
             this.FirstPageBtn.Enabled = false;
             this.LastPageBtn.Enabled = false;
+            this.NextGridBtn.Enabled = false;
+            this.BackGridBtn.Enabled = false;
 
             if (opType == "u")
             {
@@ -1788,6 +1842,8 @@ namespace ConferencePlanner.WinUi
             this.BackPageBtn.Enabled = false;
             this.FirstPageBtn.Enabled = false;
             this.LastPageBtn.Enabled = false;
+            this.NextGridBtn.Enabled = false;
+            this.BackGridBtn.Enabled = false;
 
             if (opType == "u")
             {
@@ -1894,6 +1950,8 @@ namespace ConferencePlanner.WinUi
             this.BackPageBtn.Enabled = false;
             this.FirstPageBtn.Enabled = false;
             this.LastPageBtn.Enabled = false;
+            this.NextGridBtn.Enabled = false;
+            this.BackGridBtn.Enabled = false;
 
             if (opType == "update")
             {
@@ -2019,6 +2077,8 @@ namespace ConferencePlanner.WinUi
             LastPageBtn.Enabled = false;
             FirstPageBtn.Enabled = false;
             BackPageBtn.Enabled = false;
+            this.NextGridBtn.Enabled = false;
+            this.BackGridBtn.Enabled = false;
 
             if (Action == "Update")
             {
@@ -2046,6 +2106,8 @@ namespace ConferencePlanner.WinUi
             LastPageBtn.Enabled = true;
             FirstPageBtn.Enabled = true;
             BackPageBtn.Enabled = true;
+            this.NextGridBtn.Enabled = true;
+            this.BackGridBtn.Enabled = true;
 
             if (!CountyGridView.AllowUserToAddRows)
             {
@@ -2144,6 +2206,8 @@ namespace ConferencePlanner.WinUi
             LastPageBtn.Enabled = true;
             FirstPageBtn.Enabled = true;
             BackPageBtn.Enabled = true;
+            this.NextGridBtn.Enabled = true;
+            this.BackGridBtn.Enabled = true;
 
             if (!CountryGridView.AllowUserToAddRows)
             {
@@ -2230,6 +2294,9 @@ namespace ConferencePlanner.WinUi
             this.BackPageBtn.Enabled = true;
             this.FirstPageBtn.Enabled = true;
             this.LastPageBtn.Enabled = true;
+            this.NextGridBtn.Enabled = true;
+            this.BackGridBtn.Enabled = true;
+
             if (this.SpeakerGridView.AllowUserToAddRows == false)
             {
                 this.SpeakerGridView.AllowUserToAddRows = true;
@@ -2280,6 +2347,9 @@ namespace ConferencePlanner.WinUi
             this.BackPageBtn.Enabled = true;
             this.FirstPageBtn.Enabled = true;
             this.LastPageBtn.Enabled = true;
+            this.NextGridBtn.Enabled = true;
+            this.BackGridBtn.Enabled = true;
+
             if (this.TypeGridView.AllowUserToAddRows == false)
             {
                 this.TypeGridView.AllowUserToAddRows = true;
@@ -2330,6 +2400,8 @@ namespace ConferencePlanner.WinUi
             this.BackPageBtn.Enabled = true;
             this.FirstPageBtn.Enabled = true;
             this.LastPageBtn.Enabled = true;
+            this.NextGridBtn.Enabled = true;
+            this.BackGridBtn.Enabled = true;
 
             if (!CityGridView.AllowUserToAddRows)
             {
@@ -2376,6 +2448,9 @@ namespace ConferencePlanner.WinUi
             BackPageBtn.Enabled = true;
             FirstPageBtn.Enabled = true;
             LastPageBtn.Enabled = true;
+            this.NextGridBtn.Enabled = true;
+            this.BackGridBtn.Enabled = true;
+
             if (CategoryGridView.AllowUserToAddRows == false)
             {
                 CategoryGridView.AllowUserToAddRows = true;
@@ -2638,6 +2713,10 @@ namespace ConferencePlanner.WinUi
         }
         private void SearchBar_TextChanged(object sender, EventArgs e)
         {
+            if(this.SearchBar.Text == "")
+            {
+                return;
+            }
             if (IndexGridChange == 1)
             {
                 CountriesCurrentPage = 1;
@@ -2755,16 +2834,18 @@ namespace ConferencePlanner.WinUi
             DateTime ConferenceStartHour = this.StartHourPicker.Value;
             DateTime ConferenceEndHour = this.EndHourPicker.Value;
 
-            string startDate = ConferenceStartDate.ToString("yyyy-MM-dd hh:mm:ss").Split(" ")[0] + " " + ConferenceStartHour.ToString().Split(" ")[1];
-            string endDate = ConferenceEndDate.ToString("yyyy-MM-dd hh:mm:ss").Split(" ")[0] + " " + ConferenceEndHour.ToString().Split(" ")[1];
+            DateTime startDate = ConferenceStartDate.Date + ConferenceStartHour.TimeOfDay;
+            DateTime endDate = ConferenceEndDate.Date + ConferenceEndHour.TimeOfDay;
 
             newConference.Email = Program.EnteredEmailAddress;
             newConference.ConferenceName = this.ConfName.Text;
-            newConference.ConferenceCategoryName = this.SelectedCategoryId.ToString();
-            newConference.ConferenceTypeName = this.SelectedTypeId.ToString();
-            newConference.Speaker = this.SelectedSpeakerId.ToString();
-            newConference.Location = this.SelectedCityId.ToString();
-            newConference.Period = startDate + " - " + endDate;
+            newConference.ConferenceCategoryId = this.SelectedCategoryId;
+            newConference.ConferenceTypeId = this.SelectedTypeId;
+            newConference.MainSpeakerId = this.SelectedSpeakerId;
+            newConference.LocationId = this.SelectedCityId;
+            
+            newConference.StartDate = startDate;
+            newConference.EndDate = endDate;
 
             return newConference;
         }
@@ -2777,6 +2858,15 @@ namespace ConferencePlanner.WinUi
             this.StartHourPicker.Value = DateTime.Today;
             this.EndHourPicker.Value = DateTime.Today;
 
+            this.SelectedCategoryId = -1;
+            this.SelectedTypeId = -1;
+            this.SelectedSpeakerId = -1;
+            this.SelectedCountryId = -1;
+            this.SelectedCountyId = -1;
+            this.SelectedCityId = -1;
+
+            this.IndexGridChange = 1;
+            this.CheckGridVisibility();
             //mai trebuie niste variabile 
 
         }
@@ -2901,6 +2991,22 @@ namespace ConferencePlanner.WinUi
             t.Wait();
 
             ResetForm();
+            this.LoadCountryTab();
+        }
+        private void StartHourPicker_ValueChanged(object sender, EventArgs e)
+        {
+            if (this.EndHourPicker.Value <= this.StartHourPicker.Value)
+            {
+                this.EndHourPicker.Value = this.StartHourPicker.Value;
+            }
+        }
+
+        private void StartDatePicker_ValueChanged(object sender, EventArgs e)
+        {
+            if (this.EndDatePicker.Value <= this.StartDatePicker.Value)
+            {
+                this.EndDatePicker.Value = this.StartDatePicker.Value;
+            }
         }
 
         private void SpeakerGridView_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
