@@ -121,12 +121,16 @@ namespace ConferencePlanner.WinUi
             if (attendees.Count() == 0)
             {
                 AttendeeGridvw.Visible = false;
+                this.OrganizersPaginationSelector.Visible = false;
+                this.RightArrowPagButton.Visible = false;
             }
             else
             {
                 AttendeeGridvw.Visible = true;
                 AttendeeGridvw.DataSource = attendees.ToList();
                 AttendeeGridvw.AutoGenerateColumns = false;
+                this.OrganizersPaginationSelector.Visible = true;
+                this.RightArrowPagButton.Visible = true;
             }
         }
 
@@ -238,7 +242,7 @@ namespace ConferencePlanner.WinUi
         private void CreateAttendeePage()
         {
 
-            string[] dates;
+            string[] dates = new string[2];
             if (check2 == 0)
             {
                 dates = new string[] { DateTime.Parse("1900-01-01 00:00:00").ToString("yyyy'-'MM'-'dd' 'HH':'mm':'ss"), DateTime.Parse("2050-01-01 00:00:00").ToString("yyyy'-'MM'-'dd' 'HH':'mm':'ss") };
@@ -270,7 +274,7 @@ namespace ConferencePlanner.WinUi
             {
                 this.AttendeeCurrentPageIndex++;
                 this.CreateAttendeePage();
-                ConditionsForButtons();
+                //ConditionsForButtons();
             }
         }
 
@@ -285,7 +289,7 @@ namespace ConferencePlanner.WinUi
             {
                 this.AttendeeCurrentPageIndex--;
                 this.CreateAttendeePage();
-                ConditionsForButtons();
+                //ConditionsForButtons();
             }
         }
 
@@ -368,7 +372,7 @@ namespace ConferencePlanner.WinUi
 
                 this.CalculateTotalPages(allConferences, "a");
 
-                var t2 = Task.Run(() => GetAttendeesByPage(Program.EnteredEmailAddress,1,this.PageSize+1, dates[0], dates[1]));
+                var t2 = Task.Run(() => GetAttendeesByPage(Program.EnteredEmailAddress,1,this.PageSize + 1, dates[0], dates[1]));
                 t2.Wait();
                 var conferences = t2.Result;
                 //this.ConditionsForButtons();
@@ -956,6 +960,7 @@ namespace ConferencePlanner.WinUi
                 AttendeeGridvw.Columns.Insert(columnIndex, joinButtonColumn);
 
                 AttendeeGridvw.CellClick += AttendeeGridvw_CellClick;
+                
             }
             ConditionsForButtons();
         }
