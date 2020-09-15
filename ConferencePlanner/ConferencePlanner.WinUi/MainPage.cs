@@ -1002,7 +1002,7 @@ namespace ConferencePlanner.WinUi
             AttendeeGridvw.Visible = true;
             OrganizerDataGrid.Visible = false;
             gridName = "a";
-            this.CheckPaginationButtonsVisibility(this.OrganizerCurrentPageIndex, this.OrganizerTotalPage);
+            this.CheckPaginationButtonsVisibility(this.AttendeeCurrentPageIndex, this.AttendeeTotalPage);
             //Organizer_SelectedIndexChangedRemake("a");
 
         }
