@@ -377,6 +377,11 @@ namespace ConferencePlanner.Repository.Ado.Repository
         {
             throw new NotImplementedException();
         }
+
+        public List<ConferenceModel> AttendeeConferences(string name, int pageSize, int currentPage)
+        {
+            throw new NotImplementedException();
+        }
     }
     }
 

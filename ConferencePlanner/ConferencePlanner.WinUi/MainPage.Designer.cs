@@ -269,7 +269,7 @@ namespace ConferencePlanner.WinUi
             this.AttendeeGridvw.TabIndex = 3;
             this.AttendeeGridvw.Text = "dataGridView1";
             this.AttendeeGridvw.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.AttendeeGridvw_DataBindingComplete);
-            this.AttendeeGridvw.Layout += new System.Windows.Forms.LayoutEventHandler(this.tabPage1_Layout);
+            this.AttendeeGridvw.Layout += new System.Windows.Forms.LayoutEventHandler(this.TabAttendee_Layout);
             // 
             // OrganizersPaginationSelector
             // 
@@ -311,7 +311,7 @@ namespace ConferencePlanner.WinUi
             this.RightArrowPagButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.RightArrowPagButton.FlatAppearance.BorderSize = 0;
             this.RightArrowPagButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.RightArrowPagButton.Location = new System.Drawing.Point(863, 30);
+            this.RightArrowPagButton.Location = new System.Drawing.Point(827, 30);
             this.RightArrowPagButton.Margin = new System.Windows.Forms.Padding(1);
             this.RightArrowPagButton.Name = "RightArrowPagButton";
             this.RightArrowPagButton.Size = new System.Drawing.Size(40, 40);
@@ -330,7 +330,7 @@ namespace ConferencePlanner.WinUi
             this.LeftArrowPagButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.LeftArrowPagButton.FlatAppearance.BorderSize = 0;
             this.LeftArrowPagButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.LeftArrowPagButton.Location = new System.Drawing.Point(819, 30);
+            this.LeftArrowPagButton.Location = new System.Drawing.Point(783, 30);
             this.LeftArrowPagButton.Name = "LeftArrowPagButton";
             this.LeftArrowPagButton.Size = new System.Drawing.Size(40, 40);
             this.LeftArrowPagButton.TabIndex = 7;
@@ -346,7 +346,7 @@ namespace ConferencePlanner.WinUi
             this.panel3.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel3.Location = new System.Drawing.Point(0, 0);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(1419, 119);
+            this.panel3.Size = new System.Drawing.Size(1370, 119);
             this.panel3.TabIndex = 14;
             // 
             // tableLayoutPanel1
@@ -355,15 +355,15 @@ namespace ConferencePlanner.WinUi
             this.tableLayoutPanel1.ColumnCount = 3;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 71.53527F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 28.46473F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 214F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 215F));
             this.tableLayoutPanel1.Controls.Add(this.LeftArrowPagButton, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.RightArrowPagButton, 1, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 692);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 649);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1419, 100);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1370, 100);
             this.tableLayoutPanel1.TabIndex = 15;
             // 
             // panel4
@@ -386,7 +386,7 @@ namespace ConferencePlanner.WinUi
             this.BackColor = System.Drawing.Color.White;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.ClientSize = new System.Drawing.Size(1419, 792);
+            this.ClientSize = new System.Drawing.Size(1370, 749);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel4);
             this.Controls.Add(this.tableLayoutPanel1);
