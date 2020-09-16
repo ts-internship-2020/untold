@@ -3002,7 +3002,7 @@ namespace ConferencePlanner.WinUi
         }
         private void StartHourPicker_ValueChanged(object sender, EventArgs e)
         {
-            if (this.EndHourPicker.Value <= this.StartHourPicker.Value)
+            if (this.EndHourPicker.Value <= this.StartHourPicker.Value && this.StartDatePicker.Value.Date >= this.EndDatePicker.Value.Date)
             {
                 this.EndHourPicker.Value = this.StartHourPicker.Value;
             }
@@ -3013,7 +3013,13 @@ namespace ConferencePlanner.WinUi
             if (this.EndDatePicker.Value <= this.StartDatePicker.Value)
             {
                 this.EndDatePicker.Value = this.StartDatePicker.Value;
+
+                if (this.StartHourPicker.Value.TimeOfDay > this.EndHourPicker.Value.TimeOfDay)
+                {
+                    this.EndHourPicker.Value = this.StartHourPicker.Value;
+                }
             }
+           
         }
 
         private void SpeakerGridView_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
@@ -3044,6 +3050,23 @@ namespace ConferencePlanner.WinUi
         private void CategoryGridView_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             this.CategoryGridView.BeginEdit(true);
+        }
+
+        private void EndDatePicker_ValueChanged(object sender, EventArgs e)
+        {
+            if (this.StartDatePicker.Value > this.EndDatePicker.Value)
+            {
+                this.StartDatePicker.Value = this.EndDatePicker.Value;
+            }
+
+        }
+
+        private void EndHourPicker_ValueChanged(object sender, EventArgs e)
+        {
+            if (this.StartHourPicker.Value > this.EndHourPicker.Value && this.StartDatePicker.Value.Date >= this.EndDatePicker.Value.Date)
+            {
+                this.StartHourPicker.Value = this.EndHourPicker.Value;
+            }
         }
     }
 }

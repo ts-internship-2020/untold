@@ -158,7 +158,7 @@
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 57.3975F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 143F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 39F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 42F));
             this.tableLayoutPanel2.Controls.Add(this.ConfNameLabel, 0, 0);
             this.tableLayoutPanel2.Controls.Add(this.StartDateLabel, 0, 1);
             this.tableLayoutPanel2.Controls.Add(this.EndDateLabel, 0, 2);
@@ -196,7 +196,7 @@
             this.StartDateLabel.AutoSize = true;
             this.StartDateLabel.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.StartDateLabel.ForeColor = System.Drawing.Color.White;
-            this.StartDateLabel.Location = new System.Drawing.Point(67, 82);
+            this.StartDateLabel.Location = new System.Drawing.Point(66, 82);
             this.StartDateLabel.Name = "StartDateLabel";
             this.StartDateLabel.Size = new System.Drawing.Size(92, 21);
             this.StartDateLabel.TabIndex = 1;
@@ -209,7 +209,7 @@
             this.EndDateLabel.AutoSize = true;
             this.EndDateLabel.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.EndDateLabel.ForeColor = System.Drawing.Color.White;
-            this.EndDateLabel.Location = new System.Drawing.Point(71, 139);
+            this.EndDateLabel.Location = new System.Drawing.Point(70, 139);
             this.EndDateLabel.Name = "EndDateLabel";
             this.EndDateLabel.Size = new System.Drawing.Size(84, 21);
             this.EndDateLabel.TabIndex = 2;
@@ -218,10 +218,10 @@
             // ConfName
             // 
             this.ConfName.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.ConfName.Location = new System.Drawing.Point(241, 18);
+            this.ConfName.Location = new System.Drawing.Point(240, 18);
             this.ConfName.Margin = new System.Windows.Forms.Padding(15, 3, 15, 3);
             this.ConfName.Name = "ConfName";
-            this.ConfName.Size = new System.Drawing.Size(275, 26);
+            this.ConfName.Size = new System.Drawing.Size(273, 26);
             this.ConfName.TabIndex = 3;
             this.ConfName.Enter += new System.EventHandler(this.ConfName_Enter);
             this.ConfName.Leave += new System.EventHandler(this.ConfName_Leave);
@@ -230,10 +230,10 @@
             // 
             this.StartDatePicker.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.StartDatePicker.Font = new System.Drawing.Font("Century Gothic", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.StartDatePicker.Location = new System.Drawing.Point(241, 80);
+            this.StartDatePicker.Location = new System.Drawing.Point(240, 80);
             this.StartDatePicker.Margin = new System.Windows.Forms.Padding(15, 3, 15, 3);
             this.StartDatePicker.Name = "StartDatePicker";
-            this.StartDatePicker.Size = new System.Drawing.Size(275, 26);
+            this.StartDatePicker.Size = new System.Drawing.Size(273, 26);
             this.StartDatePicker.TabIndex = 4;
             this.StartDatePicker.ValueChanged += new System.EventHandler(this.StartDatePicker_ValueChanged);
             // 
@@ -241,11 +241,12 @@
             // 
             this.EndDatePicker.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.EndDatePicker.Font = new System.Drawing.Font("Century Gothic", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.EndDatePicker.Location = new System.Drawing.Point(241, 137);
+            this.EndDatePicker.Location = new System.Drawing.Point(240, 137);
             this.EndDatePicker.Margin = new System.Windows.Forms.Padding(15, 3, 15, 3);
             this.EndDatePicker.Name = "EndDatePicker";
-            this.EndDatePicker.Size = new System.Drawing.Size(275, 26);
+            this.EndDatePicker.Size = new System.Drawing.Size(273, 26);
             this.EndDatePicker.TabIndex = 5;
+            this.EndDatePicker.ValueChanged += new System.EventHandler(this.EndDatePicker_ValueChanged);
             // 
             // StartHourPicker
             // 
@@ -253,7 +254,7 @@
             this.StartHourPicker.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.StartHourPicker.CustomFormat = "HH:mm";
             this.StartHourPicker.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.StartHourPicker.Location = new System.Drawing.Point(567, 80);
+            this.StartHourPicker.Location = new System.Drawing.Point(564, 80);
             this.StartHourPicker.Name = "StartHourPicker";
             this.StartHourPicker.ShowUpDown = true;
             this.StartHourPicker.Size = new System.Drawing.Size(111, 26);
@@ -266,12 +267,13 @@
             this.EndHourPicker.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.EndHourPicker.CustomFormat = "HH:mm";
             this.EndHourPicker.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.EndHourPicker.Location = new System.Drawing.Point(567, 137);
+            this.EndHourPicker.Location = new System.Drawing.Point(564, 137);
             this.EndHourPicker.Name = "EndHourPicker";
             this.EndHourPicker.ShowUpDown = true;
             this.EndHourPicker.Size = new System.Drawing.Size(111, 26);
             this.EndHourPicker.TabIndex = 10;
             this.EndHourPicker.Value = new System.DateTime(2020, 9, 6, 0, 0, 0, 0);
+            this.EndHourPicker.ValueChanged += new System.EventHandler(this.EndHourPicker_ValueChanged);
             // 
             // tableLayoutPanel3
             // 
