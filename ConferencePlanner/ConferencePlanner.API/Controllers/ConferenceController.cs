@@ -65,7 +65,7 @@ namespace ConferencePlanner.Api.Controllers
         }
 
         [HttpGet]
-        [Route("attendees_by_email/email={email}/pageSize={pageSize}/currentPage={currentPage}")]
+        [Route("attendees_by_email/email={email}&pageSize={pageSize}&currentPage={currentPage}")]
         public IActionResult AttendeeConferences(string email,int pageSize,int currentPage)
         {
             List<ConferenceModel> conferences = _conferenceRepository.AttendeeConferences(email,pageSize,currentPage);
