@@ -995,6 +995,10 @@ namespace ConferencePlanner.WinUi
             {
                 CityGridView.Columns["DictionaryCityId"].Visible = false;
             }
+            if (CityGridView.Columns.Contains("CountyId") && CityGridView.Columns["CountyId"].Visible)
+            {
+                CityGridView.Columns["CountyId"].Visible = false;
+            }
 
             CityGridView.Columns["CityName"].HeaderText = "City Name";
 
