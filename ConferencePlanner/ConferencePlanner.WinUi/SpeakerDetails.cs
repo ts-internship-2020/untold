@@ -17,27 +17,34 @@ namespace ConferencePlanner.WinUi
     public partial class SpeakerDetails : Form
     {
 
-        private readonly SpeakerModel Speaker;
+        private SpeakerModel MainSpeaker = new SpeakerModel();
 
-        public SpeakerDetails(SpeakerModel speaker)
+        public SpeakerDetails(int conferenceId)
         {
-            this.SetStyle(ControlStyles.SupportsTransparentBackColor, true);
-            this.Speaker = speaker;
-            InitializeComponent();
+            var t = Task.Run(() => GetSpeakerByConferenceId(conferenceId));
+            t.Wait();
+
+            if(this.MainSpeaker.SpeakerId != 21)
+            {
+                InitializeComponent();
+            }
+            else
+            {
+                this.Close();
+            }
         }
 
         public SpeakerDetails()
-        {
-            this.SetStyle(ControlStyles.SupportsTransparentBackColor, true);
+        {    
             InitializeComponent();
         }
 
 
     private void SpeakerDetails_Load(object sender, EventArgs e)
         {
-            this.speakerName.Text = this.Speaker.FirstName + " " + this.Speaker.LastName;
-            this.speakerNationality.Text = this.Speaker.Nationality;
-            this.speakerRating.Text = this.Speaker.Rating.ToString() + " / 10";
+            this.speakerName.Text = MainSpeaker.FirstName + " " + this.MainSpeaker.LastName;
+            this.speakerNationality.Text = this.MainSpeaker.Nationality;
+            this.speakerRating.Text = this.MainSpeaker.Rating.ToString() + " / 10";
 
             //StringBuilder strB = new StringBuilder("", 50);
             //strB.AppendFormat("../../../Resources/speakersPhotos/{0}_{1}.jpg", this.Speaker.LastName.ToLower(), this.Speaker.FirstName.ToLower());
@@ -46,7 +53,7 @@ namespace ConferencePlanner.WinUi
             Image img;
             try
             {
-                img = Image.FromFile(this.Speaker.ImagePath);
+                img = Image.FromFile(this.MainSpeaker.ImagePath);
             }
             catch (System.ArgumentNullException ex)
             {
@@ -74,6 +81,20 @@ namespace ConferencePlanner.WinUi
         private void pictureBox1_MouseLeave(object sender, EventArgs e)
         {
             pictureBox1.BackgroundImageLayout = ImageLayout.Center;
+        }
+
+        private async Task GetSpeakerByConferenceId(int conferenceId)
+        {
+            HttpClient client = new HttpClient();
+            HttpResponseMessage s = await client.GetAsync("http://localhost:2794/api/Speaker/speaker_by_conference_id/id=" + conferenceId);
+
+            if (s.IsSuccessStatusCode)
+            {
+                string json = await s.Content.ReadAsStringAsync();
+                var result = JsonConvert.DeserializeObject<SpeakerModel>(json);
+
+                this.MainSpeaker = result;
+            }
         }
     }
 }

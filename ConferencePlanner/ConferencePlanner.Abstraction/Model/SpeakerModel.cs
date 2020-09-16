@@ -15,8 +15,4 @@ namespace ConferencePlanner.Abstraction.Model
         public string ImagePath { get; set; }
 
     }
-
-    
-
-
 }

@@ -42,10 +42,10 @@ namespace ConferencePlanner.Api.Controllers
             return Ok(speaker);
         }
         [HttpGet]
-        [Route("speaker_by_name/fname={fname}&lname={lname}")]
-        public IActionResult GetSpeakerByName(string fname, string lname)
+        [Route("speaker_by_conference_id/id={conferenceId}")]
+        public IActionResult GetSpeakerByConferenceId(int conferenceId)
         {
-            SpeakerModel speaker = _speakerRepository.GetSpeakerByName(fname, lname);
+            SpeakerModel speaker = _speakerRepository.GetSpeakerByConferenceId(conferenceId);
             return Ok(speaker);
         }
         [HttpPost]

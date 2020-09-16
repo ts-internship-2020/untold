@@ -175,6 +175,11 @@ namespace ConferencePlanner.Repository.Ado.Repository
             }
             
         }
+
+        public SpeakerModel GetSpeakerByConferenceId(int id)
+        {
+            throw new NotImplementedException();
+        }
     }
     }
 
