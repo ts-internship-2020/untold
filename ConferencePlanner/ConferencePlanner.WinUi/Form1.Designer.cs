@@ -58,9 +58,10 @@
             this.CountryBar = new System.Windows.Forms.Panel();
             this.CountyBar = new System.Windows.Forms.Panel();
             this.SearchTableLayout = new System.Windows.Forms.TableLayoutPanel();
-            this.SaveEditBtn = new System.Windows.Forms.Button();
             this.EditTextBox = new System.Windows.Forms.TextBox();
             this.SearchBar = new System.Windows.Forms.TextBox();
+            this.CancelBtn = new System.Windows.Forms.Button();
+            this.SaveEditBtn = new System.Windows.Forms.Button();
             this.CountryGridView = new System.Windows.Forms.DataGridView();
             this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel7 = new System.Windows.Forms.TableLayoutPanel();
@@ -158,7 +159,7 @@
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 57.3975F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 143F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 31F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 51F));
             this.tableLayoutPanel2.Controls.Add(this.ConfNameLabel, 0, 0);
             this.tableLayoutPanel2.Controls.Add(this.StartDateLabel, 0, 1);
             this.tableLayoutPanel2.Controls.Add(this.EndDateLabel, 0, 2);
@@ -184,7 +185,7 @@
             this.ConfNameLabel.AutoSize = true;
             this.ConfNameLabel.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.ConfNameLabel.ForeColor = System.Drawing.Color.White;
-            this.ConfNameLabel.Location = new System.Drawing.Point(41, 20);
+            this.ConfNameLabel.Location = new System.Drawing.Point(38, 20);
             this.ConfNameLabel.Name = "ConfNameLabel";
             this.ConfNameLabel.Size = new System.Drawing.Size(145, 21);
             this.ConfNameLabel.TabIndex = 0;
@@ -196,7 +197,7 @@
             this.StartDateLabel.AutoSize = true;
             this.StartDateLabel.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.StartDateLabel.ForeColor = System.Drawing.Color.White;
-            this.StartDateLabel.Location = new System.Drawing.Point(67, 82);
+            this.StartDateLabel.Location = new System.Drawing.Point(64, 82);
             this.StartDateLabel.Name = "StartDateLabel";
             this.StartDateLabel.Size = new System.Drawing.Size(92, 21);
             this.StartDateLabel.TabIndex = 1;
@@ -209,7 +210,7 @@
             this.EndDateLabel.AutoSize = true;
             this.EndDateLabel.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.EndDateLabel.ForeColor = System.Drawing.Color.White;
-            this.EndDateLabel.Location = new System.Drawing.Point(71, 139);
+            this.EndDateLabel.Location = new System.Drawing.Point(68, 139);
             this.EndDateLabel.Name = "EndDateLabel";
             this.EndDateLabel.Size = new System.Drawing.Size(84, 21);
             this.EndDateLabel.TabIndex = 2;
@@ -218,10 +219,10 @@
             // ConfName
             // 
             this.ConfName.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.ConfName.Location = new System.Drawing.Point(242, 18);
+            this.ConfName.Location = new System.Drawing.Point(236, 18);
             this.ConfName.Margin = new System.Windows.Forms.Padding(15, 3, 15, 3);
             this.ConfName.Name = "ConfName";
-            this.ConfName.Size = new System.Drawing.Size(277, 26);
+            this.ConfName.Size = new System.Drawing.Size(268, 26);
             this.ConfName.TabIndex = 3;
             this.ConfName.Enter += new System.EventHandler(this.ConfName_Enter);
             this.ConfName.Leave += new System.EventHandler(this.ConfName_Leave);
@@ -230,10 +231,10 @@
             // 
             this.StartDatePicker.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.StartDatePicker.Font = new System.Drawing.Font("Century Gothic", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.StartDatePicker.Location = new System.Drawing.Point(242, 80);
+            this.StartDatePicker.Location = new System.Drawing.Point(236, 80);
             this.StartDatePicker.Margin = new System.Windows.Forms.Padding(15, 3, 15, 3);
             this.StartDatePicker.Name = "StartDatePicker";
-            this.StartDatePicker.Size = new System.Drawing.Size(277, 26);
+            this.StartDatePicker.Size = new System.Drawing.Size(268, 26);
             this.StartDatePicker.TabIndex = 4;
             this.StartDatePicker.ValueChanged += new System.EventHandler(this.StartDatePicker_ValueChanged);
             // 
@@ -241,10 +242,10 @@
             // 
             this.EndDatePicker.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.EndDatePicker.Font = new System.Drawing.Font("Century Gothic", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.EndDatePicker.Location = new System.Drawing.Point(242, 137);
+            this.EndDatePicker.Location = new System.Drawing.Point(236, 137);
             this.EndDatePicker.Margin = new System.Windows.Forms.Padding(15, 3, 15, 3);
             this.EndDatePicker.Name = "EndDatePicker";
-            this.EndDatePicker.Size = new System.Drawing.Size(277, 26);
+            this.EndDatePicker.Size = new System.Drawing.Size(268, 26);
             this.EndDatePicker.TabIndex = 5;
             this.EndDatePicker.ValueChanged += new System.EventHandler(this.EndDatePicker_ValueChanged);
             // 
@@ -254,7 +255,7 @@
             this.StartHourPicker.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.StartHourPicker.CustomFormat = "HH:mm";
             this.StartHourPicker.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.StartHourPicker.Location = new System.Drawing.Point(570, 80);
+            this.StartHourPicker.Location = new System.Drawing.Point(555, 80);
             this.StartHourPicker.Name = "StartHourPicker";
             this.StartHourPicker.ShowUpDown = true;
             this.StartHourPicker.Size = new System.Drawing.Size(111, 26);
@@ -267,7 +268,7 @@
             this.EndHourPicker.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.EndHourPicker.CustomFormat = "HH:mm";
             this.EndHourPicker.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.EndHourPicker.Location = new System.Drawing.Point(570, 137);
+            this.EndHourPicker.Location = new System.Drawing.Point(555, 137);
             this.EndHourPicker.Name = "EndHourPicker";
             this.EndHourPicker.ShowUpDown = true;
             this.EndHourPicker.Size = new System.Drawing.Size(111, 26);
@@ -477,13 +478,15 @@
             // 
             // SearchTableLayout
             // 
-            this.SearchTableLayout.ColumnCount = 3;
-            this.SearchTableLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.SearchTableLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.SearchTableLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 242F));
-            this.SearchTableLayout.Controls.Add(this.SaveEditBtn, 2, 0);
+            this.SearchTableLayout.ColumnCount = 4;
+            this.SearchTableLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 35.30752F));
+            this.SearchTableLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 64.69248F));
+            this.SearchTableLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 120F));
+            this.SearchTableLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 133F));
             this.SearchTableLayout.Controls.Add(this.EditTextBox, 1, 0);
             this.SearchTableLayout.Controls.Add(this.SearchBar, 0, 0);
+            this.SearchTableLayout.Controls.Add(this.CancelBtn, 3, 0);
+            this.SearchTableLayout.Controls.Add(this.SaveEditBtn, 2, 0);
             this.SearchTableLayout.Dock = System.Windows.Forms.DockStyle.Fill;
             this.SearchTableLayout.Location = new System.Drawing.Point(3, 249);
             this.SearchTableLayout.Name = "SearchTableLayout";
@@ -492,33 +495,14 @@
             this.SearchTableLayout.Size = new System.Drawing.Size(1118, 55);
             this.SearchTableLayout.TabIndex = 3;
             // 
-            // SaveEditBtn
-            // 
-            this.SaveEditBtn.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.SaveEditBtn.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("SaveEditBtn.BackgroundImage")));
-            this.SaveEditBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.SaveEditBtn.FlatAppearance.BorderSize = 0;
-            this.SaveEditBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.SaveEditBtn.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.SaveEditBtn.ForeColor = System.Drawing.Color.White;
-            this.SaveEditBtn.Location = new System.Drawing.Point(896, 6);
-            this.SaveEditBtn.Margin = new System.Windows.Forms.Padding(20, 3, 3, 3);
-            this.SaveEditBtn.Name = "SaveEditBtn";
-            this.SaveEditBtn.Size = new System.Drawing.Size(80, 43);
-            this.SaveEditBtn.TabIndex = 1;
-            this.SaveEditBtn.Text = "Save";
-            this.SaveEditBtn.UseVisualStyleBackColor = true;
-            this.SaveEditBtn.Visible = false;
-            this.SaveEditBtn.Click += new System.EventHandler(this.SaveEditBtn_Click);
-            // 
             // EditTextBox
             // 
             this.EditTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.EditTextBox.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.EditTextBox.Location = new System.Drawing.Point(453, 14);
+            this.EditTextBox.Location = new System.Drawing.Point(320, 14);
             this.EditTextBox.Margin = new System.Windows.Forms.Padding(15, 3, 15, 3);
             this.EditTextBox.Name = "EditTextBox";
-            this.EditTextBox.Size = new System.Drawing.Size(408, 27);
+            this.EditTextBox.Size = new System.Drawing.Size(529, 27);
             this.EditTextBox.TabIndex = 0;
             this.EditTextBox.Visible = false;
             // 
@@ -527,13 +511,47 @@
             this.SearchBar.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.SearchBar.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.SearchBar.ForeColor = System.Drawing.SystemColors.ScrollBar;
-            this.SearchBar.Location = new System.Drawing.Point(28, 14);
+            this.SearchBar.Location = new System.Drawing.Point(5, 14);
             this.SearchBar.Name = "SearchBar";
-            this.SearchBar.Size = new System.Drawing.Size(381, 27);
+            this.SearchBar.Size = new System.Drawing.Size(295, 27);
             this.SearchBar.TabIndex = 2;
             this.SearchBar.Text = "Search";
             this.SearchBar.TextChanged += new System.EventHandler(this.SearchBar_TextChanged);
             this.SearchBar.Enter += new System.EventHandler(this.SearchBar_Enter);
+            // 
+            // CancelBtn
+            // 
+            this.CancelBtn.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("CancelBtn.BackgroundImage")));
+            this.CancelBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.CancelBtn.FlatAppearance.BorderSize = 0;
+            this.CancelBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.CancelBtn.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.CancelBtn.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.CancelBtn.Location = new System.Drawing.Point(987, 3);
+            this.CancelBtn.Name = "CancelBtn";
+            this.CancelBtn.Size = new System.Drawing.Size(83, 43);
+            this.CancelBtn.TabIndex = 3;
+            this.CancelBtn.Text = "Cancel";
+            this.CancelBtn.UseVisualStyleBackColor = true;
+            this.CancelBtn.Visible = false;
+            this.CancelBtn.Click += new System.EventHandler(this.CancelBtn_Click);
+            // 
+            // SaveEditBtn
+            // 
+            this.SaveEditBtn.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("SaveEditBtn.BackgroundImage")));
+            this.SaveEditBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.SaveEditBtn.FlatAppearance.BorderSize = 0;
+            this.SaveEditBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.SaveEditBtn.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.SaveEditBtn.ForeColor = System.Drawing.Color.White;
+            this.SaveEditBtn.Location = new System.Drawing.Point(867, 3);
+            this.SaveEditBtn.Name = "SaveEditBtn";
+            this.SaveEditBtn.Size = new System.Drawing.Size(100, 43);
+            this.SaveEditBtn.TabIndex = 1;
+            this.SaveEditBtn.Text = "Save";
+            this.SaveEditBtn.UseVisualStyleBackColor = true;
+            this.SaveEditBtn.Visible = false;
+            this.SaveEditBtn.Click += new System.EventHandler(this.SaveEditBtn_Click);
             // 
             // CountryGridView
             // 
@@ -590,9 +608,9 @@
             // 
             // BackGridBtn
             // 
+            this.BackGridBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.BackGridBtn.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("BackGridBtn.BackgroundImage")));
             this.BackGridBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.BackGridBtn.Dock = System.Windows.Forms.DockStyle.Right;
             this.BackGridBtn.FlatAppearance.BorderSize = 0;
             this.BackGridBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BackGridBtn.Font = new System.Drawing.Font("Century Gothic", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
@@ -607,9 +625,10 @@
             // 
             // NextGridBtn
             // 
+            this.NextGridBtn.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.NextGridBtn.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("NextGridBtn.BackgroundImage")));
             this.NextGridBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.NextGridBtn.Dock = System.Windows.Forms.DockStyle.Fill;
             this.NextGridBtn.FlatAppearance.BorderSize = 0;
             this.NextGridBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.NextGridBtn.Font = new System.Drawing.Font("Century Gothic", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
@@ -626,7 +645,6 @@
             // 
             this.SaveNewBtn.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("SaveNewBtn.BackgroundImage")));
             this.SaveNewBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.SaveNewBtn.Dock = System.Windows.Forms.DockStyle.Left;
             this.SaveNewBtn.FlatAppearance.BorderSize = 0;
             this.SaveNewBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.SaveNewBtn.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
@@ -665,9 +683,9 @@
             // 
             // FirstPageBtn
             // 
+            this.FirstPageBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.FirstPageBtn.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("FirstPageBtn.BackgroundImage")));
             this.FirstPageBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.FirstPageBtn.Dock = System.Windows.Forms.DockStyle.Right;
             this.FirstPageBtn.FlatAppearance.BorderSize = 0;
             this.FirstPageBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.FirstPageBtn.Location = new System.Drawing.Point(279, 3);
@@ -679,9 +697,10 @@
             // 
             // BackPageBtn
             // 
+            this.BackPageBtn.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.BackPageBtn.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("BackPageBtn.BackgroundImage")));
             this.BackPageBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.BackPageBtn.Dock = System.Windows.Forms.DockStyle.Fill;
             this.BackPageBtn.FlatAppearance.BorderSize = 0;
             this.BackPageBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BackPageBtn.Location = new System.Drawing.Point(371, 3);
@@ -693,9 +712,10 @@
             // 
             // NextPageBtn
             // 
+            this.NextPageBtn.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.NextPageBtn.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("NextPageBtn.BackgroundImage")));
             this.NextPageBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.NextPageBtn.Dock = System.Windows.Forms.DockStyle.Fill;
             this.NextPageBtn.FlatAppearance.BorderSize = 0;
             this.NextPageBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.NextPageBtn.Location = new System.Drawing.Point(557, 3);
@@ -1123,5 +1143,6 @@
         private System.Windows.Forms.ErrorProvider EndDateError;
         private System.Windows.Forms.ErrorProvider StartHourError;
         private System.Windows.Forms.ErrorProvider EndHourError;
+        private System.Windows.Forms.Button CancelBtn;
     }
 }

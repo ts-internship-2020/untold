@@ -64,7 +64,10 @@ namespace ConferencePlanner.WinUi
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            
+            RightArrowPagButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
+            RightArrowPagButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
+            LeftArrowPagButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
+            LeftArrowPagButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
         }
 
         //metoda de generat codul de bare.
