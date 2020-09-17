@@ -179,28 +179,33 @@ namespace ConferencePlanner.WinUi
 
         }
 
-        private void CalculateTotalPages(int numOfConferences, String gridName)
+        private void CalculateTotalPages(List<ConferenceModel> allConferences, string gridName)
         {
+            int rowCount = allConferences.Count();
+            CalculateTotalPages(rowCount, gridName);
+        }
 
+        private void CalculateTotalPages(int rowCount, string gridName)
+        {
             if (gridName.Equals("o"))
             {
-                this.OrganizerTotalPage = numOfConferences / this.PageSize;
+                this.OrganizerTotalPage = rowCount / this.PageSize;
 
-                if (numOfConferences % this.PageSize > 0)
+                if (rowCount % this.PageSize > 0)
                     this.OrganizerTotalPage += 1;
 
             }
             else if (gridName.Equals("a"))
             {
 
-                this.AttendeeTotalPage = numOfConferences / this.PageSize;
+                this.AttendeeTotalPage = rowCount / this.PageSize;
 
-                if (numOfConferences % this.PageSize > 0)
+                if (rowCount % this.PageSize > 0)
                     this.AttendeeTotalPage += 1;
             }
         }
 
-        private void CheckPaginationButtonsVisibility(int currentIndex,int totalPage)
+        private void CheckPaginationButtonsVisibility(int currentIndex, int totalPage)
         {
             if (currentIndex == totalPage)
             {
@@ -220,7 +225,7 @@ namespace ConferencePlanner.WinUi
             }
         }
 
-      
+
 
         private void CreatePage()
         {
@@ -315,21 +320,18 @@ namespace ConferencePlanner.WinUi
 
             int PreviousPageOffSet = (this.AttendeeCurrentPageIndex - 1) * this.PageSize;
 
-            var t = Task.Run(() => GetAttendeesByEmail(Program.EnteredEmailAddress));
-            t.Wait();
-            int numOfConferences = t.Result.Count();
-           
-            var t2 = Task.Run(() => GetAttendeesByPage(Program.EnteredEmailAddress, PreviousPageOffSet + 1, PreviousPageOffSet + this.PageSize + 1, dates[0], dates[1]));
-            t2.Wait();
-            var attendees = t2.Result;
+            Task t = Task.Run(async () =>
+            {
+                var count = await GetAttendeesCount(Program.EnteredEmailAddress, dates[0], dates[1]);
+                CalculateTotalPages(count, "a");
+                var conferences = await GetAttendeesByPage(Program.EnteredEmailAddress, PreviousPageOffSet + 1, PreviousPageOffSet + this.PageSize + 1, dates[0], dates[1]);
 
-            this.CheckPaginationButtonsVisibility(this.AttendeeCurrentPageIndex, this.AttendeeTotalPage);
-
-            CalculateTotalPages(numOfConferences, "a");
-
-            this.MainPagePaginationTextBox.Text = "Page " + this.AttendeeCurrentPageIndex + " of " + this.AttendeeTotalPage;
-
-            AttendeeGridvw.DataSource = attendees;
+                AttendeeGridvw.Invoke((MethodInvoker)delegate
+                {
+                    CheckPaginationButtonsVisibility(this.AttendeeCurrentPageIndex, this.AttendeeTotalPage);
+                    AttendeeGridvw.DataSource = conferences; // runs on UI thread
+                });
+            });
         }
 
         private string[] GetCurrentDateFilterSelection()
@@ -354,16 +356,15 @@ namespace ConferencePlanner.WinUi
                 OrganizerDataGrid.DataSource = null;
                 this.OrganizerCurrentPageIndex = 1;
 
-                var t = Task.Run(() => FilterConferencesByDate(Program.EnteredEmailAddress, dates[0], dates[1]));
+                var t = Task.Run(() => GetAttendeesCount(Program.EnteredEmailAddress, dates[0], dates[1]));
                 t.Wait();
-                int numberOfConferences = t.Result.Count();
-                this.CalculateTotalPages(numberOfConferences, "o");
+                var count = t.Result;
+                CalculateTotalPages(count, "o");
 
                 var t2 = Task.Run(() => GetConferencesByPage(Program.EnteredEmailAddress, 1, this.PageSize + 1, dates[0], dates[1]));
                 t2.Wait();
                 var conferences = t2.Result;
-                this.CheckPaginationButtonsVisibility(this.OrganizerCurrentPageIndex,this.OrganizerTotalPage);
-                this.MainPagePaginationTextBox.Text = "Page " + this.OrganizerCurrentPageIndex + " of " + this.OrganizerTotalPage;
+                this.CheckPaginationButtonsVisibility(this.OrganizerCurrentPageIndex, this.OrganizerTotalPage);
                 CheckNumberOfRows(conferences);
 
             }
@@ -506,9 +507,8 @@ namespace ConferencePlanner.WinUi
                 check = 1;
                 this.OrganizerCurrentPageIndex = 1;
 
-                var t = Task.Run(() => FilterConferencesByDate(Program.EnteredEmailAddress, dates[0], dates[1]));
-                t.Wait();
-                int numberOfConferences = t.Result.Count();
+                var t = Task.Run(() => GetAttendeesCount(Program.EnteredEmailAddress, dates[0], dates[1])); t.Wait();
+                int numberOfConferences = t.Result;
                 this.CalculateTotalPages(numberOfConferences, "o");
 
                 var t2 = Task.Run(() => GetConferencesByPage(Program.EnteredEmailAddress, 1, this.PageSize + 1, dates[0], dates[1]));
@@ -817,20 +817,20 @@ namespace ConferencePlanner.WinUi
                 return new ConferenceModel();
             }
         }
-        private async Task<List<ConferenceModel>> FilterConferencesByDate(string email, string sDate, string eDate)
+        private async Task<int> GetAttendeesCount(string email, string sDate, string eDate)
         {
             HttpClient client = new HttpClient();
-            HttpResponseMessage s = await client.GetAsync("http://localhost:2794/api/Conference/conferences_by_date/email=" + email+ "&sDate="+sDate +"&eDate="+eDate);
+            HttpResponseMessage s = await client.GetAsync("http://localhost:2794/api/Conference/get_attendees_count/email=" + email + "&sDate=" + sDate + "&eDate=" + eDate);
 
             if (s.IsSuccessStatusCode)
             {
                 string json = await s.Content.ReadAsStringAsync();
-                var t = JsonConvert.DeserializeObject<List<ConferenceModel>>(json);
+                var t = JsonConvert.DeserializeObject<int>(json);
                 return t;
             }
             else
             {
-                return new List<ConferenceModel>();
+                return default;
             }
         }
         private async Task<List<ConferenceModel>> GetConferencesByPage(string email, int sIndex, int eIndex, string sDate, string eDate)
