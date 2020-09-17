@@ -51,7 +51,7 @@ namespace ConferencePlanner.Api.Controllers
         public IActionResult GetCountryIdByConferenceId(int conferenceId)
         {
             int countryId = _countryRepository.GetCountryIdByConferenceId(conferenceId);
-            return Ok();
+            return Ok(countryId);
         }
 
     }

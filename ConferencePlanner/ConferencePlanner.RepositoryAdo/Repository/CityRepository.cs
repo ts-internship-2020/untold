@@ -99,5 +99,10 @@ namespace ConferencePlanner.Repository.Ado.Repository
             sqlDataReader.Close();
             return dictionaryCityId;
         }
+
+        public int GetCityIdByConferenceId(int conferenceId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

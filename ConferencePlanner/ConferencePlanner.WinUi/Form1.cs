@@ -76,21 +76,12 @@ namespace ConferencePlanner.WinUi
         private int CategoriesLastPageLastRow = 0;
         private int UpdateCategoryRow;
 
-
-        string ConferenceName;
-        string StartDate;
-        string StartHour;
-        string EndDate;
-        string EndHour;
-        string Country;
-        string County;
-        string City;
-        string Type;
-        string Speaker;
-        string Category;
-
         private bool isEditingConference = false;
-        private ConferenceModel updatingConference = new ConferenceModel();
+        private ConferenceModelWithEmail updatingConference = new ConferenceModelWithEmail();
+
+        public ConferenceModelWithEmail GetUpdatedConference{
+            get { return this.updatingConference; }
+    }
         public Form1(IConferenceRepository conferenceRepository, ICountryRepository countryRepository, ICountyRepository countyRepository, ISpeakerRepository speakerRepository, ITypeRepository typeRepository, ICityRepository cityRepository, ICategoryRepository categoryRepository)
         {
             _conferenceRepository = conferenceRepository;
@@ -107,7 +98,7 @@ namespace ConferencePlanner.WinUi
             InitializeComponent();
         }
 
-        public Form1(ConferenceModel conference, IConferenceRepository conferenceRepository, ICountryRepository countryRepository, ICountyRepository countyRepository, ISpeakerRepository speakerRepository, ITypeRepository typeRepository, ICityRepository cityRepository, ICategoryRepository categoryRepository)
+        public Form1(ConferenceModelWithEmail conference, IConferenceRepository conferenceRepository, ICountryRepository countryRepository, ICountyRepository countyRepository, ISpeakerRepository speakerRepository, ITypeRepository typeRepository, ICityRepository cityRepository, ICategoryRepository categoryRepository)
         {
             _conferenceRepository = conferenceRepository;
             _countryRepository = countryRepository;
@@ -121,28 +112,34 @@ namespace ConferencePlanner.WinUi
             this.isEditingConference = true;
             this.updatingConference = conference;
             this.PopulateForm();
-            //this.ChangeToEditLayout();
+            
         }
-        //private void ChangeToEditLayout()
-        //{
 
-        //}
         private void PopulateForm()
         {
             ConfName.Text = updatingConference.ConferenceName;
 
-            string[] dates = updatingConference.Period.Split(" - ");
+            this.StartDatePicker.Value = updatingConference.StartDate;
+            this.EndDatePicker.Value = updatingConference.EndDate;
+            this.StartHourPicker.Value = updatingConference.StartDate;
+            this.EndHourPicker.Value = updatingConference.EndDate;
 
-            this.StartDatePicker.Value = DateTime.Parse(dates[0]);
-            this.EndDatePicker.Value = DateTime.Parse(dates[1]);
-            this.StartHourPicker.Value = DateTime.Parse(dates[0]);
-            this.EndHourPicker.Value = DateTime.Parse(dates[1]);
+            this.SelectedTypeId = updatingConference.ConferenceTypeId;
+            this.SelectedCategoryId = updatingConference.ConferenceCategoryId;
+            this.SelectedSpeakerId = updatingConference.MainSpeakerId;
 
-            string[] places = updatingConference.Location.Split(", ");
-            //var test = this.CountryGridView
-            var t = Task.Run(() => GetCountryIdByConferenceID(this.updatingConference.ConferenceId));
+            var t = Task.Run(() => GetCountryIdByConferenceId(this.updatingConference.ConferenceId));
             t.Wait();
-            int id = t.Result;
+            this.SelectedCountryId = t.Result;
+
+            var t2 = Task.Run(() => GetCountyIdByConferenceId(this.updatingConference.ConferenceId));
+            t2.Wait();
+            this.SelectedCountyId = t2.Result;
+
+            var t3 = Task.Run(() => GetCityIdByConferenceId(this.updatingConference.ConferenceId));
+            t3.Wait();
+            this.SelectedCityId = t3.Result;
+
         }
         private void CheckGridVisibility()
         {
@@ -245,20 +242,32 @@ namespace ConferencePlanner.WinUi
         }
         public void CheckIndexChangeBtns()
         {
+
             if(IndexGridChange == 1)
             {
                 BackGridBtn.Enabled = false;
                 this.SaveNewBtn.Visible = false;
-                
+                if (isEditingConference)
+                {
+                    this.SaveNewBtn.Text = "Save";
+                    this.SaveNewBtn.Visible = true;
+                }            
             }
             else
             {
                 BackGridBtn.Enabled = true;
             }
-            if(IndexGridChange == 7)
+            if(IndexGridChange == 7 )
             {
-                NextGridBtn.Text = "Save";
-                SaveNewBtn.Visible = true;
+                if (isEditingConference)
+                {
+                    NextGridBtn.Enabled = false;
+                }
+                else
+                {
+                    NextGridBtn.Text = "Save";
+                    SaveNewBtn.Visible = true;
+                }
             }else
             {
                 NextGridBtn.Text = "Next";
@@ -280,7 +289,7 @@ namespace ConferencePlanner.WinUi
 
         private void LoadCountryTab()
         {
-
+            
             this.Countries = _countryRepository.GetCountriesList();
             CountriesFromSearchBar = Countries;
             int[] pages = CalculateTotalPages(Countries.Count);
@@ -457,13 +466,16 @@ namespace ConferencePlanner.WinUi
             BindingList<CountryModel> CountriesList = new BindingList<CountryModel>();
             int PreviousPageOffSet = (CountriesCurrentPage - 1) * PageSize;
             int min = Math.Min(PreviousPageOffSet + PageSize, list.Count);
+ 
             for (int i = PreviousPageOffSet; i < min; i++)
             {
                 CountriesList.Add(list[i]);
+
             }
             this.CountryGridView.DataSource = CountriesList;
             CountryGridView.CurrentCell = null;
             CountryGridView.Rows[0].Selected = false;
+
         }
 
         private void CountiesCreatePage(BindingList<CountyModel> list)
@@ -571,7 +583,7 @@ namespace ConferencePlanner.WinUi
             CategoryGridView.CurrentCell = null;
             CategoryGridView.Rows[0].Selected = false;
         }
-        private async Task<int> GetCountryIdByConferenceID(int conferenceId)
+        private async Task<int> GetCountryIdByConferenceId(int conferenceId)
         {
             HttpClient client = new HttpClient();
             HttpResponseMessage s = await client.GetAsync("http://localhost:2794/api/Country/get_country_id_by_conference_id/id=" + conferenceId);
@@ -583,7 +595,35 @@ namespace ConferencePlanner.WinUi
                 return t;
 
             }
-            return 0;
+            return -1;
+        }
+        private async Task<int> GetCountyIdByConferenceId(int conferenceId)
+        {
+            HttpClient client = new HttpClient();
+            HttpResponseMessage s = await client.GetAsync("http://localhost:2794/api/County/get_county_id_by_conference_id/id=" + conferenceId);
+
+            if (s.IsSuccessStatusCode)
+            {
+                string json = await s.Content.ReadAsStringAsync();
+                var t = JsonConvert.DeserializeObject<int>(json);
+                return t;
+
+            }
+            return -1;
+        }
+        private async Task<int> GetCityIdByConferenceId(int conferenceId)
+        {
+            HttpClient client = new HttpClient();
+            HttpResponseMessage s = await client.GetAsync("http://localhost:2794/api/City/get_city_id_by_conference_id/id=" + conferenceId);
+
+            if (s.IsSuccessStatusCode)
+            {
+                string json = await s.Content.ReadAsStringAsync();
+                var t = JsonConvert.DeserializeObject<int>(json);
+                return t;
+
+            }
+            return -1;
         }
         private async Task GetAllSpeakers()
         {
@@ -1155,16 +1195,7 @@ namespace ConferencePlanner.WinUi
             }
             else
             {
-                if (this.isEditingConference)
-                {
-                    ConferenceModelWithEmail newConference = CreateConferenceForInsert();
-
-                    var t = Task.Run(() => UpdateConference(newConference));
-                    t.Wait();
-
-                    this.Close();
-                }
-                else
+                if (!this.isEditingConference)
                 {
                     ConferenceModelWithEmail newConference = CreateConferenceForInsert();
 
@@ -2850,6 +2881,11 @@ namespace ConferencePlanner.WinUi
 
             newConference.Email = Program.EnteredEmailAddress;
             newConference.ConferenceName = this.ConfName.Text;
+            if (isEditingConference)
+            {
+                newConference.ConferenceId = this.updatingConference.ConferenceId;
+            }
+            
             newConference.ConferenceCategoryId = this.SelectedCategoryId;
             newConference.ConferenceTypeId = this.SelectedTypeId;
             newConference.MainSpeakerId = this.SelectedSpeakerId;
@@ -2992,13 +3028,28 @@ namespace ConferencePlanner.WinUi
 
         private void SaveNewBtn_Click(object sender, EventArgs e)
         {
-            ConferenceModelWithEmail newConference = CreateConferenceForInsert();
+            if (isEditingConference)
+            {
+                ConferenceModelWithEmail newConference = CreateConferenceForInsert();
 
-            var t = Task.Run(() => InsertConference(newConference));
-            t.Wait();
+                var t = Task.Run(() => UpdateConference(newConference));
+                t.Wait();
 
-            ResetForm();
-            this.LoadCountryTab();
+                this.updatingConference = newConference;
+                this.DialogResult = DialogResult.OK;
+                this.Close();
+            }
+            else
+            {
+                ConferenceModelWithEmail newConference = CreateConferenceForInsert();
+
+                var t = Task.Run(() => InsertConference(newConference));
+                t.Wait();
+
+                ResetForm();
+                this.LoadCountryTab();
+            }
+
         }
         private void StartHourPicker_ValueChanged(object sender, EventArgs e)
         {
@@ -3068,5 +3119,6 @@ namespace ConferencePlanner.WinUi
                 this.StartHourPicker.Value = this.EndHourPicker.Value;
             }
         }
+
     }
 }

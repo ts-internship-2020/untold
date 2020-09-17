@@ -43,7 +43,7 @@ namespace ConferencePlanner.Api.Controllers
         [Route("conference_by_id/id={id}")]
         public IActionResult GetConferenceById(int id)
         {
-            ConferenceModel conference = _conferenceRepository.GetConferenceById(id);
+            ConferenceModelWithEmail conference = _conferenceRepository.GetConferenceById(id);
             return Ok(conference);
         }
 

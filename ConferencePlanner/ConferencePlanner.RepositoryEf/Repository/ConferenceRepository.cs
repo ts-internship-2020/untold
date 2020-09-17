@@ -139,7 +139,7 @@ namespace ConferencePlanner.Repository.Ef.Repository
 
         public List<ConferenceModel> FilterConferencesByDate(string email, string sDate, string eDate)
         {
-            List<Conference> conferences = _untoldContext.Conference.Where(c => c.EmailOrganizer == email && c.StartDate >= DateTime.Parse(sDate) && c.EndDate <= DateTime.Parse(eDate))
+            List<Conference> conferences = _untoldContext.Conference.Where(c => c.EmailOrganizer == email && c.StartDate >= DateTime.Parse(sDate) && c.StartDate > DateTime.Now  && c.EndDate <= DateTime.Parse(eDate))
                 .Include(x => x.MainSpeaker)
                 .Include(x => x.ConferenceType)
                 .Include(x => x.ConferenceCategory)
@@ -211,7 +211,7 @@ namespace ConferencePlanner.Repository.Ef.Repository
             return result;
         }
 
-        public ConferenceModel GetConferenceById(int id)
+        public ConferenceModelWithEmail GetConferenceById(int id)
         {
             Conference conf = _untoldContext.Conference.Where(c => c.ConferenceId == id)
                 .Include(x => x.Location)
@@ -220,12 +220,16 @@ namespace ConferencePlanner.Repository.Ef.Repository
                 .ThenInclude(x => x.Country)
                 .FirstOrDefault();
 
-            ConferenceModel conferenceModel = new ConferenceModel()
+            ConferenceModelWithEmail conferenceModel = new ConferenceModelWithEmail()
             {
                 ConferenceId = conf.ConferenceId,
                 ConferenceName = conf.ConferenceName,
-                Location = conf.Location.City.County.Country.CountryName + ", " + conf.Location.City.County.CountyName + ", " + conf.Location.City.CityName,
-                Period = conf.StartDate + " - " + conf.EndDate
+                ConferenceCategoryId = (int)conf.ConferenceCategoryId,
+                ConferenceTypeId = (int)conf.ConferenceTypeId,
+                StartDate = conf.StartDate,
+                EndDate = conf.EndDate,
+                LocationId = (int)conf.LocationId,
+                MainSpeakerId = conf.MainSpeakerId
             };
             return conferenceModel;
 
@@ -235,7 +239,7 @@ namespace ConferencePlanner.Repository.Ef.Repository
 
         public List<ConferenceModel> GetConferencesByOrganizer(string email)
         {
-            List<Conference> conferences = _untoldContext.Conference.Where(c => c.EmailOrganizer == email)
+            List<Conference> conferences = _untoldContext.Conference.Where(c => c.EmailOrganizer == email && c.StartDate > DateTime.Now)
                .Include(x => x.MainSpeaker)
                .Include(x => x.ConferenceType)
                .Include(x => x.ConferenceCategory)
@@ -261,7 +265,7 @@ namespace ConferencePlanner.Repository.Ef.Repository
 
         public List<ConferenceModel> GetConferencesByPage(string email, int startIndex, int endIndex, string sDate, string eDate)
         {
-            List<Conference> conferences = _untoldContext.Conference.Where(c => c.EmailOrganizer == email && c.StartDate >= DateTime.Parse(sDate) && c.EndDate <= DateTime.Parse(eDate))
+            List<Conference> conferences = _untoldContext.Conference.Where(c => c.EmailOrganizer == email && c.StartDate >= DateTime.Parse(sDate) && c.StartDate > DateTime.Now && c.EndDate <= DateTime.Parse(eDate))
                .Include(x => x.MainSpeaker)
                .Include(x => x.ConferenceType)
                .Include(x => x.ConferenceCategory)
@@ -332,6 +336,7 @@ namespace ConferencePlanner.Repository.Ef.Repository
         public void UpdateConference(ConferenceModelWithEmail conferenceModel)
         {
             Conference conferenceUpdate = _untoldContext.Conference.Find(conferenceModel.ConferenceId);
+
             conferenceUpdate.ConferenceName = conferenceModel.ConferenceName;
             conferenceUpdate.ConferenceCategoryId = conferenceModel.ConferenceCategoryId;
             conferenceUpdate.ConferenceTypeId = conferenceModel.ConferenceTypeId;
@@ -339,6 +344,7 @@ namespace ConferencePlanner.Repository.Ef.Repository
             conferenceUpdate.LocationId = conferenceModel.LocationId;
             conferenceUpdate.StartDate = conferenceModel.StartDate;
             conferenceUpdate.EndDate = conferenceModel.EndDate;
+            conferenceUpdate.EmailOrganizer = conferenceModel.Email;
 
             _untoldContext.SaveChanges();
         }

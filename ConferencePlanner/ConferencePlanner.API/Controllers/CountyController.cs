@@ -60,5 +60,13 @@ namespace ConferencePlanner.Api.Controllers
             string error = _countyRepository.DeleteCounty(countyId);
             return Ok(error);
         }
+
+        [HttpGet]
+        [Route("get_county_id_by_conference_id/id={conferenceId}")]
+        public IActionResult GetCountyIdByConfernceId(int conferenceId)
+        {
+            int id = _countyRepository.GetCountyIdByCounferenceId(conferenceId);
+            return Ok(id);
+        }
     }
 }

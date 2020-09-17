@@ -216,9 +216,7 @@ namespace ConferencePlanner.Repository.Ado.Repository
 
         public List<ConferenceModel> GetConferencesByOrganizer(string email)
         {
-            
-        
-            
+
             string commandText = "select ConferenceId, ConferenceName, ConferenceCategoryName, ConferenceTypeName, " +
                 "LocationName, SpeakerName, ConferencePeriod from vwConferenceDetails where EmailOrganizer = @Email";
             
@@ -379,6 +377,11 @@ namespace ConferencePlanner.Repository.Ado.Repository
         }
 
         public List<ConferenceModel> AttendeeConferences(string name, int pageSize, int currentPage)
+        {
+            throw new NotImplementedException();
+        }
+
+        ConferenceModelWithEmail IConferenceRepository.GetConferenceById(int id)
         {
             throw new NotImplementedException();
         }

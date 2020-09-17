@@ -144,13 +144,5 @@ namespace ConferencePlanner.Repository.Ado.Repository
             return error;
         }
 
-
-
-
-
-
-
-
-
     }
 }

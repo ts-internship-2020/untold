@@ -600,12 +600,16 @@ namespace ConferencePlanner.WinUi
                 
                 var t = Task.Run(() => GetConferenceById(id));
                 t.Wait();
-                ConferenceModel conference = t.Result;
 
-                var varAddConf = new AddConf(conference, _conferenceRepository, _countryRepository, _countyRepository, _speakerRepository, _typeRepository, _cityRepository, _categoryRepository);
+                ConferenceModelWithEmail conference = new ConferenceModelWithEmail();
 
-                varAddConf.ShowDialog();
-
+                using (Form1 newAddConf = new Form1(t.Result, _conferenceRepository, _countryRepository, _countyRepository, _speakerRepository, _typeRepository, _cityRepository, _categoryRepository))
+                {
+                    if(newAddConf.ShowDialog() == DialogResult.OK)
+                    {
+                        conference = newAddConf.GetUpdatedConference;
+                    }
+                }
             }
 
             if (e.ColumnIndex == OrganizerDataGrid.Columns["delete_column"].Index)
@@ -798,7 +802,7 @@ namespace ConferencePlanner.WinUi
                 return new List<ConferenceModel>();
             }
         }
-        private async Task<ConferenceModel> GetConferenceById(int id)
+        private async Task<ConferenceModelWithEmail> GetConferenceById(int id)
         {
             HttpClient client = new HttpClient();
             HttpResponseMessage s = await client.GetAsync("http://localhost:2794/api/Conference/conference_by_id/id=" + id);
@@ -806,12 +810,12 @@ namespace ConferencePlanner.WinUi
             if (s.IsSuccessStatusCode)
             {
                 string json = await s.Content.ReadAsStringAsync();
-                var t = JsonConvert.DeserializeObject<ConferenceModel>(json);
+                var t = JsonConvert.DeserializeObject<ConferenceModelWithEmail>(json);
                 return t;
             }
             else
             {
-                return new ConferenceModel();
+                return new ConferenceModelWithEmail();
             }
         }
         private async Task<List<ConferenceModel>> FilterConferencesByDate(string email, string sDate, string eDate)
