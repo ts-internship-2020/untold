@@ -76,7 +76,9 @@ namespace ConferencePlanner.WinUi
         private int CategoriesCurrentPage = 1;
         private int CategoriesLastPageLastRow = 0;
         private int UpdateCategoryRow;
-
+        CountryModel EditCountry;
+        CountyModel EditCounty;
+        CityModel EditCity;
 
         string ConferenceName;
         string StartDate;
@@ -232,6 +234,7 @@ namespace ConferencePlanner.WinUi
             IndexGridChange--;
             PageControlTableLayout.Visible = true;
             SearchTableLayout.Visible = true;
+            this.SaveNewBtn.Visible = false;
             CheckGridVisibility();
         }
 
@@ -829,7 +832,7 @@ namespace ConferencePlanner.WinUi
             var httpContent = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
 
             HttpClient client = new HttpClient();
-            HttpResponseMessage message = await client.PostAsync("http://localhost:2794/api/Category/update_category" + category.ConferenceCategoryId, httpContent);
+            HttpResponseMessage message = await client.PostAsync("http://localhost:2794/api/Category/update_category/", httpContent);
             if (message.IsSuccessStatusCode)
             {
                 popUpMethod("Succes", "Your category has been updated");
@@ -1115,6 +1118,9 @@ namespace ConferencePlanner.WinUi
             FirstPageBtn.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
             LastPageBtn.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
             LastPageBtn.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
+            SaveNewBtn.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
+            SaveNewBtn.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
+
         }
 
         private void NextGridBtn_Click(object sender, EventArgs e)
@@ -3075,6 +3081,7 @@ namespace ConferencePlanner.WinUi
             ResetForm();
             this.LoadCountryTab();
         }
+
         //private void StartHourPicker_ValueChanged(object sender, EventArgs e)
         //{
         //    if (this.EndHourPicker.Value <= this.StartHourPicker.Value)

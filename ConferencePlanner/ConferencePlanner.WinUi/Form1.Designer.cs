@@ -65,9 +65,9 @@
             this.CountryGridView = new System.Windows.Forms.DataGridView();
             this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel7 = new System.Windows.Forms.TableLayoutPanel();
+            this.BackGridBtn = new System.Windows.Forms.Button();
             this.NextGridBtn = new System.Windows.Forms.Button();
             this.SaveNewBtn = new System.Windows.Forms.Button();
-            this.BackGridBtn = new System.Windows.Forms.Button();
             this.PageControlTableLayout = new System.Windows.Forms.TableLayoutPanel();
             this.FirstPageBtn = new System.Windows.Forms.Button();
             this.BackPageBtn = new System.Windows.Forms.Button();
@@ -159,7 +159,7 @@
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 57.3975F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 143F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 55F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 67F));
             this.tableLayoutPanel2.Controls.Add(this.ConfNameLabel, 0, 0);
             this.tableLayoutPanel2.Controls.Add(this.StartDateLabel, 0, 1);
             this.tableLayoutPanel2.Controls.Add(this.EndDateLabel, 0, 2);
@@ -185,7 +185,7 @@
             this.ConfNameLabel.AutoSize = true;
             this.ConfNameLabel.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.ConfNameLabel.ForeColor = System.Drawing.Color.White;
-            this.ConfNameLabel.Location = new System.Drawing.Point(37, 20);
+            this.ConfNameLabel.Location = new System.Drawing.Point(34, 20);
             this.ConfNameLabel.Name = "ConfNameLabel";
             this.ConfNameLabel.Size = new System.Drawing.Size(145, 21);
             this.ConfNameLabel.TabIndex = 0;
@@ -197,7 +197,7 @@
             this.StartDateLabel.AutoSize = true;
             this.StartDateLabel.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.StartDateLabel.ForeColor = System.Drawing.Color.White;
-            this.StartDateLabel.Location = new System.Drawing.Point(63, 82);
+            this.StartDateLabel.Location = new System.Drawing.Point(61, 82);
             this.StartDateLabel.Name = "StartDateLabel";
             this.StartDateLabel.Size = new System.Drawing.Size(92, 21);
             this.StartDateLabel.TabIndex = 1;
@@ -210,7 +210,7 @@
             this.EndDateLabel.AutoSize = true;
             this.EndDateLabel.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.EndDateLabel.ForeColor = System.Drawing.Color.White;
-            this.EndDateLabel.Location = new System.Drawing.Point(67, 139);
+            this.EndDateLabel.Location = new System.Drawing.Point(65, 139);
             this.EndDateLabel.Name = "EndDateLabel";
             this.EndDateLabel.Size = new System.Drawing.Size(84, 21);
             this.EndDateLabel.TabIndex = 2;
@@ -219,10 +219,10 @@
             // ConfName
             // 
             this.ConfName.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.ConfName.Location = new System.Drawing.Point(234, 18);
+            this.ConfName.Location = new System.Drawing.Point(229, 18);
             this.ConfName.Margin = new System.Windows.Forms.Padding(15, 3, 15, 3);
             this.ConfName.Name = "ConfName";
-            this.ConfName.Size = new System.Drawing.Size(266, 26);
+            this.ConfName.Size = new System.Drawing.Size(259, 26);
             this.ConfName.TabIndex = 3;
             this.ConfName.Enter += new System.EventHandler(this.ConfName_Enter);
             this.ConfName.Leave += new System.EventHandler(this.ConfName_Leave);
@@ -231,10 +231,10 @@
             // 
             this.StartDatePicker.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.StartDatePicker.Font = new System.Drawing.Font("Century Gothic", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.StartDatePicker.Location = new System.Drawing.Point(234, 80);
+            this.StartDatePicker.Location = new System.Drawing.Point(229, 80);
             this.StartDatePicker.Margin = new System.Windows.Forms.Padding(15, 3, 15, 3);
             this.StartDatePicker.Name = "StartDatePicker";
-            this.StartDatePicker.Size = new System.Drawing.Size(266, 26);
+            this.StartDatePicker.Size = new System.Drawing.Size(259, 26);
             this.StartDatePicker.TabIndex = 4;
             this.StartDatePicker.ValueChanged += new System.EventHandler(this.StartDatePicker_ValueChanged);
             // 
@@ -242,10 +242,10 @@
             // 
             this.EndDatePicker.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.EndDatePicker.Font = new System.Drawing.Font("Century Gothic", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.EndDatePicker.Location = new System.Drawing.Point(234, 137);
+            this.EndDatePicker.Location = new System.Drawing.Point(229, 137);
             this.EndDatePicker.Margin = new System.Windows.Forms.Padding(15, 3, 15, 3);
             this.EndDatePicker.Name = "EndDatePicker";
-            this.EndDatePicker.Size = new System.Drawing.Size(266, 26);
+            this.EndDatePicker.Size = new System.Drawing.Size(259, 26);
             this.EndDatePicker.TabIndex = 5;
             this.EndDatePicker.ValueChanged += new System.EventHandler(this.EndDatePicker_ValueChanged);
             // 
@@ -255,7 +255,7 @@
             this.StartHourPicker.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.StartHourPicker.CustomFormat = "HH:mm";
             this.StartHourPicker.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.StartHourPicker.Location = new System.Drawing.Point(551, 80);
+            this.StartHourPicker.Location = new System.Drawing.Point(539, 80);
             this.StartHourPicker.Name = "StartHourPicker";
             this.StartHourPicker.ShowUpDown = true;
             this.StartHourPicker.Size = new System.Drawing.Size(111, 26);
@@ -268,7 +268,7 @@
             this.EndHourPicker.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.EndHourPicker.CustomFormat = "HH:mm";
             this.EndHourPicker.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.EndHourPicker.Location = new System.Drawing.Point(551, 137);
+            this.EndHourPicker.Location = new System.Drawing.Point(539, 137);
             this.EndHourPicker.Name = "EndHourPicker";
             this.EndHourPicker.ShowUpDown = true;
             this.EndHourPicker.Size = new System.Drawing.Size(111, 26);
@@ -482,7 +482,7 @@
             this.SearchTableLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 35.30752F));
             this.SearchTableLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 64.69248F));
             this.SearchTableLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 120F));
-            this.SearchTableLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 137F));
+            this.SearchTableLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 149F));
             this.SearchTableLayout.Controls.Add(this.EditTextBox, 1, 0);
             this.SearchTableLayout.Controls.Add(this.SearchBar, 0, 0);
             this.SearchTableLayout.Controls.Add(this.CancelBtn, 3, 0);
@@ -499,10 +499,10 @@
             // 
             this.EditTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.EditTextBox.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.EditTextBox.Location = new System.Drawing.Point(318, 14);
+            this.EditTextBox.Location = new System.Drawing.Point(314, 14);
             this.EditTextBox.Margin = new System.Windows.Forms.Padding(15, 3, 15, 3);
             this.EditTextBox.Name = "EditTextBox";
-            this.EditTextBox.Size = new System.Drawing.Size(527, 27);
+            this.EditTextBox.Size = new System.Drawing.Size(519, 27);
             this.EditTextBox.TabIndex = 0;
             this.EditTextBox.Visible = false;
             // 
@@ -511,9 +511,9 @@
             this.SearchBar.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.SearchBar.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.SearchBar.ForeColor = System.Drawing.SystemColors.ScrollBar;
-            this.SearchBar.Location = new System.Drawing.Point(4, 14);
+            this.SearchBar.Location = new System.Drawing.Point(3, 14);
             this.SearchBar.Name = "SearchBar";
-            this.SearchBar.Size = new System.Drawing.Size(295, 27);
+            this.SearchBar.Size = new System.Drawing.Size(293, 27);
             this.SearchBar.TabIndex = 2;
             this.SearchBar.Text = "Search";
             this.SearchBar.TextChanged += new System.EventHandler(this.SearchBar_TextChanged);
@@ -527,7 +527,7 @@
             this.CancelBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.CancelBtn.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.CancelBtn.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.CancelBtn.Location = new System.Drawing.Point(983, 3);
+            this.CancelBtn.Location = new System.Drawing.Point(971, 3);
             this.CancelBtn.Name = "CancelBtn";
             this.CancelBtn.Size = new System.Drawing.Size(83, 43);
             this.CancelBtn.TabIndex = 3;
@@ -544,7 +544,7 @@
             this.SaveEditBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.SaveEditBtn.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.SaveEditBtn.ForeColor = System.Drawing.Color.White;
-            this.SaveEditBtn.Location = new System.Drawing.Point(863, 3);
+            this.SaveEditBtn.Location = new System.Drawing.Point(851, 3);
             this.SaveEditBtn.Name = "SaveEditBtn";
             this.SaveEditBtn.Size = new System.Drawing.Size(100, 43);
             this.SaveEditBtn.TabIndex = 1;
@@ -593,11 +593,11 @@
             // 
             this.tableLayoutPanel7.ColumnCount = 3;
             this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 84F));
-            this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 527F));
+            this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 86F));
+            this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 538F));
+            this.tableLayoutPanel7.Controls.Add(this.BackGridBtn, 0, 0);
             this.tableLayoutPanel7.Controls.Add(this.NextGridBtn, 1, 0);
             this.tableLayoutPanel7.Controls.Add(this.SaveNewBtn, 2, 0);
-            this.tableLayoutPanel7.Controls.Add(this.BackGridBtn, 0, 0);
             this.tableLayoutPanel7.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel7.Location = new System.Drawing.Point(3, 57);
             this.tableLayoutPanel7.Name = "tableLayoutPanel7";
@@ -605,6 +605,23 @@
             this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel7.Size = new System.Drawing.Size(1118, 49);
             this.tableLayoutPanel7.TabIndex = 0;
+            // 
+            // BackGridBtn
+            // 
+            this.BackGridBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.BackGridBtn.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("BackGridBtn.BackgroundImage")));
+            this.BackGridBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.BackGridBtn.FlatAppearance.BorderSize = 0;
+            this.BackGridBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BackGridBtn.Font = new System.Drawing.Font("Century Gothic", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.BackGridBtn.ForeColor = System.Drawing.Color.White;
+            this.BackGridBtn.Location = new System.Drawing.Point(411, 3);
+            this.BackGridBtn.Name = "BackGridBtn";
+            this.BackGridBtn.Size = new System.Drawing.Size(80, 43);
+            this.BackGridBtn.TabIndex = 0;
+            this.BackGridBtn.Text = "Back";
+            this.BackGridBtn.UseVisualStyleBackColor = true;
+            this.BackGridBtn.Click += new System.EventHandler(this.BackGridBtn_Click);
             // 
             // NextGridBtn
             // 
@@ -616,9 +633,9 @@
             this.NextGridBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.NextGridBtn.Font = new System.Drawing.Font("Century Gothic", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.NextGridBtn.ForeColor = System.Drawing.Color.White;
-            this.NextGridBtn.Location = new System.Drawing.Point(510, 3);
+            this.NextGridBtn.Location = new System.Drawing.Point(497, 3);
             this.NextGridBtn.Name = "NextGridBtn";
-            this.NextGridBtn.Size = new System.Drawing.Size(78, 43);
+            this.NextGridBtn.Size = new System.Drawing.Size(80, 43);
             this.NextGridBtn.TabIndex = 1;
             this.NextGridBtn.Text = "Next";
             this.NextGridBtn.UseVisualStyleBackColor = true;
@@ -632,7 +649,7 @@
             this.SaveNewBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.SaveNewBtn.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.SaveNewBtn.ForeColor = System.Drawing.Color.White;
-            this.SaveNewBtn.Location = new System.Drawing.Point(594, 3);
+            this.SaveNewBtn.Location = new System.Drawing.Point(583, 3);
             this.SaveNewBtn.Name = "SaveNewBtn";
             this.SaveNewBtn.Size = new System.Drawing.Size(153, 43);
             this.SaveNewBtn.TabIndex = 2;
@@ -640,23 +657,6 @@
             this.SaveNewBtn.UseVisualStyleBackColor = true;
             this.SaveNewBtn.Visible = false;
             this.SaveNewBtn.Click += new System.EventHandler(this.SaveNewBtn_Click);
-            // 
-            // BackGridBtn
-            // 
-            this.BackGridBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.BackGridBtn.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("BackGridBtn.BackgroundImage")));
-            this.BackGridBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.BackGridBtn.FlatAppearance.BorderSize = 0;
-            this.BackGridBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.BackGridBtn.Font = new System.Drawing.Font("Century Gothic", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.BackGridBtn.ForeColor = System.Drawing.Color.White;
-            this.BackGridBtn.Location = new System.Drawing.Point(424, 3);
-            this.BackGridBtn.Name = "BackGridBtn";
-            this.BackGridBtn.Size = new System.Drawing.Size(80, 43);
-            this.BackGridBtn.TabIndex = 0;
-            this.BackGridBtn.Text = "Back";
-            this.BackGridBtn.UseVisualStyleBackColor = true;
-            this.BackGridBtn.Click += new System.EventHandler(this.BackGridBtn_Click);
             // 
             // PageControlTableLayout
             // 
@@ -744,13 +744,12 @@
             this.PagesTextBox.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.PagesTextBox.BackColor = System.Drawing.SystemColors.Window;
             this.PagesTextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.PagesTextBox.Font = new System.Drawing.Font("Nirmala UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.PagesTextBox.Location = new System.Drawing.Point(464, 13);
+            this.PagesTextBox.Font = new System.Drawing.Font("Century", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.PagesTextBox.Location = new System.Drawing.Point(464, 14);
             this.PagesTextBox.Name = "PagesTextBox";
             this.PagesTextBox.ReadOnly = true;
-            this.PagesTextBox.Size = new System.Drawing.Size(86, 22);
+            this.PagesTextBox.Size = new System.Drawing.Size(86, 20);
             this.PagesTextBox.TabIndex = 5;
-            this.PagesTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // PaginationSelector
             // 
@@ -855,7 +854,6 @@
             this.CategoryGridView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.CategoryGridView.BackgroundColor = System.Drawing.SystemColors.Window;
             this.CategoryGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.CategoryGridView.Location = new System.Drawing.Point(50, 373);
             this.CategoryGridView.Name = "CategoryGridView";
