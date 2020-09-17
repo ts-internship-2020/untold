@@ -3058,21 +3058,21 @@ namespace ConferencePlanner.WinUi
             ResetForm();
             this.LoadCountryTab();
         }
-        private void StartHourPicker_ValueChanged(object sender, EventArgs e)
-        {
-            if (this.EndHourPicker.Value <= this.StartHourPicker.Value)
-            {
-                this.EndHourPicker.Value = this.StartHourPicker.Value;
-            }
-        }
+        //private void StartHourPicker_ValueChanged(object sender, EventArgs e)
+        //{
+        //    if (this.EndHourPicker.Value <= this.StartHourPicker.Value)
+        //    {
+        //        this.EndHourPicker.Value = this.StartHourPicker.Value;
+        //    }
+        //}
 
-        private void StartDatePicker_ValueChanged(object sender, EventArgs e)
-        {
-            if (this.EndDatePicker.Value <= this.StartDatePicker.Value)
-            {
-                this.EndDatePicker.Value = this.StartDatePicker.Value;
-            }
-        }
+        //private void StartDatePicker_ValueChanged(object sender, EventArgs e)
+        //{
+        //    if (this.EndDatePicker.Value <= this.StartDatePicker.Value)
+        //    {
+        //        this.EndDatePicker.Value = this.StartDatePicker.Value;
+        //    }
+        //}
 
         private void SpeakerGridView_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
