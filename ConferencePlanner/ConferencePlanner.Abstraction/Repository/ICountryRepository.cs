@@ -8,7 +8,7 @@ namespace ConferencePlanner.Abstraction.Repository
 {
     public interface ICountryRepository
     {
-        List<CountryModel> GetListCountry();
+        //List<CountryModel> GetListCountry();
 
         //CountryModel GetCountryIdByConferenceId(int id);
 

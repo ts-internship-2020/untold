@@ -3,6 +3,7 @@ using ConferencePlanner.Abstraction.Repository;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -52,6 +53,15 @@ namespace ConferencePlanner.Api.Controllers
         {
             int countryId = _countryRepository.GetCountryIdByConferenceId(conferenceId);
             return Ok();
+        }
+
+        [HttpGet]
+        [Route("get_country_list")]
+        public IActionResult GetCountriesList()
+        {
+            BindingList<CountryModel> countries = _countryRepository.GetCountriesList();
+            return Ok(countries);
+
         }
 
     }

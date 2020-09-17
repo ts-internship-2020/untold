@@ -18,31 +18,31 @@ namespace ConferencePlanner.Repository.Ado.Repository
             _sqlConnection = sqlConnection;
         }
 
-        public List<CountryModel> GetListCountry()
-        {
-            SqlCommand sqlCommandCountry = _sqlConnection.CreateCommand();
-            sqlCommandCountry.CommandText = "select DictionaryCountryId, CountryCode, CountryName from DictionaryCountry order by CountryName";
-            SqlDataReader sqlDataReader = sqlCommandCountry.ExecuteReader();
+        //public List<CountryModel> GetListCountry()
+        //{
+        //    SqlCommand sqlCommandCountry = _sqlConnection.CreateCommand();
+        //    sqlCommandCountry.CommandText = "select DictionaryCountryId, CountryCode, CountryName from DictionaryCountry order by CountryName";
+        //    SqlDataReader sqlDataReader = sqlCommandCountry.ExecuteReader();
 
-            List<CountryModel> countrylist = new List<CountryModel>();
+        //    List<CountryModel> countrylist = new List<CountryModel>();
 
-            if (sqlDataReader.HasRows)
-            {
-                while (sqlDataReader.Read())
-                {
-                    countrylist.Add(new CountryModel()
-                    {
-                        DictionaryCountryId = sqlDataReader.GetInt32("DictionaryCountryId"),
-                        CountryCode = sqlDataReader.GetString("CountryCode"),
-                        CountryName = sqlDataReader.GetString("CountryName")
+        //    if (sqlDataReader.HasRows)
+        //    {
+        //        while (sqlDataReader.Read())
+        //        {
+        //            countrylist.Add(new CountryModel()
+        //            {
+        //                DictionaryCountryId = sqlDataReader.GetInt32("DictionaryCountryId"),
+        //                CountryCode = sqlDataReader.GetString("CountryCode"),
+        //                CountryName = sqlDataReader.GetString("CountryName")
 
-                    }) ;
-                }
-            }
+        //            }) ;
+        //        }
+        //    }
 
-            sqlDataReader.Close();
-            return countrylist;
-        }
+        //    sqlDataReader.Close();
+        //    return countrylist;
+        //}
 
         public int GetCountryIdByConferenceId(int id)
         {

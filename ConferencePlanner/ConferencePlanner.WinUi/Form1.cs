@@ -287,8 +287,9 @@ namespace ConferencePlanner.WinUi
 
         private void LoadCountryTab()
         {
-
-            this.Countries = _countryRepository.GetCountriesList();
+            var t = Task.Run(() => GetCountriesList());
+            t.Wait();
+           // this.Countries = _countryRepository.GetCountriesList();
             CountriesFromSearchBar = Countries;
             int[] pages = CalculateTotalPages(Countries.Count);
             
@@ -850,7 +851,21 @@ namespace ConferencePlanner.WinUi
                 Counties = t;
             }
         }
+        public async Task GetCountriesList()
+        {
+            HttpClient client = new HttpClient();
+            HttpResponseMessage message = await client.GetAsync("http://localhost:2794/api/Country/get_country_list");
+            if (message.IsSuccessStatusCode)
+            {
+                string json = await message.Content.ReadAsStringAsync();
+                var t = JsonConvert.DeserializeObject<BindingList<CountryModel>>(json);
+                Countries = t;
+            }
+        }
 
+
+
+        //
         public async Task<int> GetLastCountyId()
         {
             HttpClient client = new HttpClient();
@@ -2234,13 +2249,15 @@ namespace ConferencePlanner.WinUi
         private CountryModel GetCountry()
         {
             CountryModel Country = new CountryModel();
-            Country.DictionaryCountryId = Countries.Count + 1;
             Country.CountryName = CountryGridView.Rows[UpdateCountriesRow].Cells["CountryName"].Value.ToString();
-            // Country.CountryId = SelectedCountryId;
+            Country.CountryCode = CountryGridView.Rows[UpdateCountriesRow].Cells["CountryCode"].Value.ToString();
+            //Country.CountryId = SelectedCountryId;
 
 
             return Country;
         }
+
+        
         private void CountriesEndEditLayout(string PopUpTitle, string PopUpMessage)
         {
             PaginationSelector.Enabled = true;
