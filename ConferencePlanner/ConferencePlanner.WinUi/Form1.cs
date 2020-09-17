@@ -76,7 +76,9 @@ namespace ConferencePlanner.WinUi
         private int CategoriesCurrentPage = 1;
         private int CategoriesLastPageLastRow = 0;
         private int UpdateCategoryRow;
-
+        CountryModel EditCountry;
+        CountyModel EditCounty;
+        CityModel EditCity;
 
         string ConferenceName;
         string StartDate;
