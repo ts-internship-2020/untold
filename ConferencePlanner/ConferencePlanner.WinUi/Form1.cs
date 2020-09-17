@@ -8,6 +8,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Net.Http;
+using System.Security;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -75,6 +76,9 @@ namespace ConferencePlanner.WinUi
         private int CategoriesCurrentPage = 1;
         private int CategoriesLastPageLastRow = 0;
         private int UpdateCategoryRow;
+        CountryModel EditCountry;
+        CountyModel EditCounty;
+        CityModel EditCity;
 
         private bool isEditingConference = false;
         private ConferenceModelWithEmail updatingConference = new ConferenceModelWithEmail();
@@ -163,7 +167,7 @@ namespace ConferencePlanner.WinUi
             {
                 CountryGridView.Visible = true;
                 CountryBar.Visible = true;
-
+                SaveBar.Visible = false;
                 this.SearchTableLayout.Visible = true;
                 this.PageControlTableLayout.Visible = true;
                 LoadCountryTab();
@@ -205,6 +209,7 @@ namespace ConferencePlanner.WinUi
             {
                 CategoryGridView.Visible = true;
                 CategoryBar.Visible = true;
+                SaveBar.Visible = false;
                 LoadCategoryTab();
                 CheckIndexChangeBtns();
 
@@ -212,6 +217,8 @@ namespace ConferencePlanner.WinUi
             }
             else if(IndexGridChange == 7)
             {
+                PageControlTableLayout.Visible = false;
+                SearchTableLayout.Visible = false;
                 SavePanel.Visible = true;
                 SaveBar.Visible = true;
                 LoadSaveTab();
@@ -222,6 +229,9 @@ namespace ConferencePlanner.WinUi
         private void BackGridBtn_Click(object sender, EventArgs e)
         {
             IndexGridChange--;
+            PageControlTableLayout.Visible = true;
+            SearchTableLayout.Visible = true;
+            this.SaveNewBtn.Visible = false;
             CheckGridVisibility();
         }
 
@@ -289,8 +299,9 @@ namespace ConferencePlanner.WinUi
 
         private void LoadCountryTab()
         {
-            
-            this.Countries = _countryRepository.GetCountriesList();
+            var t = Task.Run(() => GetCountriesList());
+            t.Wait();
+           // this.Countries = _countryRepository.GetCountriesList();
             CountriesFromSearchBar = Countries;
             int[] pages = CalculateTotalPages(Countries.Count);
             
@@ -310,7 +321,10 @@ namespace ConferencePlanner.WinUi
 
         private void LoadCountyTab()
         {
-            this.Counties = _countyRepository.GetCountyList(this.SelectedCountryId);
+            
+
+            var t = Task.Run(() => GetCountyList(SelectedCountryId));
+            t.Wait();
             CountiesFromSearchBar = Counties;
             int[] pages = CalculateTotalPages(Counties.Count);
             CountyGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
@@ -329,6 +343,7 @@ namespace ConferencePlanner.WinUi
             var t = Task.Run(() => GetCityAsync(SelectedCountyId));
             t.Wait();
             //_cityRepository.GetCitiesByCountyId(SelectedCountyId);
+            CitiesFromSearchBar = Cities;
             int[] pages = CalculateTotalPages(Cities.Count);
             CityGridView.AllowUserToOrderColumns = true;
             CityGridView.DefaultCellStyle.ForeColor = Color.Black;
@@ -369,8 +384,6 @@ namespace ConferencePlanner.WinUi
 
         private void LoadCategoryTab()
         {
-            PageControlTableLayout.Visible = false;
-            SearchTableLayout.Visible = false;
 
             var t = Task.Run(() => GetConferenceCategories());
             t.Wait();
@@ -390,6 +403,7 @@ namespace ConferencePlanner.WinUi
         {
             PageControlTableLayout.Visible = false;
             SearchTableLayout.Visible = false;
+
             ConfNameSaveLabel.Text = "Conference name: " +  this.ConfName.Text;
             DateTime sDate = (this.StartDatePicker.Value).Date + this.StartHourPicker.Value.TimeOfDay;
             DateTime eDate = (this.EndDatePicker.Value).Date + this.EndHourPicker.Value.TimeOfDay;
@@ -858,7 +872,7 @@ namespace ConferencePlanner.WinUi
             var httpContent = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
 
             HttpClient client = new HttpClient();
-            HttpResponseMessage message = await client.PostAsync("http://localhost:2794/api/Category/update_category" + category.ConferenceCategoryId, httpContent);
+            HttpResponseMessage message = await client.PostAsync("http://localhost:2794/api/Category/update_category/", httpContent);
             if (message.IsSuccessStatusCode)
             {
                 popUpMethod("Succes", "Your category has been updated");
@@ -872,7 +886,7 @@ namespace ConferencePlanner.WinUi
         public async Task GetCountyList(int CountryId)
         {
             HttpClient client = new HttpClient();
-            HttpResponseMessage message = await client.GetAsync("http://localhost:2794/api/County/county_by_countryId?countryID=" + CountryId);
+            HttpResponseMessage message = await client.GetAsync("http://localhost:2794/api/County/county_by_countryId/countryId=" + CountryId);
             if (message.IsSuccessStatusCode)
             {
                 string json = await message.Content.ReadAsStringAsync();
@@ -880,7 +894,21 @@ namespace ConferencePlanner.WinUi
                 Counties = t;
             }
         }
+        public async Task GetCountriesList()
+        {
+            HttpClient client = new HttpClient();
+            HttpResponseMessage message = await client.GetAsync("http://localhost:2794/api/Country/get_country_list");
+            if (message.IsSuccessStatusCode)
+            {
+                string json = await message.Content.ReadAsStringAsync();
+                var t = JsonConvert.DeserializeObject<BindingList<CountryModel>>(json);
+                Countries = t;
+            }
+        }
 
+
+
+        //
         public async Task<int> GetLastCountyId()
         {
             HttpClient client = new HttpClient();
@@ -1109,6 +1137,30 @@ namespace ConferencePlanner.WinUi
         {
             LoadCountryTab();
             CheckIndexChangeBtns();
+            HideGrayBg();
+        }
+
+        private void HideGrayBg()
+        {
+            NextGridBtn.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
+            NextGridBtn.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
+            BackGridBtn.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
+            BackGridBtn.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
+            SaveEditBtn.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
+            SaveEditBtn.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
+            CancelBtn.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
+            CancelBtn.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
+            NextPageBtn.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
+            NextPageBtn.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
+            BackPageBtn.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
+            BackPageBtn.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
+            FirstPageBtn.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
+            FirstPageBtn.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
+            LastPageBtn.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
+            LastPageBtn.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
+            SaveNewBtn.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
+            SaveNewBtn.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
+
         }
 
         private void NextGridBtn_Click(object sender, EventArgs e)
@@ -1585,6 +1637,7 @@ namespace ConferencePlanner.WinUi
             EditTextBox.Text = "You are now adding a new country. Press the button to Save. ";
             EditTextBox.Visible = true;
             SaveEditBtn.Visible = true;
+            CancelBtn.Visible = true;
         }
         private void CountriesBeginEditLayout(string Action)
         {
@@ -1613,6 +1666,7 @@ namespace ConferencePlanner.WinUi
             EditTextBox.Text = "You are now editing the " + CountryName + " country. Press the button to Save.";
             EditTextBox.Visible = true;
             SaveEditBtn.Visible = true;
+            CancelBtn.Visible = true;
         }
         private void CountryGridView_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
         {
@@ -1645,9 +1699,10 @@ namespace ConferencePlanner.WinUi
 
         private void CategoryAddInsertMessage()
         {
-            EditTextBox.Text = "You are now adding a new conference category.  Press the button to Save.";
+            EditTextBox.Text = "You are now adding a new conference category. Press the button to Save.";
             EditTextBox.Visible = true;
             SaveEditBtn.Visible = true;
+            this.CancelBtn.Visible = true;
         }
         private void CategoryBeginEditLayout(string action)
         {
@@ -1679,6 +1734,7 @@ namespace ConferencePlanner.WinUi
             EditTextBox.Text = "You are now editing conference category " + name + ". Press the Button to Save.";
             EditTextBox.Visible = true;
             SaveEditBtn.Visible = true;
+            CancelBtn.Visible = true;
         }
         private void CategoryGridView_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
         {
@@ -1746,6 +1802,7 @@ namespace ConferencePlanner.WinUi
             this.EditTextBox.Text = "You are now adding a new speaker. Press the button to Save.";
             this.EditTextBox.Visible = true;
             this.SaveEditBtn.Visible = true;
+            this.CancelBtn.Visible = true;
         }
         private void SpeakerBeginEditLayout(string opType)
         {
@@ -1784,6 +1841,7 @@ namespace ConferencePlanner.WinUi
             this.EditTextBox.Text = "You are now editing speaker " + sName + "'s informations. Press the button to Save.";
             this.EditTextBox.Visible = true;
             this.SaveEditBtn.Visible = true;
+            this.CancelBtn.Visible = true;
         }
         private void SpeakerGridView_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
         {
@@ -1865,6 +1923,7 @@ namespace ConferencePlanner.WinUi
             this.EditTextBox.Text = "You are now adding a new conference type. Press the button to Save.";
             this.EditTextBox.Visible = true;
             this.SaveEditBtn.Visible = true;
+            this.CancelBtn.Visible = true;
         }
 
         private void TypeBeginEditLayout(string opType)
@@ -1901,6 +1960,7 @@ namespace ConferencePlanner.WinUi
             this.EditTextBox.Text = "You are now editing conference type " + confname + " Press the button to Save.";
             this.EditTextBox.Visible = true;
             this.SaveEditBtn.Visible = true;
+            this.CancelBtn.Visible = true;
         }
 
         private void TypeGridView_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
@@ -1974,6 +2034,7 @@ namespace ConferencePlanner.WinUi
             this.EditTextBox.Text = "You are now adding a new city. Press the button to Save.";
             this.EditTextBox.Visible = true;
             this.SaveEditBtn.Visible = true;
+            this.CancelBtn.Visible = true;
         }
         private void CitiesBeginEditLayout(string opType)
         {
@@ -2007,6 +2068,7 @@ namespace ConferencePlanner.WinUi
             this.EditTextBox.Text = "You are now editing city " + cityName + "'s informations. Press the button to Save.";
             this.EditTextBox.Visible = true;
             this.SaveEditBtn.Visible = true;
+            this.CancelBtn.Visible = true;
         }
         //private void CountryGridView_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
         //{
@@ -2094,6 +2156,7 @@ namespace ConferencePlanner.WinUi
             EditTextBox.Text = "You are now adding a new county. Press the button to Save. ";
             EditTextBox.Visible = true;
             SaveEditBtn.Visible = true;
+            this.CancelBtn.Visible = true;
         }
 
         private void CountyAddUpdateMessage(string CountyName)
@@ -2101,6 +2164,7 @@ namespace ConferencePlanner.WinUi
             EditTextBox.Text = "You are now editing the " + CountyName + " county. Press the button to Save.";
             EditTextBox.Visible = true;
             SaveEditBtn.Visible = true;
+            this.CancelBtn.Visible = true;
         }
 
         private void CountyBeginEditLayout(string Action)
@@ -2133,6 +2197,7 @@ namespace ConferencePlanner.WinUi
             PaginationSelector.Enabled = true;
             EditTextBox.Visible = false;
             SaveEditBtn.Visible = false;
+            this.CancelBtn.Visible = false;
             popUpMethod(PopUpTitle, PopUpMessage);
             CountyGridView.Columns["delete_column"].Visible = true;
             SearchBar.Enabled = true;
@@ -2221,18 +2286,21 @@ namespace ConferencePlanner.WinUi
         private CountryModel GetCountry()
         {
             CountryModel Country = new CountryModel();
-            Country.DictionaryCountryId = Countries.Count + 1;
             Country.CountryName = CountryGridView.Rows[UpdateCountriesRow].Cells["CountryName"].Value.ToString();
-            // Country.CountryId = SelectedCountryId;
+            Country.CountryCode = CountryGridView.Rows[UpdateCountriesRow].Cells["CountryCode"].Value.ToString();
+            //Country.CountryId = SelectedCountryId;
 
 
             return Country;
         }
+
+        
         private void CountriesEndEditLayout(string PopUpTitle, string PopUpMessage)
         {
             PaginationSelector.Enabled = true;
             EditTextBox.Visible = false;
             SaveEditBtn.Visible = false;
+            this.CancelBtn.Visible = false;
             popUpMethod(PopUpTitle, PopUpMessage);
             CountryGridView.Columns["delete_column"].Visible = true;
             SearchBar.Enabled = true;
@@ -2318,6 +2386,7 @@ namespace ConferencePlanner.WinUi
             SpeakerGridView.SelectionMode = (DataGridViewSelectionMode)1;
             this.EditTextBox.Visible = false;
             this.SaveEditBtn.Visible = false;
+            this.CancelBtn.Visible = false;
             this.popUpMethod(str1popup, str2popup);
             this.SpeakerGridView.Columns["main_speaker"].ReadOnly = false;
             this.SpeakerGridView.Columns["main_speaker"].DefaultCellStyle.BackColor = Color.White;
@@ -2372,6 +2441,7 @@ namespace ConferencePlanner.WinUi
         {
             PaginationSelector.Enabled = true;
             this.SaveEditBtn.Visible = false;
+            this.CancelBtn.Visible = false;
             this.EditTextBox.Visible = false;
             this.popUpMethod(str1popup, str2popup);
             this.TypeGridView.Columns["TypeId"].Visible = false;
@@ -2427,6 +2497,7 @@ namespace ConferencePlanner.WinUi
             PaginationSelector.Enabled = true;
             EditTextBox.Visible = false;
             SaveEditBtn.Visible = false;
+            this.CancelBtn.Visible = false;
             popUpMethod(PopUpTitle, PopUpMessage);
             CityGridView.Columns["delete_column"].Visible = true;
             SearchBar.Enabled = true;
@@ -2473,6 +2544,7 @@ namespace ConferencePlanner.WinUi
         {
             PaginationSelector.Enabled = true;
             SaveEditBtn.Visible = false;
+            this.CancelBtn.Visible = false;
             EditTextBox.Visible = false;
             popUpMethod(PopUpTitle, PopUpMessage);
             CategoryGridView.Columns["ConferenceCategoryId"].Visible = false;
@@ -2552,7 +2624,7 @@ namespace ConferencePlanner.WinUi
                     CountyModel NewCounty = GetCounty();
                     var t=Task.Run(() => GetLastCountyId());
                     t.Wait();
-                    NewCounty.CountyId = t.Result;
+                    NewCounty.CountyId = t.Result+1;
 
                     var task = Task.Run(() => InsertCounty(NewCounty));
                     task.Wait();
@@ -2631,6 +2703,7 @@ namespace ConferencePlanner.WinUi
                     this.TypeGridView.CurrentCell = null;
                     this.TypeGridView.Rows[0].Selected = false;
                     this.SaveEditBtn.Visible = false;
+                    this.CancelBtn.Visible = false;
                     this.NextPageBtn.Enabled = true;
                     this.BackPageBtn.Enabled = true;
                     this.FirstPageBtn.Enabled = true;
@@ -3023,7 +3096,15 @@ namespace ConferencePlanner.WinUi
 
         private void ConfName_Leave(object sender, EventArgs e)
         {
-            CheckError();
+            if (CheckError())
+            {
+                ConferenceName = ConfName.Text;
+                if (IndexGridChange == 7)
+                {
+                    LoadSaveTab();
+                }
+                
+            }
         }
 
         private void SaveNewBtn_Click(object sender, EventArgs e)
@@ -3103,20 +3184,67 @@ namespace ConferencePlanner.WinUi
             this.CategoryGridView.BeginEdit(true);
         }
 
+        private void StartDatePicker_ValueChanged(object sender, EventArgs e)
+        {
+            if (this.EndDatePicker.Value <= this.StartDatePicker.Value)
+            {
+                this.EndDatePicker.Value = this.StartDatePicker.Value;
+            }
+            StartDate = StartDatePicker.Value.ToString();
+            if(IndexGridChange == 7)
+            {
+            LoadSaveTab();
+
+            }
+        }
+
         private void EndDatePicker_ValueChanged(object sender, EventArgs e)
         {
-            if (this.StartDatePicker.Value > this.EndDatePicker.Value)
+            EndDate = EndDatePicker.Value.ToString();
+            if (IndexGridChange == 7)
             {
-                this.StartDatePicker.Value = this.EndDatePicker.Value;
-            }
+                LoadSaveTab();
 
+            }
+        }
+
+        private void StartHourPicker_ValueChanged(object sender, EventArgs e)
+        {
+            if (this.EndDatePicker.Value <= this.StartDatePicker.Value)
+            {
+                this.EndDatePicker.Value = this.StartDatePicker.Value;
+
+                if (this.StartHourPicker.Value.TimeOfDay > this.EndHourPicker.Value.TimeOfDay)
+                {
+                    this.EndHourPicker.Value = this.StartHourPicker.Value;
+                }
+            }
+            StartHour = StartHourPicker.Value.ToString();
+            if (IndexGridChange == 7)
+            {
+                LoadSaveTab();
+
+            }
+           
         }
 
         private void EndHourPicker_ValueChanged(object sender, EventArgs e)
         {
-            if (this.StartHourPicker.Value > this.EndHourPicker.Value && this.StartDatePicker.Value.Date >= this.EndDatePicker.Value.Date)
+
+            EndHour = EndHourPicker.Value.ToString();
+            if (IndexGridChange == 7)
             {
-                this.StartHourPicker.Value = this.EndHourPicker.Value;
+                LoadSaveTab();
+
+            }
+        }
+
+        private void CancelBtn_Click(object sender, EventArgs e)
+        {
+            if(IndexGridChange == 1)
+            {
+                CountryGridView.EndEdit();
+                
             }
         }
 

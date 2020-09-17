@@ -385,6 +385,10 @@ namespace ConferencePlanner.Repository.Ado.Repository
         {
             throw new NotImplementedException();
         }
+        public int GetAtendeesCount(string email, string sDate, string eDate)
+        {
+            throw new NotImplementedException();
+        }
     }
     }
 
