@@ -62,6 +62,7 @@ namespace ConferencePlanner.WinUi
             this.speakerName.Location = new System.Drawing.Point(4, 36);
             this.speakerName.Margin = new System.Windows.Forms.Padding(4);
             this.speakerName.Name = "speakerName";
+            this.speakerName.ReadOnly = true;
             this.speakerName.Size = new System.Drawing.Size(199, 29);
             this.speakerName.TabIndex = 1;
             this.speakerName.Text = "test";
@@ -73,6 +74,7 @@ namespace ConferencePlanner.WinUi
             this.speakerNationality.Location = new System.Drawing.Point(4, 89);
             this.speakerNationality.Margin = new System.Windows.Forms.Padding(4);
             this.speakerNationality.Name = "speakerNationality";
+            this.speakerNationality.ReadOnly = true;
             this.speakerNationality.Size = new System.Drawing.Size(199, 29);
             this.speakerNationality.TabIndex = 2;
             // 
@@ -98,7 +100,7 @@ namespace ConferencePlanner.WinUi
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 366F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 294F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(729, 294);
             this.tableLayoutPanel1.TabIndex = 4;
             // 

@@ -47,18 +47,21 @@ namespace ConferencePlanner.Repository.Ef.Repository
                 ImagePath = speaker.ImagePath};
             return speakerModel;
         }
-        public SpeakerModel GetSpeakerByName(string fname, string lname)
+        public SpeakerModel GetSpeakerByConferenceId(int conferenceId)
         {
-            Speaker speaker = _untoldContext.Speaker.Where(s => s.FirstName.ToLower() == fname.ToLower() && s.LastName.ToLower() == lname.ToLower()).FirstOrDefault();
+            Conference conference =  _untoldContext.Conference
+                .Where(c => c.ConferenceId==conferenceId)
+                .Include(x => x.MainSpeaker)
+                .FirstOrDefault();
 
             SpeakerModel speakerModel = new SpeakerModel()
             {
-                SpeakerId = speaker.SpeakerId,
-                FirstName = speaker.FirstName,
-                LastName = speaker.LastName,
-                Nationality = speaker.Nationality,
-                Rating = (float)speaker.Rating,
-                ImagePath = speaker.ImagePath
+                SpeakerId = conference.MainSpeaker.SpeakerId,
+                FirstName = conference.MainSpeaker.FirstName,
+                LastName = conference.MainSpeaker.LastName,
+                Nationality = conference.MainSpeaker.Nationality,
+                Rating = (float)conference.MainSpeaker.Rating,
+                ImagePath = conference.MainSpeaker.ImagePath
             };
             return speakerModel;
         }
