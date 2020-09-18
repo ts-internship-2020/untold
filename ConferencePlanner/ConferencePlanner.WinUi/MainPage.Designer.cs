@@ -287,7 +287,7 @@ namespace ConferencePlanner.WinUi
             "5",
             "10",
             "25"});
-            this.OrganizersPaginationSelector.Location = new System.Drawing.Point(335, 19);
+            this.OrganizersPaginationSelector.Location = new System.Drawing.Point(334, 19);
             this.OrganizersPaginationSelector.Margin = new System.Windows.Forms.Padding(15);
             this.OrganizersPaginationSelector.Name = "OrganizersPaginationSelector";
             this.OrganizersPaginationSelector.Size = new System.Drawing.Size(80, 25);
@@ -322,7 +322,7 @@ namespace ConferencePlanner.WinUi
             this.RightArrowPagButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.RightArrowPagButton.FlatAppearance.BorderSize = 0;
             this.RightArrowPagButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.RightArrowPagButton.Location = new System.Drawing.Point(850, 8);
+            this.RightArrowPagButton.Location = new System.Drawing.Point(848, 8);
             this.RightArrowPagButton.Margin = new System.Windows.Forms.Padding(1);
             this.RightArrowPagButton.Name = "RightArrowPagButton";
             this.RightArrowPagButton.Size = new System.Drawing.Size(40, 40);
@@ -341,7 +341,7 @@ namespace ConferencePlanner.WinUi
             this.LeftArrowPagButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.LeftArrowPagButton.FlatAppearance.BorderSize = 0;
             this.LeftArrowPagButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.LeftArrowPagButton.Location = new System.Drawing.Point(674, 8);
+            this.LeftArrowPagButton.Location = new System.Drawing.Point(672, 8);
             this.LeftArrowPagButton.Name = "LeftArrowPagButton";
             this.LeftArrowPagButton.Size = new System.Drawing.Size(40, 40);
             this.LeftArrowPagButton.TabIndex = 7;
@@ -364,7 +364,7 @@ namespace ConferencePlanner.WinUi
             this.MainPagePaginationTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.MainPagePaginationTextBox.Enabled = false;
-            this.MainPagePaginationTextBox.Location = new System.Drawing.Point(732, 17);
+            this.MainPagePaginationTextBox.Location = new System.Drawing.Point(730, 17);
             this.MainPagePaginationTextBox.Margin = new System.Windows.Forms.Padding(15);
             this.MainPagePaginationTextBox.Name = "MainPagePaginationTextBox";
             this.MainPagePaginationTextBox.ReadOnly = true;
@@ -395,7 +395,7 @@ namespace ConferencePlanner.WinUi
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 46F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 132F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 50F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 470F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 472F));
             this.tableLayoutPanel1.Controls.Add(this.OrganizersPaginationSelector, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.MainPagePaginationTextBox, 4, 0);
             this.tableLayoutPanel1.Controls.Add(this.LeftArrowPagButton, 3, 0);
@@ -427,6 +427,7 @@ namespace ConferencePlanner.WinUi
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "MainForm";
             this.TransparencyKey = System.Drawing.Color.NavajoWhite;
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainPage_FormClosing);
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();

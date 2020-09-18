@@ -159,7 +159,7 @@
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 57.3975F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 143F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 108F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 111F));
             this.tableLayoutPanel2.Controls.Add(this.ConfNameLabel, 0, 0);
             this.tableLayoutPanel2.Controls.Add(this.StartDateLabel, 0, 1);
             this.tableLayoutPanel2.Controls.Add(this.EndDateLabel, 0, 2);
@@ -185,7 +185,7 @@
             this.ConfNameLabel.AutoSize = true;
             this.ConfNameLabel.Font = new System.Drawing.Font("Nirmala UI", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.ConfNameLabel.ForeColor = System.Drawing.Color.White;
-            this.ConfNameLabel.Location = new System.Drawing.Point(27, 19);
+            this.ConfNameLabel.Location = new System.Drawing.Point(26, 19);
             this.ConfNameLabel.Name = "ConfNameLabel";
             this.ConfNameLabel.Size = new System.Drawing.Size(142, 23);
             this.ConfNameLabel.TabIndex = 0;
@@ -197,7 +197,7 @@
             this.StartDateLabel.AutoSize = true;
             this.StartDateLabel.Font = new System.Drawing.Font("Nirmala UI", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.StartDateLabel.ForeColor = System.Drawing.Color.White;
-            this.StartDateLabel.Location = new System.Drawing.Point(53, 81);
+            this.StartDateLabel.Location = new System.Drawing.Point(52, 81);
             this.StartDateLabel.Name = "StartDateLabel";
             this.StartDateLabel.Size = new System.Drawing.Size(90, 23);
             this.StartDateLabel.TabIndex = 1;
@@ -210,7 +210,7 @@
             this.EndDateLabel.AutoSize = true;
             this.EndDateLabel.Font = new System.Drawing.Font("Nirmala UI", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.EndDateLabel.ForeColor = System.Drawing.Color.White;
-            this.EndDateLabel.Location = new System.Drawing.Point(56, 138);
+            this.EndDateLabel.Location = new System.Drawing.Point(55, 138);
             this.EndDateLabel.Name = "EndDateLabel";
             this.EndDateLabel.Size = new System.Drawing.Size(84, 23);
             this.EndDateLabel.TabIndex = 2;
@@ -220,10 +220,10 @@
             // 
             this.ConfName.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.ConfName.Font = new System.Drawing.Font("Nirmala UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.ConfName.Location = new System.Drawing.Point(212, 16);
+            this.ConfName.Location = new System.Drawing.Point(210, 16);
             this.ConfName.Margin = new System.Windows.Forms.Padding(15, 3, 15, 3);
             this.ConfName.Name = "ConfName";
-            this.ConfName.Size = new System.Drawing.Size(235, 29);
+            this.ConfName.Size = new System.Drawing.Size(234, 29);
             this.ConfName.TabIndex = 3;
             this.ConfName.Enter += new System.EventHandler(this.ConfName_Enter);
             this.ConfName.Leave += new System.EventHandler(this.ConfName_Leave);
@@ -232,10 +232,10 @@
             // 
             this.StartDatePicker.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.StartDatePicker.Font = new System.Drawing.Font("Nirmala UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.StartDatePicker.Location = new System.Drawing.Point(212, 79);
+            this.StartDatePicker.Location = new System.Drawing.Point(210, 79);
             this.StartDatePicker.Margin = new System.Windows.Forms.Padding(15, 3, 15, 3);
             this.StartDatePicker.Name = "StartDatePicker";
-            this.StartDatePicker.Size = new System.Drawing.Size(235, 27);
+            this.StartDatePicker.Size = new System.Drawing.Size(234, 27);
             this.StartDatePicker.TabIndex = 4;
             this.StartDatePicker.ValueChanged += new System.EventHandler(this.StartDatePicker_ValueChanged);
             // 
@@ -243,10 +243,10 @@
             // 
             this.EndDatePicker.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.EndDatePicker.Font = new System.Drawing.Font("Nirmala UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.EndDatePicker.Location = new System.Drawing.Point(212, 136);
+            this.EndDatePicker.Location = new System.Drawing.Point(210, 136);
             this.EndDatePicker.Margin = new System.Windows.Forms.Padding(15, 3, 15, 3);
             this.EndDatePicker.Name = "EndDatePicker";
-            this.EndDatePicker.Size = new System.Drawing.Size(235, 27);
+            this.EndDatePicker.Size = new System.Drawing.Size(234, 27);
             this.EndDatePicker.TabIndex = 5;
             this.EndDatePicker.ValueChanged += new System.EventHandler(this.EndDatePicker_ValueChanged);
             // 
@@ -257,7 +257,7 @@
             this.StartHourPicker.CustomFormat = "HH:mm";
             this.StartHourPicker.Font = new System.Drawing.Font("Nirmala UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.StartHourPicker.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.StartHourPicker.Location = new System.Drawing.Point(498, 79);
+            this.StartHourPicker.Location = new System.Drawing.Point(495, 79);
             this.StartHourPicker.Name = "StartHourPicker";
             this.StartHourPicker.ShowUpDown = true;
             this.StartHourPicker.Size = new System.Drawing.Size(111, 27);
@@ -271,7 +271,7 @@
             this.EndHourPicker.CustomFormat = "HH:mm";
             this.EndHourPicker.Font = new System.Drawing.Font("Nirmala UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.EndHourPicker.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.EndHourPicker.Location = new System.Drawing.Point(498, 136);
+            this.EndHourPicker.Location = new System.Drawing.Point(495, 136);
             this.EndHourPicker.Name = "EndHourPicker";
             this.EndHourPicker.ShowUpDown = true;
             this.EndHourPicker.Size = new System.Drawing.Size(111, 27);
@@ -485,7 +485,7 @@
             this.SearchTableLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 35.30752F));
             this.SearchTableLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 64.69248F));
             this.SearchTableLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 120F));
-            this.SearchTableLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 190F));
+            this.SearchTableLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 193F));
             this.SearchTableLayout.Controls.Add(this.EditTextBox, 1, 0);
             this.SearchTableLayout.Controls.Add(this.SearchBar, 0, 0);
             this.SearchTableLayout.Controls.Add(this.CancelBtn, 3, 0);
@@ -503,11 +503,11 @@
             this.EditTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.EditTextBox.Enabled = false;
             this.EditTextBox.Font = new System.Drawing.Font("Nirmala UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.EditTextBox.Location = new System.Drawing.Point(300, 13);
+            this.EditTextBox.Location = new System.Drawing.Point(299, 13);
             this.EditTextBox.Margin = new System.Windows.Forms.Padding(15, 3, 15, 3);
             this.EditTextBox.Name = "EditTextBox";
             this.EditTextBox.ReadOnly = true;
-            this.EditTextBox.Size = new System.Drawing.Size(492, 29);
+            this.EditTextBox.Size = new System.Drawing.Size(490, 29);
             this.EditTextBox.TabIndex = 0;
             this.EditTextBox.Visible = false;
             // 
@@ -518,7 +518,7 @@
             this.SearchBar.ForeColor = System.Drawing.SystemColors.ScrollBar;
             this.SearchBar.Location = new System.Drawing.Point(3, 13);
             this.SearchBar.Name = "SearchBar";
-            this.SearchBar.Size = new System.Drawing.Size(279, 29);
+            this.SearchBar.Size = new System.Drawing.Size(278, 29);
             this.SearchBar.TabIndex = 2;
             this.SearchBar.Text = "Search";
             this.SearchBar.TextChanged += new System.EventHandler(this.SearchBar_TextChanged);
@@ -532,7 +532,7 @@
             this.CancelBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.CancelBtn.Font = new System.Drawing.Font("Nirmala UI", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.CancelBtn.ForeColor = System.Drawing.Color.White;
-            this.CancelBtn.Location = new System.Drawing.Point(930, 3);
+            this.CancelBtn.Location = new System.Drawing.Point(927, 3);
             this.CancelBtn.Name = "CancelBtn";
             this.CancelBtn.Size = new System.Drawing.Size(83, 43);
             this.CancelBtn.TabIndex = 3;
@@ -549,7 +549,7 @@
             this.SaveEditBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.SaveEditBtn.Font = new System.Drawing.Font("Nirmala UI", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.SaveEditBtn.ForeColor = System.Drawing.Color.White;
-            this.SaveEditBtn.Location = new System.Drawing.Point(810, 3);
+            this.SaveEditBtn.Location = new System.Drawing.Point(807, 3);
             this.SaveEditBtn.Name = "SaveEditBtn";
             this.SaveEditBtn.Size = new System.Drawing.Size(100, 43);
             this.SaveEditBtn.TabIndex = 1;

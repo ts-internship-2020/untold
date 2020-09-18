@@ -1098,6 +1098,11 @@ namespace ConferencePlanner.WinUi
         {
             Refresh();
         }
+
+        private void MainPage_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Application.Exit();
+        }
     }
 }
 
