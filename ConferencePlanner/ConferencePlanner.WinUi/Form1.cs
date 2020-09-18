@@ -671,7 +671,7 @@ namespace ConferencePlanner.WinUi
         }
 
 
-        private async Task InsertSpeaker(SpeakerModel speakerModel)
+        private async Task<int> InsertSpeaker(SpeakerModel speakerModel)
         {
             var json = JsonConvert.SerializeObject(speakerModel);
             var httpContent = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
@@ -681,11 +681,14 @@ namespace ConferencePlanner.WinUi
             HttpResponseMessage s = await client.PostAsync("http://localhost:2794/api/Speaker/insert_speaker/", httpContent);
             if (s.IsSuccessStatusCode)
             {
-                this.popUpMethod("Done", "You added the speaker succesfully");
+                string speakerId = await s.Content.ReadAsStringAsync();
+                var t = JsonConvert.DeserializeObject<int>(speakerId);
+                return t;
             }
             else
             {
                 this.popUpMethod("Error", "Something went wrong");
+                return -1;
             }
 
         }
@@ -2753,16 +2756,15 @@ namespace ConferencePlanner.WinUi
                 {
                     SpeakerModel newSpeaker = GetSpeaker();
 
-                    //_speakerRepository.InsertSpeaker(newSpeaker);
                     var t = Task.Run(() => InsertSpeaker(newSpeaker));
                     t.Wait();
+                    newSpeaker.SpeakerId = t.Result;
                     this.Speakers.Add(newSpeaker);
                     this.SpeakersForSearchBar = this.Speakers;
                     int[] aux = this.CalculateTotalPages(this.Speakers.Count);
                     this.SpeakersTotalPages = aux[0];
                     this.SpeakersLastPageLastRow = aux[1];
-                    //this.SpeakersCurrentPage = 1;
-                    //this.SpeakerCreatePage(this.SpeakersForSearchBar);
+
                     SpeakerEndEditLayout("Done", "You can see the speaker you just added on the last page.");
                     //this.SpeakerListDataGrid.CurrentCell = null;
                     this.SpeakerGridView.Rows[0].Selected = false;
@@ -3152,24 +3154,7 @@ namespace ConferencePlanner.WinUi
             }
 
         }
-        //private void StartHourPicker_ValueChanged(object sender, EventArgs e)
-        //{
-        //    if (this.EndHourPicker.Value <= this.StartHourPicker.Value && this.StartDatePicker.Value.Date >= this.EndDatePicker.Value.Date)
-        //    {
-        //        this.EndHourPicker.Value = this.StartHourPicker.Value;
-        //    }
-        //}
-
-
-
-                if (this.StartHourPicker.Value.TimeOfDay > this.EndHourPicker.Value.TimeOfDay)
-                {
-                    this.EndHourPicker.Value = this.StartHourPicker.Value;
-                }
-            }
-           
-        }
-
+      
         private void SpeakerGridView_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             this.SpeakerGridView.BeginEdit(true);

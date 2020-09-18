@@ -65,7 +65,7 @@ namespace ConferencePlanner.Repository.Ef.Repository
             };
             return speakerModel;
         }
-        public void InsertSpeaker(SpeakerModel speakerModel)
+        public int InsertSpeaker(SpeakerModel speakerModel)
         {
             Speaker speaker = new Speaker()
             {
@@ -75,9 +75,11 @@ namespace ConferencePlanner.Repository.Ef.Repository
                 Rating = speakerModel.Rating,
                 ImagePath = speakerModel.ImagePath
             };
-           
+
             _untoldContext.Speaker.Add(speaker);
             _untoldContext.SaveChanges();
+
+            return speaker.SpeakerId;
         }
         public void UpdateSpeaker(SpeakerModel speakerModel)
         {

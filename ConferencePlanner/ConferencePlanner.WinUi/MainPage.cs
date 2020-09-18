@@ -557,7 +557,7 @@ namespace ConferencePlanner.WinUi
                 DataGridViewButtonColumn editButtonColumn = new DataGridViewButtonColumn();
                 editButtonColumn.UseColumnTextForButtonValue = true;
                 editButtonColumn.Text = "Edit";
-                editButtonColumn.Width = 25;
+                //editButtonColumn.Width = 20;
                 editButtonColumn.HeaderText = "";
                 editButtonColumn.Name = "edit_column";
                 int columnIndex = OrganizerDataGrid.ColumnCount;
@@ -565,7 +565,7 @@ namespace ConferencePlanner.WinUi
                 DataGridViewButtonColumn deleteButtonColumn = new DataGridViewButtonColumn();
                 deleteButtonColumn.UseColumnTextForButtonValue = true;
                 deleteButtonColumn.Text = "Delete";
-                deleteButtonColumn.Width = 25;
+                //deleteButtonColumn.Width = 20;
                 deleteButtonColumn.HeaderText = "";
                 deleteButtonColumn.Name = "delete_column";
 
