@@ -391,23 +391,23 @@ namespace ConferencePlanner.WinUi
 
         }
 
-        private List<ConferenceModel> FilterAttendee(List<ConferenceModel> allConferences, DateTime StartDate, DateTime EndDate)
-        {
-            List<ConferenceModel> conferences = new List<ConferenceModel>();
+        //private List<ConferenceModel> FilterAttendee(List<ConferenceModel> allConferences, DateTime StartDate, DateTime EndDate)
+        //{
+        //    List<ConferenceModel> conferences = new List<ConferenceModel>();
 
-            foreach (ConferenceModel conf in allConferences)
-            {
-                string[] aux = conf.Period.Split(" - ");
-                DateTime sDate = DateTime.Parse(aux[0]);
-                DateTime eDate = DateTime.Parse(aux[1]);
+        //    foreach (ConferenceModel conf in allConferences)
+        //    {
+        //        string[] aux = conf.Period.Split(" - ");
+        //        DateTime sDate = DateTime.Parse(aux[0]);
+        //        DateTime eDate = DateTime.Parse(aux[1]);
 
-                if (DateTime.Compare(StartDate.Date, sDate) <= 0 && DateTime.Compare(eDate, EndDate.Date) <= 0)
-                {
-                    conferences.Append(conf);
-                }
-            }
-            return conferences;
-        }
+        //        if (DateTime.Compare(StartDate.Date, sDate) <= 0 && DateTime.Compare(eDate, EndDate.Date) <= 0)
+        //        {
+        //            conferences.Append(conf);
+        //        }
+        //    }
+        //    return conferences;
+        //}
 
         public void popUpMethod(String titleText, String contentText)
         {

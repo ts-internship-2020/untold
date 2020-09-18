@@ -114,6 +114,18 @@ namespace ConferencePlanner.Repository.Ado.Repository
 
             return type;
         }
+
+        public int LastTypeId()
+        {
+            int typeId = 0;
+            string commandText = "SELECT TOP 1 DictionaryConferenceTypeId FROM DictionaryConferenceType ORDER BY DictionaryConferenceTypeId DESC ";
+            SqlCommand sqlCommand = new SqlCommand(commandText, _sqlConnection);
+            SqlDataReader sqlDataReader = sqlCommand.ExecuteReader();
+            sqlDataReader.Read();
+            typeId = sqlDataReader.GetInt32("DictionaryConferenceTypeId");
+            sqlDataReader.Close();
+            return typeId;
+        }
     }
 }
     

@@ -96,6 +96,7 @@ namespace ConferencePlanner.WinUi
             _typeRepository = typeRepository;
 
             InitializeComponent();
+
             this.YesButton.Click += TypeYesButton_Click;
             this.NoButton.Click += NoDeleteButton_Click;
             this.ObjectId = confid;
@@ -168,9 +169,19 @@ namespace ConferencePlanner.WinUi
         private void TypeYesButton_Click(Object sender, EventArgs e)
         {
             //_typeRepository.DeleteType(this.ObjectId);
-            var t = Task.Run(() => DeleteType(this.ObjectId));
-            t.Wait();
-            this.Close();
+            try
+            {
+                var t = Task.Run(() => DeleteType(this.ObjectId));
+                t.Wait();
+                this.Close();
+            }
+               
+            
+            catch(Exception x)
+            {
+                this.Close();
+                this.popUpMethod("Warning", "You can't delete this row!");
+            }
         }
         private void NoDeleteButton_Click(object sender, EventArgs e)
         {
