@@ -115,5 +115,35 @@ namespace ConferencePlanner.Repository.Ado.Repository
             sqlDataReader.Close();
             return DistionaryCountyId;
         }
+
+        BindingList<CountyModel> ICountyRepository.GetCountyList(int CountryId)
+        {
+            throw new NotImplementedException();
+        }
+
+        void ICountyRepository.InsertCounty(CountyModel County)
+        {
+            throw new NotImplementedException();
+        }
+
+        void ICountyRepository.UpdateCounty(CountyModel County)
+        {
+            throw new NotImplementedException();
+        }
+
+        string ICountyRepository.DeleteCounty(int objectId)
+        {
+            throw new NotImplementedException();
+        }
+
+        int ICountyRepository.GetLastCountyId()
+        {
+            throw new NotImplementedException();
+        }
+
+        int ICountyRepository.GetCountyIdByCounferenceId(int id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

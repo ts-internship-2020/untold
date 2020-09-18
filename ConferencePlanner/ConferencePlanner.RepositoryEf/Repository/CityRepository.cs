@@ -1,6 +1,7 @@
 ﻿using ConferencePlanner.Abstraction.Model;
 using ConferencePlanner.Abstraction.Repository;
 using ConferencePlanner.Repository.Ef.Entities;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -73,6 +74,16 @@ namespace ConferencePlanner.Repository.Ef.Repository
             dictionaryCity.CityName = cityModel.CityName;
             dictionaryCity.CountyId = cityModel.CountyId;
             _untoldContext.SaveChanges();
+        }
+
+        public int GetCityIdByConferenceId(int conferenceId)
+        {
+            Conference conference = _untoldContext.Conference.Where(c => c.ConferenceId == conferenceId)
+                .Include(x => x.Location)
+                .ThenInclude(x => x.City)
+                .FirstOrDefault();
+
+            return conference.Location.City.DictionaryCityId;
         }
     }
 }

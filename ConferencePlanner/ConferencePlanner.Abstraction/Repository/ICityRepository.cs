@@ -17,5 +17,7 @@ namespace ConferencePlanner.Abstraction.Repository
         public void UpdateCity(CityModel cityModel);
 
         public int LastDictionaryCityId();
+
+        public int GetCityIdByConferenceId(int conferenceId); 
     }
 }

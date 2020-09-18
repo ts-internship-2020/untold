@@ -40,6 +40,9 @@ namespace ConferencePlanner.WinUi
         private int AttendeeTotalPage = 0;
         private static int confId = 0;
         private String gridName = "a";
+        string sDate= "1990-01-01 12:00:00";
+        string eDate= "3000-12-30 12:00:00";
+       
 
 
         public MainPage(IConferenceRepository conferenceRepository, ICountryRepository countryRepository,
@@ -134,10 +137,10 @@ namespace ConferencePlanner.WinUi
             else
             {
                 AttendeeGridvw.Visible = true;
-                AttendeeGridvw.DataSource = attendees.ToList();
+                AttendeeGridvw.DataSource = attendees;
                 AttendeeGridvw.AutoGenerateColumns = false;
                 this.OrganizersPaginationSelector.Visible = true;
-                this.RightArrowPagButton.Visible = true;
+                this.MainPagePaginationTextBox.Text = "Page " + this.AttendeeCurrentPageIndex + " of " + this.AttendeeTotalPage;
             }
         }
 
@@ -271,6 +274,7 @@ namespace ConferencePlanner.WinUi
 
             this.MainPagePaginationTextBox.Text = "Page " + this.AttendeeCurrentPageIndex + " of " + this.AttendeeTotalPage;
             CheckNumberOfRowsAttendee(t.Result);
+      
         }
 
 
@@ -349,6 +353,8 @@ namespace ConferencePlanner.WinUi
 
 
             string[] dates = this.GetCurrentDateFilterSelection();
+            sDate = dates[0];
+            eDate = dates[1];
 
             if (gridName.Equals("o"))
             {
@@ -595,6 +601,7 @@ namespace ConferencePlanner.WinUi
             }
 
             OrganizerDataGrid.AutoResizeColumns();
+            
         }
 
         private void OrganizerDataGrid_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -610,12 +617,16 @@ namespace ConferencePlanner.WinUi
                 
                 var t = Task.Run(() => GetConferenceById(id));
                 t.Wait();
-                ConferenceModel conference = t.Result;
 
-                var varAddConf = new AddConf(conference, _conferenceRepository, _countryRepository, _countyRepository, _speakerRepository, _typeRepository, _cityRepository, _categoryRepository);
+                ConferenceModelWithEmail conference = new ConferenceModelWithEmail();
 
-                varAddConf.ShowDialog();
-
+                using (Form1 newAddConf = new Form1(t.Result, _conferenceRepository, _countryRepository, _countyRepository, _speakerRepository, _typeRepository, _cityRepository, _categoryRepository))
+                {
+                    if(newAddConf.ShowDialog() == DialogResult.OK)
+                    {
+                        conference = newAddConf.GetUpdatedConference;
+                    }
+                }
             }
 
             if (e.ColumnIndex == OrganizerDataGrid.Columns["delete_column"].Index)
@@ -782,9 +793,9 @@ namespace ConferencePlanner.WinUi
             {
                 this.PageSize = int.Parse(this.OrganizersPaginationSelector.Items[idx].ToString());
 
-                var t = Task.Run(() => GetAttendeesByEmail(Program.EnteredEmailAddress));
+                var t = Task.Run(() => GetAttendeesCount(Program.EnteredEmailAddress, sDate, eDate));
                 t.Wait();
-                int numberOfConferences = t.Result.Count();
+                int numberOfConferences = t.Result;
 
                 this.CalculateTotalPages(numberOfConferences, "a");
                 this.AttendeeCurrentPageIndex = 1;
@@ -808,7 +819,7 @@ namespace ConferencePlanner.WinUi
                 return new List<ConferenceModel>();
             }
         }
-        private async Task<ConferenceModel> GetConferenceById(int id)
+        private async Task<ConferenceModelWithEmail> GetConferenceById(int id)
         {
             HttpClient client = new HttpClient();
             HttpResponseMessage s = await client.GetAsync("http://localhost:2794/api/Conference/conference_by_id/id=" + id);
@@ -816,12 +827,12 @@ namespace ConferencePlanner.WinUi
             if (s.IsSuccessStatusCode)
             {
                 string json = await s.Content.ReadAsStringAsync();
-                var t = JsonConvert.DeserializeObject<ConferenceModel>(json);
+                var t = JsonConvert.DeserializeObject<ConferenceModelWithEmail>(json);
                 return t;
             }
             else
             {
-                return new ConferenceModel();
+                return new ConferenceModelWithEmail();
             }
         }
         private async Task<int> GetAttendeesCount(string email, string sDate, string eDate)
@@ -969,6 +980,7 @@ namespace ConferencePlanner.WinUi
                 
             }
             ConditionsForButtons();
+            this.MainPagePaginationTextBox.Text = "Page " + this.AttendeeCurrentPageIndex + " of " + this.AttendeeTotalPage;
         }
         private void RightArrowPagButton_MouseEnter(object sender, EventArgs e)
         {

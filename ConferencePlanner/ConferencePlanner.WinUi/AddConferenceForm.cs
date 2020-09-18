@@ -112,27 +112,7 @@ namespace ConferencePlanner.WinUi
         private void PopulateForm(ConferenceModel conference)
         {
 
-            //this.CountryListDataGridView.Rows[0].Selected = false;
-            //this.CountiesListGridView.Rows[0].Selected = false;
-
-            this.ConfName.Text = conference.ConferenceName;
-
-            string[] dates = conference.Period.Split(" - ");
-            this.StardDatePicker.Value = DateTime.Parse(dates[0]);
-            this.EndDatePicker.Value = DateTime.Parse(dates[1]);
-
-
-            int selectedCountryId = this._countryRepository.GetCountryIdByConferenceId(conference.ConferenceId);
-            int selectedRowId = this.SearchIdInDataGrid(selectedCountryId, "DictionaryCountryId", this.CountryListDataGridView);
-            // this.ConfName.Text = selectedRowId.ToString();
-
-            if (selectedRowId > 0)
-            {
-                this.CountryListDataGridView.Rows[selectedRowId].Selected = true;
-            }
-
-
-            string[] places = conference.Location.Split(", ");
+          
 
         }
 

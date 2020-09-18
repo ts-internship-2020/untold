@@ -14,5 +14,6 @@ namespace ConferencePlanner.Abstraction.Repository
         void UpdateCounty(CountyModel County);
         string DeleteCounty(int objectId);
         int GetLastCountyId();
+        public int GetCountyIdByCounferenceId(int id);
     }
 }

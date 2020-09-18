@@ -45,16 +45,13 @@ namespace ConferencePlanner.Repository.Ef.Repository
                  .ThenInclude(x => x.County)
                  .ThenInclude(x => x.Country)
                  .FirstOrDefault();
-            
+
             return conference.Location.City.County.Country.DictionaryCountryId;
 
         }
 
 
-        public List<CountryModel> GetListCountry()
-        {
-            throw new NotImplementedException();
-        }
+  
 
         public void InsertCountry(CountryModel countryModel)
         {
@@ -97,8 +94,6 @@ namespace ConferencePlanner.Repository.Ef.Repository
             _untoldContext.SaveChanges();
             return error;
         }
-
-
 
     }
 }

@@ -17,7 +17,7 @@ namespace ConferencePlanner.Abstraction.Repository
         List<ConferenceModel> FilterConfAttendeeByDate(string email, string sDate, string eDate);
         List<ConferenceModel> GetConferencesByPage(string email, int startIndex, int endIndex, string sDate, string eDate);
         List<ConferenceModel> GetAttendeesByPage(string email, int startIndex, int endIndex, string sDate, string eDate);
-        ConferenceModel GetConferenceById(int id);
+        ConferenceModelWithEmail GetConferenceById(int id);
         void DeleteConferenceById(int id);
         void InsertConference(ConferenceModelWithEmail conference);
 
