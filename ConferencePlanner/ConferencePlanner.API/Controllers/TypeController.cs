@@ -58,7 +58,6 @@ namespace ConferencePlanner.Api.Controllers
 
         [HttpDelete]
         [Route("DeleteType/id={id}")]
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult DeleteType(int id)
         {
             _typeRepository.DeleteType(id);

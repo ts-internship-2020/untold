@@ -16,7 +16,7 @@ using Tulpep.NotificationWindow;
 
 namespace ConferencePlanner.WinUi
 {
-    public partial class Form1 : Form
+    public partial class AddConference : Form
     {
         private readonly IConferenceRepository _conferenceRepository;
         private readonly ICountryRepository _countryRepository;
@@ -79,6 +79,10 @@ namespace ConferencePlanner.WinUi
         CountryModel EditCountry;
         CountyModel EditCounty;
         CityModel EditCity;
+        CategoryModel EditCategory;
+        TypeModel EditType;
+        SpeakerModel EditSpeaker;
+
 
         private bool isEditingConference = false;
         private ConferenceModelWithEmail updatingConference = new ConferenceModelWithEmail();
@@ -86,7 +90,7 @@ namespace ConferencePlanner.WinUi
         public ConferenceModelWithEmail GetUpdatedConference{
             get { return this.updatingConference; }
     }
-        public Form1(IConferenceRepository conferenceRepository, ICountryRepository countryRepository, ICountyRepository countyRepository, ISpeakerRepository speakerRepository, ITypeRepository typeRepository, ICityRepository cityRepository, ICategoryRepository categoryRepository)
+        public AddConference(IConferenceRepository conferenceRepository, ICountryRepository countryRepository, ICountyRepository countyRepository, ISpeakerRepository speakerRepository, ITypeRepository typeRepository, ICityRepository cityRepository, ICategoryRepository categoryRepository)
         {
             _conferenceRepository = conferenceRepository;
             _countryRepository = countryRepository;
@@ -97,12 +101,12 @@ namespace ConferencePlanner.WinUi
             _categoryRepository = categoryRepository;
             InitializeComponent();
         }
-        public Form1()
+        public AddConference()
         {
             InitializeComponent();
         }
 
-        public Form1(ConferenceModelWithEmail conference, IConferenceRepository conferenceRepository, ICountryRepository countryRepository, ICountyRepository countyRepository, ISpeakerRepository speakerRepository, ITypeRepository typeRepository, ICityRepository cityRepository, ICategoryRepository categoryRepository)
+        public AddConference(ConferenceModelWithEmail conference, IConferenceRepository conferenceRepository, ICountryRepository countryRepository, ICountyRepository countyRepository, ISpeakerRepository speakerRepository, ITypeRepository typeRepository, ICityRepository cityRepository, ICategoryRepository categoryRepository)
         {
             _conferenceRepository = conferenceRepository;
             _countryRepository = countryRepository;
@@ -680,7 +684,7 @@ namespace ConferencePlanner.WinUi
         }
 
 
-        private async Task InsertSpeaker(SpeakerModel speakerModel)
+        private async Task<int> InsertSpeaker(SpeakerModel speakerModel)
         {
             var json = JsonConvert.SerializeObject(speakerModel);
             var httpContent = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
@@ -690,11 +694,14 @@ namespace ConferencePlanner.WinUi
             HttpResponseMessage s = await client.PostAsync("http://localhost:2794/api/Speaker/insert_speaker/", httpContent);
             if (s.IsSuccessStatusCode)
             {
-                this.popUpMethod("Done", "You added the speaker succesfully");
+                string speakerId = await s.Content.ReadAsStringAsync();
+                var t = JsonConvert.DeserializeObject<int>(speakerId);
+                return t;
             }
             else
             {
                 this.popUpMethod("Error", "Something went wrong");
+                return -1;
             }
 
         }
@@ -1009,6 +1016,7 @@ namespace ConferencePlanner.WinUi
 
         private void SpeakerGridView_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
+            
             if (SpeakerGridView.Columns.Contains("ImagePath"))
             {
                 this.SpeakerGridView.Columns.Remove("ImagePath");
@@ -1041,7 +1049,9 @@ namespace ConferencePlanner.WinUi
             this.SpeakerGridView.Columns["FirstName"].HeaderText = "First Name";
             this.SpeakerGridView.Columns["LastName"].HeaderText = "Last Name";
 
-            //this.SpeakerListDataGrid.CurrentCell = null;
+            this.SpeakerGridView.Columns["Rating"].ValueType = typeof(float);
+            
+
             this.SpeakerGridView.Rows[0].Selected = false;
 
             this.SpeakerGridView.Controls[1].Enabled = true;
@@ -1693,6 +1703,7 @@ namespace ConferencePlanner.WinUi
         private void CountryGridView_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
         {
             UpdateCountriesRow = e.RowIndex;
+            
             if (EditTextBox.Visible == false)
             {
                 if (UpdateCountriesRow >= PageSize || CountriesLastPageLastRow > 0 && CountriesCurrentPage == CountriesTotalPages && UpdateCountriesRow == CountriesLastPageLastRow || CountriesTotalPages == 0 && CountriesLastPageLastRow == 0)
@@ -1702,6 +1713,8 @@ namespace ConferencePlanner.WinUi
                 }
                 else
                 {
+                    EditCountry = GetCountry();
+                    EditCountry.DictionaryCountryId = (int)CountryGridView.Rows[UpdateCountriesRow].Cells["DictionaryCountryId"].Value;
                     string CountryName = CountryGridView.Rows[UpdateCountriesRow].Cells["CountryName"].Value.ToString();
                     CountryAddUpdateMessage(CountryName);
                     CountriesBeginEditLayout("Update");
@@ -1770,6 +1783,7 @@ namespace ConferencePlanner.WinUi
                 }
                 else
                 {
+                    EditCategory = GetCategory();
                     int CategoryId = int.Parse(CategoryGridView.Rows[UpdateCategoryRow].Cells["ConferenceCategoryId"].Value.ToString());
                     string CategoryName = CategoryGridView.Rows[UpdateCategoryRow].Cells["ConferenceCategoryName"].Value.ToString();
                     CategoryAddUpdatedMessage(CategoryName);
@@ -1853,7 +1867,7 @@ namespace ConferencePlanner.WinUi
             {
                 this.SpeakerGridView.AllowUserToAddRows = false;
             }
-
+            
         }
 
         private void SpeakerAddUpdateMessage(string fName, string lName)
@@ -1865,6 +1879,27 @@ namespace ConferencePlanner.WinUi
             this.SaveEditBtn.Visible = true;
             this.CancelBtn.Visible = true;
         }
+
+        private void SpeakerGridView_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
+        {
+            e.Control.KeyPress -= new KeyPressEventHandler(RatingColumn_KeyPress);
+            if (this.SpeakerGridView.CurrentCell.ColumnIndex == this.SpeakerGridView.Columns["Rating"].Index) //Desired Column
+            {
+                TextBox tb = e.Control as TextBox;
+                if (tb != null)
+                {
+                    tb.KeyPress += new KeyPressEventHandler(RatingColumn_KeyPress);
+                }
+            }
+        }
+
+        private void RatingColumn_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
+            {
+                e.Handled = true;
+            }
+        }
         private void SpeakerGridView_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
         {
             this.UpdateSpeakerRow = e.RowIndex;
@@ -1873,6 +1908,7 @@ namespace ConferencePlanner.WinUi
             {
                 return;
             }
+           
             if (EditTextBox.Visible == false)
             {
                 if (this.UpdateSpeakerRow >= this.PageSize ||
@@ -1883,6 +1919,7 @@ namespace ConferencePlanner.WinUi
                 }
                 else
                 {
+                    EditSpeaker = GetSpeaker();
                     string fName = this.SpeakerGridView.Rows[this.UpdateSpeakerRow].Cells["FirstName"].Value.ToString();
                     string lName = this.SpeakerGridView.Rows[this.UpdateSpeakerRow].Cells["LastName"].Value.ToString();
                     this.SpeakerAddUpdateMessage(fName, lName);
@@ -2000,6 +2037,7 @@ namespace ConferencePlanner.WinUi
                 }
                 else
                 {
+                    EditType = GetType();
                     int TypeId = int.Parse(this.TypeGridView.Rows[this.UpdateTypeRow].Cells["TypeId"].Value.ToString());
                     //string Id = this.TypeDataGrid.Rows[this.UpdateTypeRow].Cells["DictionaryConferenceTypeId"].Value.ToString();
                     string Name = this.TypeGridView.Rows[this.UpdateTypeRow].Cells["TypeName"].Value.ToString();
@@ -2030,11 +2068,13 @@ namespace ConferencePlanner.WinUi
                     return;
                 }
                 int id = (int)this.TypeGridView.Rows[e.RowIndex].Cells["TypeId"].Value;
-                var newDeleteForm = new AreYouSure(_typeRepository, id);
-
-                Task t = Task.Run(() => { newDeleteForm.ShowDialog(); });
-                t.Wait();
-                this.LoadTypesTab();
+               
+                    var newDeleteForm = new AreYouSure(_typeRepository, id);
+                    Task t = Task.Run(() => { newDeleteForm.ShowDialog(); });
+                    t.Wait();
+                    this.LoadTypesTab();
+                
+                
 
             }
         }
@@ -2255,6 +2295,8 @@ namespace ConferencePlanner.WinUi
                 }
                 else
                 {
+                    EditCounty = GetCounty();
+                    EditCounty.CountyId = (int)CountyGridView.Rows[UpdateCountyRow].Cells["CountyId"].Value;
                     string CountyName = CountyGridView.Rows[UpdateCountyRow].Cells["CountyName"].Value.ToString();
                     CountyAddUpdateMessage(CountyName);
                     CountyBeginEditLayout("Update");
@@ -2283,10 +2325,7 @@ namespace ConferencePlanner.WinUi
                     return;
                 }
                 int CountyId = (int)CountyGridView.Rows[e.RowIndex].Cells["CountyId"].Value;
-                if (_countyRepository.DeleteCounty(CountyId).Equals("error"))
-                {
-                    popUpMethod("Unsuccessfully", "You can't delete a county that has cities assign to it");
-                }
+
                 var DeleteForm = new AreYouSure(_countyRepository, CountyId);
                 Task t = Task.Run(() => { DeleteForm.ShowDialog(); });
                 t.Wait();
@@ -2379,21 +2418,17 @@ namespace ConferencePlanner.WinUi
         private SpeakerModel GetSpeaker()
         {
             SpeakerModel speaker = new SpeakerModel();
-            //validari
-            //if(this.SpeakerListDataGrid.Rows[this.UpdateSpeakerRow].Cells["Rating"].Value.GetType() != "float")
-            //{
-            //    speaker.Rating = 
-            //}
-            //float rating;
-            //if (float.TryParse((string)this.SpeakerListDataGrid.Rows[this.UpdateSpeakerRow].Cells["Rating"].Value, out rating))
-            //{
-            //    speaker.Rating = (float)this.SpeakerListDataGrid.Rows[this.UpdateSpeakerRow].Cells["Rating"].Value;
-            //}
-            //else
-            //{
-            //    this.popUpMethod("Warning", "Rating must be a number! The value you inserted won't be saved");
-            //    speaker.Rating = 0;
-            //}
+            try
+            {
+                float test = (float)this.SpeakerGridView.Rows[this.UpdateSpeakerRow].Cells["Rating"].Value;
+                speaker.Rating = test;
+            }
+            catch(Exception e)
+            {
+                popUpMethod("Error", "RATING MUST BE A NUMBER");
+                speaker.Rating = 0;
+            }
+
             speaker.FirstName = this.SpeakerGridView.Rows[this.UpdateSpeakerRow].Cells["FirstName"].Value.ToString();
             speaker.LastName = this.SpeakerGridView.Rows[this.UpdateSpeakerRow].Cells["LastName"].Value.ToString();
             speaker.Nationality = this.SpeakerGridView.Rows[this.UpdateSpeakerRow].Cells["Nationality"].Value.ToString();
@@ -2709,7 +2744,9 @@ namespace ConferencePlanner.WinUi
                     || (this.TypesLastPageLastRow == 0 && this.TypesTotalPages == 0 && this.TypesCurrentPage == 1))
                 {
                     TypeModel newType = GetType();
-                    newType.TypeId = this.Types.Count + 1;
+                    newType.TypeId = _typeRepository.LastTypeId() + 1;
+                    _typeRepository.InsertType(newType);
+                   
                     //_typeRepository.InsertType(newType);
                     var t = Task.Run(() => InsertType(newType));
                     t.Wait();
@@ -2754,16 +2791,15 @@ namespace ConferencePlanner.WinUi
                 {
                     SpeakerModel newSpeaker = GetSpeaker();
 
-                    //_speakerRepository.InsertSpeaker(newSpeaker);
                     var t = Task.Run(() => InsertSpeaker(newSpeaker));
                     t.Wait();
+                    newSpeaker.SpeakerId = t.Result;
                     this.Speakers.Add(newSpeaker);
                     this.SpeakersForSearchBar = this.Speakers;
                     int[] aux = this.CalculateTotalPages(this.Speakers.Count);
                     this.SpeakersTotalPages = aux[0];
                     this.SpeakersLastPageLastRow = aux[1];
-                    //this.SpeakersCurrentPage = 1;
-                    //this.SpeakerCreatePage(this.SpeakersForSearchBar);
+
                     SpeakerEndEditLayout("Done", "You can see the speaker you just added on the last page.");
                     //this.SpeakerListDataGrid.CurrentCell = null;
                     this.SpeakerGridView.Rows[0].Selected = false;
@@ -3154,28 +3190,7 @@ namespace ConferencePlanner.WinUi
             }
 
         }
-        //private void StartHourPicker_ValueChanged(object sender, EventArgs e)
-        //{
-        //    if (this.EndHourPicker.Value <= this.StartHourPicker.Value && this.StartDatePicker.Value.Date >= this.EndDatePicker.Value.Date)
-        //    {
-        //        this.EndHourPicker.Value = this.StartHourPicker.Value;
-        //    }
-        //}
-
-        //private void StartDatePicker_ValueChanged(object sender, EventArgs e)
-        //{
-        //    if (this.EndDatePicker.Value <= this.StartDatePicker.Value)
-        //    {
-        //        this.EndDatePicker.Value = this.StartDatePicker.Value;
-
-        //        if (this.StartHourPicker.Value.TimeOfDay > this.EndHourPicker.Value.TimeOfDay)
-        //        {
-        //            this.EndHourPicker.Value = this.StartHourPicker.Value;
-        //        }
-        //    }
-           
-        //}
-
+      
         private void SpeakerGridView_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             this.SpeakerGridView.BeginEdit(true);
@@ -3266,7 +3281,39 @@ namespace ConferencePlanner.WinUi
             if(IndexGridChange == 1)
             {
                 CountryGridView.EndEdit();
-                
+                UpdateCountriesArray(EditCountry);
+                CountriesEndEditLayout("Notify", "No changes made");
+            }
+            if (IndexGridChange == 2)
+            {
+                CountyGridView.EndEdit();
+                UpdateCountiesArray(EditCounty);
+
+                CountiesEndEditLayout("Notify", "No changes made");
+            }
+            if (IndexGridChange == 3)
+            {
+                CityGridView.EndEdit();
+                UpdateInCityList(EditCity);
+                CityEndEditLayout("Notify", "No changes made");
+            }
+            if (IndexGridChange == 4)
+            {
+                TypeGridView.EndEdit();
+                UpdateTypeArray(EditType);
+                TypeEndEditLayout("Notify", "No changes made");
+            }
+            if (IndexGridChange == 5)
+            {
+                SpeakerGridView.EndEdit();
+                UpdateSpeakerArray(EditSpeaker);
+                SpeakerEndEditLayout("Notify", "No changes made");
+            }
+            if (IndexGridChange == 6)
+            {
+                CategoryGridView.EndEdit();
+                UpdateCategoryArray(EditCategory);
+                CategoryEndEditLayout("Notify", "No changes made");
             }
         }
 

@@ -180,6 +180,11 @@ namespace ConferencePlanner.Repository.Ado.Repository
         {
             throw new NotImplementedException();
         }
+
+        int ISpeakerRepository.InsertSpeaker(SpeakerModel speaker)
+        {
+            throw new NotImplementedException();
+        }
     }
     }
 

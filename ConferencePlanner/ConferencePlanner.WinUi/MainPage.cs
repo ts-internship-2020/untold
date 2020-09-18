@@ -91,7 +91,7 @@ namespace ConferencePlanner.WinUi
 
         private void AddConferenceButton_Click(object sender, EventArgs e)
         {
-            var newAddConf = new Form1(_conferenceRepository, _countryRepository, _countyRepository, _speakerRepository, _typeRepository, _cityRepository, _categoryRepository);
+            var newAddConf = new AddConference(_conferenceRepository, _countryRepository, _countyRepository, _speakerRepository, _typeRepository, _cityRepository, _categoryRepository);
             OrganizerDataGrid.Visible = true;
             AttendeeGridvw.Visible = false;
             gridName = "o";
@@ -138,9 +138,20 @@ namespace ConferencePlanner.WinUi
             {
                 AttendeeGridvw.Visible = true;
                 AttendeeGridvw.DataSource = attendees;
+                AttendeeGridvw.Columns["ConferenceName"].DisplayIndex = 3;
+                AttendeeGridvw.Columns["attend_column"].DisplayIndex = 9;
+                AttendeeGridvw.Columns["withdraw_column"].DisplayIndex = 10;
+                AttendeeGridvw.Columns["join_column"].DisplayIndex = 11;
+                AttendeeGridvw.Columns[3].HeaderText = "Name";
+                AttendeeGridvw.Columns[4].HeaderText = "Category";
+                AttendeeGridvw.Columns[5].HeaderText = "Type";
+                //AttendeeGridvw.Columns["attend_column"].DisplayIndex = 9;
+                //AttendeeGridvw.Columns["attend_column"].DisplayIndex = 9;
+                //AttendeeGridvw.Columns["attend_column"].DisplayIndex = 9;
+
                 AttendeeGridvw.AutoGenerateColumns = false;
-                this.OrganizersPaginationSelector.Visible = true;
-                this.MainPagePaginationTextBox.Text = "Page " + this.AttendeeCurrentPageIndex + " of " + this.AttendeeTotalPage;
+               // this.OrganizersPaginationSelector.Visible = true;
+               // this.MainPagePaginationTextBox.Text = "Page " + this.AttendeeCurrentPageIndex + " of " + this.AttendeeTotalPage;
             }
         }
 
@@ -379,7 +390,7 @@ namespace ConferencePlanner.WinUi
                 check2 = 1;
                 AttendeeGridvw.DataSource = null;
                 this.AttendeeCurrentPageIndex = 1;
-
+               
                 var t = Task.Run(() => FilterAttendeesByDate(Program.EnteredEmailAddress, dates[0], dates[1]));
                 t.Wait();
                 int numberOfConferences = t.Result.Count();
@@ -390,30 +401,32 @@ namespace ConferencePlanner.WinUi
                 t2.Wait();
                 var conferences = t2.Result;
                 //this.ConditionsForButtons();
-                this.CheckPaginationButtonsVisibility(this.AttendeeCurrentPageIndex, this.AttendeeTotalPage);
-                this.MainPagePaginationTextBox.Text = "Page " + this.AttendeeCurrentPageIndex + " of " + this.AttendeeTotalPage;
+                this.MainPagePaginationTextBox.Visible = true;
+                this.CheckPaginationButtonsVisibility(this.AttendeeCurrentPageIndex, numberOfConferences);
+                this.MainPagePaginationTextBox.Text = "Page " + this.AttendeeCurrentPageIndex + " of " + numberOfConferences;
                 CheckNumberOfRowsAttendee(conferences);
+               
             }
 
         }
 
-        private List<ConferenceModel> FilterAttendee(List<ConferenceModel> allConferences, DateTime StartDate, DateTime EndDate)
-        {
-            List<ConferenceModel> conferences = new List<ConferenceModel>();
+        //private List<ConferenceModel> FilterAttendee(List<ConferenceModel> allConferences, DateTime StartDate, DateTime EndDate)
+        //{
+        //    List<ConferenceModel> conferences = new List<ConferenceModel>();
 
-            foreach (ConferenceModel conf in allConferences)
-            {
-                string[] aux = conf.Period.Split(" - ");
-                DateTime sDate = DateTime.Parse(aux[0]);
-                DateTime eDate = DateTime.Parse(aux[1]);
+        //    foreach (ConferenceModel conf in allConferences)
+        //    {
+        //        string[] aux = conf.Period.Split(" - ");
+        //        DateTime sDate = DateTime.Parse(aux[0]);
+        //        DateTime eDate = DateTime.Parse(aux[1]);
 
-                if (DateTime.Compare(StartDate.Date, sDate) <= 0 && DateTime.Compare(eDate, EndDate.Date) <= 0)
-                {
-                    conferences.Append(conf);
-                }
-            }
-            return conferences;
-        }
+        //        if (DateTime.Compare(StartDate.Date, sDate) <= 0 && DateTime.Compare(eDate, EndDate.Date) <= 0)
+        //        {
+        //            conferences.Append(conf);
+        //        }
+        //    }
+        //    return conferences;
+        //}
 
         public void popUpMethod(String titleText, String contentText)
         {
@@ -543,6 +556,7 @@ namespace ConferencePlanner.WinUi
                 this.CheckPaginationButtonsVisibility(this.AttendeeCurrentPageIndex, this.AttendeeTotalPage);
                 this.MainPagePaginationTextBox.Text = "Page " + this.AttendeeCurrentPageIndex + " of " + this.AttendeeTotalPage;
                 CheckNumberOfRowsAttendee(conferences);
+                this.CreateAttendeePage();
             }
         }
 
@@ -557,7 +571,7 @@ namespace ConferencePlanner.WinUi
                 DataGridViewButtonColumn editButtonColumn = new DataGridViewButtonColumn();
                 editButtonColumn.UseColumnTextForButtonValue = true;
                 editButtonColumn.Text = "Edit";
-                editButtonColumn.Width = 25;
+                //editButtonColumn.Width = 20;
                 editButtonColumn.HeaderText = "";
                 editButtonColumn.Name = "edit_column";
                 int columnIndex = OrganizerDataGrid.ColumnCount;
@@ -565,7 +579,7 @@ namespace ConferencePlanner.WinUi
                 DataGridViewButtonColumn deleteButtonColumn = new DataGridViewButtonColumn();
                 deleteButtonColumn.UseColumnTextForButtonValue = true;
                 deleteButtonColumn.Text = "Delete";
-                deleteButtonColumn.Width = 25;
+                //deleteButtonColumn.Width = 20;
                 deleteButtonColumn.HeaderText = "";
                 deleteButtonColumn.Name = "delete_column";
 
@@ -592,6 +606,13 @@ namespace ConferencePlanner.WinUi
             OrganizerDataGrid.Columns["ConferenceTypeName"].DisplayIndex = 6;
             OrganizerDataGrid.Columns["Location"].DisplayIndex = 7;
             OrganizerDataGrid.Columns["Speaker"].DisplayIndex = 8;
+            for (int i = 0; i < OrganizerDataGrid.Rows.Count; i++)
+            {
+                OrganizerDataGrid.Rows[i].Cells["edit_column"].Style.BackColor = System.Drawing.Color.Blue;
+                OrganizerDataGrid.Rows[i].Cells["edit_column"].Style.ForeColor = System.Drawing.Color.Blue;
+                OrganizerDataGrid.Rows[i].Cells["delete_column"].Style.BackColor = System.Drawing.Color.Red;
+                OrganizerDataGrid.Rows[i].Cells["delete_column"].Style.ForeColor = System.Drawing.Color.Red;
+            }
 
             OrganizerDataGrid.AutoResizeColumns();
             
@@ -613,7 +634,7 @@ namespace ConferencePlanner.WinUi
 
                 ConferenceModelWithEmail conference = new ConferenceModelWithEmail();
 
-                using (Form1 newAddConf = new Form1(t.Result, _conferenceRepository, _countryRepository, _countyRepository, _speakerRepository, _typeRepository, _cityRepository, _categoryRepository))
+                using (AddConference newAddConf = new AddConference(t.Result, _conferenceRepository, _countryRepository, _countyRepository, _speakerRepository, _typeRepository, _cityRepository, _categoryRepository))
                 {
                     if(newAddConf.ShowDialog() == DialogResult.OK)
                     {
@@ -970,7 +991,9 @@ namespace ConferencePlanner.WinUi
                 AttendeeGridvw.Columns.Insert(columnIndex, joinButtonColumn);
 
                 AttendeeGridvw.CellClick += AttendeeGridvw_CellClick;
-                
+
+                //AttendeeGridvw.Columns["Period"].DisplayIndex = 4;
+
             }
             ConditionsForButtons();
             this.MainPagePaginationTextBox.Text = "Page " + this.AttendeeCurrentPageIndex + " of " + this.AttendeeTotalPage;

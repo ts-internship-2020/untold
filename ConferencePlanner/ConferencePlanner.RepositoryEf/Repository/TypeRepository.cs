@@ -48,28 +48,40 @@ namespace ConferencePlanner.Repository.Ef.Repository
 
         public void InsertType(TypeModel typeModel)
         {
-            
+
             DictionaryConferenceType type = new DictionaryConferenceType()
             {
                 DictionaryConferenceTypeId = typeModel.TypeId,
                 ConferenceTypeName = typeModel.TypeName
             };
             _untoldContext.DictionaryConferenceType.Add(type);
-            _untoldContext.SaveChanges();
+            //_untoldContext.SaveChanges();
 
         }
 
         public void DeleteType(int id)
         {
-            //string commandText = "delete from DictionaryConferenceType where DictionaryConferenceTypeId = @Id";
+            string error = "";
             DictionaryConferenceType type = _untoldContext.DictionaryConferenceType.FirstOrDefault(t => t.DictionaryConferenceTypeId == id);
             if (type == null)
             {
                 return;
             }
-            _untoldContext.DictionaryConferenceType.Remove(type);
-            _untoldContext.SaveChanges();
+            try
+            {
+                _untoldContext.DictionaryConferenceType.Remove(type);
+                _untoldContext.SaveChanges();
+
+            }
+            catch (Exception e)
+            {
+                error += "error";
+            }
+            
+           
         }
+
+      
 
         public TypeModel GetTypeById(int id)
         {
@@ -81,6 +93,10 @@ namespace ConferencePlanner.Repository.Ef.Repository
                 TypeName = type.ConferenceTypeName,
             };
             return typeModel;
+        }
+        public int LastTypeId()
+        {
+            throw new NotImplementedException();
         }
 
     }
