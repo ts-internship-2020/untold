@@ -314,7 +314,7 @@ namespace ConferencePlanner.Repository.Ado.Repository
         }
 
 
-        public ConferenceModel GetConferenceById(int id)
+        public ConferenceModel GetConferenceModelById(int id)
         {
             string commandText = "select ConferenceName, LocationName, ConferencePeriod from vwConferenceDetails where ConferenceId = @Id ";
 

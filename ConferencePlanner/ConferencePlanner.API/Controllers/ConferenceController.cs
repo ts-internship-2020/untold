@@ -46,6 +46,13 @@ namespace ConferencePlanner.Api.Controllers
             ConferenceModelWithEmail conference = _conferenceRepository.GetConferenceById(id);
             return Ok(conference);
         }
+        [HttpGet]
+        [Route("conferenceModel_by_id/id={id}")]
+        public IActionResult GetConferenceModelById(int id)
+        {
+            ConferenceModel conference = _conferenceRepository.GetConferenceModelById(id);
+            return Ok(conference);
+        }
 
         [HttpGet]
         [Route("conferences_by_page/email={email}&sIndex={startIndex}&eIndex={endIndex}&sDate={sDate}&eDate={eDate}")]
