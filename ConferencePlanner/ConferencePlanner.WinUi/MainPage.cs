@@ -138,6 +138,14 @@ namespace ConferencePlanner.WinUi
             {
                 AttendeeGridvw.Visible = true;
                 AttendeeGridvw.DataSource = attendees;
+                AttendeeGridvw.Columns["ConferenceName"].DisplayIndex = 3;
+                AttendeeGridvw.Columns["attend_column"].DisplayIndex = 9;
+                AttendeeGridvw.Columns["withdraw_column"].DisplayIndex = 10;
+                AttendeeGridvw.Columns["join_column"].DisplayIndex = 11;
+                //AttendeeGridvw.Columns["attend_column"].DisplayIndex = 9;
+                //AttendeeGridvw.Columns["attend_column"].DisplayIndex = 9;
+                //AttendeeGridvw.Columns["attend_column"].DisplayIndex = 9;
+
                 AttendeeGridvw.AutoGenerateColumns = false;
                 this.OrganizersPaginationSelector.Visible = true;
                 this.MainPagePaginationTextBox.Text = "Page " + this.AttendeeCurrentPageIndex + " of " + this.AttendeeTotalPage;
