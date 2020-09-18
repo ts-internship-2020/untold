@@ -490,6 +490,9 @@ namespace ConferencePlanner.WinUi
             CountryGridView.CurrentCell = null;
             CountryGridView.Rows[0].Selected = false;
 
+
+            CountryGridView.BackgroundColor = Color.White;
+
         }
 
         private void CountiesCreatePage(BindingList<CountyModel> list)
@@ -506,6 +509,7 @@ namespace ConferencePlanner.WinUi
             this.CountyGridView.DataSource = CountiesList;
             CountyGridView.CurrentCell = null;
             CountyGridView.Rows[0].Selected = false;
+            CountyGridView.BackgroundColor = Color.White;
         }
         private void CitiesCreatePage(BindingList<CityModel> cityModels)
         {
@@ -553,6 +557,10 @@ namespace ConferencePlanner.WinUi
             this.SpeakerGridView.DataSource = result;
             SpeakerGridView.CurrentCell = null;
             SpeakerGridView.Rows[0].Selected = false;
+
+            SpeakerGridView.ForeColor = Color.Black;
+
+            
         }
 
         private void TypeCreatePage(BindingList<TypeModel> lst)
@@ -575,6 +583,7 @@ namespace ConferencePlanner.WinUi
             this.TypeGridView.DataSource = result;
             TypeGridView.CurrentCell = null;
             TypeGridView.Rows[0].Selected = false;
+
         }
 
 
@@ -992,6 +1001,10 @@ namespace ConferencePlanner.WinUi
             }
 
             CategoryGridView.Rows[0].Selected = false;
+
+            CategoryGridView.BackgroundColor = Color.White;
+            CategoryGridView.ForeColor = Color.White;
+           
         }
 
         private void SpeakerGridView_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
@@ -1032,6 +1045,9 @@ namespace ConferencePlanner.WinUi
             this.SpeakerGridView.Rows[0].Selected = false;
 
             this.SpeakerGridView.Controls[1].Enabled = true;
+
+            SpeakerGridView.BackgroundColor = Color.White;
+            SpeakerGridView.ForeColor = Color.White;
         }
 
         private void TypeGridView_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
@@ -1055,6 +1071,9 @@ namespace ConferencePlanner.WinUi
 
             }
             this.TypeGridView.Rows[0].Selected = false;
+
+            TypeGridView.BackgroundColor = Color.White;
+            TypeGridView.ForeColor = Color.White;
         }
 
         private void CityGridView_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
@@ -1082,6 +1101,9 @@ namespace ConferencePlanner.WinUi
                 CityGridView.Columns.Add(deleteButtonColumn);
             }
             this.CityGridView.Rows[0].Selected = false;
+
+            CityGridView.BackgroundColor = Color.White;
+            CityGridView.ForeColor = Color.White;
         }
 
         private void CountyGridView_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
@@ -3098,7 +3120,7 @@ namespace ConferencePlanner.WinUi
         {
             if (CheckError())
             {
-                ConferenceName = ConfName.Text;
+                
                 if (IndexGridChange == 7)
                 {
                     LoadSaveTab();
@@ -3132,27 +3154,27 @@ namespace ConferencePlanner.WinUi
             }
 
         }
-        private void StartHourPicker_ValueChanged(object sender, EventArgs e)
-        {
-            if (this.EndHourPicker.Value <= this.StartHourPicker.Value && this.StartDatePicker.Value.Date >= this.EndDatePicker.Value.Date)
-            {
-                this.EndHourPicker.Value = this.StartHourPicker.Value;
-            }
-        }
+        //private void StartHourPicker_ValueChanged(object sender, EventArgs e)
+        //{
+        //    if (this.EndHourPicker.Value <= this.StartHourPicker.Value && this.StartDatePicker.Value.Date >= this.EndDatePicker.Value.Date)
+        //    {
+        //        this.EndHourPicker.Value = this.StartHourPicker.Value;
+        //    }
+        //}
 
-        private void StartDatePicker_ValueChanged(object sender, EventArgs e)
-        {
-            if (this.EndDatePicker.Value <= this.StartDatePicker.Value)
-            {
-                this.EndDatePicker.Value = this.StartDatePicker.Value;
+        //private void StartDatePicker_ValueChanged(object sender, EventArgs e)
+        //{
+        //    if (this.EndDatePicker.Value <= this.StartDatePicker.Value)
+        //    {
+        //        this.EndDatePicker.Value = this.StartDatePicker.Value;
 
-                if (this.StartHourPicker.Value.TimeOfDay > this.EndHourPicker.Value.TimeOfDay)
-                {
-                    this.EndHourPicker.Value = this.StartHourPicker.Value;
-                }
-            }
+        //        if (this.StartHourPicker.Value.TimeOfDay > this.EndHourPicker.Value.TimeOfDay)
+        //        {
+        //            this.EndHourPicker.Value = this.StartHourPicker.Value;
+        //        }
+        //    }
            
-        }
+        //}
 
         private void SpeakerGridView_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -3190,7 +3212,7 @@ namespace ConferencePlanner.WinUi
             {
                 this.EndDatePicker.Value = this.StartDatePicker.Value;
             }
-            StartDate = StartDatePicker.Value.ToString();
+           
             if(IndexGridChange == 7)
             {
             LoadSaveTab();
@@ -3200,7 +3222,7 @@ namespace ConferencePlanner.WinUi
 
         private void EndDatePicker_ValueChanged(object sender, EventArgs e)
         {
-            EndDate = EndDatePicker.Value.ToString();
+           
             if (IndexGridChange == 7)
             {
                 LoadSaveTab();
@@ -3219,7 +3241,7 @@ namespace ConferencePlanner.WinUi
                     this.EndHourPicker.Value = this.StartHourPicker.Value;
                 }
             }
-            StartHour = StartHourPicker.Value.ToString();
+            
             if (IndexGridChange == 7)
             {
                 LoadSaveTab();
@@ -3231,7 +3253,7 @@ namespace ConferencePlanner.WinUi
         private void EndHourPicker_ValueChanged(object sender, EventArgs e)
         {
 
-            EndHour = EndHourPicker.Value.ToString();
+            
             if (IndexGridChange == 7)
             {
                 LoadSaveTab();

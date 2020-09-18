@@ -79,7 +79,7 @@ namespace ConferencePlanner.WinUi
             this.AddConferenceButton.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("AddConferenceButton.BackgroundImage")));
             this.AddConferenceButton.FlatAppearance.BorderSize = 0;
             this.AddConferenceButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.AddConferenceButton.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.AddConferenceButton.Font = new System.Drawing.Font("Nirmala UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.AddConferenceButton.ForeColor = System.Drawing.Color.White;
             this.AddConferenceButton.Image = ((System.Drawing.Image)(resources.GetObject("AddConferenceButton.Image")));
             this.AddConferenceButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -94,6 +94,7 @@ namespace ConferencePlanner.WinUi
             // 
             // EndDatePicker
             // 
+            this.EndDatePicker.CalendarFont = new System.Drawing.Font("Nirmala UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.EndDatePicker.CustomFormat = "yyyy-MM-dd hh:mm:ss";
             this.EndDatePicker.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.EndDatePicker.Location = new System.Drawing.Point(83, 629);
@@ -105,6 +106,7 @@ namespace ConferencePlanner.WinUi
             // 
             // StartDatePicker
             // 
+            this.StartDatePicker.CalendarFont = new System.Drawing.Font("Nirmala UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.StartDatePicker.CustomFormat = "yyyy-MM-dd hh:mm:ss";
             this.StartDatePicker.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.StartDatePicker.Location = new System.Drawing.Point(83, 598);
@@ -150,9 +152,9 @@ namespace ConferencePlanner.WinUi
             this.pictureBox1.BackColor = System.Drawing.Color.Transparent;
             this.pictureBox1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pictureBox1.BackgroundImage")));
             this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.pictureBox1.Location = new System.Drawing.Point(0, 12);
+            this.pictureBox1.Location = new System.Drawing.Point(23, 37);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(334, 79);
+            this.pictureBox1.Size = new System.Drawing.Size(276, 54);
             this.pictureBox1.TabIndex = 13;
             this.pictureBox1.TabStop = false;
             // 
@@ -189,7 +191,7 @@ namespace ConferencePlanner.WinUi
             this.FilterByDate.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("FilterByDate.BackgroundImage")));
             this.FilterByDate.FlatAppearance.BorderSize = 0;
             this.FilterByDate.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.FilterByDate.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.FilterByDate.Font = new System.Drawing.Font("Nirmala UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.FilterByDate.ForeColor = System.Drawing.Color.White;
             this.FilterByDate.Image = ((System.Drawing.Image)(resources.GetObject("FilterByDate.Image")));
             this.FilterByDate.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -209,7 +211,7 @@ namespace ConferencePlanner.WinUi
             this.OrganizerButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.OrganizerButton.FlatAppearance.BorderSize = 0;
             this.OrganizerButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.OrganizerButton.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.OrganizerButton.Font = new System.Drawing.Font("Nirmala UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.OrganizerButton.ForeColor = System.Drawing.Color.White;
             this.OrganizerButton.Image = ((System.Drawing.Image)(resources.GetObject("OrganizerButton.Image")));
             this.OrganizerButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -237,7 +239,7 @@ namespace ConferencePlanner.WinUi
             this.AttendeeButtonFP.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("AttendeeButtonFP.BackgroundImage")));
             this.AttendeeButtonFP.FlatAppearance.BorderSize = 0;
             this.AttendeeButtonFP.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.AttendeeButtonFP.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.AttendeeButtonFP.Font = new System.Drawing.Font("Nirmala UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.AttendeeButtonFP.ForeColor = System.Drawing.Color.White;
             this.AttendeeButtonFP.Image = ((System.Drawing.Image)(resources.GetObject("AttendeeButtonFP.Image")));
             this.AttendeeButtonFP.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -245,7 +247,7 @@ namespace ConferencePlanner.WinUi
             this.AttendeeButtonFP.Name = "AttendeeButtonFP";
             this.AttendeeButtonFP.Size = new System.Drawing.Size(237, 59);
             this.AttendeeButtonFP.TabIndex = 0;
-            this.AttendeeButtonFP.Text = "         Attendee";
+            this.AttendeeButtonFP.Text = "      Conferences";
             this.AttendeeButtonFP.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.AttendeeButtonFP.UseVisualStyleBackColor = false;
             this.AttendeeButtonFP.Click += new System.EventHandler(this.button1_Click_1);
@@ -282,7 +284,7 @@ namespace ConferencePlanner.WinUi
             this.OrganizersPaginationSelector.Location = new System.Drawing.Point(15, 17);
             this.OrganizersPaginationSelector.Margin = new System.Windows.Forms.Padding(15);
             this.OrganizersPaginationSelector.Name = "OrganizersPaginationSelector";
-            this.OrganizersPaginationSelector.Size = new System.Drawing.Size(81, 25);
+            this.OrganizersPaginationSelector.Size = new System.Drawing.Size(79, 25);
             this.OrganizersPaginationSelector.TabIndex = 2;
             this.OrganizersPaginationSelector.DropDownClosed += new System.EventHandler(this.OrganizersPaginationSelector_DropDownClosed);
             // 
@@ -313,7 +315,7 @@ namespace ConferencePlanner.WinUi
             this.RightArrowPagButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.RightArrowPagButton.FlatAppearance.BorderSize = 0;
             this.RightArrowPagButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.RightArrowPagButton.Location = new System.Drawing.Point(579, 8);
+            this.RightArrowPagButton.Location = new System.Drawing.Point(568, 8);
             this.RightArrowPagButton.Margin = new System.Windows.Forms.Padding(1);
             this.RightArrowPagButton.Name = "RightArrowPagButton";
             this.RightArrowPagButton.Size = new System.Drawing.Size(40, 40);
@@ -332,7 +334,7 @@ namespace ConferencePlanner.WinUi
             this.LeftArrowPagButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.LeftArrowPagButton.FlatAppearance.BorderSize = 0;
             this.LeftArrowPagButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.LeftArrowPagButton.Location = new System.Drawing.Point(401, 8);
+            this.LeftArrowPagButton.Location = new System.Drawing.Point(393, 8);
             this.LeftArrowPagButton.Name = "LeftArrowPagButton";
             this.LeftArrowPagButton.Size = new System.Drawing.Size(40, 40);
             this.LeftArrowPagButton.TabIndex = 7;
@@ -359,7 +361,7 @@ namespace ConferencePlanner.WinUi
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 59F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25.87703F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 44F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 408F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 419F));
             this.tableLayoutPanel1.Controls.Add(this.OrganizersPaginationSelector, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.MainPagePaginationTextBox, 3, 0);
             this.tableLayoutPanel1.Controls.Add(this.LeftArrowPagButton, 2, 0);
@@ -375,12 +377,14 @@ namespace ConferencePlanner.WinUi
             // 
             this.MainPagePaginationTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.MainPagePaginationTextBox.Enabled = false;
-            this.MainPagePaginationTextBox.Location = new System.Drawing.Point(459, 16);
+            this.MainPagePaginationTextBox.Font = new System.Drawing.Font("Nirmala UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.MainPagePaginationTextBox.Location = new System.Drawing.Point(451, 15);
             this.MainPagePaginationTextBox.Margin = new System.Windows.Forms.Padding(15);
             this.MainPagePaginationTextBox.Name = "MainPagePaginationTextBox";
             this.MainPagePaginationTextBox.ReadOnly = true;
-            this.MainPagePaginationTextBox.Size = new System.Drawing.Size(104, 25);
+            this.MainPagePaginationTextBox.Size = new System.Drawing.Size(101, 27);
             this.MainPagePaginationTextBox.TabIndex = 9;
+            this.MainPagePaginationTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // panel4
             // 
@@ -413,7 +417,7 @@ namespace ConferencePlanner.WinUi
             this.MinimumSize = new System.Drawing.Size(915, 561);
             this.Name = "MainPage";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "MainForm";
+            this.Text = "Main Page";
             this.TransparencyKey = System.Drawing.Color.NavajoWhite;
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.panel2.ResumeLayout(false);

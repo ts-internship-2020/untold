@@ -46,7 +46,9 @@
             // EmailTextBox
             // 
             this.EmailTextBox.AcceptsReturn = true;
-            this.EmailTextBox.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.EmailTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.EmailTextBox.BackColor = System.Drawing.Color.Indigo;
             this.EmailTextBox.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.EmailTextBox.ForeColor = System.Drawing.Color.Silver;
@@ -62,7 +64,9 @@
             // 
             // SubmitBtn
             // 
-            this.SubmitBtn.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.SubmitBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.SubmitBtn.BackColor = System.Drawing.Color.Indigo;
             this.SubmitBtn.FlatAppearance.BorderColor = System.Drawing.SystemColors.Info;
             this.SubmitBtn.FlatAppearance.BorderSize = 0;
@@ -149,7 +153,7 @@
             this.label2.BackColor = System.Drawing.Color.Transparent;
             this.label2.Font = new System.Drawing.Font("Nirmala UI", 26.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.label2.ForeColor = System.Drawing.Color.White;
-            this.label2.Location = new System.Drawing.Point(121, 182);
+            this.label2.Location = new System.Drawing.Point(116, 182);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(265, 47);
             this.label2.TabIndex = 2;
