@@ -87,7 +87,7 @@ namespace ConferencePlanner.WinUi
             this.AddConferenceButton.Name = "AddConferenceButton";
             this.AddConferenceButton.Size = new System.Drawing.Size(237, 59);
             this.AddConferenceButton.TabIndex = 4;
-            this.AddConferenceButton.Text = "      Add a new        conference";
+            this.AddConferenceButton.Text = "      ADD A NEW         CONFERENCE";
             this.AddConferenceButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.AddConferenceButton.UseVisualStyleBackColor = false;
             this.AddConferenceButton.Click += new System.EventHandler(this.AddConferenceButton_Click);
@@ -197,7 +197,7 @@ namespace ConferencePlanner.WinUi
             this.FilterByDate.Name = "FilterByDate";
             this.FilterByDate.Size = new System.Drawing.Size(237, 59);
             this.FilterByDate.TabIndex = 0;
-            this.FilterByDate.Text = "      Filter by Date";
+            this.FilterByDate.Text = "      FILTER BY DATE";
             this.FilterByDate.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.FilterByDate.UseVisualStyleBackColor = false;
             this.FilterByDate.Click += new System.EventHandler(this.FIlterByDate_Click);
@@ -217,7 +217,7 @@ namespace ConferencePlanner.WinUi
             this.OrganizerButton.Name = "OrganizerButton";
             this.OrganizerButton.Size = new System.Drawing.Size(237, 59);
             this.OrganizerButton.TabIndex = 0;
-            this.OrganizerButton.Text = "        Organizer";
+            this.OrganizerButton.Text = "        ORGANIZER";
             this.OrganizerButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.OrganizerButton.UseMnemonic = false;
             this.OrganizerButton.UseVisualStyleBackColor = false;
@@ -245,7 +245,7 @@ namespace ConferencePlanner.WinUi
             this.AttendeeButtonFP.Name = "AttendeeButtonFP";
             this.AttendeeButtonFP.Size = new System.Drawing.Size(237, 59);
             this.AttendeeButtonFP.TabIndex = 0;
-            this.AttendeeButtonFP.Text = "         Attendee";
+            this.AttendeeButtonFP.Text = "         ATTENDEE";
             this.AttendeeButtonFP.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.AttendeeButtonFP.UseVisualStyleBackColor = false;
             this.AttendeeButtonFP.Click += new System.EventHandler(this.button1_Click_1);
@@ -279,7 +279,7 @@ namespace ConferencePlanner.WinUi
             "5",
             "10",
             "25"});
-            this.OrganizersPaginationSelector.Location = new System.Drawing.Point(346, 19);
+            this.OrganizersPaginationSelector.Location = new System.Drawing.Point(345, 17);
             this.OrganizersPaginationSelector.Margin = new System.Windows.Forms.Padding(15);
             this.OrganizersPaginationSelector.Name = "OrganizersPaginationSelector";
             this.OrganizersPaginationSelector.Size = new System.Drawing.Size(80, 25);
@@ -314,7 +314,7 @@ namespace ConferencePlanner.WinUi
             this.RightArrowPagButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.RightArrowPagButton.FlatAppearance.BorderSize = 0;
             this.RightArrowPagButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.RightArrowPagButton.Location = new System.Drawing.Point(865, 8);
+            this.RightArrowPagButton.Location = new System.Drawing.Point(863, 8);
             this.RightArrowPagButton.Margin = new System.Windows.Forms.Padding(1);
             this.RightArrowPagButton.Name = "RightArrowPagButton";
             this.RightArrowPagButton.Size = new System.Drawing.Size(40, 40);
@@ -333,7 +333,7 @@ namespace ConferencePlanner.WinUi
             this.LeftArrowPagButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.LeftArrowPagButton.FlatAppearance.BorderSize = 0;
             this.LeftArrowPagButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.LeftArrowPagButton.Location = new System.Drawing.Point(689, 8);
+            this.LeftArrowPagButton.Location = new System.Drawing.Point(687, 8);
             this.LeftArrowPagButton.Name = "LeftArrowPagButton";
             this.LeftArrowPagButton.Size = new System.Drawing.Size(40, 40);
             this.LeftArrowPagButton.TabIndex = 7;
@@ -356,7 +356,7 @@ namespace ConferencePlanner.WinUi
             this.MainPagePaginationTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.MainPagePaginationTextBox.Enabled = false;
-            this.MainPagePaginationTextBox.Location = new System.Drawing.Point(747, 17);
+            this.MainPagePaginationTextBox.Location = new System.Drawing.Point(745, 17);
             this.MainPagePaginationTextBox.Margin = new System.Windows.Forms.Padding(15);
             this.MainPagePaginationTextBox.Name = "MainPagePaginationTextBox";
             this.MainPagePaginationTextBox.ReadOnly = true;
@@ -387,7 +387,7 @@ namespace ConferencePlanner.WinUi
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 46F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 132F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 50F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 456F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 457F));
             this.tableLayoutPanel1.Controls.Add(this.OrganizersPaginationSelector, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.MainPagePaginationTextBox, 4, 0);
             this.tableLayoutPanel1.Controls.Add(this.LeftArrowPagButton, 3, 0);
