@@ -2046,11 +2046,13 @@ namespace ConferencePlanner.WinUi
                     return;
                 }
                 int id = (int)this.TypeGridView.Rows[e.RowIndex].Cells["TypeId"].Value;
-                var newDeleteForm = new AreYouSure(_typeRepository, id);
-
-                Task t = Task.Run(() => { newDeleteForm.ShowDialog(); });
-                t.Wait();
-                this.LoadTypesTab();
+               
+                    var newDeleteForm = new AreYouSure(_typeRepository, id);
+                    Task t = Task.Run(() => { newDeleteForm.ShowDialog(); });
+                    t.Wait();
+                    this.LoadTypesTab();
+                
+                
 
             }
         }
@@ -2720,7 +2722,9 @@ namespace ConferencePlanner.WinUi
                     || (this.TypesLastPageLastRow == 0 && this.TypesTotalPages == 0 && this.TypesCurrentPage == 1))
                 {
                     TypeModel newType = GetType();
-                    newType.TypeId = this.Types.Count + 1;
+                    newType.TypeId = _typeRepository.LastTypeId() + 1;
+                    _typeRepository.InsertType(newType);
+                   
                     //_typeRepository.InsertType(newType);
                     var t = Task.Run(() => InsertType(newType));
                     t.Wait();
