@@ -265,7 +265,7 @@ namespace ConferencePlanner.WinUi
         private async Task DeleteCounty(int id)
         {
             HttpClient client = new HttpClient();
-            HttpResponseMessage s = await client.DeleteAsync("http://localhost:2794/api/County/delete_county");
+            HttpResponseMessage s = await client.DeleteAsync("http://localhost:2794/api/County/delete_county/id=" + id);
             if (s.IsSuccessStatusCode)
             {
                 popUpMethod("Succes", "The County was deleted!");

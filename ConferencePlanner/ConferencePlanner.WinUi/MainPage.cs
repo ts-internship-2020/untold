@@ -93,7 +93,7 @@ namespace ConferencePlanner.WinUi
 
         private void AddConferenceButton_Click(object sender, EventArgs e)
         {
-            var newAddConf = new Form1(_conferenceRepository, _countryRepository, _countyRepository, _speakerRepository, _typeRepository, _cityRepository, _categoryRepository);
+            var newAddConf = new AddConference(_conferenceRepository, _countryRepository, _countyRepository, _speakerRepository, _typeRepository, _cityRepository, _categoryRepository);
             OrganizerDataGrid.Visible = true;
             AttendeeGridvw.Visible = false;
             gridName = "o";
@@ -144,13 +144,16 @@ namespace ConferencePlanner.WinUi
                 AttendeeGridvw.Columns["attend_column"].DisplayIndex = 9;
                 AttendeeGridvw.Columns["withdraw_column"].DisplayIndex = 10;
                 AttendeeGridvw.Columns["join_column"].DisplayIndex = 11;
+                AttendeeGridvw.Columns[3].HeaderText = "Name";
+                AttendeeGridvw.Columns[4].HeaderText = "Category";
+                AttendeeGridvw.Columns[5].HeaderText = "Type";
                 //AttendeeGridvw.Columns["attend_column"].DisplayIndex = 9;
                 //AttendeeGridvw.Columns["attend_column"].DisplayIndex = 9;
                 //AttendeeGridvw.Columns["attend_column"].DisplayIndex = 9;
 
                 AttendeeGridvw.AutoGenerateColumns = false;
-                this.OrganizersPaginationSelector.Visible = true;
-                this.MainPagePaginationTextBox.Text = "Page " + this.AttendeeCurrentPageIndex + " of " + this.AttendeeTotalPage;
+               // this.OrganizersPaginationSelector.Visible = true;
+               // this.MainPagePaginationTextBox.Text = "Page " + this.AttendeeCurrentPageIndex + " of " + this.AttendeeTotalPage;
             }
         }
 
@@ -410,7 +413,7 @@ namespace ConferencePlanner.WinUi
                 check2 = 1;
                 AttendeeGridvw.DataSource = null;
                 this.AttendeeCurrentPageIndex = 1;
-
+               
                 var t = Task.Run(() => FilterAttendeesByDate(Program.EnteredEmailAddress, dates[0], dates[1]));
                 t.Wait();
                 int numberOfConferences = t.Result.Count();
@@ -421,9 +424,11 @@ namespace ConferencePlanner.WinUi
                 t2.Wait();
                 var conferences = t2.Result;
                 //this.ConditionsForButtons();
-                this.CheckPaginationButtonsVisibility(this.AttendeeCurrentPageIndex, this.AttendeeTotalPage);
-                this.MainPagePaginationTextBox.Text = "Page " + this.AttendeeCurrentPageIndex + " of " + this.AttendeeTotalPage;
+                this.MainPagePaginationTextBox.Visible = true;
+                this.CheckPaginationButtonsVisibility(this.AttendeeCurrentPageIndex, numberOfConferences);
+                this.MainPagePaginationTextBox.Text = "Page " + this.AttendeeCurrentPageIndex + " of " + numberOfConferences;
                 CheckNumberOfRowsAttendee(conferences);
+               
             }
 
         }
@@ -574,6 +579,7 @@ namespace ConferencePlanner.WinUi
                 this.CheckPaginationButtonsVisibility(this.AttendeeCurrentPageIndex, this.AttendeeTotalPage);
                 this.MainPagePaginationTextBox.Text = "Page " + this.AttendeeCurrentPageIndex + " of " + this.AttendeeTotalPage;
                 CheckNumberOfRowsAttendee(conferences);
+                this.CreateAttendeePage();
             }
         }
 
@@ -651,7 +657,7 @@ namespace ConferencePlanner.WinUi
 
                 ConferenceModelWithEmail conference = new ConferenceModelWithEmail();
 
-                using (Form1 newAddConf = new Form1(t.Result, _conferenceRepository, _countryRepository, _countyRepository, _speakerRepository, _typeRepository, _cityRepository, _categoryRepository))
+                using (AddConference newAddConf = new AddConference(t.Result, _conferenceRepository, _countryRepository, _countyRepository, _speakerRepository, _typeRepository, _cityRepository, _categoryRepository))
                 {
                     if(newAddConf.ShowDialog() == DialogResult.OK)
                     {

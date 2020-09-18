@@ -54,7 +54,7 @@ namespace ConferencePlanner.Api.Controllers
         }
 
         [HttpDelete]
-        [Route("delete_county")]
+        [Route("delete_county/id={countyId}")]
         public IActionResult DeleteCounty(int countyId)
         {
             string error = _countyRepository.DeleteCounty(countyId);

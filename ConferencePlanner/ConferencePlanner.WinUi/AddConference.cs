@@ -16,7 +16,7 @@ using Tulpep.NotificationWindow;
 
 namespace ConferencePlanner.WinUi
 {
-    public partial class Form1 : Form
+    public partial class AddConference : Form
     {
         private readonly IConferenceRepository _conferenceRepository;
         private readonly ICountryRepository _countryRepository;
@@ -90,7 +90,7 @@ namespace ConferencePlanner.WinUi
         public ConferenceModelWithEmail GetUpdatedConference{
             get { return this.updatingConference; }
     }
-        public Form1(IConferenceRepository conferenceRepository, ICountryRepository countryRepository, ICountyRepository countyRepository, ISpeakerRepository speakerRepository, ITypeRepository typeRepository, ICityRepository cityRepository, ICategoryRepository categoryRepository)
+        public AddConference(IConferenceRepository conferenceRepository, ICountryRepository countryRepository, ICountyRepository countyRepository, ISpeakerRepository speakerRepository, ITypeRepository typeRepository, ICityRepository cityRepository, ICategoryRepository categoryRepository)
         {
             _conferenceRepository = conferenceRepository;
             _countryRepository = countryRepository;
@@ -101,12 +101,12 @@ namespace ConferencePlanner.WinUi
             _categoryRepository = categoryRepository;
             InitializeComponent();
         }
-        public Form1()
+        public AddConference()
         {
             InitializeComponent();
         }
 
-        public Form1(ConferenceModelWithEmail conference, IConferenceRepository conferenceRepository, ICountryRepository countryRepository, ICountyRepository countyRepository, ISpeakerRepository speakerRepository, ITypeRepository typeRepository, ICityRepository cityRepository, ICategoryRepository categoryRepository)
+        public AddConference(ConferenceModelWithEmail conference, IConferenceRepository conferenceRepository, ICountryRepository countryRepository, ICountyRepository countyRepository, ISpeakerRepository speakerRepository, ITypeRepository typeRepository, ICityRepository cityRepository, ICategoryRepository categoryRepository)
         {
             _conferenceRepository = conferenceRepository;
             _countryRepository = countryRepository;
@@ -494,6 +494,9 @@ namespace ConferencePlanner.WinUi
             CountryGridView.CurrentCell = null;
             CountryGridView.Rows[0].Selected = false;
 
+
+            CountryGridView.BackgroundColor = Color.White;
+
         }
 
         private void CountiesCreatePage(BindingList<CountyModel> list)
@@ -510,6 +513,7 @@ namespace ConferencePlanner.WinUi
             this.CountyGridView.DataSource = CountiesList;
             CountyGridView.CurrentCell = null;
             CountyGridView.Rows[0].Selected = false;
+            CountyGridView.BackgroundColor = Color.White;
         }
         private void CitiesCreatePage(BindingList<CityModel> cityModels)
         {
@@ -557,6 +561,10 @@ namespace ConferencePlanner.WinUi
             this.SpeakerGridView.DataSource = result;
             SpeakerGridView.CurrentCell = null;
             SpeakerGridView.Rows[0].Selected = false;
+
+            SpeakerGridView.ForeColor = Color.Black;
+
+            
         }
 
         private void TypeCreatePage(BindingList<TypeModel> lst)
@@ -579,6 +587,7 @@ namespace ConferencePlanner.WinUi
             this.TypeGridView.DataSource = result;
             TypeGridView.CurrentCell = null;
             TypeGridView.Rows[0].Selected = false;
+
         }
 
 
@@ -999,6 +1008,10 @@ namespace ConferencePlanner.WinUi
             }
 
             CategoryGridView.Rows[0].Selected = false;
+
+            CategoryGridView.BackgroundColor = Color.White;
+            CategoryGridView.ForeColor = Color.White;
+           
         }
 
         private void SpeakerGridView_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
@@ -1042,6 +1055,9 @@ namespace ConferencePlanner.WinUi
             this.SpeakerGridView.Rows[0].Selected = false;
 
             this.SpeakerGridView.Controls[1].Enabled = true;
+
+            SpeakerGridView.BackgroundColor = Color.White;
+            SpeakerGridView.ForeColor = Color.White;
         }
 
         private void TypeGridView_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
@@ -1065,6 +1081,9 @@ namespace ConferencePlanner.WinUi
 
             }
             this.TypeGridView.Rows[0].Selected = false;
+
+            TypeGridView.BackgroundColor = Color.White;
+            TypeGridView.ForeColor = Color.White;
         }
 
         private void CityGridView_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
@@ -1092,6 +1111,9 @@ namespace ConferencePlanner.WinUi
                 CityGridView.Columns.Add(deleteButtonColumn);
             }
             this.CityGridView.Rows[0].Selected = false;
+
+            CityGridView.BackgroundColor = Color.White;
+            CityGridView.ForeColor = Color.White;
         }
 
         private void CountyGridView_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
@@ -2303,10 +2325,7 @@ namespace ConferencePlanner.WinUi
                     return;
                 }
                 int CountyId = (int)CountyGridView.Rows[e.RowIndex].Cells["CountyId"].Value;
-                if (_countyRepository.DeleteCounty(CountyId).Equals("error"))
-                {
-                    popUpMethod("Unsuccessfully", "You can't delete a county that has cities assign to it");
-                }
+
                 var DeleteForm = new AreYouSure(_countyRepository, CountyId);
                 Task t = Task.Run(() => { DeleteForm.ShowDialog(); });
                 t.Wait();
@@ -3137,6 +3156,7 @@ namespace ConferencePlanner.WinUi
         {
             if (CheckError())
             {
+                
                 if (IndexGridChange == 7)
                 {
                     LoadSaveTab();
@@ -3207,6 +3227,7 @@ namespace ConferencePlanner.WinUi
             {
                 this.EndDatePicker.Value = this.StartDatePicker.Value;
             }
+           
             if(IndexGridChange == 7)
             {
             LoadSaveTab();
@@ -3216,6 +3237,7 @@ namespace ConferencePlanner.WinUi
 
         private void EndDatePicker_ValueChanged(object sender, EventArgs e)
         {
+           
             if (IndexGridChange == 7)
             {
                 LoadSaveTab();
@@ -3234,6 +3256,7 @@ namespace ConferencePlanner.WinUi
                     this.EndHourPicker.Value = this.StartHourPicker.Value;
                 }
             }
+            
             if (IndexGridChange == 7)
             {
                 LoadSaveTab();
@@ -3245,6 +3268,7 @@ namespace ConferencePlanner.WinUi
         private void EndHourPicker_ValueChanged(object sender, EventArgs e)
         {
 
+            
             if (IndexGridChange == 7)
             {
                 LoadSaveTab();
