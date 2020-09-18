@@ -79,6 +79,10 @@ namespace ConferencePlanner.WinUi
         CountryModel EditCountry;
         CountyModel EditCounty;
         CityModel EditCity;
+        CategoryModel EditCategory;
+        TypeModel EditType;
+        SpeakerModel EditSpeaker;
+
 
         private bool isEditingConference = false;
         private ConferenceModelWithEmail updatingConference = new ConferenceModelWithEmail();
@@ -1671,6 +1675,7 @@ namespace ConferencePlanner.WinUi
         private void CountryGridView_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
         {
             UpdateCountriesRow = e.RowIndex;
+            
             if (EditTextBox.Visible == false)
             {
                 if (UpdateCountriesRow >= PageSize || CountriesLastPageLastRow > 0 && CountriesCurrentPage == CountriesTotalPages && UpdateCountriesRow == CountriesLastPageLastRow || CountriesTotalPages == 0 && CountriesLastPageLastRow == 0)
@@ -1680,6 +1685,8 @@ namespace ConferencePlanner.WinUi
                 }
                 else
                 {
+                    EditCountry = GetCountry();
+                    EditCountry.DictionaryCountryId = (int)CountryGridView.Rows[UpdateCountriesRow].Cells["DictionaryCountryId"].Value;
                     string CountryName = CountryGridView.Rows[UpdateCountriesRow].Cells["CountryName"].Value.ToString();
                     CountryAddUpdateMessage(CountryName);
                     CountriesBeginEditLayout("Update");
@@ -1748,6 +1755,7 @@ namespace ConferencePlanner.WinUi
                 }
                 else
                 {
+                    EditCategory = GetCategory();
                     int CategoryId = int.Parse(CategoryGridView.Rows[UpdateCategoryRow].Cells["ConferenceCategoryId"].Value.ToString());
                     string CategoryName = CategoryGridView.Rows[UpdateCategoryRow].Cells["ConferenceCategoryName"].Value.ToString();
                     CategoryAddUpdatedMessage(CategoryName);
@@ -1861,6 +1869,7 @@ namespace ConferencePlanner.WinUi
                 }
                 else
                 {
+                    EditSpeaker = GetSpeaker();
                     string fName = this.SpeakerGridView.Rows[this.UpdateSpeakerRow].Cells["FirstName"].Value.ToString();
                     string lName = this.SpeakerGridView.Rows[this.UpdateSpeakerRow].Cells["LastName"].Value.ToString();
                     this.SpeakerAddUpdateMessage(fName, lName);
@@ -1978,6 +1987,7 @@ namespace ConferencePlanner.WinUi
                 }
                 else
                 {
+                    EditType = GetType();
                     int TypeId = int.Parse(this.TypeGridView.Rows[this.UpdateTypeRow].Cells["TypeId"].Value.ToString());
                     //string Id = this.TypeDataGrid.Rows[this.UpdateTypeRow].Cells["DictionaryConferenceTypeId"].Value.ToString();
                     string Name = this.TypeGridView.Rows[this.UpdateTypeRow].Cells["TypeName"].Value.ToString();
@@ -2233,6 +2243,8 @@ namespace ConferencePlanner.WinUi
                 }
                 else
                 {
+                    EditCounty = GetCounty();
+                    EditCounty.CountyId = (int)CountyGridView.Rows[UpdateCountyRow].Cells["CountyId"].Value;
                     string CountyName = CountyGridView.Rows[UpdateCountyRow].Cells["CountyName"].Value.ToString();
                     CountyAddUpdateMessage(CountyName);
                     CountyBeginEditLayout("Update");
@@ -3098,7 +3110,7 @@ namespace ConferencePlanner.WinUi
         {
             if (CheckError())
             {
-                ConferenceName = ConfName.Text;
+                //ConferenceName = ConfName.Text;
                 if (IndexGridChange == 7)
                 {
                     LoadSaveTab();
@@ -3132,27 +3144,27 @@ namespace ConferencePlanner.WinUi
             }
 
         }
-        private void StartHourPicker_ValueChanged(object sender, EventArgs e)
-        {
-            if (this.EndHourPicker.Value <= this.StartHourPicker.Value && this.StartDatePicker.Value.Date >= this.EndDatePicker.Value.Date)
-            {
-                this.EndHourPicker.Value = this.StartHourPicker.Value;
-            }
-        }
+        //private void StartHourPicker_ValueChanged(object sender, EventArgs e)
+        //{
+        //    if (this.EndHourPicker.Value <= this.StartHourPicker.Value && this.StartDatePicker.Value.Date >= this.EndDatePicker.Value.Date)
+        //    {
+        //        this.EndHourPicker.Value = this.StartHourPicker.Value;
+        //    }
+        //}
 
-        private void StartDatePicker_ValueChanged(object sender, EventArgs e)
-        {
-            if (this.EndDatePicker.Value <= this.StartDatePicker.Value)
-            {
-                this.EndDatePicker.Value = this.StartDatePicker.Value;
+        //private void StartDatePicker_ValueChanged(object sender, EventArgs e)
+        //{
+        //    if (this.EndDatePicker.Value <= this.StartDatePicker.Value)
+        //    {
+        //        this.EndDatePicker.Value = this.StartDatePicker.Value;
 
-                if (this.StartHourPicker.Value.TimeOfDay > this.EndHourPicker.Value.TimeOfDay)
-                {
-                    this.EndHourPicker.Value = this.StartHourPicker.Value;
-                }
-            }
+        //        if (this.StartHourPicker.Value.TimeOfDay > this.EndHourPicker.Value.TimeOfDay)
+        //        {
+        //            this.EndHourPicker.Value = this.StartHourPicker.Value;
+        //        }
+        //    }
            
-        }
+        //}
 
         private void SpeakerGridView_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -3190,7 +3202,7 @@ namespace ConferencePlanner.WinUi
             {
                 this.EndDatePicker.Value = this.StartDatePicker.Value;
             }
-            StartDate = StartDatePicker.Value.ToString();
+            //StartDate = StartDatePicker.Value.ToString();
             if(IndexGridChange == 7)
             {
             LoadSaveTab();
@@ -3200,7 +3212,7 @@ namespace ConferencePlanner.WinUi
 
         private void EndDatePicker_ValueChanged(object sender, EventArgs e)
         {
-            EndDate = EndDatePicker.Value.ToString();
+            //EndDate = EndDatePicker.Value.ToString();
             if (IndexGridChange == 7)
             {
                 LoadSaveTab();
@@ -3219,7 +3231,7 @@ namespace ConferencePlanner.WinUi
                     this.EndHourPicker.Value = this.StartHourPicker.Value;
                 }
             }
-            StartHour = StartHourPicker.Value.ToString();
+            //StartHour = StartHourPicker.Value.ToString();
             if (IndexGridChange == 7)
             {
                 LoadSaveTab();
@@ -3231,7 +3243,7 @@ namespace ConferencePlanner.WinUi
         private void EndHourPicker_ValueChanged(object sender, EventArgs e)
         {
 
-            EndHour = EndHourPicker.Value.ToString();
+            //EndHour = EndHourPicker.Value.ToString();
             if (IndexGridChange == 7)
             {
                 LoadSaveTab();
@@ -3244,7 +3256,39 @@ namespace ConferencePlanner.WinUi
             if(IndexGridChange == 1)
             {
                 CountryGridView.EndEdit();
-                
+                UpdateCountriesArray(EditCountry);
+                CountriesEndEditLayout("Notify", "No changes made");
+            }
+            if (IndexGridChange == 2)
+            {
+                CountyGridView.EndEdit();
+                UpdateCountiesArray(EditCounty);
+
+                CountiesEndEditLayout("Notify", "No changes made");
+            }
+            if (IndexGridChange == 3)
+            {
+                CityGridView.EndEdit();
+                UpdateInCityList(EditCity);
+                CityEndEditLayout("Notify", "No changes made");
+            }
+            if (IndexGridChange == 4)
+            {
+                TypeGridView.EndEdit();
+                UpdateTypeArray(EditType);
+                TypeEndEditLayout("Notify", "No changes made");
+            }
+            if (IndexGridChange == 5)
+            {
+                SpeakerGridView.EndEdit();
+                UpdateSpeakerArray(EditSpeaker);
+                SpeakerEndEditLayout("Notify", "No changes made");
+            }
+            if (IndexGridChange == 6)
+            {
+                CategoryGridView.EndEdit();
+                UpdateCategoryArray(EditCategory);
+                CategoryEndEditLayout("Notify", "No changes made");
             }
         }
 
