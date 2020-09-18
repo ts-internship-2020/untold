@@ -121,7 +121,6 @@ namespace ConferencePlanner.WinUi
 
         private void PopulateForm()
         {
-            ConfName.Text = updatingConference.ConferenceName;
 
             this.StartDatePicker.Value = updatingConference.StartDate;
             this.EndDatePicker.Value = updatingConference.EndDate;
