@@ -15,6 +15,7 @@ using ConferencePlanner.Repository.Ado.Repository;
 using System.Net.Http;
 using Newtonsoft.Json;
 using System.Threading;
+using Windows.Devices.PointOfService;
 
 namespace ConferencePlanner.WinUi
 {
@@ -42,6 +43,8 @@ namespace ConferencePlanner.WinUi
         private String gridName = "a";
         string sDate= "1990-01-01 12:00:00";
         string eDate= "3000-12-30 12:00:00";
+
+        private TypeModel typeForUpdate = new TypeModel();
        
 
 
@@ -600,10 +603,11 @@ namespace ConferencePlanner.WinUi
                 OrganizerDataGrid.Rows[i].Cells["delete_column"].Style.ForeColor = System.Drawing.Color.Red;
             }
 
-            OrganizerDataGrid.AutoResizeColumns();
+            //OrganizerDataGrid.AutoResizeColumns();
             
         }
 
+       
         private void OrganizerDataGrid_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex < 0)
@@ -624,9 +628,13 @@ namespace ConferencePlanner.WinUi
                 {
                     if(newAddConf.ShowDialog() == DialogResult.OK)
                     {
-                        conference = newAddConf.GetUpdatedConference;
+                        //var t2 = Task.Run(() => GetConferenceModelById(id));
+                        //t2.Wait();
+
+                        //this.OrganizerDataGrid.Rows[e.RowIndex].Cells = t2.Result;
                     }
                 }
+                //ConferenceModel conferenceModel = this.ConvertToConferenceModel(conference);
             }
 
             if (e.ColumnIndex == OrganizerDataGrid.Columns["delete_column"].Index)
@@ -833,6 +841,34 @@ namespace ConferencePlanner.WinUi
             else
             {
                 return new ConferenceModelWithEmail();
+            }
+        }
+        private async Task<ConferenceModel> GetConferenceModelById(int id)
+        {
+            HttpClient client = new HttpClient();
+            HttpResponseMessage s = await client.GetAsync("http://localhost:2794/api/Conference/conferenceModel_by_id/id=" + id);
+
+            if (s.IsSuccessStatusCode)
+            {
+                string json = await s.Content.ReadAsStringAsync();
+                var t = JsonConvert.DeserializeObject<ConferenceModel>(json);
+                return t;
+            }
+            else
+            {
+                return new ConferenceModel();
+            }
+        }
+        private async Task GetTypeById(int id)
+        {
+            HttpClient client = new HttpClient();
+            HttpResponseMessage s = await client.GetAsync("http://localhost:2794/api/Type/GetTypeById/id=" + id);
+
+            if (s.IsSuccessStatusCode)
+            {
+                string json = await s.Content.ReadAsStringAsync();
+                var t = JsonConvert.DeserializeObject<TypeModel>(json);
+                this.typeForUpdate = t;
             }
         }
         private async Task<int> GetAttendeesCount(string email, string sDate, string eDate)

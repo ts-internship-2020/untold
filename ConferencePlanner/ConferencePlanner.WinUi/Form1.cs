@@ -1179,20 +1179,44 @@ namespace ConferencePlanner.WinUi
                 {
                     if (CheckError())
                     {
-                        if (IndexChange("Country", CountryGridView))
+                        if (IndexChange("Country", CountryGridView) || isEditingConference)
                         {
+                            if (isEditingConference)
+                            {
+                                IndexGridChange++;
+                                CheckGridVisibility();
+                                if (CountryGridView.SelectedRows.Count > 0)
+                                {
+                                    SelectedCountryId = (int)CountryGridView.SelectedRows[0].Cells["DictionaryCountryId"].Value;
+                                }
+                                return;
+
+                            }
                             SelectedCountryId = (int)CountryGridView.SelectedRows[0].Cells["DictionaryCountryId"].Value;
-                            //object value = CountryGridView.SelectedRows[0].Cells["CountryName"].Value;
-                            //Country = (string)value;
                             IndexGridChange++;
                             CheckGridVisibility();
+
                         }
+                        
                     }
                 }
                 if (IndexGridChange == 2)
                 {
-                    if (IndexChange("County", CountyGridView))
+                    if (IndexChange("County", CountyGridView) || isEditingConference)
                     {
+                        if (CountyGridView.SelectedRows.Count > 0)
+                        {
+                            this.SelectedCountyId = (int)CountyGridView.SelectedRows[0].Cells["CountyId"].Value;
+                        }
+                        if (isEditingConference)
+                            {
+                                IndexGridChange++;
+                                CheckGridVisibility();
+                            
+                            return;
+
+                            }
+                           
                         SelectedCountyId = (int)CountyGridView.SelectedRows[0].Cells["CountyId"].Value;
                         //County = (string)CountyGridView.SelectedRows[0].Cells["CountyName"].Value;
                         IndexGridChange++;
@@ -1201,9 +1225,21 @@ namespace ConferencePlanner.WinUi
                 }
                 if (IndexGridChange == 3)
                 {
-                    if (IndexChange("City", CityGridView))
+                    if (IndexChange("City", CityGridView) || isEditingConference)
                     {
-                        SelectedCityId = (int)CityGridView.SelectedRows[0].Cells["DictionaryCityId"].Value;
+                        if (isEditingConference)
+                        {
+                            if (CityGridView.SelectedRows.Count > 0)
+                            {
+                                this.SelectedCityId = (int)CityGridView.SelectedRows[0].Cells["DictionaryCityId"].Value;
+                            }
+                            IndexGridChange++;
+                            CheckGridVisibility();
+                            return;
+
+                        }
+                        SelectedCityId = (int)CityGridView.SelectedRows[0].Cells["DictionaryCityId"].Value; 
+                        
                         //City = (string)CityGridView.SelectedRows[0].Cells["CityName"].Value;
                         IndexGridChange++;
                         CheckGridVisibility();
@@ -1211,9 +1247,21 @@ namespace ConferencePlanner.WinUi
                 }
                 if (IndexGridChange == 4)
                 {
-                    if (IndexChange("Type", TypeGridView))
+                    if (IndexChange("Type", TypeGridView) || isEditingConference)
                     {
-                        SelectedTypeId = (int)TypeGridView.SelectedRows[0].Cells["TypeId"].Value;
+                        if (isEditingConference)
+                        {
+                            if (TypeGridView.SelectedRows.Count > 0)
+                            {
+                                this.SelectedTypeId = (int)TypeGridView.SelectedRows[0].Cells["TypeId"].Value;
+                            }
+                            IndexGridChange++;
+                            CheckGridVisibility();
+                            return;
+
+                        }
+                        SelectedTypeId = (int)TypeGridView.SelectedRows[0].Cells["TypeId"].Value; 
+                        
                         //Type = (string)TypeGridView.SelectedRows[0].Cells["TypeName"].Value;
                         IndexGridChange++;
                         CheckGridVisibility();
@@ -1222,30 +1270,56 @@ namespace ConferencePlanner.WinUi
 
                 if (IndexGridChange == 5)
                 {
-                    if (IndexChange("Speaker", SpeakerGridView))
+                    if (IndexChange("Speaker", SpeakerGridView) || isEditingConference)
                     {
-                        int col_idx = SpeakerGridView.Columns["main_speaker"].Index;
-                        foreach (DataGridViewRow row in SpeakerGridView.Rows)
+                        if (SpeakerGridView.SelectedRows.Count > 0)
                         {
-
-                            if (Convert.ToBoolean(row.Cells[col_idx].Value) == true)
+                            this.SelectedSpeakerId = (int)SpeakerGridView.SelectedRows[0].Cells["SpeakerId"].Value;
+                            IndexGridChange++;
+                            CheckGridVisibility();
+                            return;
+                        }
+                        else
+                        {
+                            int col_idx = SpeakerGridView.Columns["main_speaker"].Index;
+                            foreach (DataGridViewRow row in SpeakerGridView.Rows)
                             {
-                                SelectedRowIndex = row.Index;
+
+                                if (Convert.ToBoolean(row.Cells[col_idx].Value) == true)
+                                {
+                                    SelectedRowIndex = row.Index;
+                                }
                             }
+
+                            SelectedSpeakerId = (int)SpeakerGridView.Rows[SelectedRowIndex].Cells["SpeakerId"].Value;
+
                         }
 
-                        SelectedSpeakerId = (int)SpeakerGridView.Rows[SelectedRowIndex].Cells["SpeakerId"].Value;
-                        //Speaker = (string)SpeakerGridView.Rows[SelectedRowIndex].Cells["FirstName"].Value + " " + (string)SpeakerGridView.Rows[SelectedRowIndex].Cells["LastName"].Value;
+
                         IndexGridChange++;
-                        CheckGridVisibility();
+                            CheckGridVisibility();
                     }
                 }
                 if(IndexGridChange == 6)
                 {
-                    if(IndexChange("Category", CategoryGridView))
+                    
+                    if(IndexChange("Category", CategoryGridView) || isEditingConference)
                     {
-                        SelectedCategoryId = (int)CategoryGridView.SelectedRows[0].Cells["ConferenceCategoryId"].Value;
-                        //Category = (string)CategoryGridView.SelectedRows[0].Cells["ConferenceCategoryName"].Value;
+                        if (isEditingConference)
+                        {
+                            if (CategoryGridView.SelectedRows.Count > 0)
+                            {
+                                this.SelectedCategoryId = (int)CategoryGridView.SelectedRows[0].Cells["ConferenceCategoryId"].Value;
+                            }
+                            IndexGridChange++;
+                            CheckGridVisibility();
+                            return;
+
+                        }
+                        
+                            SelectedCategoryId = (int)CategoryGridView.SelectedRows[0].Cells["ConferenceCategoryId"].Value;
+                        
+
                         IndexGridChange++;
                         CheckGridVisibility();
                     }

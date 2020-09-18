@@ -372,6 +372,32 @@ namespace ConferencePlanner.Repository.Ef.Repository
 
             _untoldContext.SaveChanges();
         }
+
+        public ConferenceModel GetConferenceModelById(int id)
+        {
+            Conference conference = _untoldContext.Conference.Where(x => x.ConferenceId == id)
+                .Include(x => x.MainSpeaker)
+                .Include(x => x.ConferenceCategory)
+                .Include(x => x.ConferenceType)
+                .Include(x => x.Location)
+                .ThenInclude(x => x.City)
+                .ThenInclude(x => x.County)
+                .ThenInclude(x => x.Country)
+                .FirstOrDefault();
+
+            ConferenceModel conferenceModel = new ConferenceModel()
+            {
+                ConferenceId = conference.ConferenceId,
+                ConferenceName = conference.ConferenceName,
+                ConferenceTypeName = conference.ConferenceType.ConferenceTypeName,
+                ConferenceCategoryName = conference.ConferenceCategory.ConferenceCategoryName,
+                Location = conference.Location.City.County.Country.CountryName + ", " + conference.Location.City.County.CountyName + ", " + conference.Location.City.CityName,
+                Speaker = conference.MainSpeaker.FirstName + " " + conference.MainSpeaker.LastName,
+                Period = conference.StartDate + " - " + conference.EndDate
+        };
+
+            return conferenceModel;
+        }
     }
 
 
