@@ -3098,7 +3098,6 @@ namespace ConferencePlanner.WinUi
         {
             if (CheckError())
             {
-                ConferenceName = ConfName.Text;
                 if (IndexGridChange == 7)
                 {
                     LoadSaveTab();
@@ -3132,27 +3131,27 @@ namespace ConferencePlanner.WinUi
             }
 
         }
-        private void StartHourPicker_ValueChanged(object sender, EventArgs e)
-        {
-            if (this.EndHourPicker.Value <= this.StartHourPicker.Value && this.StartDatePicker.Value.Date >= this.EndDatePicker.Value.Date)
-            {
-                this.EndHourPicker.Value = this.StartHourPicker.Value;
-            }
-        }
+        //private void StartHourPicker_ValueChanged(object sender, EventArgs e)
+        //{
+        //    if (this.EndHourPicker.Value <= this.StartHourPicker.Value && this.StartDatePicker.Value.Date >= this.EndDatePicker.Value.Date)
+        //    {
+        //        this.EndHourPicker.Value = this.StartHourPicker.Value;
+        //    }
+        //}
 
-        private void StartDatePicker_ValueChanged(object sender, EventArgs e)
-        {
-            if (this.EndDatePicker.Value <= this.StartDatePicker.Value)
-            {
-                this.EndDatePicker.Value = this.StartDatePicker.Value;
+        //private void StartDatePicker_ValueChanged(object sender, EventArgs e)
+        //{
+        //    if (this.EndDatePicker.Value <= this.StartDatePicker.Value)
+        //    {
+        //        this.EndDatePicker.Value = this.StartDatePicker.Value;
 
-                if (this.StartHourPicker.Value.TimeOfDay > this.EndHourPicker.Value.TimeOfDay)
-                {
-                    this.EndHourPicker.Value = this.StartHourPicker.Value;
-                }
-            }
+        //        if (this.StartHourPicker.Value.TimeOfDay > this.EndHourPicker.Value.TimeOfDay)
+        //        {
+        //            this.EndHourPicker.Value = this.StartHourPicker.Value;
+        //        }
+        //    }
            
-        }
+        //}
 
         private void SpeakerGridView_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -3190,7 +3189,6 @@ namespace ConferencePlanner.WinUi
             {
                 this.EndDatePicker.Value = this.StartDatePicker.Value;
             }
-            StartDate = StartDatePicker.Value.ToString();
             if(IndexGridChange == 7)
             {
             LoadSaveTab();
@@ -3200,7 +3198,6 @@ namespace ConferencePlanner.WinUi
 
         private void EndDatePicker_ValueChanged(object sender, EventArgs e)
         {
-            EndDate = EndDatePicker.Value.ToString();
             if (IndexGridChange == 7)
             {
                 LoadSaveTab();
@@ -3219,7 +3216,6 @@ namespace ConferencePlanner.WinUi
                     this.EndHourPicker.Value = this.StartHourPicker.Value;
                 }
             }
-            StartHour = StartHourPicker.Value.ToString();
             if (IndexGridChange == 7)
             {
                 LoadSaveTab();
@@ -3231,7 +3227,6 @@ namespace ConferencePlanner.WinUi
         private void EndHourPicker_ValueChanged(object sender, EventArgs e)
         {
 
-            EndHour = EndHourPicker.Value.ToString();
             if (IndexGridChange == 7)
             {
                 LoadSaveTab();
