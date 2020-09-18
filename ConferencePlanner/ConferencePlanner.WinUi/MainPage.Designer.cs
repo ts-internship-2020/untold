@@ -303,6 +303,7 @@ namespace ConferencePlanner.WinUi
             this.OrganizerDataGrid.Text = "organizerDataGrid";
             this.OrganizerDataGrid.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.OrganizerDataGrid_DataBindingComplete);
             this.OrganizerDataGrid.Layout += new System.Windows.Forms.LayoutEventHandler(this.OrganizerDataGrid_Layout);
+            this.OrganizerDataGrid.RowHeadersVisible = false;
             // 
             // RightArrowPagButton
             // 

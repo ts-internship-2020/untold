@@ -586,6 +586,13 @@ namespace ConferencePlanner.WinUi
             OrganizerDataGrid.Columns["ConferenceTypeName"].DisplayIndex = 6;
             OrganizerDataGrid.Columns["Location"].DisplayIndex = 7;
             OrganizerDataGrid.Columns["Speaker"].DisplayIndex = 8;
+            for (int i = 0; i < OrganizerDataGrid.Rows.Count; i++)
+            {
+                OrganizerDataGrid.Rows[i].Cells["edit_column"].Style.BackColor = System.Drawing.Color.Blue;
+                OrganizerDataGrid.Rows[i].Cells["edit_column"].Style.ForeColor = System.Drawing.Color.Blue;
+                OrganizerDataGrid.Rows[i].Cells["delete_column"].Style.BackColor = System.Drawing.Color.Red;
+                OrganizerDataGrid.Rows[i].Cells["delete_column"].Style.ForeColor = System.Drawing.Color.Red;
+            }
 
             OrganizerDataGrid.AutoResizeColumns();
         }
