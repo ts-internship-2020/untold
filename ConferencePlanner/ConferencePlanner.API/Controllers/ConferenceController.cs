@@ -102,5 +102,13 @@ namespace ConferencePlanner.Api.Controllers
             _conferenceRepository.UpdateConference(conferenceModel);
             return Ok();
         }
+
+        [HttpGet]
+        [Route("filter_attendees_by_date/email={email}&sDate={sDate}&eDate={eDate}")]
+        public IActionResult FilterAttendees(string email, string sDate, string eDate)
+        {
+           List<ConferenceModel> attendees =  _conferenceRepository.FilterAttendeesByDate(email, sDate, eDate);
+            return Ok(attendees);
+        }
     }
 }

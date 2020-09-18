@@ -22,7 +22,6 @@ namespace ConferencePlanner.Abstraction.Repository
         void InsertConference(ConferenceModelWithEmail conference);
 
         void UpdateConference(ConferenceModelWithEmail conference);
-
-
+        List<ConferenceModel> FilterAttendeesByDate(string email, string sDate, string eDate);
     }
 }

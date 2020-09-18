@@ -105,6 +105,8 @@ namespace ConferencePlanner.Repository.Ef.Repository
             return conferenceModels.OrderByDescending(x => x.StatusId).ToList();
         }
 
+
+
         public List<ConferenceModel> FilterConfAttendeeByDate(string email, string sDate, string eDate)
         {
             List<Conference> conferences = _untoldContext.Conference.Where(c => c.StartDate >= DateTime.Parse(sDate) && c.EndDate <= DateTime.Parse(eDate))
