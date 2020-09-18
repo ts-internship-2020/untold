@@ -59,8 +59,8 @@ namespace ConferencePlanner.Api.Controllers
         [Route("insert_speaker/")]
         public IActionResult InsertSpeaker(SpeakerModel speaker)
         {
-            _speakerRepository.InsertSpeaker(speaker);
-            return Ok();
+            int speakerId = _speakerRepository.InsertSpeaker(speaker);
+            return Ok(speakerId);
         }
         [HttpDelete]
         [Route("delete_speaker/id={id}")]

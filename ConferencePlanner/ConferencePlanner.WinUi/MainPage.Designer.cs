@@ -52,16 +52,15 @@ namespace ConferencePlanner.WinUi
             this.RightArrowPagButton = new System.Windows.Forms.Button();
             this.LeftArrowPagButton = new System.Windows.Forms.Button();
             this.panel3 = new System.Windows.Forms.Panel();
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.panel4 = new System.Windows.Forms.Panel();
             this.MainPagePaginationTextBox = new System.Windows.Forms.TextBox();
+            this.panel4 = new System.Windows.Forms.Panel();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.AttendeeGridvw)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.OrganizerDataGrid)).BeginInit();
-            this.panel3.SuspendLayout();
-            this.tableLayoutPanel1.SuspendLayout();
             this.panel4.SuspendLayout();
+            this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // StartDateLabel
@@ -88,7 +87,7 @@ namespace ConferencePlanner.WinUi
             this.AddConferenceButton.Name = "AddConferenceButton";
             this.AddConferenceButton.Size = new System.Drawing.Size(237, 59);
             this.AddConferenceButton.TabIndex = 4;
-            this.AddConferenceButton.Text = "      Add a new        conference";
+            this.AddConferenceButton.Text = "      ADD A NEW         CONFERENCE";
             this.AddConferenceButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.AddConferenceButton.UseVisualStyleBackColor = false;
             this.AddConferenceButton.Click += new System.EventHandler(this.AddConferenceButton_Click);
@@ -122,7 +121,7 @@ namespace ConferencePlanner.WinUi
             this.panel1.BackColor = System.Drawing.Color.Transparent;
             this.panel1.Location = new System.Drawing.Point(1345, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(74, 792);
+            this.panel1.Size = new System.Drawing.Size(25, 734);
             this.panel1.TabIndex = 11;
             // 
             // panel2
@@ -198,7 +197,7 @@ namespace ConferencePlanner.WinUi
             this.FilterByDate.Name = "FilterByDate";
             this.FilterByDate.Size = new System.Drawing.Size(237, 59);
             this.FilterByDate.TabIndex = 0;
-            this.FilterByDate.Text = "      Filter by Date";
+            this.FilterByDate.Text = "      FILTER BY DATE";
             this.FilterByDate.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.FilterByDate.UseVisualStyleBackColor = false;
             this.FilterByDate.Click += new System.EventHandler(this.FIlterByDate_Click);
@@ -218,7 +217,7 @@ namespace ConferencePlanner.WinUi
             this.OrganizerButton.Name = "OrganizerButton";
             this.OrganizerButton.Size = new System.Drawing.Size(237, 59);
             this.OrganizerButton.TabIndex = 0;
-            this.OrganizerButton.Text = "        Organizer";
+            this.OrganizerButton.Text = "        ORGANIZER";
             this.OrganizerButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.OrganizerButton.UseMnemonic = false;
             this.OrganizerButton.UseVisualStyleBackColor = false;
@@ -246,7 +245,7 @@ namespace ConferencePlanner.WinUi
             this.AttendeeButtonFP.Name = "AttendeeButtonFP";
             this.AttendeeButtonFP.Size = new System.Drawing.Size(237, 59);
             this.AttendeeButtonFP.TabIndex = 0;
-            this.AttendeeButtonFP.Text = "         Attendee";
+            this.AttendeeButtonFP.Text = "         ATTENDEE";
             this.AttendeeButtonFP.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.AttendeeButtonFP.UseVisualStyleBackColor = false;
             this.AttendeeButtonFP.Click += new System.EventHandler(this.button1_Click_1);
@@ -274,14 +273,16 @@ namespace ConferencePlanner.WinUi
             // 
             // OrganizersPaginationSelector
             // 
+            this.OrganizersPaginationSelector.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.OrganizersPaginationSelector.FormattingEnabled = true;
             this.OrganizersPaginationSelector.Items.AddRange(new object[] {
             "5",
             "10",
             "25"});
-            this.OrganizersPaginationSelector.Location = new System.Drawing.Point(766, 92);
+            this.OrganizersPaginationSelector.Location = new System.Drawing.Point(345, 17);
+            this.OrganizersPaginationSelector.Margin = new System.Windows.Forms.Padding(15);
             this.OrganizersPaginationSelector.Name = "OrganizersPaginationSelector";
-            this.OrganizersPaginationSelector.Size = new System.Drawing.Size(121, 25);
+            this.OrganizersPaginationSelector.Size = new System.Drawing.Size(80, 25);
             this.OrganizersPaginationSelector.TabIndex = 2;
             this.OrganizersPaginationSelector.DropDownClosed += new System.EventHandler(this.OrganizersPaginationSelector_DropDownClosed);
             // 
@@ -298,6 +299,7 @@ namespace ConferencePlanner.WinUi
             this.OrganizerDataGrid.Location = new System.Drawing.Point(0, 0);
             this.OrganizerDataGrid.Name = "OrganizerDataGrid";
             this.OrganizerDataGrid.ReadOnly = true;
+            this.OrganizerDataGrid.RowHeadersVisible = false;
             this.OrganizerDataGrid.Size = new System.Drawing.Size(1001, 561);
             this.OrganizerDataGrid.TabIndex = 0;
             this.OrganizerDataGrid.Text = "organizerDataGrid";
@@ -312,7 +314,7 @@ namespace ConferencePlanner.WinUi
             this.RightArrowPagButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.RightArrowPagButton.FlatAppearance.BorderSize = 0;
             this.RightArrowPagButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.RightArrowPagButton.Location = new System.Drawing.Point(858, 30);
+            this.RightArrowPagButton.Location = new System.Drawing.Point(863, 8);
             this.RightArrowPagButton.Margin = new System.Windows.Forms.Padding(1);
             this.RightArrowPagButton.Name = "RightArrowPagButton";
             this.RightArrowPagButton.Size = new System.Drawing.Size(40, 40);
@@ -331,7 +333,7 @@ namespace ConferencePlanner.WinUi
             this.LeftArrowPagButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.LeftArrowPagButton.FlatAppearance.BorderSize = 0;
             this.LeftArrowPagButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.LeftArrowPagButton.Location = new System.Drawing.Point(702, 30);
+            this.LeftArrowPagButton.Location = new System.Drawing.Point(687, 8);
             this.LeftArrowPagButton.Name = "LeftArrowPagButton";
             this.LeftArrowPagButton.Size = new System.Drawing.Size(40, 40);
             this.LeftArrowPagButton.TabIndex = 7;
@@ -343,32 +345,23 @@ namespace ConferencePlanner.WinUi
             // panel3
             // 
             this.panel3.BackColor = System.Drawing.Color.Transparent;
-            this.panel3.Controls.Add(this.OrganizersPaginationSelector);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel3.Location = new System.Drawing.Point(0, 0);
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(1370, 119);
             this.panel3.TabIndex = 14;
             // 
-            // tableLayoutPanel1
+            // MainPagePaginationTextBox
             // 
-            this.tableLayoutPanel1.BackColor = System.Drawing.Color.Transparent;
-            this.tableLayoutPanel1.ColumnCount = 4;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 71.53527F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 112F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 28.46473F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 216F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.Controls.Add(this.LeftArrowPagButton, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.RightArrowPagButton, 2, 0);
-            this.tableLayoutPanel1.Controls.Add(this.MainPagePaginationTextBox, 1, 0);
-            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 649);
-            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 1;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1370, 100);
-            this.tableLayoutPanel1.TabIndex = 15;
+            this.MainPagePaginationTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.MainPagePaginationTextBox.Enabled = false;
+            this.MainPagePaginationTextBox.Location = new System.Drawing.Point(745, 17);
+            this.MainPagePaginationTextBox.Margin = new System.Windows.Forms.Padding(15);
+            this.MainPagePaginationTextBox.Name = "MainPagePaginationTextBox";
+            this.MainPagePaginationTextBox.ReadOnly = true;
+            this.MainPagePaginationTextBox.Size = new System.Drawing.Size(102, 25);
+            this.MainPagePaginationTextBox.TabIndex = 9;
             // 
             // panel4
             // 
@@ -383,15 +376,28 @@ namespace ConferencePlanner.WinUi
             this.panel4.Size = new System.Drawing.Size(1001, 561);
             this.panel4.TabIndex = 16;
             // 
-            // MainPagePaginationTextBox
+            // tableLayoutPanel1
             // 
-            this.MainPagePaginationTextBox.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.MainPagePaginationTextBox.Enabled = false;
-            this.MainPagePaginationTextBox.Location = new System.Drawing.Point(751, 72);
-            this.MainPagePaginationTextBox.Name = "MainPagePaginationTextBox";
-            this.MainPagePaginationTextBox.ReadOnly = true;
-            this.MainPagePaginationTextBox.Size = new System.Drawing.Size(100, 25);
-            this.MainPagePaginationTextBox.TabIndex = 9;
+            this.tableLayoutPanel1.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.tableLayoutPanel1.BackColor = System.Drawing.Color.Transparent;
+            this.tableLayoutPanel1.ColumnCount = 7;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 73.55556F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 26.44444F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 236F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 46F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 132F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 50F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 457F));
+            this.tableLayoutPanel1.Controls.Add(this.OrganizersPaginationSelector, 1, 0);
+            this.tableLayoutPanel1.Controls.Add(this.MainPagePaginationTextBox, 4, 0);
+            this.tableLayoutPanel1.Controls.Add(this.LeftArrowPagButton, 3, 0);
+            this.tableLayoutPanel1.Controls.Add(this.RightArrowPagButton, 5, 0);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 692);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 1;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1370, 57);
+            this.tableLayoutPanel1.TabIndex = 17;
             // 
             // MainPage
             // 
@@ -402,8 +408,8 @@ namespace ConferencePlanner.WinUi
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(1370, 749);
             this.Controls.Add(this.panel2);
-            this.Controls.Add(this.panel4);
             this.Controls.Add(this.tableLayoutPanel1);
+            this.Controls.Add(this.panel4);
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.panel1);
             this.Font = new System.Drawing.Font("Nirmala UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
@@ -418,10 +424,9 @@ namespace ConferencePlanner.WinUi
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.AttendeeGridvw)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.OrganizerDataGrid)).EndInit();
-            this.panel3.ResumeLayout(false);
+            this.panel4.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
-            this.panel4.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -453,8 +458,8 @@ namespace ConferencePlanner.WinUi
         private Button RightArrowPagButton;
         private Button LeftArrowPagButton;
         private Panel panel3;
-        private TableLayoutPanel tableLayoutPanel1;
         private Panel panel4;
         private TextBox MainPagePaginationTextBox;
+        private TableLayoutPanel tableLayoutPanel1;
     }
 }
