@@ -16,7 +16,7 @@ using Tulpep.NotificationWindow;
 
 namespace ConferencePlanner.WinUi
 {
-    public partial class Form1 : Form
+    public partial class AddConference : Form
     {
         private readonly IConferenceRepository _conferenceRepository;
         private readonly ICountryRepository _countryRepository;
@@ -90,7 +90,7 @@ namespace ConferencePlanner.WinUi
         public ConferenceModelWithEmail GetUpdatedConference{
             get { return this.updatingConference; }
     }
-        public Form1(IConferenceRepository conferenceRepository, ICountryRepository countryRepository, ICountyRepository countyRepository, ISpeakerRepository speakerRepository, ITypeRepository typeRepository, ICityRepository cityRepository, ICategoryRepository categoryRepository)
+        public AddConference(IConferenceRepository conferenceRepository, ICountryRepository countryRepository, ICountyRepository countyRepository, ISpeakerRepository speakerRepository, ITypeRepository typeRepository, ICityRepository cityRepository, ICategoryRepository categoryRepository)
         {
             _conferenceRepository = conferenceRepository;
             _countryRepository = countryRepository;
@@ -101,12 +101,12 @@ namespace ConferencePlanner.WinUi
             _categoryRepository = categoryRepository;
             InitializeComponent();
         }
-        public Form1()
+        public AddConference()
         {
             InitializeComponent();
         }
 
-        public Form1(ConferenceModelWithEmail conference, IConferenceRepository conferenceRepository, ICountryRepository countryRepository, ICountyRepository countyRepository, ISpeakerRepository speakerRepository, ITypeRepository typeRepository, ICityRepository cityRepository, ICategoryRepository categoryRepository)
+        public AddConference(ConferenceModelWithEmail conference, IConferenceRepository conferenceRepository, ICountryRepository countryRepository, ICountyRepository countyRepository, ISpeakerRepository speakerRepository, ITypeRepository typeRepository, ICityRepository cityRepository, ICategoryRepository categoryRepository)
         {
             _conferenceRepository = conferenceRepository;
             _countryRepository = countryRepository;
@@ -2303,10 +2303,7 @@ namespace ConferencePlanner.WinUi
                     return;
                 }
                 int CountyId = (int)CountyGridView.Rows[e.RowIndex].Cells["CountyId"].Value;
-                if (_countyRepository.DeleteCounty(CountyId).Equals("error"))
-                {
-                    popUpMethod("Unsuccessfully", "You can't delete a county that has cities assign to it");
-                }
+
                 var DeleteForm = new AreYouSure(_countyRepository, CountyId);
                 Task t = Task.Run(() => { DeleteForm.ShowDialog(); });
                 t.Wait();
