@@ -970,7 +970,9 @@ namespace ConferencePlanner.WinUi
                 AttendeeGridvw.Columns.Insert(columnIndex, joinButtonColumn);
 
                 AttendeeGridvw.CellClick += AttendeeGridvw_CellClick;
-                
+
+                //AttendeeGridvw.Columns["Period"].DisplayIndex = 4;
+
             }
             ConditionsForButtons();
             this.MainPagePaginationTextBox.Text = "Page " + this.AttendeeCurrentPageIndex + " of " + this.AttendeeTotalPage;

@@ -996,6 +996,7 @@ namespace ConferencePlanner.WinUi
 
         private void SpeakerGridView_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
+            
             if (SpeakerGridView.Columns.Contains("ImagePath"))
             {
                 this.SpeakerGridView.Columns.Remove("ImagePath");
@@ -1028,7 +1029,9 @@ namespace ConferencePlanner.WinUi
             this.SpeakerGridView.Columns["FirstName"].HeaderText = "First Name";
             this.SpeakerGridView.Columns["LastName"].HeaderText = "Last Name";
 
-            //this.SpeakerListDataGrid.CurrentCell = null;
+            this.SpeakerGridView.Columns["Rating"].ValueType = typeof(float);
+            
+
             this.SpeakerGridView.Rows[0].Selected = false;
 
             this.SpeakerGridView.Controls[1].Enabled = true;
@@ -1831,7 +1834,7 @@ namespace ConferencePlanner.WinUi
             {
                 this.SpeakerGridView.AllowUserToAddRows = false;
             }
-
+            
         }
 
         private void SpeakerAddUpdateMessage(string fName, string lName)
@@ -1843,6 +1846,27 @@ namespace ConferencePlanner.WinUi
             this.SaveEditBtn.Visible = true;
             this.CancelBtn.Visible = true;
         }
+
+        private void SpeakerGridView_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
+        {
+            e.Control.KeyPress -= new KeyPressEventHandler(RatingColumn_KeyPress);
+            if (this.SpeakerGridView.CurrentCell.ColumnIndex == this.SpeakerGridView.Columns["Rating"].Index) //Desired Column
+            {
+                TextBox tb = e.Control as TextBox;
+                if (tb != null)
+                {
+                    tb.KeyPress += new KeyPressEventHandler(RatingColumn_KeyPress);
+                }
+            }
+        }
+
+        private void RatingColumn_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
+            {
+                e.Handled = true;
+            }
+        }
         private void SpeakerGridView_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
         {
             this.UpdateSpeakerRow = e.RowIndex;
@@ -1851,6 +1875,7 @@ namespace ConferencePlanner.WinUi
             {
                 return;
             }
+           
             if (EditTextBox.Visible == false)
             {
                 if (this.UpdateSpeakerRow >= this.PageSize ||
@@ -2357,21 +2382,17 @@ namespace ConferencePlanner.WinUi
         private SpeakerModel GetSpeaker()
         {
             SpeakerModel speaker = new SpeakerModel();
-            //validari
-            //if(this.SpeakerListDataGrid.Rows[this.UpdateSpeakerRow].Cells["Rating"].Value.GetType() != "float")
-            //{
-            //    speaker.Rating = 
-            //}
-            //float rating;
-            //if (float.TryParse((string)this.SpeakerListDataGrid.Rows[this.UpdateSpeakerRow].Cells["Rating"].Value, out rating))
-            //{
-            //    speaker.Rating = (float)this.SpeakerListDataGrid.Rows[this.UpdateSpeakerRow].Cells["Rating"].Value;
-            //}
-            //else
-            //{
-            //    this.popUpMethod("Warning", "Rating must be a number! The value you inserted won't be saved");
-            //    speaker.Rating = 0;
-            //}
+            try
+            {
+                float test = (float)this.SpeakerGridView.Rows[this.UpdateSpeakerRow].Cells["Rating"].Value;
+                speaker.Rating = test;
+            }
+            catch(Exception e)
+            {
+                popUpMethod("Error", "RATING MUST BE A NUMBER");
+                speaker.Rating = 0;
+            }
+
             speaker.FirstName = this.SpeakerGridView.Rows[this.UpdateSpeakerRow].Cells["FirstName"].Value.ToString();
             speaker.LastName = this.SpeakerGridView.Rows[this.UpdateSpeakerRow].Cells["LastName"].Value.ToString();
             speaker.Nationality = this.SpeakerGridView.Rows[this.UpdateSpeakerRow].Cells["Nationality"].Value.ToString();
@@ -3098,7 +3119,7 @@ namespace ConferencePlanner.WinUi
         {
             if (CheckError())
             {
-                ConferenceName = ConfName.Text;
+                //ConferenceName = ConfName.Text;
                 if (IndexGridChange == 7)
                 {
                     LoadSaveTab();
@@ -3132,13 +3153,6 @@ namespace ConferencePlanner.WinUi
             }
 
         }
-        private void StartHourPicker_ValueChanged(object sender, EventArgs e)
-        {
-            if (this.EndHourPicker.Value <= this.StartHourPicker.Value && this.StartDatePicker.Value.Date >= this.EndDatePicker.Value.Date)
-            {
-                this.EndHourPicker.Value = this.StartHourPicker.Value;
-            }
-        }
 
         private void StartDatePicker_ValueChanged(object sender, EventArgs e)
         {
@@ -3151,7 +3165,12 @@ namespace ConferencePlanner.WinUi
                     this.EndHourPicker.Value = this.StartHourPicker.Value;
                 }
             }
-           
+            if (IndexGridChange == 7)
+            {
+                LoadSaveTab();
+
+            }
+
         }
 
         private void SpeakerGridView_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
@@ -3184,23 +3203,9 @@ namespace ConferencePlanner.WinUi
             this.CategoryGridView.BeginEdit(true);
         }
 
-        private void StartDatePicker_ValueChanged(object sender, EventArgs e)
-        {
-            if (this.EndDatePicker.Value <= this.StartDatePicker.Value)
-            {
-                this.EndDatePicker.Value = this.StartDatePicker.Value;
-            }
-            StartDate = StartDatePicker.Value.ToString();
-            if(IndexGridChange == 7)
-            {
-            LoadSaveTab();
-
-            }
-        }
-
         private void EndDatePicker_ValueChanged(object sender, EventArgs e)
         {
-            EndDate = EndDatePicker.Value.ToString();
+            //EndDate = EndDatePicker.Value.ToString();
             if (IndexGridChange == 7)
             {
                 LoadSaveTab();
@@ -3219,7 +3224,7 @@ namespace ConferencePlanner.WinUi
                     this.EndHourPicker.Value = this.StartHourPicker.Value;
                 }
             }
-            StartHour = StartHourPicker.Value.ToString();
+            //StartHour = StartHourPicker.Value.ToString();
             if (IndexGridChange == 7)
             {
                 LoadSaveTab();
@@ -3231,7 +3236,7 @@ namespace ConferencePlanner.WinUi
         private void EndHourPicker_ValueChanged(object sender, EventArgs e)
         {
 
-            EndHour = EndHourPicker.Value.ToString();
+            //EndHour = EndHourPicker.Value.ToString();
             if (IndexGridChange == 7)
             {
                 LoadSaveTab();

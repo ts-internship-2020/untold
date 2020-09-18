@@ -79,7 +79,6 @@
             this.CityGridView = new System.Windows.Forms.DataGridView();
             this.TypeGridView = new System.Windows.Forms.DataGridView();
             this.SpeakerGridView = new System.Windows.Forms.DataGridView();
-            this.CategoryGridView = new System.Windows.Forms.DataGridView();
             this.SavePanel = new System.Windows.Forms.Panel();
             this.tableLayoutPanel10 = new System.Windows.Forms.TableLayoutPanel();
             this.TitleSaveLable = new System.Windows.Forms.Label();
@@ -95,6 +94,7 @@
             this.EndDateError = new System.Windows.Forms.ErrorProvider(this.components);
             this.StartHourError = new System.Windows.Forms.ErrorProvider(this.components);
             this.EndHourError = new System.Windows.Forms.ErrorProvider(this.components);
+            this.CategoryGridView = new System.Windows.Forms.DataGridView();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel8.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
@@ -109,7 +109,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.CityGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.TypeGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.SpeakerGridView)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.CategoryGridView)).BeginInit();
             this.SavePanel.SuspendLayout();
             this.tableLayoutPanel10.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ConfNameError)).BeginInit();
@@ -117,6 +116,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.EndDateError)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.StartHourError)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.EndHourError)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CategoryGridView)).BeginInit();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -159,7 +159,7 @@
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 57.3975F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 143F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 67F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 70F));
             this.tableLayoutPanel2.Controls.Add(this.ConfNameLabel, 0, 0);
             this.tableLayoutPanel2.Controls.Add(this.StartDateLabel, 0, 1);
             this.tableLayoutPanel2.Controls.Add(this.EndDateLabel, 0, 2);
@@ -197,7 +197,7 @@
             this.StartDateLabel.AutoSize = true;
             this.StartDateLabel.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.StartDateLabel.ForeColor = System.Drawing.Color.White;
-            this.StartDateLabel.Location = new System.Drawing.Point(61, 82);
+            this.StartDateLabel.Location = new System.Drawing.Point(60, 82);
             this.StartDateLabel.Name = "StartDateLabel";
             this.StartDateLabel.Size = new System.Drawing.Size(92, 21);
             this.StartDateLabel.TabIndex = 1;
@@ -210,7 +210,7 @@
             this.EndDateLabel.AutoSize = true;
             this.EndDateLabel.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.EndDateLabel.ForeColor = System.Drawing.Color.White;
-            this.EndDateLabel.Location = new System.Drawing.Point(65, 139);
+            this.EndDateLabel.Location = new System.Drawing.Point(64, 139);
             this.EndDateLabel.Name = "EndDateLabel";
             this.EndDateLabel.Size = new System.Drawing.Size(84, 21);
             this.EndDateLabel.TabIndex = 2;
@@ -219,10 +219,10 @@
             // ConfName
             // 
             this.ConfName.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.ConfName.Location = new System.Drawing.Point(229, 18);
+            this.ConfName.Location = new System.Drawing.Point(228, 18);
             this.ConfName.Margin = new System.Windows.Forms.Padding(15, 3, 15, 3);
             this.ConfName.Name = "ConfName";
-            this.ConfName.Size = new System.Drawing.Size(259, 26);
+            this.ConfName.Size = new System.Drawing.Size(257, 26);
             this.ConfName.TabIndex = 3;
             this.ConfName.Enter += new System.EventHandler(this.ConfName_Enter);
             this.ConfName.Leave += new System.EventHandler(this.ConfName_Leave);
@@ -231,10 +231,10 @@
             // 
             this.StartDatePicker.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.StartDatePicker.Font = new System.Drawing.Font("Century Gothic", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.StartDatePicker.Location = new System.Drawing.Point(229, 80);
+            this.StartDatePicker.Location = new System.Drawing.Point(228, 80);
             this.StartDatePicker.Margin = new System.Windows.Forms.Padding(15, 3, 15, 3);
             this.StartDatePicker.Name = "StartDatePicker";
-            this.StartDatePicker.Size = new System.Drawing.Size(259, 26);
+            this.StartDatePicker.Size = new System.Drawing.Size(257, 26);
             this.StartDatePicker.TabIndex = 4;
             this.StartDatePicker.ValueChanged += new System.EventHandler(this.StartDatePicker_ValueChanged);
             // 
@@ -242,10 +242,10 @@
             // 
             this.EndDatePicker.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.EndDatePicker.Font = new System.Drawing.Font("Century Gothic", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.EndDatePicker.Location = new System.Drawing.Point(229, 137);
+            this.EndDatePicker.Location = new System.Drawing.Point(228, 137);
             this.EndDatePicker.Margin = new System.Windows.Forms.Padding(15, 3, 15, 3);
             this.EndDatePicker.Name = "EndDatePicker";
-            this.EndDatePicker.Size = new System.Drawing.Size(259, 26);
+            this.EndDatePicker.Size = new System.Drawing.Size(257, 26);
             this.EndDatePicker.TabIndex = 5;
             this.EndDatePicker.ValueChanged += new System.EventHandler(this.EndDatePicker_ValueChanged);
             // 
@@ -255,7 +255,7 @@
             this.StartHourPicker.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.StartHourPicker.CustomFormat = "HH:mm";
             this.StartHourPicker.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.StartHourPicker.Location = new System.Drawing.Point(539, 80);
+            this.StartHourPicker.Location = new System.Drawing.Point(536, 80);
             this.StartHourPicker.Name = "StartHourPicker";
             this.StartHourPicker.ShowUpDown = true;
             this.StartHourPicker.Size = new System.Drawing.Size(111, 26);
@@ -268,7 +268,7 @@
             this.EndHourPicker.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.EndHourPicker.CustomFormat = "HH:mm";
             this.EndHourPicker.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.EndHourPicker.Location = new System.Drawing.Point(539, 137);
+            this.EndHourPicker.Location = new System.Drawing.Point(536, 137);
             this.EndHourPicker.Name = "EndHourPicker";
             this.EndHourPicker.ShowUpDown = true;
             this.EndHourPicker.Size = new System.Drawing.Size(111, 26);
@@ -482,7 +482,7 @@
             this.SearchTableLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 35.30752F));
             this.SearchTableLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 64.69248F));
             this.SearchTableLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 120F));
-            this.SearchTableLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 149F));
+            this.SearchTableLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 152F));
             this.SearchTableLayout.Controls.Add(this.EditTextBox, 1, 0);
             this.SearchTableLayout.Controls.Add(this.SearchBar, 0, 0);
             this.SearchTableLayout.Controls.Add(this.CancelBtn, 3, 0);
@@ -499,10 +499,10 @@
             // 
             this.EditTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.EditTextBox.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.EditTextBox.Location = new System.Drawing.Point(314, 14);
+            this.EditTextBox.Location = new System.Drawing.Point(313, 14);
             this.EditTextBox.Margin = new System.Windows.Forms.Padding(15, 3, 15, 3);
             this.EditTextBox.Name = "EditTextBox";
-            this.EditTextBox.Size = new System.Drawing.Size(519, 27);
+            this.EditTextBox.Size = new System.Drawing.Size(517, 27);
             this.EditTextBox.TabIndex = 0;
             this.EditTextBox.Visible = false;
             // 
@@ -513,7 +513,7 @@
             this.SearchBar.ForeColor = System.Drawing.SystemColors.ScrollBar;
             this.SearchBar.Location = new System.Drawing.Point(3, 14);
             this.SearchBar.Name = "SearchBar";
-            this.SearchBar.Size = new System.Drawing.Size(293, 27);
+            this.SearchBar.Size = new System.Drawing.Size(292, 27);
             this.SearchBar.TabIndex = 2;
             this.SearchBar.Text = "Search";
             this.SearchBar.TextChanged += new System.EventHandler(this.SearchBar_TextChanged);
@@ -527,7 +527,7 @@
             this.CancelBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.CancelBtn.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.CancelBtn.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.CancelBtn.Location = new System.Drawing.Point(971, 3);
+            this.CancelBtn.Location = new System.Drawing.Point(968, 3);
             this.CancelBtn.Name = "CancelBtn";
             this.CancelBtn.Size = new System.Drawing.Size(83, 43);
             this.CancelBtn.TabIndex = 3;
@@ -544,7 +544,7 @@
             this.SaveEditBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.SaveEditBtn.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.SaveEditBtn.ForeColor = System.Drawing.Color.White;
-            this.SaveEditBtn.Location = new System.Drawing.Point(851, 3);
+            this.SaveEditBtn.Location = new System.Drawing.Point(848, 3);
             this.SaveEditBtn.Name = "SaveEditBtn";
             this.SaveEditBtn.Size = new System.Drawing.Size(100, 43);
             this.SaveEditBtn.TabIndex = 1;
@@ -847,28 +847,8 @@
             this.SpeakerGridView.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.SpeakerGridView_CellDoubleClick);
             this.SpeakerGridView.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.SpeakerGridView_CellEndEdit);
             this.SpeakerGridView.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.SpeakerGridView_DataBindingComplete);
+            this.SpeakerGridView.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.SpeakerGridView_EditingControlShowing);
             this.SpeakerGridView.Layout += new System.Windows.Forms.LayoutEventHandler(this.SpeakerGridView_Layout);
-            // 
-            // CategoryGridView
-            // 
-            this.CategoryGridView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.CategoryGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.CategoryGridView.Location = new System.Drawing.Point(50, 373);
-            this.CategoryGridView.Name = "CategoryGridView";
-            this.CategoryGridView.RowHeadersVisible = false;
-            this.CategoryGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.CategoryGridView.Size = new System.Drawing.Size(1121, 209);
-            this.CategoryGridView.TabIndex = 1;
-            this.CategoryGridView.Text = "dataGridView1";
-            this.CategoryGridView.Visible = false;
-            this.CategoryGridView.CellBeginEdit += new System.Windows.Forms.DataGridViewCellCancelEventHandler(this.CategoryGridView_CellBeginEdit);
-            this.CategoryGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.CategoryGridView_CellClick);
-            this.CategoryGridView.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.CategoryGridView_CellDoubleClick);
-            this.CategoryGridView.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.CategoryGridView_CellEndEdit);
-            this.CategoryGridView.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.CategoryGridView_DataBindingComplete);
-            this.CategoryGridView.Layout += new System.Windows.Forms.LayoutEventHandler(this.CategoryGridView_Layout);
             // 
             // SavePanel
             // 
@@ -1023,6 +1003,27 @@
             // 
             this.EndHourError.ContainerControl = this;
             // 
+            // CategoryGridView
+            // 
+            this.CategoryGridView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.CategoryGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.CategoryGridView.Location = new System.Drawing.Point(50, 373);
+            this.CategoryGridView.Name = "CategoryGridView";
+            this.CategoryGridView.RowHeadersVisible = false;
+            this.CategoryGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.CategoryGridView.Size = new System.Drawing.Size(1121, 209);
+            this.CategoryGridView.TabIndex = 1;
+            this.CategoryGridView.Text = "dataGridView1";
+            this.CategoryGridView.Visible = false;
+            this.CategoryGridView.CellBeginEdit += new System.Windows.Forms.DataGridViewCellCancelEventHandler(this.CategoryGridView_CellBeginEdit);
+            this.CategoryGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.CategoryGridView_CellClick);
+            this.CategoryGridView.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.CategoryGridView_CellDoubleClick);
+            this.CategoryGridView.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.CategoryGridView_CellEndEdit);
+            this.CategoryGridView.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.CategoryGridView_DataBindingComplete);
+            this.CategoryGridView.Layout += new System.Windows.Forms.LayoutEventHandler(this.CategoryGridView_Layout);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
@@ -1063,7 +1064,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.CityGridView)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.TypeGridView)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.SpeakerGridView)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.CategoryGridView)).EndInit();
             this.SavePanel.ResumeLayout(false);
             this.tableLayoutPanel10.ResumeLayout(false);
             this.tableLayoutPanel10.PerformLayout();
@@ -1072,6 +1072,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.EndDateError)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.StartHourError)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.EndHourError)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CategoryGridView)).EndInit();
             this.ResumeLayout(false);
 
         }
