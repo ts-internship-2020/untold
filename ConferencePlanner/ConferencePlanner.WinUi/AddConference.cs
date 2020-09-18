@@ -16,7 +16,7 @@ using Tulpep.NotificationWindow;
 
 namespace ConferencePlanner.WinUi
 {
-    public partial class Form1 : Form
+    public partial class AddConference : Form
     {
         private readonly IConferenceRepository _conferenceRepository;
         private readonly ICountryRepository _countryRepository;
@@ -79,6 +79,10 @@ namespace ConferencePlanner.WinUi
         CountryModel EditCountry;
         CountyModel EditCounty;
         CityModel EditCity;
+        CategoryModel EditCategory;
+        TypeModel EditType;
+        SpeakerModel EditSpeaker;
+
 
         private bool isEditingConference = false;
         private ConferenceModelWithEmail updatingConference = new ConferenceModelWithEmail();
@@ -86,7 +90,7 @@ namespace ConferencePlanner.WinUi
         public ConferenceModelWithEmail GetUpdatedConference{
             get { return this.updatingConference; }
     }
-        public Form1(IConferenceRepository conferenceRepository, ICountryRepository countryRepository, ICountyRepository countyRepository, ISpeakerRepository speakerRepository, ITypeRepository typeRepository, ICityRepository cityRepository, ICategoryRepository categoryRepository)
+        public AddConference(IConferenceRepository conferenceRepository, ICountryRepository countryRepository, ICountyRepository countyRepository, ISpeakerRepository speakerRepository, ITypeRepository typeRepository, ICityRepository cityRepository, ICategoryRepository categoryRepository)
         {
             _conferenceRepository = conferenceRepository;
             _countryRepository = countryRepository;
@@ -97,12 +101,12 @@ namespace ConferencePlanner.WinUi
             _categoryRepository = categoryRepository;
             InitializeComponent();
         }
-        public Form1()
+        public AddConference()
         {
             InitializeComponent();
         }
 
-        public Form1(ConferenceModelWithEmail conference, IConferenceRepository conferenceRepository, ICountryRepository countryRepository, ICountyRepository countyRepository, ISpeakerRepository speakerRepository, ITypeRepository typeRepository, ICityRepository cityRepository, ICategoryRepository categoryRepository)
+        public AddConference(ConferenceModelWithEmail conference, IConferenceRepository conferenceRepository, ICountryRepository countryRepository, ICountyRepository countyRepository, ISpeakerRepository speakerRepository, ITypeRepository typeRepository, ICityRepository cityRepository, ICategoryRepository categoryRepository)
         {
             _conferenceRepository = conferenceRepository;
             _countryRepository = countryRepository;
@@ -489,6 +493,9 @@ namespace ConferencePlanner.WinUi
             CountryGridView.CurrentCell = null;
             CountryGridView.Rows[0].Selected = false;
 
+
+            CountryGridView.BackgroundColor = Color.White;
+
         }
 
         private void CountiesCreatePage(BindingList<CountyModel> list)
@@ -505,6 +512,7 @@ namespace ConferencePlanner.WinUi
             this.CountyGridView.DataSource = CountiesList;
             CountyGridView.CurrentCell = null;
             CountyGridView.Rows[0].Selected = false;
+            CountyGridView.BackgroundColor = Color.White;
         }
         private void CitiesCreatePage(BindingList<CityModel> cityModels)
         {
@@ -552,6 +560,10 @@ namespace ConferencePlanner.WinUi
             this.SpeakerGridView.DataSource = result;
             SpeakerGridView.CurrentCell = null;
             SpeakerGridView.Rows[0].Selected = false;
+
+            SpeakerGridView.ForeColor = Color.Black;
+
+            
         }
 
         private void TypeCreatePage(BindingList<TypeModel> lst)
@@ -574,6 +586,7 @@ namespace ConferencePlanner.WinUi
             this.TypeGridView.DataSource = result;
             TypeGridView.CurrentCell = null;
             TypeGridView.Rows[0].Selected = false;
+
         }
 
 
@@ -994,6 +1007,10 @@ namespace ConferencePlanner.WinUi
             }
 
             CategoryGridView.Rows[0].Selected = false;
+
+            CategoryGridView.BackgroundColor = Color.White;
+            CategoryGridView.ForeColor = Color.White;
+           
         }
 
         private void SpeakerGridView_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
@@ -1037,6 +1054,9 @@ namespace ConferencePlanner.WinUi
             this.SpeakerGridView.Rows[0].Selected = false;
 
             this.SpeakerGridView.Controls[1].Enabled = true;
+
+            SpeakerGridView.BackgroundColor = Color.White;
+            SpeakerGridView.ForeColor = Color.White;
         }
 
         private void TypeGridView_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
@@ -1060,6 +1080,9 @@ namespace ConferencePlanner.WinUi
 
             }
             this.TypeGridView.Rows[0].Selected = false;
+
+            TypeGridView.BackgroundColor = Color.White;
+            TypeGridView.ForeColor = Color.White;
         }
 
         private void CityGridView_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
@@ -1087,6 +1110,9 @@ namespace ConferencePlanner.WinUi
                 CityGridView.Columns.Add(deleteButtonColumn);
             }
             this.CityGridView.Rows[0].Selected = false;
+
+            CityGridView.BackgroundColor = Color.White;
+            CityGridView.ForeColor = Color.White;
         }
 
         private void CountyGridView_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
@@ -1750,6 +1776,7 @@ namespace ConferencePlanner.WinUi
         private void CountryGridView_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
         {
             UpdateCountriesRow = e.RowIndex;
+            
             if (EditTextBox.Visible == false)
             {
                 if (UpdateCountriesRow >= PageSize || CountriesLastPageLastRow > 0 && CountriesCurrentPage == CountriesTotalPages && UpdateCountriesRow == CountriesLastPageLastRow || CountriesTotalPages == 0 && CountriesLastPageLastRow == 0)
@@ -1759,6 +1786,8 @@ namespace ConferencePlanner.WinUi
                 }
                 else
                 {
+                    EditCountry = GetCountry();
+                    EditCountry.DictionaryCountryId = (int)CountryGridView.Rows[UpdateCountriesRow].Cells["DictionaryCountryId"].Value;
                     string CountryName = CountryGridView.Rows[UpdateCountriesRow].Cells["CountryName"].Value.ToString();
                     CountryAddUpdateMessage(CountryName);
                     CountriesBeginEditLayout("Update");
@@ -1827,6 +1856,7 @@ namespace ConferencePlanner.WinUi
                 }
                 else
                 {
+                    EditCategory = GetCategory();
                     int CategoryId = int.Parse(CategoryGridView.Rows[UpdateCategoryRow].Cells["ConferenceCategoryId"].Value.ToString());
                     string CategoryName = CategoryGridView.Rows[UpdateCategoryRow].Cells["ConferenceCategoryName"].Value.ToString();
                     CategoryAddUpdatedMessage(CategoryName);
@@ -1962,6 +1992,7 @@ namespace ConferencePlanner.WinUi
                 }
                 else
                 {
+                    EditSpeaker = GetSpeaker();
                     string fName = this.SpeakerGridView.Rows[this.UpdateSpeakerRow].Cells["FirstName"].Value.ToString();
                     string lName = this.SpeakerGridView.Rows[this.UpdateSpeakerRow].Cells["LastName"].Value.ToString();
                     this.SpeakerAddUpdateMessage(fName, lName);
@@ -2079,6 +2110,7 @@ namespace ConferencePlanner.WinUi
                 }
                 else
                 {
+                    EditType = GetType();
                     int TypeId = int.Parse(this.TypeGridView.Rows[this.UpdateTypeRow].Cells["TypeId"].Value.ToString());
                     //string Id = this.TypeDataGrid.Rows[this.UpdateTypeRow].Cells["DictionaryConferenceTypeId"].Value.ToString();
                     string Name = this.TypeGridView.Rows[this.UpdateTypeRow].Cells["TypeName"].Value.ToString();
@@ -2109,11 +2141,13 @@ namespace ConferencePlanner.WinUi
                     return;
                 }
                 int id = (int)this.TypeGridView.Rows[e.RowIndex].Cells["TypeId"].Value;
-                var newDeleteForm = new AreYouSure(_typeRepository, id);
-
-                Task t = Task.Run(() => { newDeleteForm.ShowDialog(); });
-                t.Wait();
-                this.LoadTypesTab();
+               
+                    var newDeleteForm = new AreYouSure(_typeRepository, id);
+                    Task t = Task.Run(() => { newDeleteForm.ShowDialog(); });
+                    t.Wait();
+                    this.LoadTypesTab();
+                
+                
 
             }
         }
@@ -2334,6 +2368,8 @@ namespace ConferencePlanner.WinUi
                 }
                 else
                 {
+                    EditCounty = GetCounty();
+                    EditCounty.CountyId = (int)CountyGridView.Rows[UpdateCountyRow].Cells["CountyId"].Value;
                     string CountyName = CountyGridView.Rows[UpdateCountyRow].Cells["CountyName"].Value.ToString();
                     CountyAddUpdateMessage(CountyName);
                     CountyBeginEditLayout("Update");
@@ -2362,10 +2398,7 @@ namespace ConferencePlanner.WinUi
                     return;
                 }
                 int CountyId = (int)CountyGridView.Rows[e.RowIndex].Cells["CountyId"].Value;
-                if (_countyRepository.DeleteCounty(CountyId).Equals("error"))
-                {
-                    popUpMethod("Unsuccessfully", "You can't delete a county that has cities assign to it");
-                }
+
                 var DeleteForm = new AreYouSure(_countyRepository, CountyId);
                 Task t = Task.Run(() => { DeleteForm.ShowDialog(); });
                 t.Wait();
@@ -2784,7 +2817,9 @@ namespace ConferencePlanner.WinUi
                     || (this.TypesLastPageLastRow == 0 && this.TypesTotalPages == 0 && this.TypesCurrentPage == 1))
                 {
                     TypeModel newType = GetType();
-                    newType.TypeId = this.Types.Count + 1;
+                    newType.TypeId = _typeRepository.LastTypeId() + 1;
+                    _typeRepository.InsertType(newType);
+                   
                     //_typeRepository.InsertType(newType);
                     var t = Task.Run(() => InsertType(newType));
                     t.Wait();
@@ -3194,6 +3229,7 @@ namespace ConferencePlanner.WinUi
         {
             if (CheckError())
             {
+                
                 if (IndexGridChange == 7)
                 {
                     LoadSaveTab();
@@ -3264,6 +3300,7 @@ namespace ConferencePlanner.WinUi
             {
                 this.EndDatePicker.Value = this.StartDatePicker.Value;
             }
+           
             if(IndexGridChange == 7)
             {
             LoadSaveTab();
@@ -3273,6 +3310,7 @@ namespace ConferencePlanner.WinUi
 
         private void EndDatePicker_ValueChanged(object sender, EventArgs e)
         {
+           
             if (IndexGridChange == 7)
             {
                 LoadSaveTab();
@@ -3291,6 +3329,7 @@ namespace ConferencePlanner.WinUi
                     this.EndHourPicker.Value = this.StartHourPicker.Value;
                 }
             }
+            
             if (IndexGridChange == 7)
             {
                 LoadSaveTab();
@@ -3302,6 +3341,7 @@ namespace ConferencePlanner.WinUi
         private void EndHourPicker_ValueChanged(object sender, EventArgs e)
         {
 
+            
             if (IndexGridChange == 7)
             {
                 LoadSaveTab();
@@ -3314,7 +3354,39 @@ namespace ConferencePlanner.WinUi
             if(IndexGridChange == 1)
             {
                 CountryGridView.EndEdit();
-                
+                UpdateCountriesArray(EditCountry);
+                CountriesEndEditLayout("Notify", "No changes made");
+            }
+            if (IndexGridChange == 2)
+            {
+                CountyGridView.EndEdit();
+                UpdateCountiesArray(EditCounty);
+
+                CountiesEndEditLayout("Notify", "No changes made");
+            }
+            if (IndexGridChange == 3)
+            {
+                CityGridView.EndEdit();
+                UpdateInCityList(EditCity);
+                CityEndEditLayout("Notify", "No changes made");
+            }
+            if (IndexGridChange == 4)
+            {
+                TypeGridView.EndEdit();
+                UpdateTypeArray(EditType);
+                TypeEndEditLayout("Notify", "No changes made");
+            }
+            if (IndexGridChange == 5)
+            {
+                SpeakerGridView.EndEdit();
+                UpdateSpeakerArray(EditSpeaker);
+                SpeakerEndEditLayout("Notify", "No changes made");
+            }
+            if (IndexGridChange == 6)
+            {
+                CategoryGridView.EndEdit();
+                UpdateCategoryArray(EditCategory);
+                CategoryEndEditLayout("Notify", "No changes made");
             }
         }
 

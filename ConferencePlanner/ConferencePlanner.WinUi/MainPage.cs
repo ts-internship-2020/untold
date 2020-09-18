@@ -33,6 +33,8 @@ namespace ConferencePlanner.WinUi
         private readonly ICityRepository _cityRepository;
         private readonly ICategoryRepository _categoryRepository;
 
+
+        private List<ConferenceModel> attendees;
         private int PageSize = 5;
         private int OrganizerCurrentPageIndex = 1;
         private int OrganizerTotalPage = 0;
@@ -94,7 +96,7 @@ namespace ConferencePlanner.WinUi
 
         private void AddConferenceButton_Click(object sender, EventArgs e)
         {
-            var newAddConf = new Form1(_conferenceRepository, _countryRepository, _countyRepository, _speakerRepository, _typeRepository, _cityRepository, _categoryRepository);
+            var newAddConf = new AddConference(_conferenceRepository, _countryRepository, _countyRepository, _speakerRepository, _typeRepository, _cityRepository, _categoryRepository);
             OrganizerDataGrid.Visible = true;
             AttendeeGridvw.Visible = false;
             gridName = "o";
@@ -141,9 +143,20 @@ namespace ConferencePlanner.WinUi
             {
                 AttendeeGridvw.Visible = true;
                 AttendeeGridvw.DataSource = attendees;
+                AttendeeGridvw.Columns["ConferenceName"].DisplayIndex = 3;
+                AttendeeGridvw.Columns["attend_column"].DisplayIndex = 9;
+                AttendeeGridvw.Columns["withdraw_column"].DisplayIndex = 10;
+                AttendeeGridvw.Columns["join_column"].DisplayIndex = 11;
+                AttendeeGridvw.Columns[3].HeaderText = "Name";
+                AttendeeGridvw.Columns[4].HeaderText = "Category";
+                AttendeeGridvw.Columns[5].HeaderText = "Type";
+                //AttendeeGridvw.Columns["attend_column"].DisplayIndex = 9;
+                //AttendeeGridvw.Columns["attend_column"].DisplayIndex = 9;
+                //AttendeeGridvw.Columns["attend_column"].DisplayIndex = 9;
+
                 AttendeeGridvw.AutoGenerateColumns = false;
-                this.OrganizersPaginationSelector.Visible = true;
-                this.MainPagePaginationTextBox.Text = "Page " + this.AttendeeCurrentPageIndex + " of " + this.AttendeeTotalPage;
+               // this.OrganizersPaginationSelector.Visible = true;
+               // this.MainPagePaginationTextBox.Text = "Page " + this.AttendeeCurrentPageIndex + " of " + this.AttendeeTotalPage;
             }
         }
 
@@ -258,7 +271,7 @@ namespace ConferencePlanner.WinUi
 
         private void CreateAttendeePage()
         {
-
+            List<ConferenceModel> temp = new List<ConferenceModel>() ;
             string[] dates = new string[2];
             if (check2 == 0)
             {
@@ -271,12 +284,28 @@ namespace ConferencePlanner.WinUi
             this.CheckPaginationButtonsVisibility(this.AttendeeCurrentPageIndex, this.AttendeeTotalPage);
 
             int PreviousPageOffSet = (this.AttendeeCurrentPageIndex - 1) * this.PageSize;
+
+
             
-            var t = Task.Run(() => GetAttendeesByPage(Program.EnteredEmailAddress, PreviousPageOffSet + 1, PreviousPageOffSet + this.PageSize + 1, dates[0], dates[1]));
+            var t = Task.Run(() => FilterAttendeesByDate(Program.EnteredEmailAddress,  dates[0], dates[1]));
             t.Wait();
+            attendees = t.Result;
+            for(int i= PreviousPageOffSet; i<= PreviousPageOffSet - 1 + this.PageSize; i++)
+            {
+               try
+                {
+                    temp.Add(attendees[i]);
+                }
+                catch (Exception e)
+                {
+                    break;
+                }
+              
+            }
+             
 
             this.MainPagePaginationTextBox.Text = "Page " + this.AttendeeCurrentPageIndex + " of " + this.AttendeeTotalPage;
-            CheckNumberOfRowsAttendee(t.Result);
+            CheckNumberOfRowsAttendee(temp);
       
         }
 
@@ -329,7 +358,7 @@ namespace ConferencePlanner.WinUi
 
             Task t = Task.Run(async () =>
             {
-                var count = await GetAttendeesCount(Program.EnteredEmailAddress, dates[0], dates[1]);
+                var count = await FilterAttendeesByDate(Program.EnteredEmailAddress, dates[0], dates[1]);
                 CalculateTotalPages(count, "a");
                 var conferences = await GetAttendeesByPage(Program.EnteredEmailAddress, PreviousPageOffSet + 1, PreviousPageOffSet + this.PageSize + 1, dates[0], dates[1]);
 
@@ -351,6 +380,11 @@ namespace ConferencePlanner.WinUi
             return dates;
         }
 
+
+        //public int countconf(string sDate, string eDate)
+        //{
+        //    return this.Resunt.Count()
+        //}
         private void StartDatePicker_ValueChanged(object sender, EventArgs e)
         {
 
@@ -365,7 +399,7 @@ namespace ConferencePlanner.WinUi
                 OrganizerDataGrid.DataSource = null;
                 this.OrganizerCurrentPageIndex = 1;
 
-                var t = Task.Run(() => GetAttendeesCount(Program.EnteredEmailAddress, dates[0], dates[1]));
+                var t = Task.Run(() => FilterAttendeesByDate(Program.EnteredEmailAddress, dates[0], dates[1]));
                 t.Wait();
                 var count = t.Result;
                 CalculateTotalPages(count, "o");
@@ -382,7 +416,7 @@ namespace ConferencePlanner.WinUi
                 check2 = 1;
                 AttendeeGridvw.DataSource = null;
                 this.AttendeeCurrentPageIndex = 1;
-
+               
                 var t = Task.Run(() => FilterAttendeesByDate(Program.EnteredEmailAddress, dates[0], dates[1]));
                 t.Wait();
                 int numberOfConferences = t.Result.Count();
@@ -393,30 +427,32 @@ namespace ConferencePlanner.WinUi
                 t2.Wait();
                 var conferences = t2.Result;
                 //this.ConditionsForButtons();
-                this.CheckPaginationButtonsVisibility(this.AttendeeCurrentPageIndex, this.AttendeeTotalPage);
-                this.MainPagePaginationTextBox.Text = "Page " + this.AttendeeCurrentPageIndex + " of " + this.AttendeeTotalPage;
+                this.MainPagePaginationTextBox.Visible = true;
+                this.CheckPaginationButtonsVisibility(this.AttendeeCurrentPageIndex, numberOfConferences);
+                this.MainPagePaginationTextBox.Text = "Page " + this.AttendeeCurrentPageIndex + " of " + numberOfConferences;
                 CheckNumberOfRowsAttendee(conferences);
+               
             }
 
         }
 
-        private List<ConferenceModel> FilterAttendee(List<ConferenceModel> allConferences, DateTime StartDate, DateTime EndDate)
-        {
-            List<ConferenceModel> conferences = new List<ConferenceModel>();
+        //private List<ConferenceModel> FilterAttendee(List<ConferenceModel> allConferences, DateTime StartDate, DateTime EndDate)
+        //{
+        //    List<ConferenceModel> conferences = new List<ConferenceModel>();
 
-            foreach (ConferenceModel conf in allConferences)
-            {
-                string[] aux = conf.Period.Split(" - ");
-                DateTime sDate = DateTime.Parse(aux[0]);
-                DateTime eDate = DateTime.Parse(aux[1]);
+        //    foreach (ConferenceModel conf in allConferences)
+        //    {
+        //        string[] aux = conf.Period.Split(" - ");
+        //        DateTime sDate = DateTime.Parse(aux[0]);
+        //        DateTime eDate = DateTime.Parse(aux[1]);
 
-                if (DateTime.Compare(StartDate.Date, sDate) <= 0 && DateTime.Compare(eDate, EndDate.Date) <= 0)
-                {
-                    conferences.Append(conf);
-                }
-            }
-            return conferences;
-        }
+        //        if (DateTime.Compare(StartDate.Date, sDate) <= 0 && DateTime.Compare(eDate, EndDate.Date) <= 0)
+        //        {
+        //            conferences.Append(conf);
+        //        }
+        //    }
+        //    return conferences;
+        //}
 
         public void popUpMethod(String titleText, String contentText)
         {
@@ -516,8 +552,8 @@ namespace ConferencePlanner.WinUi
                 check = 1;
                 this.OrganizerCurrentPageIndex = 1;
 
-                var t = Task.Run(() => GetAttendeesCount(Program.EnteredEmailAddress, dates[0], dates[1])); t.Wait();
-                int numberOfConferences = t.Result;
+                var t = Task.Run(() => FilterAttendeesByDate(Program.EnteredEmailAddress, dates[0], dates[1])); t.Wait();
+                int numberOfConferences = t.Result.Count();
                 this.CalculateTotalPages(numberOfConferences, "o");
 
                 var t2 = Task.Run(() => GetConferencesByPage(Program.EnteredEmailAddress, 1, this.PageSize + 1, dates[0], dates[1]));
@@ -546,6 +582,7 @@ namespace ConferencePlanner.WinUi
                 this.CheckPaginationButtonsVisibility(this.AttendeeCurrentPageIndex, this.AttendeeTotalPage);
                 this.MainPagePaginationTextBox.Text = "Page " + this.AttendeeCurrentPageIndex + " of " + this.AttendeeTotalPage;
                 CheckNumberOfRowsAttendee(conferences);
+                this.CreateAttendeePage();
             }
         }
 
@@ -624,7 +661,7 @@ namespace ConferencePlanner.WinUi
 
                 ConferenceModelWithEmail conference = new ConferenceModelWithEmail();
 
-                using (Form1 newAddConf = new Form1(t.Result, _conferenceRepository, _countryRepository, _countyRepository, _speakerRepository, _typeRepository, _cityRepository, _categoryRepository))
+                using (AddConference newAddConf = new AddConference(t.Result, _conferenceRepository, _countryRepository, _countyRepository, _speakerRepository, _typeRepository, _cityRepository, _categoryRepository))
                 {
                     if(newAddConf.ShowDialog() == DialogResult.OK)
                     {
@@ -801,9 +838,9 @@ namespace ConferencePlanner.WinUi
             {
                 this.PageSize = int.Parse(this.OrganizersPaginationSelector.Items[idx].ToString());
 
-                var t = Task.Run(() => GetAttendeesCount(Program.EnteredEmailAddress, sDate, eDate));
+                var t = Task.Run(() => FilterAttendeesByDate(Program.EnteredEmailAddress, sDate, eDate));
                 t.Wait();
-                int numberOfConferences = t.Result;
+                int numberOfConferences = t.Result.Count();
 
                 this.CalculateTotalPages(numberOfConferences, "a");
                 this.AttendeeCurrentPageIndex = 1;
@@ -1091,6 +1128,11 @@ namespace ConferencePlanner.WinUi
                 tmp = 0;
             }
             ;
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            Refresh();
         }
     }
 }

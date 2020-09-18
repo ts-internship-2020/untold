@@ -14,6 +14,9 @@ namespace ConferencePlanner.Abstraction.Repository
         
         void UpdateType(TypeModel type);
         void InsertType(TypeModel type);
+
+        int LastTypeId();
+
         void DeleteType(int id);
     }
 }
